@@ -180,6 +180,7 @@ type
 
   TIdC_INT   = Integer;
   PIdC_INT   = ^TIdC_INT;
+  PPIdC_INT  = ^PIdC_INT;
   TIdC_UINT  = Cardinal;
   PIdC_UINT  = ^TIdC_UINT;
 
@@ -278,8 +279,14 @@ type
   // Some headers require this in D5 or earlier.
   // FreePascal already has this in its system unit.
   {$IFNDEF HAS_PByte}PByte = ^Byte;{$ENDIF}
+  PPByte = ^PByte;
+  PPPByte = ^PPByte;
   {$IFNDEF HAS_PWord}PWord = ^Word;{$ENDIF}
 
+  size_t = NativeUInt;
+  PSize_t = ^size_t;
+
+  time_t = TIdC_LONG;
   {$ENDIF}
 
 implementation

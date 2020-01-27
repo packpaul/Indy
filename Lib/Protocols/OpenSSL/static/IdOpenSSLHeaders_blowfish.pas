@@ -1,0 +1,54 @@
+unit IdOpenSSLHeaders_blowfish;
+
+// This File is generated!
+// Any modification should be in the respone unit in the 
+// responding unit in the "intermediate" folder! 
+
+// Generation date: 27.01.2020 13:25:53
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// blowfish.h
+
+{$i IdCompilerDefines.inc}
+
+uses
+  IdCTypes,
+  IdGlobal;
+
+const
+  // Added '_CONST' to avoid name clashes
+  BF_ENCRYPT_CONST = 1;
+  // Added '_CONST' to avoid name clashes
+  BF_DECRYPT_CONST = 0;
+
+  BF_ROUNDS = 16;
+  BF_BLOCK  = 8;
+
+type
+  BF_LONG = TIdC_UINT;
+  PBF_LONG = ^BF_LONG;
+
+  bf_key_st = record
+    p: array[0 .. BF_ROUNDS + 2 - 1] of BF_LONG;
+    s: array[0 .. 4 * 256 - 1] of BF_LONG;
+  end;
+  BF_KEY = bf_key_st;
+  PBF_KEY = ^BF_KEY;
+
+  procedure BF_set_key(key: PBF_KEY; len: TIdC_INT; const data: PByte) cdecl; external 'libcrypto-1_1.dll';
+
+  procedure BF_encrypt(data: PBF_LONG; const key: PBF_KEY) cdecl; external 'libcrypto-1_1.dll';
+  procedure BF_decrypt(data: PBF_LONG; const key: PBF_KEY) cdecl; external 'libcrypto-1_1.dll';
+
+  procedure BF_ecb_encrypt(const &in: PByte; &out: PByte; key: PBF_KEY; enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure BF_cbc_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; schedule: PBF_KEY; ivec: PByte; enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure BF_cfb64_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; schedule: PBF_KEY; ivec: PByte; num: PIdC_INT; enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure BF_ofb64_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; schedule: PBF_KEY; ivec: PByte; num: PIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+
+  function BF_options: PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
+
+implementation
+
+end.
