@@ -4,7 +4,7 @@ unit IdOpenSSLHeaders_ssl;
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:53
+// Generation date: 16.03.2020 14:04:26
 
 interface
 
@@ -921,7 +921,7 @@ type
   SSL_custom_ext_parse_cb_ex = function (s: PSSL; ext_type: TIdC_UINT; context: TIdC_UINT; const &in: PByte; inlen: Size_t; x: Px509; chainidx: Size_t; al: PIdC_INT; parse_arg: Pointer): TIdC_INT; cdecl;
 
   (* Typedef for verification callback *)
-  SSL_verify_cb = function (preverify_ok: TIdC_INT; x509_ctx: PX509_STORE_CTX): TIdC_INT;
+  SSL_verify_cb = function (preverify_ok: TIdC_INT; x509_ctx: PX509_STORE_CTX): TIdC_INT; cdecl;
 
   tls_session_ticket_ext_cb_fn = function (s: PSSL; const data: PByte; len: TIdC_INT; arg: Pointer): TIdC_INT; cdecl;
 
@@ -1063,10 +1063,91 @@ type
 
   DTLS_timer_cb = function(s: PSSL; timer_us: TIdC_UINT): TIdC_UINT; cdecl;
   SSL_allow_early_data_cb_fn = function(s: PSSL; arg: Pointer): TIdC_INT; cdecl;
-  
+
   SSL_CTX_sess_new_cb = function (ssl: PSSL; sess: PSSL_SESSION): TIdC_INT; cdecl;
-  
+
   SSL_CTX_sess_remove_cb = procedure(ctx: PSSL_CTX; sess: PSSL_SESSION); cdecl;
+
+{$REGION 'C compiler macros'}
+function SSL_CTX_set_mode(ctx: PSSL_CTX; op: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_clear_mode(ctx: PSSL_CTX; op: TIdC_LONG): TIdC_LONG;
+
+function SSL_CTX_sess_set_cache_size(ctx: PSSL_CTX; t: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_sess_get_cache_size(ctx: PSSL_CTX): TIdC_LONG;
+function SSL_CTX_set_session_cache_mode(ctx: PSSL_CTX; m: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_get_session_cache_mode(ctx: PSSL_CTX): TIdC_LONG;
+
+function SSL_num_renegotiations(ssl: PSSL): TIdC_LONG;
+function SSL_clear_num_renegotiations(ssl: PSSL): TIdC_LONG;
+function SSL_total_renegotiations(ssl: PSSL): TIdC_LONG;
+function SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PByte): TIdC_LONG;
+function SSL_CTX_set_tmp_ecdh(ctx: PSSL_CTX; ecdh: PByte): TIdC_LONG;
+function SSL_CTX_set_dh_auto(ctx: PSSL_CTX; onoff: TIdC_LONG): TIdC_LONG;
+function SSL_set_dh_auto(s: PSSL; onoff: TIdC_LONG): TIdC_LONG;
+function SSL_set_tmp_dh(ssl: PSSL; dh: PByte): TIdC_LONG;
+function SSL_set_tmp_ecdh(ssl: PSSL; ecdh: PByte): TIdC_LONG;
+function SSL_CTX_add_extra_chain_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+function SSL_CTX_get_extra_chain_certs(ctx: PSSL_CTX; px509: Pointer): TIdC_LONG;
+function SSL_CTX_get_extra_chain_certs_only(ctx: PSSL_CTX; px509: Pointer): TIdC_LONG;
+function SSL_CTX_clear_extra_chain_certs(ctx: PSSL_CTX): TIdC_LONG;
+function SSL_CTX_set0_chain(ctx: PSSL_CTX; sk: PByte): TIdC_LONG;
+function SSL_CTX_set1_chain(ctx: PSSL_CTX; sk: PByte): TIdC_LONG;
+function SSL_CTX_add0_chain_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+function SSL_CTX_add1_chain_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+function SSL_CTX_get0_chain_certs(ctx: PSSL_CTX; px509: Pointer): TIdC_LONG;
+function SSL_CTX_clear_chain_certs(ctx: PSSL_CTX): TIdC_LONG;
+function SSL_CTX_build_cert_chain(ctx: PSSL_CTX; flags: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_select_current_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+function SSL_CTX_set_current_cert(ctx: PSSL_CTX; op: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_set0_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+function SSL_CTX_set1_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+function SSL_CTX_set0_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+function SSL_CTX_set1_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+function SSL_set0_chain(s: PSSL; sk: PByte): TIdC_LONG;
+function SSL_set1_chain(s: PSSL; sk: PByte): TIdC_LONG;
+function SSL_add0_chain_cert(s: PSSL; x509: PByte): TIdC_LONG;
+function SSL_add1_chain_cert(s: PSSL; x509: PByte): TIdC_LONG;
+function SSL_get0_chain_certs(s: PSSL; px509: Pointer): TIdC_LONG;
+function SSL_clear_chain_certs(s: PSSL): TIdC_LONG;
+function SSL_build_cert_chain(s: PSSL; flags: TIdC_LONG): TIdC_LONG;
+function SSL_select_current_cert(s: PSSL; x509: PByte): TIdC_LONG;
+function SSL_set_current_cert(s: PSSL; op: TIdC_LONG): TIdC_LONG;
+function SSL_set0_verify_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+function SSL_set1_verify_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+function SSL_set0_chain_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+function SSL_set1_chain_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+function SSL_get1_groups(s: PSSL; glist: PIdC_INT): TIdC_LONG;
+function SSL_CTX_set1_groups(ctx: PSSL_CTX; glist: PByte; glistlen: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_set1_groups_list(ctx: PSSL_CTX; s: PByte): TIdC_LONG;
+function SSL_set1_groups(s: PSSL; glist: PByte; glistlen: TIdC_LONG): TIdC_LONG;
+function SSL_set1_groups_list(s: PSSL; str: PByte): TIdC_LONG;
+function SSL_get_shared_group(s: PSSL; n: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_set1_sigalgs(ctx: PSSL_CTX; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_set1_sigalgs_list(ctx: PSSL_CTX; s: PByte): TIdC_LONG;
+function SSL_set1_sigalgs(s: PSSL; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+function SSL_set1_sigalgs_list(s: PSSL; str: PByte): TIdC_LONG;
+function SSL_CTX_set1_client_sigalgs(ctx: PSSL_CTX; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_set1_client_sigalgs_list(ctx: PSSL_CTX; s: PByte): TIdC_LONG;
+function SSL_set1_client_sigalgs(s: PSSL; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+function SSL_set1_client_sigalgs_list(s: PSSL; str: PByte): TIdC_LONG;
+function SSL_get0_certificate_types(s: PSSL; clist: PByte): TIdC_LONG;
+function SSL_CTX_set1_client_certificate_types(ctx: PSSL_CTX; clist: PByte; clistlen: TIdC_LONG): TIdC_LONG;
+function SSL_set1_client_certificate_types(s: PSSL; clist: PByte; clistlen: TIdC_LONG): TIdC_LONG;
+function SSL_get_signature_nid(s: PSSL; pn: Pointer): TIdC_LONG;
+function SSL_get_peer_signature_nid(s: PSSL; pn: Pointer): TIdC_LONG;
+function SSL_get_peer_tmp_key(s: PSSL; pk: Pointer): TIdC_LONG;
+function SSL_get_tmp_key(s: PSSL; pk: Pointer): TIdC_LONG;
+function SSL_get0_raw_cipherlist(s: PSSL; plst: Pointer): TIdC_LONG;
+function SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TIdC_LONG;
+function SSL_CTX_set_min_proto_version(ctx: PSSL_CTX; version: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_set_max_proto_version(ctx: PSSL_CTX; version: TIdC_LONG): TIdC_LONG;
+function SSL_CTX_get_min_proto_version(ctx: PSSL_CTX): TIdC_LONG;
+function SSL_CTX_get_max_proto_version(ctx: PSSL_CTX): TIdC_LONG;
+function SSL_set_min_proto_version(s: PSSL; version: TIdC_LONG): TIdC_LONG;
+function SSL_set_max_proto_version(s: PSSL; version: TIdC_LONG): TIdC_LONG;
+function SSL_get_min_proto_version(s: PSSL): TIdC_LONG;
+function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
+{$ENDREGION}
 
   //typedef TIdC_INT (*tls_session_secret_cb_fn)(s: PSSL, void *secret, TIdC_INT *secret_len,
   //                                        STACK_OF(SSL_CIPHER) *peer_ciphers,
@@ -1336,147 +1417,6 @@ type
   //        SSL_ctrl(ssl,DTLS_CTRL_GET_TIMEOUT,0, (void *)(arg))
   //# define DTLSv1_handle_timeout(ssl) \
   //        SSL_ctrl(ssl,DTLS_CTRL_HANDLE_TIMEOUT,0, NULL)
-  //# define SSL_num_renegotiations(ssl) \
-  //        SSL_ctrl((ssl),SSL_CTRL_GET_NUM_RENEGOTIATIONS,0,NULL)
-  //# define SSL_clear_num_renegotiations(ssl) \
-  //        SSL_ctrl((ssl),SSL_CTRL_CLEAR_NUM_RENEGOTIATIONS,0,NULL)
-  //# define SSL_total_renegotiations(ssl) \
-  //        SSL_ctrl((ssl),SSL_CTRL_GET_TOTAL_RENEGOTIATIONS,0,NULL)
-  //# define SSL_CTX_set_tmp_dh(ctx,dh) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_DH,0,(PIdAnsiChar *)(dh))
-  //# define SSL_CTX_set_tmp_ecdh(ctx,ecdh) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_ECDH,0,(PIdAnsiChar *)(ecdh))
-  //# define SSL_CTX_set_dh_auto(ctx, onoff) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_DH_AUTO,onoff,NULL)
-  //# define SSL_set_dh_auto(s, onoff) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_DH_AUTO,onoff,NULL)
-  //# define SSL_set_tmp_dh(ssl,dh) \
-  //        SSL_ctrl(ssl,SSL_CTRL_SET_TMP_DH,0,(PIdAnsiChar *)(dh))
-  //# define SSL_set_tmp_ecdh(ssl,ecdh) \
-  //        SSL_ctrl(ssl,SSL_CTRL_SET_TMP_ECDH,0,(PIdAnsiChar *)(ecdh))
-  //# define SSL_CTX_add_extra_chain_cert(ctx,x509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_EXTRA_CHAIN_CERT,0,(PIdAnsiChar *)(x509))
-  //# define SSL_CTX_get_extra_chain_certs(ctx,px509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_GET_EXTRA_CHAIN_CERTS,0,px509)
-  //# define SSL_CTX_get_extra_chain_certs_only(ctx,px509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_GET_EXTRA_CHAIN_CERTS,1,px509)
-  //# define SSL_CTX_clear_extra_chain_certs(ctx) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_CLEAR_EXTRA_CHAIN_CERTS,0,NULL)
-  //# define SSL_CTX_set0_chain(ctx,sk) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN,0,(PIdAnsiChar *)(sk))
-  //# define SSL_CTX_set1_chain(ctx,sk) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN,1,(PIdAnsiChar *)(sk))
-  //# define SSL_CTX_add0_chain_cert(ctx,x509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN_CERT,0,(PIdAnsiChar *)(x509))
-  //# define SSL_CTX_add1_chain_cert(ctx,x509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN_CERT,1,(PIdAnsiChar *)(x509))
-  //# define SSL_CTX_get0_chain_certs(ctx,px509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_GET_CHAIN_CERTS,0,px509)
-  //# define SSL_CTX_clear_chain_certs(ctx) \
-  //        SSL_CTX_set0_chain(ctx,NULL)
-  //# define SSL_CTX_build_cert_chain(ctx, flags) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_BUILD_CERT_CHAIN, flags, NULL)
-  //# define SSL_CTX_select_current_cert(ctx,x509) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SELECT_CURRENT_CERT,0,(PIdAnsiChar *)(x509))
-  //# define SSL_CTX_set_current_cert(ctx, op) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CURRENT_CERT, op, NULL)
-  //# define SSL_CTX_set0_verify_cert_store(ctx,st) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_VERIFY_CERT_STORE,0,(PIdAnsiChar *)(st))
-  //# define SSL_CTX_set1_verify_cert_store(ctx,st) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_VERIFY_CERT_STORE,1,(PIdAnsiChar *)(st))
-  //# define SSL_CTX_set0_chain_cert_store(ctx,st) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CHAIN_CERT_STORE,0,(PIdAnsiChar *)(st))
-  //# define SSL_CTX_set1_chain_cert_store(ctx,st) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CHAIN_CERT_STORE,1,(PIdAnsiChar *)(st))
-  //# define SSL_set0_chain(s,sk) \
-  //        SSL_ctrl(s,SSL_CTRL_CHAIN,0,(PIdAnsiChar *)(sk))
-  //# define SSL_set1_chain(s,sk) \
-  //        SSL_ctrl(s,SSL_CTRL_CHAIN,1,(PIdAnsiChar *)(sk))
-  //# define SSL_add0_chain_cert(s,x509) \
-  //        SSL_ctrl(s,SSL_CTRL_CHAIN_CERT,0,(PIdAnsiChar *)(x509))
-  //# define SSL_add1_chain_cert(s,x509) \
-  //        SSL_ctrl(s,SSL_CTRL_CHAIN_CERT,1,(PIdAnsiChar *)(x509))
-  //# define SSL_get0_chain_certs(s,px509) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_CHAIN_CERTS,0,px509)
-  //# define SSL_clear_chain_certs(s) \
-  //        SSL_set0_chain(s,NULL)
-  //# define SSL_build_cert_chain(s, flags) \
-  //        SSL_ctrl(s,SSL_CTRL_BUILD_CERT_CHAIN, flags, NULL)
-  //# define SSL_select_current_cert(s,x509) \
-  //        SSL_ctrl(s,SSL_CTRL_SELECT_CURRENT_CERT,0,(PIdAnsiChar *)(x509))
-  //# define SSL_set_current_cert(s,op) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_CURRENT_CERT, op, NULL)
-  //# define SSL_set0_verify_cert_store(s,st) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_VERIFY_CERT_STORE,0,(PIdAnsiChar *)(st))
-  //# define SSL_set1_verify_cert_store(s,st) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_VERIFY_CERT_STORE,1,(PIdAnsiChar *)(st))
-  //# define SSL_set0_chain_cert_store(s,st) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_CHAIN_CERT_STORE,0,(PIdAnsiChar *)(st))
-  //# define SSL_set1_chain_cert_store(s,st) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_CHAIN_CERT_STORE,1,(PIdAnsiChar *)(st))
-  //# define SSL_get1_groups(s, glist) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_GROUPS,0,(TIdC_INT*)(glist))
-  //# define SSL_CTX_set1_groups(ctx, glist, glistlen) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_GROUPS,glistlen,(PIdAnsiChar *)(glist))
-  //# define SSL_CTX_set1_groups_list(ctx, s) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_GROUPS_LIST,0,(PIdAnsiChar *)(s))
-  //# define SSL_set1_groups(s, glist, glistlen) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_GROUPS,glistlen,(PIdAnsiChar *)(glist))
-  //# define SSL_set1_groups_list(s, str) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_GROUPS_LIST,0,(PIdAnsiChar *)(str))
-  //# define SSL_get_shared_group(s, n) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_SHARED_GROUP,n,NULL)
-  //# define SSL_CTX_set1_sigalgs(ctx, slist, slistlen) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SIGALGS,slistlen,(TIdC_INT *)(slist))
-  //# define SSL_CTX_set1_sigalgs_list(ctx, s) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SIGALGS_LIST,0,(PIdAnsiChar *)(s))
-  //# define SSL_set1_sigalgs(s, slist, slistlen) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_SIGALGS,slistlen,(TIdC_INT *)(slist))
-  //# define SSL_set1_sigalgs_list(s, str) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_SIGALGS_LIST,0,(PIdAnsiChar *)(str))
-  //# define SSL_CTX_set1_client_sigalgs(ctx, slist, slistlen) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CLIENT_SIGALGS,slistlen,(TIdC_INT *)(slist))
-  //# define SSL_CTX_set1_client_sigalgs_list(ctx, s) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CLIENT_SIGALGS_LIST,0,(PIdAnsiChar *)(s))
-  //# define SSL_set1_client_sigalgs(s, slist, slistlen) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_CLIENT_SIGALGS,slistlen,(TIdC_INT *)(slist))
-  //# define SSL_set1_client_sigalgs_list(s, str) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_CLIENT_SIGALGS_LIST,0,(PIdAnsiChar *)(str))
-  //# define SSL_get0_certificate_types(s, clist) \
-  //        SSL_ctrl(s, SSL_CTRL_GET_CLIENT_CERT_TYPES, 0, (PIdAnsiChar *)(clist))
-  //# define SSL_CTX_set1_client_certificate_types(ctx, clist, clistlen) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CLIENT_CERT_TYPES,clistlen, \
-  //                     (PIdAnsiChar *)(clist))
-  //# define SSL_set1_client_certificate_types(s, clist, clistlen) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_CLIENT_CERT_TYPES,clistlen,(PIdAnsiChar *)(clist))
-  //# define SSL_get_signature_nid(s, pn) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_SIGNATURE_NID,0,pn)
-  //# define SSL_get_peer_signature_nid(s, pn) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_PEER_SIGNATURE_NID,0,pn)
-  //# define SSL_get_peer_tmp_key(s, pk) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_PEER_TMP_KEY,0,pk)
-  //# define SSL_get_tmp_key(s, pk) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_TMP_KEY,0,pk)
-  //# define SSL_get0_raw_cipherlist(s, plst) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_RAW_CIPHERLIST,0,plst)
-  //# define SSL_get0_ec_point_formats(s, plst) \
-  //        SSL_ctrl(s,SSL_CTRL_GET_EC_POINT_FORMATS,0,plst)
-  //# define SSL_CTX_set_min_proto_version(ctx, version) \
-  //        SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MIN_PROTO_VERSION, version, NULL)
-  //# define SSL_CTX_set_max_proto_version(ctx, version) \
-  //        SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MAX_PROTO_VERSION, version, NULL)
-  //# define SSL_CTX_get_min_proto_version(ctx) \
-  //        SSL_CTX_ctrl(ctx, SSL_CTRL_GET_MIN_PROTO_VERSION, 0, NULL)
-  //# define SSL_CTX_get_max_proto_version(ctx) \
-  //        SSL_CTX_ctrl(ctx, SSL_CTRL_GET_MAX_PROTO_VERSION, 0, NULL)
-  //# define SSL_set_min_proto_version(s, version) \
-  //        SSL_ctrl(s, SSL_CTRL_SET_MIN_PROTO_VERSION, version, NULL)
-  //# define SSL_set_max_proto_version(s, version) \
-  //        SSL_ctrl(s, SSL_CTRL_SET_MAX_PROTO_VERSION, version, NULL)
-  //# define SSL_get_min_proto_version(s) \
-  //        SSL_ctrl(s, SSL_CTRL_GET_MIN_PROTO_VERSION, 0, NULL)
-  //# define SSL_get_max_proto_version(s) \
-  //        SSL_ctrl(s, SSL_CTRL_GET_MAX_PROTO_VERSION, 0, NULL)
   //
   ///* Backwards compatibility, original 1.1.0 names */
   //# define SSL_CTRL_GET_SERVER_TMP_KEY \
@@ -1834,8 +1774,8 @@ type
   //void SSL_CTX_set_client_CA_list(ctx: PSSL_CTX, STACK_OF(X509_NAME) *name_list);
   //__owur STACK_OF(X509_NAME) *SSL_get_client_CA_list(const s: PSSL);
   //__owur STACK_OF(X509_NAME) *SSL_CTX_get_client_CA_list(const SSL_CTX *s);
-  //__owur TIdC_INT SSL_add_client_CA(ssl: PSSL, X509 *x);
-  //__owur TIdC_INT SSL_CTX_add_client_CA(ctx: PSSL_CTX, X509 *x);
+  function SSL_add_client_CA(ssl: PSSL; x: PX509): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_add_client_CA(ctx: PSSL_CTX; x: PX509): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
   procedure SSL_set_connect_state(s: PSSL) cdecl; external 'libssl-1_1.dll';
   procedure SSL_set_accept_state(s: PSSL) cdecl; external 'libssl-1_1.dll';
@@ -1894,28 +1834,18 @@ type
 
   //#define SSL_get_ex_new_index(l, p, newf, dupf, freef) \
   //    CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_SSL, l, p, newf, dupf, freef)
-  //__owur TIdC_INT SSL_set_ex_data(ssl: PSSL, TIdC_INT idx, void *data);
+  function SSL_set_ex_data(ssl: PSSL; idx: TIdC_INT; data: Pointer): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_get_ex_data(const ssl: PSSL; idx: TIdC_INT): Pointer cdecl; external 'libssl-1_1.dll';
   //#define SSL_SESSION_get_ex_new_index(l, p, newf, dupf, freef) \
   //    CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_SSL_SESSION, l, p, newf, dupf, freef)
-  //__owur TIdC_INT SSL_SESSION_set_ex_data(SSL_SESSION *ss, TIdC_INT idx, void *data);
+  function SSL_SESSION_set_ex_data(ss: PSSL_SESSION; idx: TIdC_INT; data: Pointer): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_get_ex_data(const ss: PSSL_SESSION; idx: TIdC_INT): Pointer cdecl; external 'libssl-1_1.dll';
   //#define SSL_CTX_get_ex_new_index(l, p, newf, dupf, freef) \
   //    CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_SSL_CTX, l, p, newf, dupf, freef)
-  //__owur TIdC_INT SSL_CTX_set_ex_data(SSL_CTX *ssl, TIdC_INT idx, void *data);
+  function SSL_CTX_set_ex_data(ssl: PSSL_CTX; idx: TIdC_INT; data: Pointer): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_CTX_get_ex_data(const ssl: PSSL_CTX; idx: TIdC_INT): Pointer cdecl; external 'libssl-1_1.dll';
 
-
   //__owur TIdC_INT SSL_get_ex_data_X509_STORE_CTX_idx(void);
-  //
-  //# define SSL_CTX_sess_set_cache_size(ctx,t) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SESS_CACHE_SIZE,t,NULL)
-  //# define SSL_CTX_sess_get_cache_size(ctx) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_GET_SESS_CACHE_SIZE,0,NULL)
-  //# define SSL_CTX_set_session_cache_mode(ctx,m) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SESS_CACHE_MODE,m,NULL)
-  //# define SSL_CTX_get_session_cache_mode(ctx) \
-  //        SSL_CTX_ctrl(ctx,SSL_CTRL_GET_SESS_CACHE_MODE,0,NULL)
 
   //# define SSL_CTX_get_default_read_ahead(ctx) SSL_CTX_get_read_ahead(ctx)
   //# define SSL_CTX_set_default_read_ahead(ctx,m) SSL_CTX_set_read_ahead(ctx,m)
@@ -2136,5 +2066,468 @@ type
   procedure SSL_set_allow_early_data_cb(s: PSSL; cb: SSL_allow_early_data_cb_fN; arg: Pointer) cdecl; external 'libssl-1_1.dll';
 
 implementation
+
+
+{$REGION 'C compiler macros'}
+
+//# define SSL_CTX_set_mode(ctx,op)      SSL_CTX_ctrl((ctx),SSL_CTRL_MODE,(op),NULL)
+function SSL_CTX_set_mode(ctx: PSSL_CTX; op: TIdC_LONG): TIdC_LONG;
+
+begin
+
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_MODE, op, nil);
+end;
+
+
+//# define SSL_CTX_clear_mode(ctx,op)   SSL_CTX_ctrl((ctx),SSL_CTRL_CLEAR_MODE,(op),NULL)
+function SSL_CTX_clear_mode(ctx: PSSL_CTX; op: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_CLEAR_MODE, op, nil);
+end;
+
+//# define SSL_CTX_sess_set_cache_size(ctx,t)         SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SESS_CACHE_SIZE,t,NULL)
+function SSL_CTX_sess_set_cache_size(ctx: PSSL_CTX; t: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_SESS_CACHE_SIZE, t, nil);
+end;
+
+//# define SSL_CTX_sess_get_cache_size(ctx)           SSL_CTX_ctrl(ctx,SSL_CTRL_GET_SESS_CACHE_SIZE,0,NULL)
+function SSL_CTX_sess_get_cache_size(ctx: PSSL_CTX): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_SESS_CACHE_SIZE, 0, nil);
+end;
+
+//# define SSL_CTX_set_session_cache_mode(ctx,m)      SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SESS_CACHE_MODE,m,NULL)
+function SSL_CTX_set_session_cache_mode(ctx: PSSL_CTX; m: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_SESS_CACHE_MODE, m, nil);
+end;
+
+//# define SSL_CTX_get_session_cache_mode(ctx)        SSL_CTX_ctrl(ctx,SSL_CTRL_GET_SESS_CACHE_MODE,0,NULL)
+function SSL_CTX_get_session_cache_mode(ctx: PSSL_CTX): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_SESS_CACHE_MODE, 0, nil);
+end;
+
+//# define SSL_num_renegotiations(ssl)                       SSL_ctrl((ssl),SSL_CTRL_GET_NUM_RENEGOTIATIONS,0,NULL)
+function SSL_num_renegotiations(ssl: PSSL): TIdC_LONG;
+begin
+  Result := SSL_ctrl(ssl, SSL_CTRL_GET_NUM_RENEGOTIATIONS, 0, nil);
+end;
+
+//# define SSL_clear_num_renegotiations(ssl)                 SSL_ctrl((ssl),SSL_CTRL_CLEAR_NUM_RENEGOTIATIONS,0,NULL)
+function SSL_clear_num_renegotiations(ssl: PSSL): TIdC_LONG;
+begin
+  Result := SSL_ctrl(ssl, SSL_CTRL_CLEAR_NUM_RENEGOTIATIONS, 0, nil);
+end;
+
+//# define SSL_total_renegotiations(ssl)                     SSL_ctrl((ssl),SSL_CTRL_GET_TOTAL_RENEGOTIATIONS,0,NULL)
+function SSL_total_renegotiations(ssl: PSSL): TIdC_LONG;
+begin
+  Result := SSL_ctrl(ssl, SSL_CTRL_GET_TOTAL_RENEGOTIATIONS, 0, nil);
+end;
+
+//# define SSL_CTX_set_tmp_dh(ctx,dh)                        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_DH,0,(char *)(dh))
+function SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TMP_DH, 0, dh);
+end;
+
+//# define SSL_CTX_set_tmp_ecdh(ctx,ecdh)                    SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_ECDH,0,(char *)(ecdh))
+function SSL_CTX_set_tmp_ecdh(ctx: PSSL_CTX; ecdh: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TMP_ECDH, 0, ecdh);
+end;
+
+//# define SSL_CTX_set_dh_auto(ctx, onoff)                   SSL_CTX_ctrl(ctx,SSL_CTRL_SET_DH_AUTO,onoff,NULL)
+function SSL_CTX_set_dh_auto(ctx: PSSL_CTX; onoff: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_DH_AUTO, onoff, nil);
+end;
+
+//# define SSL_set_dh_auto(s, onoff)                         SSL_ctrl(s,SSL_CTRL_SET_DH_AUTO,onoff,NULL)
+function SSL_set_dh_auto(s: PSSL; onoff: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_DH_AUTO, onoff, nil);
+end;
+
+//# define SSL_set_tmp_dh(ssl,dh)                            SSL_ctrl(ssl,SSL_CTRL_SET_TMP_DH,0,(char *)(dh))
+function SSL_set_tmp_dh(ssl: PSSL; dh: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(ssl, SSL_CTRL_SET_TMP_DH, 0, dh);
+end;
+
+//# define SSL_set_tmp_ecdh(ssl,ecdh)                        SSL_ctrl(ssl,SSL_CTRL_SET_TMP_ECDH,0,(char *)(ecdh))
+function SSL_set_tmp_ecdh(ssl: PSSL; ecdh: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(ssl, SSL_CTRL_SET_TMP_ECDH, 0, ecdh);
+end;
+
+//# define SSL_CTX_add_extra_chain_cert(ctx,x509)            SSL_CTX_ctrl(ctx,SSL_CTRL_EXTRA_CHAIN_CERT,0,(char *)(x509))
+function SSL_CTX_add_extra_chain_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_EXTRA_CHAIN_CERT, 0, x509);
+end;
+
+//# define SSL_CTX_get_extra_chain_certs(ctx,px509)          SSL_CTX_ctrl(ctx,SSL_CTRL_GET_EXTRA_CHAIN_CERTS,0,px509)
+function SSL_CTX_get_extra_chain_certs(ctx: PSSL_CTX; px509: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_EXTRA_CHAIN_CERTS, 0, px509);
+end;
+
+//# define SSL_CTX_get_extra_chain_certs_only(ctx,px509)     SSL_CTX_ctrl(ctx,SSL_CTRL_GET_EXTRA_CHAIN_CERTS,1,px509)
+function SSL_CTX_get_extra_chain_certs_only(ctx: PSSL_CTX; px509: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_EXTRA_CHAIN_CERTS, 1, px509);
+end;
+
+//# define SSL_CTX_clear_extra_chain_certs(ctx)              SSL_CTX_ctrl(ctx,SSL_CTRL_CLEAR_EXTRA_CHAIN_CERTS,0,NULL)
+function SSL_CTX_clear_extra_chain_certs(ctx: PSSL_CTX): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_CLEAR_EXTRA_CHAIN_CERTS, 0, nil);
+end;
+
+//# define SSL_CTX_set0_chain(ctx,sk)                        SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN,0,(char *)(sk))
+function SSL_CTX_set0_chain(ctx: PSSL_CTX; sk: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_CHAIN, 0, sk);
+end;
+
+//# define SSL_CTX_set1_chain(ctx,sk)                        SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN,1,(char *)(sk))
+function SSL_CTX_set1_chain(ctx: PSSL_CTX; sk: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_CHAIN, 1, sk);
+end;
+
+//# define SSL_CTX_add0_chain_cert(ctx,x509)                 SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN_CERT,0,(char *)(x509))
+function SSL_CTX_add0_chain_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_CHAIN_CERT, 0, x509);
+end;
+
+//# define SSL_CTX_add1_chain_cert(ctx,x509)                 SSL_CTX_ctrl(ctx,SSL_CTRL_CHAIN_CERT,1,(char *)(x509))
+function SSL_CTX_add1_chain_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_CHAIN_CERT, 1, x509);
+end;
+
+//# define SSL_CTX_get0_chain_certs(ctx,px509)               SSL_CTX_ctrl(ctx,SSL_CTRL_GET_CHAIN_CERTS,0,px509)
+function SSL_CTX_get0_chain_certs(ctx: PSSL_CTX; px509: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_CHAIN_CERTS, 0, px509);
+end;
+
+//# define SSL_CTX_clear_chain_certs(ctx)                    SSL_CTX_set0_chain(ctx,NULL)
+function SSL_CTX_clear_chain_certs(ctx: PSSL_CTX): TIdC_LONG;
+begin
+  Result := SSL_CTX_set0_chain(ctx, nil);
+end;
+
+//# define SSL_CTX_build_cert_chain(ctx, flags)              SSL_CTX_ctrl(ctx,SSL_CTRL_BUILD_CERT_CHAIN, flags, NULL)
+function SSL_CTX_build_cert_chain(ctx: PSSL_CTX; flags: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_BUILD_CERT_CHAIN, flags, nil);
+end;
+
+//# define SSL_CTX_select_current_cert(ctx,x509)             SSL_CTX_ctrl(ctx,SSL_CTRL_SELECT_CURRENT_CERT,0,(char *)(x509))
+function SSL_CTX_select_current_cert(ctx: PSSL_CTX; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SELECT_CURRENT_CERT, 0, x509);
+end;
+
+//# define SSL_CTX_set_current_cert(ctx, op)                 SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CURRENT_CERT, op, NULL)
+function SSL_CTX_set_current_cert(ctx: PSSL_CTX; op: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_CURRENT_CERT, op, nil);
+end;
+
+//# define SSL_CTX_set0_verify_cert_store(ctx,st)            SSL_CTX_ctrl(ctx,SSL_CTRL_SET_VERIFY_CERT_STORE,0,(char *)(st))
+function SSL_CTX_set0_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_VERIFY_CERT_STORE, 0, st);
+end;
+
+//# define SSL_CTX_set1_verify_cert_store(ctx,st)            SSL_CTX_ctrl(ctx,SSL_CTRL_SET_VERIFY_CERT_STORE,1,(char *)(st))
+function SSL_CTX_set1_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_VERIFY_CERT_STORE, 1, st);
+end;
+
+//# define SSL_CTX_set0_chain_cert_store(ctx,st)             SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CHAIN_CERT_STORE,0,(char *)(st))
+function SSL_CTX_set0_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_CHAIN_CERT_STORE, 0, st);
+end;
+
+//# define SSL_CTX_set1_chain_cert_store(ctx,st)             SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CHAIN_CERT_STORE,1,(char *)(st))
+function SSL_CTX_set1_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_CHAIN_CERT_STORE, 1, st);
+end;
+
+//# define SSL_set0_chain(s,sk)                              SSL_ctrl(s,SSL_CTRL_CHAIN,0,(char *)(sk))
+function SSL_set0_chain(s: PSSL; sk: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_CHAIN, 0, sk);
+end;
+
+//# define SSL_set1_chain(s,sk)                              SSL_ctrl(s,SSL_CTRL_CHAIN,1,(char *)(sk))
+function SSL_set1_chain(s: PSSL; sk: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_CHAIN, 1, sk);
+end;
+
+//# define SSL_add0_chain_cert(s,x509)                       SSL_ctrl(s,SSL_CTRL_CHAIN_CERT,0,(char *)(x509))
+function SSL_add0_chain_cert(s: PSSL; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_CHAIN_CERT, 0, x509);
+end;
+
+//# define SSL_add1_chain_cert(s,x509)                       SSL_ctrl(s,SSL_CTRL_CHAIN_CERT,1,(char *)(x509))
+function SSL_add1_chain_cert(s: PSSL; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_CHAIN_CERT, 1, x509);
+end;
+
+//# define SSL_get0_chain_certs(s,px509)                     SSL_ctrl(s,SSL_CTRL_GET_CHAIN_CERTS,0,px509)
+function SSL_get0_chain_certs(s: PSSL; px509: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_CHAIN_CERTS, 0, px509);
+end;
+
+//# define SSL_clear_chain_certs(s)                          SSL_set0_chain(s,NULL)
+function SSL_clear_chain_certs(s: PSSL): TIdC_LONG;
+begin
+  Result := SSL_set0_chain(s, nil);
+end;
+
+//# define SSL_build_cert_chain(s, flags)                    SSL_ctrl(s,SSL_CTRL_BUILD_CERT_CHAIN, flags, NULL)
+function SSL_build_cert_chain(s: PSSL; flags: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_BUILD_CERT_CHAIN, flags, nil);
+end;
+
+//# define SSL_select_current_cert(s,x509)                   SSL_ctrl(s,SSL_CTRL_SELECT_CURRENT_CERT,0,(char *)(x509))
+function SSL_select_current_cert(s: PSSL; x509: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SELECT_CURRENT_CERT, 0, x509);
+end;
+
+//# define SSL_set_current_cert(s,op)                        SSL_ctrl(s,SSL_CTRL_SET_CURRENT_CERT, op, NULL)
+function SSL_set_current_cert(s: PSSL; op: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_CURRENT_CERT, op, nil);
+end;
+
+//# define SSL_set0_verify_cert_store(s,st)                  SSL_ctrl(s,SSL_CTRL_SET_VERIFY_CERT_STORE,0,(char *)(st))
+function SSL_set0_verify_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_VERIFY_CERT_STORE, 0, st);
+end;
+
+//# define SSL_set1_verify_cert_store(s,st)                  SSL_ctrl(s,SSL_CTRL_SET_VERIFY_CERT_STORE,1,(char *)(st))
+function SSL_set1_verify_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_VERIFY_CERT_STORE, 1, st);
+end;
+
+//# define SSL_set0_chain_cert_store(s,st)                   SSL_ctrl(s,SSL_CTRL_SET_CHAIN_CERT_STORE,0,(char *)(st))
+function SSL_set0_chain_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_CHAIN_CERT_STORE, 0, st);
+end;
+
+//# define SSL_set1_chain_cert_store(s,st)                   SSL_ctrl(s,SSL_CTRL_SET_CHAIN_CERT_STORE,1,(char *)(st))
+function SSL_set1_chain_cert_store(s: PSSL; st: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_CHAIN_CERT_STORE, 1, st);
+end;
+
+//# define SSL_get1_groups(s, glist)                         SSL_ctrl(s,SSL_CTRL_GET_GROUPS,0,(TIdC_INT*)(glist))
+function SSL_get1_groups(s: PSSL; glist: PIdC_INT): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_GROUPS, 0, glist);
+end;
+
+//# define SSL_CTX_set1_groups(ctx, glist, glistlen)         SSL_CTX_ctrl(ctx,SSL_CTRL_SET_GROUPS,glistlen,(char *)(glist))
+function SSL_CTX_set1_groups(ctx: PSSL_CTX; glist: PByte; glistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_GROUPS, glistlen, glist);
+end;
+
+//# define SSL_CTX_set1_groups_list(ctx, s)                  SSL_CTX_ctrl(ctx,SSL_CTRL_SET_GROUPS_LIST,0,(char *)(s))
+function SSL_CTX_set1_groups_list(ctx: PSSL_CTX; s: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_GROUPS_LIST, 0, s);
+end;
+
+//# define SSL_set1_groups(s, glist, glistlen)               SSL_ctrl(s,SSL_CTRL_SET_GROUPS,glistlen,(char *)(glist))
+function SSL_set1_groups(s: PSSL; glist: PByte; glistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_GROUPS, glistlen, glist);
+end;
+
+//# define SSL_set1_groups_list(s, str)                      SSL_ctrl(s,SSL_CTRL_SET_GROUPS_LIST,0,(char *)(str))
+function SSL_set1_groups_list(s: PSSL; str: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_GROUPS_LIST, 0, str);
+end;
+
+//# define SSL_get_shared_group(s, n)                        SSL_ctrl(s,SSL_CTRL_GET_SHARED_GROUP,n,NULL)
+function SSL_get_shared_group(s: PSSL; n: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_SHARED_GROUP, n, nil);
+end;
+
+//# define SSL_CTX_set1_sigalgs(ctx, slist, slistlen)        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SIGALGS,slistlen,(TIdC_INT *)(slist))
+function SSL_CTX_set1_sigalgs(ctx: PSSL_CTX; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_SIGALGS, slistlen, slist);
+end;
+
+//# define SSL_CTX_set1_sigalgs_list(ctx, s)                 SSL_CTX_ctrl(ctx,SSL_CTRL_SET_SIGALGS_LIST,0,(char *)(s))
+function SSL_CTX_set1_sigalgs_list(ctx: PSSL_CTX; s: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_SIGALGS_LIST, 0, s);
+end;
+
+//# define SSL_set1_sigalgs(s, slist, slistlen)              SSL_ctrl(s,SSL_CTRL_SET_SIGALGS,slistlen,(TIdC_INT *)(slist))
+function SSL_set1_sigalgs(s: PSSL; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_SIGALGS, slistlen, slist);
+end;
+
+//# define SSL_set1_sigalgs_list(s, str)                     SSL_ctrl(s,SSL_CTRL_SET_SIGALGS_LIST,0,(char *)(str))
+function SSL_set1_sigalgs_list(s: PSSL; str: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_SIGALGS_LIST, 0, str);
+end;
+
+//# define SSL_CTX_set1_client_sigalgs(ctx, slist, slistlen) SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CLIENT_SIGALGS,slistlen,(TIdC_INT *)(slist))
+function SSL_CTX_set1_client_sigalgs(ctx: PSSL_CTX; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_CLIENT_SIGALGS, slistlen, slist);
+end;
+
+//# define SSL_CTX_set1_client_sigalgs_list(ctx, s)          SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CLIENT_SIGALGS_LIST,0,(char *)(s))
+function SSL_CTX_set1_client_sigalgs_list(ctx: PSSL_CTX; s: PByte): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_CLIENT_SIGALGS_LIST, 0, s);
+end;
+
+//# define SSL_set1_client_sigalgs(s, slist, slistlen)       SSL_ctrl(s,SSL_CTRL_SET_CLIENT_SIGALGS,slistlen,(TIdC_INT *)(slist))
+function SSL_set1_client_sigalgs(s: PSSL; slist: PIdC_INT; slistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_CLIENT_SIGALGS, slistlen, slist);
+end;
+
+//# define SSL_set1_client_sigalgs_list(s, str)              SSL_ctrl(s,SSL_CTRL_SET_CLIENT_SIGALGS_LIST,0,(char *)(str))
+function SSL_set1_client_sigalgs_list(s: PSSL; str: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_CLIENT_SIGALGS_LIST, 0, str);
+end;
+
+//# define SSL_get0_certificate_types(s, clist)              SSL_ctrl(s, SSL_CTRL_GET_CLIENT_CERT_TYPES, 0, (char *)(clist))
+function SSL_get0_certificate_types(s: PSSL; clist: PByte): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_CLIENT_CERT_TYPES, 0, clist);
+end;
+
+//# define SSL_CTX_set1_client_certificate_types(ctx, clist, clistlen)   SSL_CTX_ctrl(ctx,SSL_CTRL_SET_CLIENT_CERT_TYPES,clistlen, (char *)(clist))
+function SSL_CTX_set1_client_certificate_types(ctx: PSSL_CTX; clist: PByte; clistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_CLIENT_CERT_TYPES, clistlen, clist);
+end;
+
+//# define SSL_set1_client_certificate_types(s, clist, clistlen)         SSL_ctrl(s,SSL_CTRL_SET_CLIENT_CERT_TYPES,clistlen,(char *)(clist))
+function SSL_set1_client_certificate_types(s: PSSL; clist: PByte; clistlen: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_CLIENT_CERT_TYPES, clistlen, clist);
+end;
+
+//# define SSL_get_signature_nid(s, pn)                      SSL_ctrl(s,SSL_CTRL_GET_SIGNATURE_NID,0,pn)
+function SSL_get_signature_nid(s: PSSL; pn: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_SIGNATURE_NID, 0, pn);
+end;
+
+//# define SSL_get_peer_signature_nid(s, pn)                 SSL_ctrl(s,SSL_CTRL_GET_PEER_SIGNATURE_NID,0,pn)
+function SSL_get_peer_signature_nid(s: PSSL; pn: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_PEER_SIGNATURE_NID, 0, pn);
+end;
+
+//# define SSL_get_peer_tmp_key(s, pk)                       SSL_ctrl(s,SSL_CTRL_GET_PEER_TMP_KEY,0,pk)
+function SSL_get_peer_tmp_key(s: PSSL; pk: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_PEER_TMP_KEY, 0, pk);
+end;
+
+//# define SSL_get_tmp_key(s, pk)                            SSL_ctrl(s,SSL_CTRL_GET_TMP_KEY,0,pk)
+function SSL_get_tmp_key(s: PSSL; pk: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_TMP_KEY, 0, pk);
+end;
+
+//# define SSL_get0_raw_cipherlist(s, plst)                  SSL_ctrl(s,SSL_CTRL_GET_RAW_CIPHERLIST,0,plst)
+function SSL_get0_raw_cipherlist(s: PSSL; plst: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_RAW_CIPHERLIST, 0, plst);
+end;
+
+//# define SSL_get0_ec_point_formats(s, plst)                SSL_ctrl(s,SSL_CTRL_GET_EC_POINT_FORMATS,0,plst)
+function SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_EC_POINT_FORMATS, 0, plst);
+end;
+
+//# define SSL_CTX_set_min_proto_version(ctx, version)       SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MIN_PROTO_VERSION, version, NULL)
+function SSL_CTX_set_min_proto_version(ctx: PSSL_CTX; version: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MIN_PROTO_VERSION, version, nil);
+end;
+
+//# define SSL_CTX_set_max_proto_version(ctx, version)       SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MAX_PROTO_VERSION, version, NULL)
+function SSL_CTX_set_max_proto_version(ctx: PSSL_CTX; version: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MAX_PROTO_VERSION, version, nil);
+end;
+
+//# define SSL_CTX_get_min_proto_version(ctx)                SSL_CTX_ctrl(ctx, SSL_CTRL_GET_MIN_PROTO_VERSION, 0, NULL)
+function SSL_CTX_get_min_proto_version(ctx: PSSL_CTX): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_MIN_PROTO_VERSION, 0, nil);
+end;
+
+//# define SSL_CTX_get_max_proto_version(ctx)                SSL_CTX_ctrl(ctx, SSL_CTRL_GET_MAX_PROTO_VERSION, 0, NULL)
+function SSL_CTX_get_max_proto_version(ctx: PSSL_CTX): TIdC_LONG;
+begin
+  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_GET_MAX_PROTO_VERSION, 0, nil);
+end;
+
+//# define SSL_set_min_proto_version(s, version)             SSL_ctrl(s, SSL_CTRL_SET_MIN_PROTO_VERSION, version, NULL)
+function SSL_set_min_proto_version(s: PSSL; version: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_MIN_PROTO_VERSION, version, nil);
+end;
+
+//# define SSL_set_max_proto_version(s, version)             SSL_ctrl(s, SSL_CTRL_SET_MAX_PROTO_VERSION, version, NULL)
+function SSL_set_max_proto_version(s: PSSL; version: TIdC_LONG): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_MAX_PROTO_VERSION, version, nil);
+end;
+
+//# define SSL_get_min_proto_version(s)                      SSL_ctrl(s, SSL_CTRL_GET_MIN_PROTO_VERSION, 0, NULL)
+function SSL_get_min_proto_version(s: PSSL): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_MIN_PROTO_VERSION, 0, nil);
+end;
+
+//# define SSL_get_max_proto_version(s)                      SSL_ctrl(s, SSL_CTRL_GET_MAX_PROTO_VERSION, 0, NULL)
+function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_GET_MAX_PROTO_VERSION, 0, nil);
+end;
+{$ENDREGION}
 
 end.

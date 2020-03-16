@@ -4,7 +4,7 @@ unit IdOpenSSLHeaders_x509;
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 16.03.2020 14:04:24
 
 interface
 
@@ -453,6 +453,8 @@ var
   i2d_PUBKEY_bio: function(bp: PBIO; pkey: PEVP_PKEY): TIdC_INT cdecl = nil;
   d2i_PUBKEY_bio: function(bp: PBIO; a: PPEVP_PKEY): PEVP_PKEY cdecl = nil;
 
+  X509_new: function: PX509 cdecl = nil;
+  X509_free: procedure(v1: PX509) cdecl = nil;
   X509_dup: function(x509: PX509): PX509 cdecl = nil;
   X509_ATTRIBUTE_dup: function(xa: PX509_ATTRIBUTE): PX509_ATTRIBUTE cdecl = nil;
   X509_EXTENSION_dup: function(ex: PX509_EXTENSION): PX509_EXTENSION cdecl = nil;
@@ -987,6 +989,8 @@ begin
     d2i_PrivateKey_bio := LoadFunction('d2i_PrivateKey_bio', LFailed);
     i2d_PUBKEY_bio := LoadFunction('i2d_PUBKEY_bio', LFailed);
     d2i_PUBKEY_bio := LoadFunction('d2i_PUBKEY_bio', LFailed);
+    X509_new := LoadFunction('X509_new', LFailed);
+    X509_free := LoadFunction('X509_free', LFailed);
     X509_dup := LoadFunction('X509_dup', LFailed);
     X509_ATTRIBUTE_dup := LoadFunction('X509_ATTRIBUTE_dup', LFailed);
     X509_EXTENSION_dup := LoadFunction('X509_EXTENSION_dup', LFailed);
@@ -1309,6 +1313,8 @@ begin
   d2i_PrivateKey_bio := nil;
   i2d_PUBKEY_bio := nil;
   d2i_PUBKEY_bio := nil;
+  X509_new := nil;
+  X509_free := nil;
   X509_dup := nil;
   X509_ATTRIBUTE_dup := nil;
   X509_EXTENSION_dup := nil;

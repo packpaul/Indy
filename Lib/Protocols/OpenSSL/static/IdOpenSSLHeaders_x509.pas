@@ -4,7 +4,7 @@ unit IdOpenSSLHeaders_x509;
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:53
+// Generation date: 16.03.2020 14:04:26
 
 interface
 
@@ -447,6 +447,8 @@ type
   function i2d_PUBKEY_bio(bp: PBIO; pkey: PEVP_PKEY): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function d2i_PUBKEY_bio(bp: PBIO; a: PPEVP_PKEY): PEVP_PKEY cdecl; external 'libcrypto-1_1.dll';
 
+  function X509_new: PX509 cdecl; external 'libcrypto-1_1.dll';
+  procedure X509_free(v1: PX509) cdecl; external 'libcrypto-1_1.dll';
   function X509_dup(x509: PX509): PX509 cdecl; external 'libcrypto-1_1.dll';
   function X509_ATTRIBUTE_dup(xa: PX509_ATTRIBUTE): PX509_ATTRIBUTE cdecl; external 'libcrypto-1_1.dll';
   function X509_EXTENSION_dup(ex: PX509_EXTENSION): PX509_EXTENSION cdecl; external 'libcrypto-1_1.dll';

@@ -4,7 +4,7 @@ unit IdOpenSSLHeaders_tls1;
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:53
+// Generation date: 16.03.2020 14:04:26
 
 interface
 
@@ -1071,6 +1071,10 @@ type
     data: Pointer;
   end;
 
+{$REGION 'C compiler macros'}
+function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
+{$ENDREGION}
+
   function SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTx; mode: TIdC_UINT8): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: TIdC_UINT8): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
@@ -1101,10 +1105,6 @@ type
 
   //__owur TIdC_INT SSL_check_chain(s: PSSL, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain);
 
-  //# define SSL_set_tlsext_host_name(s,name) \
-  //        SSL_ctrl(s,SSL_CTRL_SET_TLSEXT_HOSTNAME,TLSEXT_NAMETYPE_host_name,\
-  //                (void *)name)
-  //
   //# define SSL_set_tlsext_debug_callback(ssl, cb) \
   //        SSL_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_DEBUG_CB,\
   //                (void (*)(void))cb)
@@ -1169,33 +1169,19 @@ type
   //        SSL_CTX_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_TICKET_KEY_CB,\
   //                (void (*)(void))cb)
 
-  //# ifndef OPENSSL_NO_HEARTBEATS
-
-  //#  define SSL_get_dtlsext_heartbeat_pending(ssl) \
-  //        SSL_ctrl(ssl,SSL_CTRL_GET_DTLS_EXT_HEARTBEAT_PENDING,0,NULL)
-  //#  define SSL_set_dtlsext_heartbeat_no_requests(ssl, arg) \
-  //        SSL_ctrl(ssl,SSL_CTRL_SET_DTLS_EXT_HEARTBEAT_NO_REQUESTS,arg,NULL)
-
-  //#  if OPENSSL_API_COMPAT < 0x10100000L
-  //#   define SSL_CTRL_TLS_EXT_SEND_HEARTBEAT \
-  //        SSL_CTRL_DTLS_EXT_SEND_HEARTBEAT
-  //#   define SSL_CTRL_GET_TLS_EXT_HEARTBEAT_PENDING \
-  //        SSL_CTRL_GET_DTLS_EXT_HEARTBEAT_PENDING
-  //#   define SSL_CTRL_SET_TLS_EXT_HEARTBEAT_NO_REQUESTS \
-  //        SSL_CTRL_SET_DTLS_EXT_HEARTBEAT_NO_REQUESTS
-  //#   define SSL_TLSEXT_HB_ENABLED \
-  //        SSL_DTLSEXT_HB_ENABLED
-  //#   define SSL_TLSEXT_HB_DONT_SEND_REQUESTS \
-  //        SSL_DTLSEXT_HB_DONT_SEND_REQUESTS
-  //#   define SSL_TLSEXT_HB_DONT_RECV_REQUESTS \
-  //        SSL_DTLSEXT_HB_DONT_RECV_REQUESTS
-  //#   define SSL_get_tlsext_heartbeat_pending(ssl) \
-  //        SSL_get_dtlsext_heartbeat_pending(ssl)
-  //#   define SSL_set_tlsext_heartbeat_no_requests(ssl, arg) \
-  //        SSL_set_dtlsext_heartbeat_no_requests(ssl,arg)
-  //#  endif
-  //# endif
-
 implementation
+
+
+uses
+  IdOpenSSLHeaders_ssl;
+
+
+{$REGION 'C compiler macros'}
+//# define SSL_set_tlsext_host_name(s,name)         SSL_ctrl(s,SSL_CTRL_SET_TLSEXT_HOSTNAME,TLSEXT_NAMETYPE_host_name, (void *)name)
+function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
+begin
+  Result := SSL_ctrl(s, SSL_CTRL_SET_TLSEXT_HOSTNAME, TLSEXT_NAMETYPE_host_name, Pointer(name));
+end;
+{$ENDREGION}
 
 end.

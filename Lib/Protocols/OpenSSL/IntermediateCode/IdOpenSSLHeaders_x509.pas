@@ -442,6 +442,8 @@ var
   function i2d_PUBKEY_bio(bp: PBIO; pkey: PEVP_PKEY): TIdC_INT;
   function d2i_PUBKEY_bio(bp: PBIO; a: PPEVP_PKEY): PEVP_PKEY;
 
+  function X509_new: PX509;
+  procedure X509_free(v1: PX509);
   function X509_dup(x509: PX509): PX509;
   function X509_ATTRIBUTE_dup(xa: PX509_ATTRIBUTE): PX509_ATTRIBUTE;
   function X509_EXTENSION_dup(ex: PX509_EXTENSION): PX509_EXTENSION;

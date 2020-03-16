@@ -11,6 +11,7 @@ uses
   IdCTypes,
   IdGlobal,
   IdOpenSSLHeaders_ossl_typ,
+  IdOpenSSLHeaders_pkcs7,
   IdOpenSSLHeaders_x509;
   
 type
@@ -82,31 +83,31 @@ var
   procedure PEM_proc_type(buf: PIdAnsiChar; &type: TIdC_INT);
   procedure PEM_dek_info(buf: PIdAnsiChar; const &type: PIdAnsiChar; len: TIdC_INT; str: PIdAnsiChar);
 
-//  function PEM_read_bio_X509(bp: PBIO; x: PPX509; cb: pem_password_cb; u: Pointer): PX509;
-//  function PEM_write_bio_X509(bp: PBIO; x: PX509): TIdC_INT;
-//
-//  function PEM_read_bio_X509_AUX(bp: PBIO; x: PPX509; cb: pem_password_cb; u: Pointer): PX509;
-//  function PEM_write_bio_X509_AUX(bp: PBIO; x: PX509): TIdC_INT;
-//
-//  function PEM_read_bio_X509_REQ(bp: PBIO; x: PPX509_REQ; cb: pem_password_cb; u: Pointer): PX509_REQ;
-//  function PEM_write_bio_X509_REQ(bp: PBIO; x: PX509_REQ): TIdC_INT;
-//
-//  function PEM_write_bio_X509_REQ_NEW(bp: PBIO; x: PX509_REQ): TIdC_INT;
-//
-//  function PEM_read_bio_X509_CRL(bp: PBIO; x: PPX509_CRL; cb: pem_password_cb; u: Pointer): PX509_CRL;
-//  function PEM_write_bio_X509_CRL(bp: PBIO; x: PX509_CRL): TIdC_INT;
-//
-//  function PEM_read_bio_PKCS7(bp: PBIO; x: PPPKCS7; cb: pem_password_cb; u: Pointer): PPKCS7;
-//  function PEM_write_bio_PKCS7(bp: PBIO; x: PPKCS7): TIdC_INT;
-//
+  function PEM_read_bio_X509(bp: PBIO; x: PPX509; cb: pem_password_cb; u: Pointer): PX509;
+  function PEM_write_bio_X509(bp: PBIO; x: PX509): TIdC_INT;
+
+  function PEM_read_bio_X509_AUX(bp: PBIO; x: PPX509; cb: pem_password_cb; u: Pointer): PX509;
+  function PEM_write_bio_X509_AUX(bp: PBIO; x: PX509): TIdC_INT;
+
+  function PEM_read_bio_X509_REQ(bp: PBIO; x: PPX509_REQ; cb: pem_password_cb; u: Pointer): PX509_REQ;
+  function PEM_write_bio_X509_REQ(bp: PBIO; x: PX509_REQ): TIdC_INT;
+
+  function PEM_write_bio_X509_REQ_NEW(bp: PBIO; x: PX509_REQ): TIdC_INT;
+
+  function PEM_read_bio_X509_CRL(bp: PBIO; x: PPX509_CRL; cb: pem_password_cb; u: Pointer): PX509_CRL;
+  function PEM_write_bio_X509_CRL(bp: PBIO; x: PX509_CRL): TIdC_INT;
+
+  function PEM_read_bio_PKCS7(bp: PBIO; x: PPPKCS7; cb: pem_password_cb; u: Pointer): PPKCS7;
+  function PEM_write_bio_PKCS7(bp: PBIO; x: PPKCS7): TIdC_INT;
+
 //  function PEM_read_bio_NETSCAPE_CERT_SEQUENCE(bp: PBIO; x: PPNETSCAPE_CERT_SEQUENCE; cb: pem_password_cb; u: Pointer): PNETSCAPE_CERT_SEQUENCE;
 //  function PEM_write_bio_NETSCAPE_CERT_SEQUENCE(bp: PBIO; x: PNETSCAPE_CERT_SEQUENCE): TIdC_INT;
-//
-//  function PEM_read_bio_PKCS8(bp: PBIO; x: PPX509_SIG; cb: pem_password_cb; u: Pointer): PX509_SIG;
-//  function PEM_write_bio_PKCS8(bp: PBIO; x: PX509_SIG): TIdC_INT;
-//
-//  function PEM_read_bio_PKCS8_PRIV_KEY_INFO(bp: PBIO; x: PPPKCS8_PRIV_KEY_INFO; cb: pem_password_cb; u: Pointer): PPKCS8_PRIV_KEY_INFO;
-//  function PEM_write_bio_PKCS8_PRIV_KEY_INFO(bp: PBIO; x: PPKCS8_PRIV_KEY_INFO): TIdC_INT;
+
+  function PEM_read_bio_PKCS8(bp: PBIO; x: PPX509_SIG; cb: pem_password_cb; u: Pointer): PX509_SIG;
+  function PEM_write_bio_PKCS8(bp: PBIO; x: PX509_SIG): TIdC_INT;
+
+  function PEM_read_bio_PKCS8_PRIV_KEY_INFO(bp: PBIO; x: PPPKCS8_PRIV_KEY_INFO; cb: pem_password_cb; u: Pointer): PPKCS8_PRIV_KEY_INFO;
+  function PEM_write_bio_PKCS8_PRIV_KEY_INFO(bp: PBIO; x: PPKCS8_PRIV_KEY_INFO): TIdC_INT;
 //
 //  // RSA
 //  function PEM_read_bio_RSAPrivateKey(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA;

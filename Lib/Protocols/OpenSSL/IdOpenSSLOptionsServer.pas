@@ -1,0 +1,82 @@
+unit IdOpenSSLOptionsServer;
+
+interface
+
+uses
+  Classes,
+  IdOpenSSLOptions;
+
+type
+  TIdOpenSSLOptionsServer = class(TIdOpenSSLOptionsBase)
+  private
+    FRequestCertificate: Boolean;
+    FFailIfNoPeerCertificate: Boolean;
+    FRequestCertificateOnlyOnce: Boolean;
+  public
+    procedure AssignTo(Dest: TPersistent); override;
+    function Equals(Obj: TObject): Boolean; override;
+  published
+    /// <summary>
+    ///   The server sends a client certificate request to the client. The
+    ///   certificate returned (if any) is checked. If the verification process
+    ///   fails, the TLS/SSL handshake is immediately terminated with an alert
+    ///   message containing the reason for the verification failure.
+    /// </summary>
+    property RequestCertificate: Boolean read FRequestCertificate write FRequestCertificate default False;
+
+    /// <summary>
+    ///   If the client did not return a certificate, the TLS/SSL handshake is
+    ///   immediately terminated with a "handshake failure" alert.
+    /// </summary>
+    /// <remarks>
+    ///   Will be ignored if <see cref="RequestCertificate"/> is False.
+    /// </remarks>
+    property FailIfNoPeerCertificate: Boolean read FFailIfNoPeerCertificate write FFailIfNoPeerCertificate default False;
+
+    /// <summary>
+    ///   Only request a client certificate once during the connection. Do not
+    ///   ask for a client certificate again during renegotiation or
+    ///   post-authentication if a certificate was requested during the initial
+    ///   handshake.
+    /// </summary>
+    /// <remarks>
+    ///   Will be ignored if <see cref="RequestCertificate"/> is False.
+    /// </remarks>
+    property RequestCertificateOnlyOnce: Boolean read FRequestCertificateOnlyOnce write FRequestCertificateOnlyOnce default False;
+  end;
+
+  TIdOpenSSLOptionsServerClass = class of TIdOpenSSLOptionsServer;
+
+implementation
+
+{ TIdOpenSSLOptionsServer }
+
+procedure TIdOpenSSLOptionsServer.AssignTo(Dest: TPersistent);
+var
+  LDest: TIdOpenSSLOptionsServer;
+begin
+  inherited;
+  if Dest is TIdOpenSSLOptionsServer then
+  begin
+    LDest := TIdOpenSSLOptionsServer(Dest);
+    LDest.FRequestCertificate := FRequestCertificate;
+    LDest.FFailIfNoPeerCertificate := FFailIfNoPeerCertificate;
+    LDest.FRequestCertificateOnlyOnce := FRequestCertificateOnlyOnce;
+  end;
+end;
+
+function TIdOpenSSLOptionsServer.Equals(Obj: TObject): Boolean;
+var
+  LObj: TIdOpenSSLOptionsServer;
+begin
+  Result := inherited;
+  if Result and (Obj is TIdOpenSSLOptionsServer) then
+  begin
+    LObj := TIdOpenSSLOptionsServer(Obj);
+    Result := (FRequestCertificate = LObj.FRequestCertificate)
+      and (FFailIfNoPeerCertificate = LObj.FFailIfNoPeerCertificate)
+      and (FRequestCertificateOnlyOnce = LObj.FRequestCertificateOnlyOnce);
+  end;
+end;
+
+end.
