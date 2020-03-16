@@ -18,10 +18,10 @@ type
     FSessionIdCtxFallback: Integer;
     procedure SetSessionContext(
       const AContext: PSSL_CTX;
-      const ACAFile: string);
+      const ACAFile: UTF8String);
     procedure SetClientCA(
       const AContext: PSSL_CTX;
-      const ACAFile: string);
+      const ACAFile: UTF8String);
   protected
     function GetVerifyMode(const AOptions: TIdOpenSSLOptionsBase): TIdC_INT; override;
   public
@@ -68,13 +68,13 @@ function TIdOpenSSLContextServer.Init(
   const AOptions: TIdOpenSSLOptionsServer): Boolean;
 begin
   Result := inherited Init(AOptions);
-  SetSessionContext(OpenSSLContext, AOptions.VerifyCertificate);
+  SetSessionContext(OpenSSLContext, UTF8String(AOptions.VerifyCertificate));
   if AOptions.RequestCertificate then
-    SetClientCA(OpenSSLContext, AOptions.VerifyCertificate);
+    SetClientCA(OpenSSLContext, UTF8String(AOptions.VerifyCertificate));
 end;
 
 procedure TIdOpenSSLContextServer.SetClientCA(const AContext: PSSL_CTX;
-  const ACAFile: string);
+  const ACAFile: UTF8String);
 var
   LBio: PBIO;
   LX509: PX509;
@@ -99,7 +99,7 @@ end;
 
 procedure TIdOpenSSLContextServer.SetSessionContext(
   const AContext: PSSL_CTX;
-  const ACAFile: string);
+  const ACAFile: UTF8String);
 var
   LBio: PBIO;
   LX509: PX509;

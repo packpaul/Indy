@@ -29,16 +29,16 @@ type
       const AMaxVersion: TIdOpenSSLVersion);
     procedure SetVerifyLocations(
       const AContext: PSSL_CTX;
-      const AVerifyCertificate: string;
-      const AVerifyCertDirectory: string);
+      const AVerifyCertificate: UTF8String;
+      const AVerifyCertDirectory: UTF8String);
     procedure SetCertificate(
       const AContext: PSSL_CTX;
-      const ACertificateFile: string;
-      const APrivateKeyFile: string);
+      const ACertificateFile: UTF8String;
+      const APrivateKeyFile: UTF8String);
     procedure SetCiphers(
       const AContext: PSSL_CTX;
-      const ACipherList: string;
-      const ACipherSuites: string;
+      const ACipherList: UTF8String;
+      const ACipherSuites: UTF8String;
       const AUseServerCipherPreferences: Boolean);
     procedure SetKeylogCallback(
       const AContext: PSSL_CTX;
@@ -208,12 +208,12 @@ begin
 
   InitContextWithStaticValues(FContext);
 
-  SetCertificate(FContext, FOptions.CertFile, FOptions.CertKey);
+  SetCertificate(FContext, UTF8String(FOptions.CertFile), UTF8String(FOptions.CertKey));
   SetTLSVersions(FContext, FOptions.MinimumTLSVersion, FOptions.MaximumTLSVersion);
-  SetVerifyLocations(FContext, FOptions.VerifyCertificate, FOptions.VerifyCertDirectory);
+  SetVerifyLocations(FContext, UTF8String(FOptions.VerifyCertificate), UTF8String(FOptions.VerifyCertDirectory));
   SSL_CTX_set_verify(FContext, GetVerifyMode(FOptions), VerifyCallback);
 //  SSL_CTX_set_verify(FContext, GetVerifyMode(FOptions), nil);
-  SetCiphers(FContext, FOptions.CipherList, FOptions.CipherSuites, FOptions.UseServerCipherPreferences);
+  SetCiphers(FContext, UTF8String(FOptions.CipherList), UTF8String(FOptions.CipherSuites), FOptions.UseServerCipherPreferences);
   SetKeylogCallback(FContext, FOptions.OnKeyLogging);
   SetLegacyOptions(FContext, FOptions.AllowUnsafeLegacyRenegotiation, FOptions.UseLegacyServerConnect);
 end;
@@ -234,7 +234,7 @@ begin
 end;
 
 procedure TIdOpenSSLContext.SetCertificate(const AContext: PSSL_CTX;
-  const ACertificateFile, APrivateKeyFile: string);
+  const ACertificateFile, APrivateKeyFile: UTF8String);
 begin
   if (ACertificateFile = '') and (APrivateKeyFile = '') then
     Exit;
@@ -254,8 +254,8 @@ end;
 
 procedure TIdOpenSSLContext.SetCiphers(
   const AContext: PSSL_CTX;
-  const ACipherList: string;
-  const ACipherSuites: string;
+  const ACipherList: UTF8String;
+  const ACipherSuites: UTF8String;
   const AUseServerCipherPreferences: Boolean);
 begin
   if ACipherList <> '' then
@@ -325,7 +325,7 @@ begin
 end;
 
 procedure TIdOpenSSLContext.SetVerifyLocations(const AContext: PSSL_CTX;
-  const AVerifyCertificate, AVerifyCertDirectory: string);
+  const AVerifyCertificate, AVerifyCertDirectory: UTF8String);
 var
   LCert: PIdAnsiChar;
   LDir: PIdAnsiChar;
