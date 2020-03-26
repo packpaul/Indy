@@ -8,11 +8,17 @@ uses
 
 type
   TIdOpenSSLOptionsServer = class(TIdOpenSSLOptionsBase)
+  strict private const
+    CDefaultRequestCertificate = False;
+    CDefaultFailIfNoPeerCertificate = False;
+    CDefaultRequestCertificateOnlyOnce = False;
   private
     FRequestCertificate: Boolean;
     FFailIfNoPeerCertificate: Boolean;
     FRequestCertificateOnlyOnce: Boolean;
   public
+    constructor Create; override;
+
     procedure AssignTo(Dest: TPersistent); override;
     function Equals(Obj: TObject): Boolean; override;
   published
@@ -22,7 +28,7 @@ type
     ///   fails, the TLS/SSL handshake is immediately terminated with an alert
     ///   message containing the reason for the verification failure.
     /// </summary>
-    property RequestCertificate: Boolean read FRequestCertificate write FRequestCertificate default False;
+    property RequestCertificate: Boolean read FRequestCertificate write FRequestCertificate default CDefaultRequestCertificate;
 
     /// <summary>
     ///   If the client did not return a certificate, the TLS/SSL handshake is
@@ -31,7 +37,7 @@ type
     /// <remarks>
     ///   Will be ignored if <see cref="RequestCertificate"/> is False.
     /// </remarks>
-    property FailIfNoPeerCertificate: Boolean read FFailIfNoPeerCertificate write FFailIfNoPeerCertificate default False;
+    property FailIfNoPeerCertificate: Boolean read FFailIfNoPeerCertificate write FFailIfNoPeerCertificate default CDefaultFailIfNoPeerCertificate;
 
     /// <summary>
     ///   Only request a client certificate once during the connection. Do not
@@ -42,7 +48,7 @@ type
     /// <remarks>
     ///   Will be ignored if <see cref="RequestCertificate"/> is False.
     /// </remarks>
-    property RequestCertificateOnlyOnce: Boolean read FRequestCertificateOnlyOnce write FRequestCertificateOnlyOnce default False;
+    property RequestCertificateOnlyOnce: Boolean read FRequestCertificateOnlyOnce write FRequestCertificateOnlyOnce default CDefaultRequestCertificateOnlyOnce;
   end;
 
   TIdOpenSSLOptionsServerClass = class of TIdOpenSSLOptionsServer;
@@ -63,6 +69,14 @@ begin
     LDest.FFailIfNoPeerCertificate := FFailIfNoPeerCertificate;
     LDest.FRequestCertificateOnlyOnce := FRequestCertificateOnlyOnce;
   end;
+end;
+
+constructor TIdOpenSSLOptionsServer.Create;
+begin
+  inherited;
+  FRequestCertificate := CDefaultRequestCertificate;
+  FFailIfNoPeerCertificate := CDefaultFailIfNoPeerCertificate;
+  FRequestCertificateOnlyOnce := CDefaultRequestCertificateOnlyOnce;
 end;
 
 function TIdOpenSSLOptionsServer.Equals(Obj: TObject): Boolean;

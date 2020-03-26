@@ -8,9 +8,13 @@ uses
 
 type
   TIdOpenSSLOptionsClient = class(TIdOpenSSLOptionsBase)
+  strict private const
+    CDefaultVerifyServerCertificate = True;
   private
     FVerifyServerCertificate: Boolean;
   public
+    constructor Create; override;
+
     procedure AssignTo(Dest: TPersistent); override;
     function Equals(Obj: TObject): Boolean; override;
   published
@@ -23,7 +27,7 @@ type
     ///   the verification failure. If no server certificate is sent, because an
     ///   anonymous cipher is used, this option is ignored.
     /// </remarks>
-    property VerifyServerCertificate: Boolean read FVerifyServerCertificate write FVerifyServerCertificate default True;
+    property VerifyServerCertificate: Boolean read FVerifyServerCertificate write FVerifyServerCertificate default CDefaultVerifyServerCertificate;
   end;
 
   TIdOpenSSLOptionsClientClass = class of TIdOpenSSLOptionsClient;
@@ -37,6 +41,12 @@ begin
   inherited;
   if Dest is TIdOpenSSLOptionsClient then
     TIdOpenSSLOptionsClient(Dest).FVerifyServerCertificate := FVerifyServerCertificate;
+end;
+
+constructor TIdOpenSSLOptionsClient.Create;
+begin
+  inherited;
+  FVerifyServerCertificate := CDefaultVerifyServerCertificate;
 end;
 
 function TIdOpenSSLOptionsClient.Equals(Obj: TObject): Boolean;
