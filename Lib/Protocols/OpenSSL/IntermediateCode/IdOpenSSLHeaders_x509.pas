@@ -153,6 +153,8 @@ type
     notAfter: PASN1_TIME;
   end;
   X509_VAL = X509_val_st;
+  PX509_VAL = ^X509_VAL;
+  PPX509_VAL = ^PX509_VAL;
 
   X509_SIG = type Pointer; // X509_sig_st
   PX509_SIG = ^X509_SIG;
@@ -184,6 +186,8 @@ type
   //DEFINE_STACK_OF(X509_ATTRIBUTE)
 
   X509_REQ_INFO = type Pointer; // X509_req_info_st
+  PX509_REQ_INFO = ^X509_REQ_INFO;
+  PPX509_REQ_INFO = ^PX509_REQ_INFO;
 
   X509_REQ = type Pointer; // X509_req_st
   PX509_REQ = ^X509_REQ;
@@ -217,6 +221,8 @@ type
   PPX509_REVOKED = ^PX509_REVOKED;/////////////////////////////////////////////
 
   X509_CRL_INFO = type Pointer; // X509_crl_info_st
+  PX509_CRL_INFO = ^X509_CRL_INFO;
+  PPX509_CRL_INFO = ^PX509_CRL_INFO;
 
   //DEFINE_STACK_OF(X509_CRL)
 
@@ -442,8 +448,6 @@ var
   function i2d_PUBKEY_bio(bp: PBIO; pkey: PEVP_PKEY): TIdC_INT;
   function d2i_PUBKEY_bio(bp: PBIO; a: PPEVP_PKEY): PEVP_PKEY;
 
-  function X509_new: PX509;
-  procedure X509_free(v1: PX509);
   function X509_dup(x509: PX509): PX509;
   function X509_ATTRIBUTE_dup(xa: PX509_ATTRIBUTE): PX509_ATTRIBUTE;
   function X509_EXTENSION_dup(ex: PX509_EXTENSION): PX509_EXTENSION;
@@ -475,11 +479,20 @@ var
   function X509_to_X509_REQ(x: PX509; pkey: PEVP_PKEY; const md: PEVP_MD): PX509_REQ;
   function X509_REQ_to_X509(r: PX509_REQ; days: TIdC_INT; pkey: PEVP_PKEY): PX509;
 
-  //DECLARE_ASN1_FUNCTIONS(X509_ALGOR)
+  function X509_ALGOR_new: PX509_ALGOR;
+  procedure X509_ALGOR_free(v1: PX509_ALGOR);
+  function d2i_X509_ALGOR(a: PPX509_ALGOR; const &in: PPByte; len: TIdC_LONG): PX509_ALGOR;
+  function i2d_X509_ALGOR(a: PX509_ALGOR; &out: PPByte): TIdC_INT;
   //DECLARE_ASN1_ENCODE_FUNCTIONS(X509_ALGORS, X509_ALGORS, X509_ALGORS)
-  //DECLARE_ASN1_FUNCTIONS(X509_VAL)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_PUBKEY)
+  function X509_VAL_new: PX509_VAL;
+  procedure X509_VAL_free(v1: PX509_VAL);
+  function d2i_X509_VAL(a: PPX509_VAL; const &in: PPByte; len: TIdC_LONG): PX509_VAL;
+  function i2d_X509_VAL(a: PX509_VAL; &out: PPByte): TIdC_INT;
+
+  function X509_PUBKEY_new: PX509_PUBKEY;
+  procedure X509_PUBKEY_free(v1: PX509_PUBKEY);
+  function d2i_X509_PUBKEY(a: PPX509_PUBKEY; const &in: PPByte; len: TIdC_LONG): PX509_PUBKEY;
+  function i2d_X509_PUBKEY(a: PX509_PUBKEY; &out: PPByte): TIdC_INT;
 
   function X509_PUBKEY_set(x: PPX509_PUBKEY; pkey: PEVP_PKEY): TIdC_INT;
   function X509_PUBKEY_get0(key: PX509_PUBKEY): PEVP_PKEY;
@@ -498,28 +511,54 @@ var
   function i2d_EC_PUBKEY(a: EC_KEY; pp: PPByte): TIdC_INT;
   function d2i_EC_PUBKEY(a: PPEC_KEY; const pp: PPByte; length: TIdC_LONG): PEC_KEY;
 
-  //DECLARE_ASN1_FUNCTIONS(X509_SIG)
+  function X509_SIG_new: PX509_SIG;
+  procedure X509_SIG_free(v1: PX509_SIG);
+  function d2i_X509_SIG(a: PPX509_SIG; const &in: PPByte; len: TIdC_LONG): PX509_SIG;
+  function i2d_X509_SIG(a: PX509_SIG; &out: PPByte): TIdC_INT;
   procedure X509_SIG_get0(const sig: PX509_SIG; const palg: PPX509_ALGOR; const pdigest: PPASN1_OCTET_STRING);
   procedure X509_SIG_getm(sig: X509_SIG; palg: PPX509_ALGOR; pdigest: PPASN1_OCTET_STRING);
 
-  //DECLARE_ASN1_FUNCTIONS(X509_REQ_INFO)
-  //DECLARE_ASN1_FUNCTIONS(X509_REQ)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_ATTRIBUTE)
+  function X509_REQ_INFO_new: PX509_REQ_INFO;
+  procedure X509_REQ_INFO_free(v1: PX509_REQ_INFO);
+  function d2i_X509_REQ_INFO(a: PPX509_REQ_INFO; const &in: PPByte; len: TIdC_LONG): PX509_REQ_INFO;
+  function i2d_X509_REQ_INFO(a: PX509_REQ_INFO; &out: PPByte): TIdC_INT;
+
+  function X509_REQ_new: PX509_REQ;
+  procedure X509_REQ_free(v1: PX509_REQ);
+  function d2i_X509_REQ(a: PPX509_REQ; const &in: PPByte; len: TIdC_LONG): PX509_REQ;
+  function i2d_X509_REQ(a: PX509_REQ; &out: PPByte): TIdC_INT;
+
+  function X509_ATTRIBUTE_new: PX509_ATTRIBUTE;
+  procedure X509_ATTRIBUTE_free(v1: PX509_ATTRIBUTE);
+  function d2i_X509_ATTRIBUTE(a: PPX509_ATTRIBUTE; const &in: PPByte; len: TIdC_LONG): PX509_ATTRIBUTE;
+  function i2d_X509_ATTRIBUTE(a: PX509_ATTRIBUTE; &out: PPByte): TIdC_INT;
   function X509_ATTRIBUTE_create(nid: TIdC_INT; trtype: TIdC_INT; value: Pointer): PX509_ATTRIBUTE;
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_EXTENSION)
+
+  function X509_EXTENSION_new: PX509_EXTENSION;
+  procedure X509_EXTENSION_free(v1: PX509_EXTENSION);
+  function d2i_X509_EXTENSION(a: PPX509_EXTENSION; const &in: PPByte; len: TIdC_LONG): PX509_EXTENSION;
+  function i2d_X509_EXTENSION(a: PX509_EXTENSION; &out: PPByte): TIdC_INT;
   //DECLARE_ASN1_ENCODE_FUNCTIONS(X509_EXTENSIONS, X509_EXTENSIONS, X509_EXTENSIONS)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_NAME_ENTRY)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_NAME)
-  //
+
+  function X509_NAME_ENTRY_new: PX509_NAME_ENTRY;
+  procedure X509_NAME_ENTRY_free(v1: PX509_NAME_ENTRY);
+  function d2i_X509_NAME_ENTRY(a: PPX509_NAME_ENTRY; const &in: PPByte; len: TIdC_LONG): PX509_NAME_ENTRY;
+  function i2d_X509_NAME_ENTRY(a: PX509_NAME_ENTRY; &out: PPByte): TIdC_INT;
+
+  function X509_NAME_new: PX509_NAME;
+  procedure X509_NAME_free(v1: PX509_NAME);
+  function d2i_X509_NAME(a: PPX509_NAME; const &in: PPByte; len: TIdC_LONG): PX509_NAME;
+  function i2d_X509_NAME(a: PX509_NAME; &out: PPByte): TIdC_INT;
+
   function X509_NAME_set(xn: PPX509_NAME; name: PX509_NAME): TIdC_INT;
-  //
+
   //DECLARE_ASN1_FUNCTIONS(X509_CINF)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509)
+
+  function X509_new: PX509;
+  procedure X509_free(v1: PX509);
+  function d2i_X509(a: PPX509; const &in: PPByte; len: TIdC_LONG): PX509;
+  function i2d_X509(a: PX509; &out: PPByte): TIdC_INT;
+
   //DECLARE_ASN1_FUNCTIONS(X509_CERT_AUX)
   //
   //#define X509_get_ex_new_index(l, p, newf, dupf, freef) \
@@ -555,9 +594,18 @@ var
   //STACK_OF(ASN1_OBJECT) *X509_get0_trust_objects(X509 *x);
   //STACK_OF(ASN1_OBJECT) *X509_get0_reject_objects(X509 *x);
   //
-  //DECLARE_ASN1_FUNCTIONS(X509_REVOKED)
-  //DECLARE_ASN1_FUNCTIONS(X509_CRL_INFO)
-  //DECLARE_ASN1_FUNCTIONS(X509_CRL)
+  function X509_REVOKED_new: PX509_REVOKED;
+  procedure X509_REVOKED_free(v1: PX509_REVOKED);
+  function d2i_X509_REVOKED(a: PPX509_REVOKED; const &in: PPByte; len: TIdC_LONG): PX509_REVOKED;
+  function i2d_X509_REVOKED(a: PX509_REVOKED; &out: PPByte): TIdC_INT;
+  function X509_CRL_INFO_new: PX509_CRL_INFO;
+  procedure X509_CRL_INFO_free(v1: PX509_CRL_INFO);
+  function d2i_X509_CRL_INFO(a: PPX509_CRL_INFO; const &in: PPByte; len: TIdC_LONG): PX509_CRL_INFO;
+  function i2d_X509_CRL_INFO(a: PX509_CRL_INFO; &out: PPByte): TIdC_INT;
+  function X509_CRL_new: PX509_CRL;
+  procedure X509_CRL_free(v1: PX509_CRL);
+  function d2i_X509_CRL(a: PPX509_CRL; const &in: PPByte; len: TIdC_LONG): PX509_CRL;
+  function i2d_X509_CRL(a: PX509_CRL; &out: PPByte): TIdC_INT;
 
   function X509_CRL_add0_revoked(crl: PX509_CRL; rev: PX509_REVOKED): TIdC_INT;
   function X509_CRL_get0_by_serial(crl: PX509_CRL; ret: PPX509_REVOKED; serial: PASN1_INTEGER): TIdC_INT;

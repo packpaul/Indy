@@ -4,7 +4,7 @@ unit IdOpenSSLHeaders_x509;
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 16.03.2020 14:04:24
+// Generation date: 26.03.2020 10:32:31
 
 interface
 
@@ -159,6 +159,8 @@ type
     notAfter: PASN1_TIME;
   end;
   X509_VAL = X509_val_st;
+  PX509_VAL = ^X509_VAL;
+  PPX509_VAL = ^PX509_VAL;
 
   X509_SIG = type Pointer; // X509_sig_st
   PX509_SIG = ^X509_SIG;
@@ -190,6 +192,8 @@ type
   //DEFINE_STACK_OF(X509_ATTRIBUTE)
 
   X509_REQ_INFO = type Pointer; // X509_req_info_st
+  PX509_REQ_INFO = ^X509_REQ_INFO;
+  PPX509_REQ_INFO = ^PX509_REQ_INFO;
 
   X509_REQ = type Pointer; // X509_req_st
   PX509_REQ = ^X509_REQ;
@@ -223,6 +227,8 @@ type
   PPX509_REVOKED = ^PX509_REVOKED;/////////////////////////////////////////////
 
   X509_CRL_INFO = type Pointer; // X509_crl_info_st
+  PX509_CRL_INFO = ^X509_CRL_INFO;
+  PPX509_CRL_INFO = ^PX509_CRL_INFO;
 
   //DEFINE_STACK_OF(X509_CRL)
 
@@ -453,8 +459,6 @@ var
   i2d_PUBKEY_bio: function(bp: PBIO; pkey: PEVP_PKEY): TIdC_INT cdecl = nil;
   d2i_PUBKEY_bio: function(bp: PBIO; a: PPEVP_PKEY): PEVP_PKEY cdecl = nil;
 
-  X509_new: function: PX509 cdecl = nil;
-  X509_free: procedure(v1: PX509) cdecl = nil;
   X509_dup: function(x509: PX509): PX509 cdecl = nil;
   X509_ATTRIBUTE_dup: function(xa: PX509_ATTRIBUTE): PX509_ATTRIBUTE cdecl = nil;
   X509_EXTENSION_dup: function(ex: PX509_EXTENSION): PX509_EXTENSION cdecl = nil;
@@ -486,11 +490,20 @@ var
   X509_to_X509_REQ: function(x: PX509; pkey: PEVP_PKEY; const md: PEVP_MD): PX509_REQ cdecl = nil;
   X509_REQ_to_X509: function(r: PX509_REQ; days: TIdC_INT; pkey: PEVP_PKEY): PX509 cdecl = nil;
 
-  //DECLARE_ASN1_FUNCTIONS(X509_ALGOR)
+  X509_ALGOR_new: function: PX509_ALGOR cdecl = nil;
+  X509_ALGOR_free: procedure(v1: PX509_ALGOR) cdecl = nil;
+  d2i_X509_ALGOR: function(a: PPX509_ALGOR; const &in: PPByte; len: TIdC_LONG): PX509_ALGOR cdecl = nil;
+  i2d_X509_ALGOR: function(a: PX509_ALGOR; &out: PPByte): TIdC_INT cdecl = nil;
   //DECLARE_ASN1_ENCODE_FUNCTIONS(X509_ALGORS, X509_ALGORS, X509_ALGORS)
-  //DECLARE_ASN1_FUNCTIONS(X509_VAL)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_PUBKEY)
+  X509_VAL_new: function: PX509_VAL cdecl = nil;
+  X509_VAL_free: procedure(v1: PX509_VAL) cdecl = nil;
+  d2i_X509_VAL: function(a: PPX509_VAL; const &in: PPByte; len: TIdC_LONG): PX509_VAL cdecl = nil;
+  i2d_X509_VAL: function(a: PX509_VAL; &out: PPByte): TIdC_INT cdecl = nil;
+
+  X509_PUBKEY_new: function: PX509_PUBKEY cdecl = nil;
+  X509_PUBKEY_free: procedure(v1: PX509_PUBKEY) cdecl = nil;
+  d2i_X509_PUBKEY: function(a: PPX509_PUBKEY; const &in: PPByte; len: TIdC_LONG): PX509_PUBKEY cdecl = nil;
+  i2d_X509_PUBKEY: function(a: PX509_PUBKEY; &out: PPByte): TIdC_INT cdecl = nil;
 
   X509_PUBKEY_set: function(x: PPX509_PUBKEY; pkey: PEVP_PKEY): TIdC_INT cdecl = nil;
   X509_PUBKEY_get0: function(key: PX509_PUBKEY): PEVP_PKEY cdecl = nil;
@@ -509,28 +522,54 @@ var
   i2d_EC_PUBKEY: function(a: EC_KEY; pp: PPByte): TIdC_INT cdecl = nil;
   d2i_EC_PUBKEY: function(a: PPEC_KEY; const pp: PPByte; length: TIdC_LONG): PEC_KEY cdecl = nil;
 
-  //DECLARE_ASN1_FUNCTIONS(X509_SIG)
+  X509_SIG_new: function: PX509_SIG cdecl = nil;
+  X509_SIG_free: procedure(v1: PX509_SIG) cdecl = nil;
+  d2i_X509_SIG: function(a: PPX509_SIG; const &in: PPByte; len: TIdC_LONG): PX509_SIG cdecl = nil;
+  i2d_X509_SIG: function(a: PX509_SIG; &out: PPByte): TIdC_INT cdecl = nil;
   X509_SIG_get0: procedure(const sig: PX509_SIG; const palg: PPX509_ALGOR; const pdigest: PPASN1_OCTET_STRING) cdecl = nil;
   X509_SIG_getm: procedure(sig: X509_SIG; palg: PPX509_ALGOR; pdigest: PPASN1_OCTET_STRING) cdecl = nil;
 
-  //DECLARE_ASN1_FUNCTIONS(X509_REQ_INFO)
-  //DECLARE_ASN1_FUNCTIONS(X509_REQ)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_ATTRIBUTE)
+  X509_REQ_INFO_new: function: PX509_REQ_INFO cdecl = nil;
+  X509_REQ_INFO_free: procedure(v1: PX509_REQ_INFO) cdecl = nil;
+  d2i_X509_REQ_INFO: function(a: PPX509_REQ_INFO; const &in: PPByte; len: TIdC_LONG): PX509_REQ_INFO cdecl = nil;
+  i2d_X509_REQ_INFO: function(a: PX509_REQ_INFO; &out: PPByte): TIdC_INT cdecl = nil;
+
+  X509_REQ_new: function: PX509_REQ cdecl = nil;
+  X509_REQ_free: procedure(v1: PX509_REQ) cdecl = nil;
+  d2i_X509_REQ: function(a: PPX509_REQ; const &in: PPByte; len: TIdC_LONG): PX509_REQ cdecl = nil;
+  i2d_X509_REQ: function(a: PX509_REQ; &out: PPByte): TIdC_INT cdecl = nil;
+
+  X509_ATTRIBUTE_new: function: PX509_ATTRIBUTE cdecl = nil;
+  X509_ATTRIBUTE_free: procedure(v1: PX509_ATTRIBUTE) cdecl = nil;
+  d2i_X509_ATTRIBUTE: function(a: PPX509_ATTRIBUTE; const &in: PPByte; len: TIdC_LONG): PX509_ATTRIBUTE cdecl = nil;
+  i2d_X509_ATTRIBUTE: function(a: PX509_ATTRIBUTE; &out: PPByte): TIdC_INT cdecl = nil;
   X509_ATTRIBUTE_create: function(nid: TIdC_INT; trtype: TIdC_INT; value: Pointer): PX509_ATTRIBUTE cdecl = nil;
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_EXTENSION)
+
+  X509_EXTENSION_new: function: PX509_EXTENSION cdecl = nil;
+  X509_EXTENSION_free: procedure(v1: PX509_EXTENSION) cdecl = nil;
+  d2i_X509_EXTENSION: function(a: PPX509_EXTENSION; const &in: PPByte; len: TIdC_LONG): PX509_EXTENSION cdecl = nil;
+  i2d_X509_EXTENSION: function(a: PX509_EXTENSION; &out: PPByte): TIdC_INT cdecl = nil;
   //DECLARE_ASN1_ENCODE_FUNCTIONS(X509_EXTENSIONS, X509_EXTENSIONS, X509_EXTENSIONS)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_NAME_ENTRY)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509_NAME)
-  //
+
+  X509_NAME_ENTRY_new: function: PX509_NAME_ENTRY cdecl = nil;
+  X509_NAME_ENTRY_free: procedure(v1: PX509_NAME_ENTRY) cdecl = nil;
+  d2i_X509_NAME_ENTRY: function(a: PPX509_NAME_ENTRY; const &in: PPByte; len: TIdC_LONG): PX509_NAME_ENTRY cdecl = nil;
+  i2d_X509_NAME_ENTRY: function(a: PX509_NAME_ENTRY; &out: PPByte): TIdC_INT cdecl = nil;
+
+  X509_NAME_new: function: PX509_NAME cdecl = nil;
+  X509_NAME_free: procedure(v1: PX509_NAME) cdecl = nil;
+  d2i_X509_NAME: function(a: PPX509_NAME; const &in: PPByte; len: TIdC_LONG): PX509_NAME cdecl = nil;
+  i2d_X509_NAME: function(a: PX509_NAME; &out: PPByte): TIdC_INT cdecl = nil;
+
   X509_NAME_set: function(xn: PPX509_NAME; name: PX509_NAME): TIdC_INT cdecl = nil;
-  //
+
   //DECLARE_ASN1_FUNCTIONS(X509_CINF)
-  //
-  //DECLARE_ASN1_FUNCTIONS(X509)
+
+  X509_new: function: PX509 cdecl = nil;
+  X509_free: procedure(v1: PX509) cdecl = nil;
+  d2i_X509: function(a: PPX509; const &in: PPByte; len: TIdC_LONG): PX509 cdecl = nil;
+  i2d_X509: function(a: PX509; &out: PPByte): TIdC_INT cdecl = nil;
+
   //DECLARE_ASN1_FUNCTIONS(X509_CERT_AUX)
   //
   //#define X509_get_ex_new_index(l, p, newf, dupf, freef) \
@@ -566,9 +605,18 @@ var
   //STACK_OF(ASN1_OBJECT) *X509_get0_trust_objects(X509 *x);
   //STACK_OF(ASN1_OBJECT) *X509_get0_reject_objects(X509 *x);
   //
-  //DECLARE_ASN1_FUNCTIONS(X509_REVOKED)
-  //DECLARE_ASN1_FUNCTIONS(X509_CRL_INFO)
-  //DECLARE_ASN1_FUNCTIONS(X509_CRL)
+  X509_REVOKED_new: function: PX509_REVOKED cdecl = nil;
+  X509_REVOKED_free: procedure(v1: PX509_REVOKED) cdecl = nil;
+  d2i_X509_REVOKED: function(a: PPX509_REVOKED; const &in: PPByte; len: TIdC_LONG): PX509_REVOKED cdecl = nil;
+  i2d_X509_REVOKED: function(a: PX509_REVOKED; &out: PPByte): TIdC_INT cdecl = nil;
+  X509_CRL_INFO_new: function: PX509_CRL_INFO cdecl = nil;
+  X509_CRL_INFO_free: procedure(v1: PX509_CRL_INFO) cdecl = nil;
+  d2i_X509_CRL_INFO: function(a: PPX509_CRL_INFO; const &in: PPByte; len: TIdC_LONG): PX509_CRL_INFO cdecl = nil;
+  i2d_X509_CRL_INFO: function(a: PX509_CRL_INFO; &out: PPByte): TIdC_INT cdecl = nil;
+  X509_CRL_new: function: PX509_CRL cdecl = nil;
+  X509_CRL_free: procedure(v1: PX509_CRL) cdecl = nil;
+  d2i_X509_CRL: function(a: PPX509_CRL; const &in: PPByte; len: TIdC_LONG): PX509_CRL cdecl = nil;
+  i2d_X509_CRL: function(a: PX509_CRL; &out: PPByte): TIdC_INT cdecl = nil;
 
   X509_CRL_add0_revoked: function(crl: PX509_CRL; rev: PX509_REVOKED): TIdC_INT cdecl = nil;
   X509_CRL_get0_by_serial: function(crl: PX509_CRL; ret: PPX509_REVOKED; serial: PASN1_INTEGER): TIdC_INT cdecl = nil;
@@ -989,8 +1037,6 @@ begin
     d2i_PrivateKey_bio := LoadFunction('d2i_PrivateKey_bio', LFailed);
     i2d_PUBKEY_bio := LoadFunction('i2d_PUBKEY_bio', LFailed);
     d2i_PUBKEY_bio := LoadFunction('d2i_PUBKEY_bio', LFailed);
-    X509_new := LoadFunction('X509_new', LFailed);
-    X509_free := LoadFunction('X509_free', LFailed);
     X509_dup := LoadFunction('X509_dup', LFailed);
     X509_ATTRIBUTE_dup := LoadFunction('X509_ATTRIBUTE_dup', LFailed);
     X509_EXTENSION_dup := LoadFunction('X509_EXTENSION_dup', LFailed);
@@ -1012,6 +1058,18 @@ begin
     X509_get_default_private_dir := LoadFunction('X509_get_default_private_dir', LFailed);
     X509_to_X509_REQ := LoadFunction('X509_to_X509_REQ', LFailed);
     X509_REQ_to_X509 := LoadFunction('X509_REQ_to_X509', LFailed);
+    X509_ALGOR_new := LoadFunction('X509_ALGOR_new', LFailed);
+    X509_ALGOR_free := LoadFunction('X509_ALGOR_free', LFailed);
+    d2i_X509_ALGOR := LoadFunction('d2i_X509_ALGOR', LFailed);
+    i2d_X509_ALGOR := LoadFunction('i2d_X509_ALGOR', LFailed);
+    X509_VAL_new := LoadFunction('X509_VAL_new', LFailed);
+    X509_VAL_free := LoadFunction('X509_VAL_free', LFailed);
+    d2i_X509_VAL := LoadFunction('d2i_X509_VAL', LFailed);
+    i2d_X509_VAL := LoadFunction('i2d_X509_VAL', LFailed);
+    X509_PUBKEY_new := LoadFunction('X509_PUBKEY_new', LFailed);
+    X509_PUBKEY_free := LoadFunction('X509_PUBKEY_free', LFailed);
+    d2i_X509_PUBKEY := LoadFunction('d2i_X509_PUBKEY', LFailed);
+    i2d_X509_PUBKEY := LoadFunction('i2d_X509_PUBKEY', LFailed);
     X509_PUBKEY_set := LoadFunction('X509_PUBKEY_set', LFailed);
     X509_PUBKEY_get0 := LoadFunction('X509_PUBKEY_get0', LFailed);
     X509_PUBKEY_get := LoadFunction('X509_PUBKEY_get', LFailed);
@@ -1024,10 +1082,42 @@ begin
     d2i_DSA_PUBKEY := LoadFunction('d2i_DSA_PUBKEY', LFailed);
     i2d_EC_PUBKEY := LoadFunction('i2d_EC_PUBKEY', LFailed);
     d2i_EC_PUBKEY := LoadFunction('d2i_EC_PUBKEY', LFailed);
+    X509_SIG_new := LoadFunction('X509_SIG_new', LFailed);
+    X509_SIG_free := LoadFunction('X509_SIG_free', LFailed);
+    d2i_X509_SIG := LoadFunction('d2i_X509_SIG', LFailed);
+    i2d_X509_SIG := LoadFunction('i2d_X509_SIG', LFailed);
     X509_SIG_get0 := LoadFunction('X509_SIG_get0', LFailed);
     X509_SIG_getm := LoadFunction('X509_SIG_getm', LFailed);
+    X509_REQ_INFO_new := LoadFunction('X509_REQ_INFO_new', LFailed);
+    X509_REQ_INFO_free := LoadFunction('X509_REQ_INFO_free', LFailed);
+    d2i_X509_REQ_INFO := LoadFunction('d2i_X509_REQ_INFO', LFailed);
+    i2d_X509_REQ_INFO := LoadFunction('i2d_X509_REQ_INFO', LFailed);
+    X509_REQ_new := LoadFunction('X509_REQ_new', LFailed);
+    X509_REQ_free := LoadFunction('X509_REQ_free', LFailed);
+    d2i_X509_REQ := LoadFunction('d2i_X509_REQ', LFailed);
+    i2d_X509_REQ := LoadFunction('i2d_X509_REQ', LFailed);
+    X509_ATTRIBUTE_new := LoadFunction('X509_ATTRIBUTE_new', LFailed);
+    X509_ATTRIBUTE_free := LoadFunction('X509_ATTRIBUTE_free', LFailed);
+    d2i_X509_ATTRIBUTE := LoadFunction('d2i_X509_ATTRIBUTE', LFailed);
+    i2d_X509_ATTRIBUTE := LoadFunction('i2d_X509_ATTRIBUTE', LFailed);
     X509_ATTRIBUTE_create := LoadFunction('X509_ATTRIBUTE_create', LFailed);
+    X509_EXTENSION_new := LoadFunction('X509_EXTENSION_new', LFailed);
+    X509_EXTENSION_free := LoadFunction('X509_EXTENSION_free', LFailed);
+    d2i_X509_EXTENSION := LoadFunction('d2i_X509_EXTENSION', LFailed);
+    i2d_X509_EXTENSION := LoadFunction('i2d_X509_EXTENSION', LFailed);
+    X509_NAME_ENTRY_new := LoadFunction('X509_NAME_ENTRY_new', LFailed);
+    X509_NAME_ENTRY_free := LoadFunction('X509_NAME_ENTRY_free', LFailed);
+    d2i_X509_NAME_ENTRY := LoadFunction('d2i_X509_NAME_ENTRY', LFailed);
+    i2d_X509_NAME_ENTRY := LoadFunction('i2d_X509_NAME_ENTRY', LFailed);
+    X509_NAME_new := LoadFunction('X509_NAME_new', LFailed);
+    X509_NAME_free := LoadFunction('X509_NAME_free', LFailed);
+    d2i_X509_NAME := LoadFunction('d2i_X509_NAME', LFailed);
+    i2d_X509_NAME := LoadFunction('i2d_X509_NAME', LFailed);
     X509_NAME_set := LoadFunction('X509_NAME_set', LFailed);
+    X509_new := LoadFunction('X509_new', LFailed);
+    X509_free := LoadFunction('X509_free', LFailed);
+    d2i_X509 := LoadFunction('d2i_X509', LFailed);
+    i2d_X509 := LoadFunction('i2d_X509', LFailed);
     X509_set_ex_data := LoadFunction('X509_set_ex_data', LFailed);
     X509_get_ex_data := LoadFunction('X509_get_ex_data', LFailed);
     i2d_X509_AUX := LoadFunction('i2d_X509_AUX', LFailed);
@@ -1048,6 +1138,18 @@ begin
     X509_add1_reject_object := LoadFunction('X509_add1_reject_object', LFailed);
     X509_trust_clear := LoadFunction('X509_trust_clear', LFailed);
     X509_reject_clear := LoadFunction('X509_reject_clear', LFailed);
+    X509_REVOKED_new := LoadFunction('X509_REVOKED_new', LFailed);
+    X509_REVOKED_free := LoadFunction('X509_REVOKED_free', LFailed);
+    d2i_X509_REVOKED := LoadFunction('d2i_X509_REVOKED', LFailed);
+    i2d_X509_REVOKED := LoadFunction('i2d_X509_REVOKED', LFailed);
+    X509_CRL_INFO_new := LoadFunction('X509_CRL_INFO_new', LFailed);
+    X509_CRL_INFO_free := LoadFunction('X509_CRL_INFO_free', LFailed);
+    d2i_X509_CRL_INFO := LoadFunction('d2i_X509_CRL_INFO', LFailed);
+    i2d_X509_CRL_INFO := LoadFunction('i2d_X509_CRL_INFO', LFailed);
+    X509_CRL_new := LoadFunction('X509_CRL_new', LFailed);
+    X509_CRL_free := LoadFunction('X509_CRL_free', LFailed);
+    d2i_X509_CRL := LoadFunction('d2i_X509_CRL', LFailed);
+    i2d_X509_CRL := LoadFunction('i2d_X509_CRL', LFailed);
     X509_CRL_add0_revoked := LoadFunction('X509_CRL_add0_revoked', LFailed);
     X509_CRL_get0_by_serial := LoadFunction('X509_CRL_get0_by_serial', LFailed);
     X509_CRL_get0_by_cert := LoadFunction('X509_CRL_get0_by_cert', LFailed);
@@ -1313,8 +1415,6 @@ begin
   d2i_PrivateKey_bio := nil;
   i2d_PUBKEY_bio := nil;
   d2i_PUBKEY_bio := nil;
-  X509_new := nil;
-  X509_free := nil;
   X509_dup := nil;
   X509_ATTRIBUTE_dup := nil;
   X509_EXTENSION_dup := nil;
@@ -1336,6 +1436,18 @@ begin
   X509_get_default_private_dir := nil;
   X509_to_X509_REQ := nil;
   X509_REQ_to_X509 := nil;
+  X509_ALGOR_new := nil;
+  X509_ALGOR_free := nil;
+  d2i_X509_ALGOR := nil;
+  i2d_X509_ALGOR := nil;
+  X509_VAL_new := nil;
+  X509_VAL_free := nil;
+  d2i_X509_VAL := nil;
+  i2d_X509_VAL := nil;
+  X509_PUBKEY_new := nil;
+  X509_PUBKEY_free := nil;
+  d2i_X509_PUBKEY := nil;
+  i2d_X509_PUBKEY := nil;
   X509_PUBKEY_set := nil;
   X509_PUBKEY_get0 := nil;
   X509_PUBKEY_get := nil;
@@ -1348,10 +1460,42 @@ begin
   d2i_DSA_PUBKEY := nil;
   i2d_EC_PUBKEY := nil;
   d2i_EC_PUBKEY := nil;
+  X509_SIG_new := nil;
+  X509_SIG_free := nil;
+  d2i_X509_SIG := nil;
+  i2d_X509_SIG := nil;
   X509_SIG_get0 := nil;
   X509_SIG_getm := nil;
+  X509_REQ_INFO_new := nil;
+  X509_REQ_INFO_free := nil;
+  d2i_X509_REQ_INFO := nil;
+  i2d_X509_REQ_INFO := nil;
+  X509_REQ_new := nil;
+  X509_REQ_free := nil;
+  d2i_X509_REQ := nil;
+  i2d_X509_REQ := nil;
+  X509_ATTRIBUTE_new := nil;
+  X509_ATTRIBUTE_free := nil;
+  d2i_X509_ATTRIBUTE := nil;
+  i2d_X509_ATTRIBUTE := nil;
   X509_ATTRIBUTE_create := nil;
+  X509_EXTENSION_new := nil;
+  X509_EXTENSION_free := nil;
+  d2i_X509_EXTENSION := nil;
+  i2d_X509_EXTENSION := nil;
+  X509_NAME_ENTRY_new := nil;
+  X509_NAME_ENTRY_free := nil;
+  d2i_X509_NAME_ENTRY := nil;
+  i2d_X509_NAME_ENTRY := nil;
+  X509_NAME_new := nil;
+  X509_NAME_free := nil;
+  d2i_X509_NAME := nil;
+  i2d_X509_NAME := nil;
   X509_NAME_set := nil;
+  X509_new := nil;
+  X509_free := nil;
+  d2i_X509 := nil;
+  i2d_X509 := nil;
   X509_set_ex_data := nil;
   X509_get_ex_data := nil;
   i2d_X509_AUX := nil;
@@ -1372,6 +1516,18 @@ begin
   X509_add1_reject_object := nil;
   X509_trust_clear := nil;
   X509_reject_clear := nil;
+  X509_REVOKED_new := nil;
+  X509_REVOKED_free := nil;
+  d2i_X509_REVOKED := nil;
+  i2d_X509_REVOKED := nil;
+  X509_CRL_INFO_new := nil;
+  X509_CRL_INFO_free := nil;
+  d2i_X509_CRL_INFO := nil;
+  i2d_X509_CRL_INFO := nil;
+  X509_CRL_new := nil;
+  X509_CRL_free := nil;
+  d2i_X509_CRL := nil;
+  i2d_X509_CRL := nil;
   X509_CRL_add0_revoked := nil;
   X509_CRL_get0_by_serial := nil;
   X509_CRL_get0_by_cert := nil;
