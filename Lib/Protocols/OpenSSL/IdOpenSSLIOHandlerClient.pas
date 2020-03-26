@@ -4,21 +4,25 @@ interface
 
 uses
   IdGlobal,
+  IdOpenSSLContext,
+  IdOpenSSLIOHandlerClientBase,
   IdOpenSSLOptionsClient,
   IdOpenSSLSocketClient,
-  IdOpenSSLIOHandlerClientbase,
   IdSSL;
 
 type
   TIdOpenSSLIOHandlerClient = class(TIdOpenSSLIOHandlerClientBase)
   private
-    FOptions: TIdOpenSSLOptionsClient;
     function GetTargetHost: string;
     function GetClientSocket: TIdOpenSSLSocketClient; {$IFDEF USE_INLINE}inline;{$ENDIF}
   protected
+    FOptions: TIdOpenSSLOptionsClient;
     function GetOptionClass: TIdOpenSSLOptionsClientClass; virtual;
     procedure InitComponent; override;
     procedure EnsureContext; override;
+
+    procedure BeforeInitContext(const AContext: TIdOpenSSLContext); virtual;
+    procedure AfterInitContext(const AContext: TIdOpenSSLContext); virtual;
   public
     destructor Destroy; override;
     procedure StartSSL; override;
@@ -41,7 +45,20 @@ begin
   if PassThrough or Assigned(FContext) then
     Exit;
   FContext := TIdOpenSSLContextClient.Create();
+
+  BeforeInitContext(FContext);
   TIdOpenSSLContextClient(FContext).Init(FOptions);
+  AfterInitContext(FContext);
+end;
+
+procedure TIdOpenSSLIOHandlerClient.AfterInitContext(
+  const AContext: TIdOpenSSLContext);
+begin
+end;
+
+procedure TIdOpenSSLIOHandlerClient.BeforeInitContext(
+  const AContext: TIdOpenSSLContext);
+begin
 end;
 
 destructor TIdOpenSSLIOHandlerClient.Destroy;
