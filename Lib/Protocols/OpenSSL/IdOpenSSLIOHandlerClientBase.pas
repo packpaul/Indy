@@ -75,7 +75,7 @@ end;
 
 function TIdOpenSSLIOHandlerClientBase.Clone: TIdSSLIOHandlerSocketBase;
 begin
-
+  Result := TIdClientSSLClass(Self.ClassType).Create(Owner);
 end;
 
 function TIdOpenSSLIOHandlerClientBase.RecvEnc(var ABuffer: TIdBytes): Integer;

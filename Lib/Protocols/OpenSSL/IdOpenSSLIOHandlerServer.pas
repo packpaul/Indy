@@ -104,10 +104,12 @@ end;
 
 function TIdOpenSSLIOHandlerServer.MakeFTPSvrPasv: TIdSSLIOHandlerSocketBase;
 begin
+  Result := MakeClientIOHandler();
 end;
 
 function TIdOpenSSLIOHandlerServer.MakeFTPSvrPort: TIdSSLIOHandlerSocketBase;
 begin
+  Result := MakeClientIOHandler();
 end;
 
 procedure TIdOpenSSLIOHandlerServer.Shutdown;

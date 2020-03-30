@@ -1,3 +1,29 @@
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2005, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
 unit IdOpenSSLIOHandlerClient;
 
 interface
@@ -26,6 +52,8 @@ type
   public
     destructor Destroy; override;
     procedure StartSSL; override;
+
+    function Clone: TIdSSLIOHandlerSocketBase; override;
   published
     property Options: TIdOpenSSLOptionsClient read FOptions;
   end;
@@ -59,6 +87,12 @@ end;
 procedure TIdOpenSSLIOHandlerClient.BeforeInitContext(
   const AContext: TIdOpenSSLContext);
 begin
+end;
+
+function TIdOpenSSLIOHandlerClient.Clone: TIdSSLIOHandlerSocketBase;
+begin
+  Result := inherited;
+  Options.AssignTo(TIdOpenSSLIOHandlerClient(Result).Options);
 end;
 
 destructor TIdOpenSSLIOHandlerClient.Destroy;
