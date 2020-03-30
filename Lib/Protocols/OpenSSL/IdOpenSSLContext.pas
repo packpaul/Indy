@@ -241,14 +241,14 @@ begin
 
   if ACertificateFile <> '' then
 //    if SSL_CTX_use_certificate_file(FContext, GetPAnsiChar(ACertificateFile), SSL_FILETYPE_PEM) <> 1 then
-    if SSL_CTX_use_certificate_chain_file(FContext, GetPAnsiChar(ACertificateFile)) <> 1 then
+    if SSL_CTX_use_certificate_chain_file(AContext, GetPAnsiChar(ACertificateFile)) <> 1 then
       EIdOpenSSLSetCertificateError.&Raise();
 
   if APrivateKeyFile <> '' then
-    if SSL_CTX_use_PrivateKey_file(FContext, GetPAnsiChar(APrivateKeyFile), SSL_FILETYPE_PEM) <> 1 then
+    if SSL_CTX_use_PrivateKey_file(AContext, GetPAnsiChar(APrivateKeyFile), SSL_FILETYPE_PEM) <> 1 then
       EIdOpenSSLSetPrivateKeyError.&Raise();
 
-  if SSL_CTX_check_private_key(FContext) <> 1 then
+  if SSL_CTX_check_private_key(AContext) <> 1 then
     EIdOpenSSLCertAndPrivKeyMisMatchError.&Raise();
 end;
 
@@ -283,9 +283,9 @@ procedure TIdOpenSSLContext.SetKeylogCallback(
   const ACallback: TKeyLog);
 begin
   if Assigned(ACallback) then
-    SSL_CTX_set_keylog_callback(FContext, KeylogCallback)
+    SSL_CTX_set_keylog_callback(AContext, KeylogCallback)
   else
-    SSL_CTX_set_keylog_callback(FContext, nil);
+    SSL_CTX_set_keylog_callback(AContext, nil);
 end;
 
 procedure TIdOpenSSLContext.SetLegacyOptions(

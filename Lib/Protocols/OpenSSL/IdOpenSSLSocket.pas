@@ -95,7 +95,7 @@ begin
   if AReturnCode > 0 then
     Exit;
 
-  case SSL_get_error(FSSL, AReturnCode) of
+  case SSL_get_error(ASSL, AReturnCode) of
     SSL_ERROR_NONE:
     // The TLS/SSL I/O operation completed. This result code is returned if and
     // only if AReturnCode > 0

@@ -110,7 +110,7 @@ begin
     Randomize();
     FSessionIdCtxFallback := Random(High(Integer));
     if SSL_CTX_set_session_id_context(
-      OpenSSLContext,
+      AContext,
       PByte(@FSessionIdCtxFallback),
       SizeOf(FSessionIdCtxFallback)) <> 1 then
     begin
@@ -132,7 +132,7 @@ begin
       if X509_digest(LX509, EVP_sha1, @FSessionIdCtx[0], @LLen) <> 1 then
         EIdOpenSSLSessionIdContextError.&Raise();
 
-      if SSL_CTX_set_session_id_context(OpenSSLContext, @FSessionIdCtx[0], LLen) <> 1 then
+      if SSL_CTX_set_session_id_context(AContext, @FSessionIdCtx[0], LLen) <> 1 then
         EIdOpenSSLSessionIdContextError.&Raise();
     finally
       X509_free(LX509);
