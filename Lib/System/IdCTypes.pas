@@ -282,11 +282,6 @@ type
   PPByte = ^PByte;
   PPPByte = ^PPByte;
   {$IFNDEF HAS_PWord}PWord = ^Word;{$ENDIF}
-
-  size_t = NativeUInt;
-  PSize_t = ^size_t;
-
-  time_t = TIdC_LONG;
   {$ENDIF}
 
 implementation
