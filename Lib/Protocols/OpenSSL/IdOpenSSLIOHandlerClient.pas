@@ -12,7 +12,7 @@
 {  (https://www.indyproject.org/license/)                                      }
 {                                                                              }
 {  Copyright:                                                                  }
-{   (c) 1993-2005, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
 {                                                                              }
 {******************************************************************************}
 {                                                                              }
