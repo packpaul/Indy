@@ -59,6 +59,7 @@ type
   
   TIdC_INT   = cInt;
   PIdC_INT   = pcInt;
+  PPIdC_INT  = ^PIdC_INT;
   TIdC_UINT  = cUInt;
   PIdC_UINT  = pcUInt;
 
