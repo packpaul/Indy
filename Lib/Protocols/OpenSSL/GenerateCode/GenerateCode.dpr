@@ -33,10 +33,10 @@ program GenerateCode;
 uses
   System.Classes,
   System.IOUtils,
-  System.Types,
+  System.StrUtils,
   System.SysUtils,
-  Winapi.Windows,
-  System.StrUtils;
+  System.Types,
+  Winapi.Windows;
 
 type
   TGenerateMode = (gmDynamic, gmStatic);
@@ -128,18 +128,26 @@ procedure AddDynamicLoadingMethods(
   const AVarIndex: Integer;
   const AImplementationIndex: Integer);
 
-  procedure Insert(AList: TStringList; const str: string; var Index: Integer);
+  procedure Insert(const AList: TStringList; const s: string; var Index: Integer);
   begin
-    AList.Insert(Index, str);
+    AList.Insert(Index, s);
     Inc(Index);
   end;
 
-//  function Load(const AMethodName: string): Pointer;
-//  begin
-//    Result := GetProcAddress(0, PChar(AMethodName));
-//    if not Assigned(Result) then
-//      LFailed.Add(AMethodName);
-//  end;
+  function Find(const AList: TStringList; const s: string; var Index: Integer; const AOffset: Integer = 0): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := False;
+    for i := AOffset to AList.Count - 1 do
+    begin
+      if AList[i].Contains(s) then
+      begin
+        Index := i;
+        Exit(True);
+      end;
+    end;
+  end;
 
 var
   LOffset: Integer;
@@ -150,8 +158,20 @@ begin
   LOffset := AImplementationIndex + 1;
 
   {TODO -oFabian S. Biehn -cDynamic Linking : Improve loading mechanism for different platforms & lower versions}
-  Insert(AFile, '', LOffset);
-  Insert(AFile, 'uses', LOffset);
+  if not Find(AFile, 'uses', LOffset, LOffset) then
+  begin
+    Insert(AFile, '', LOffset);
+    Insert(AFile, 'uses', LOffset);
+  end
+  else
+    if Find(AFile, ';', LOffset, LOffset) then
+    begin
+      AFile[LOffset] := AFile[LOffset].Replace(';', ',');
+      Inc(LOffset)
+    end
+    else
+      Exit;
+
   if not AFile.Text.Contains('Types') then
     Insert(AFile, '  System.Types,', LOffset);
   if not AFile.Text.Contains('Classes') then
@@ -247,6 +267,21 @@ begin
 end;
 
 procedure AddGeneratedHeader(const AFile: TStringList);
+
+  function Find(const AList: TStringList; const s: string; var Index: Integer): Boolean;
+  var
+    i: Integer;
+  begin
+    Index := -1;
+    Result := False;
+    for i := 0 to AList.Count-1 do
+      if AList[i].Contains(s) then
+      begin
+        Index := i;
+        Exit(True);
+      end;
+  end;
+
 const
   CHeader: array[0..4] of string =
   (
@@ -260,7 +295,10 @@ var
   i: Integer;
   LOffset: Integer;
 begin
-  LOffset := 1;
+  if not Find(AFile, 'unit ', LOffset) then
+    Exit;
+  // Keep a empty line before "unit"
+  Dec(LOffset);
   for i := Low(CHeader) to High(CHeader) do
     AFile.Insert(i + LOffset, CHeader[i]);
   AFile.Insert(Length(CHeader) + LOffset, '// Generation date: ' + DateTimeToStr(Now()));
@@ -288,7 +326,6 @@ begin
 
   for LFile in TDirectory.GetFiles(LSource, '*.pas') do
   begin
-    LShouldUseLibSSL := False;
     Writeln('Converting ' + LFile);
     LFileName := TPath.GetFileName(LFile);
     LStringListFile := TStringList.Create();
@@ -297,10 +334,10 @@ begin
       LStringListFile.LoadFromFile(LFile);
       LVarIndex := -1;
       LImplementationIndex := -1;
+      LShouldUseLibSSL := MatchText(LFileName,
+        ['IdOpenSSLHeaders_ssl.pas', 'IdOpenSSLHeaders_sslerr.pas', 'IdOpenSSLHeaders_tls1.pas']);
       for i := 0 to LStringListFile.Count - 1 do
       begin
-        if LStringListFile[i].StartsWith('unit ') then
-          LShouldUseLibSSL := MatchText(LStringListFile[i], ['unit IdOpenSSLHeaders_ssl;', 'unit IdOpenSSLHeaders_sslerr;', 'unit IdOpenSSLHeaders_tls1;']);
         // var block found?
         if (LVarIndex = -1) and LStringListFile[i].StartsWith('var') then
           LVarIndex := i;

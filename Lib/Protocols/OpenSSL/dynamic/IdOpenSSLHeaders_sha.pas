@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_sha;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_sha;
 
 interface
 
@@ -77,31 +103,31 @@ procedure UnLoad;
 
 var
   SHA1_Init: function(c: PSHA_CTX): TIdC_INT cdecl = nil;
-  SHA1_Update: function(c: PSHA_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl = nil;
+  SHA1_Update: function(c: PSHA_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl = nil;
   SHA1_Final: function(md: PByte; c: PSHA_CTX): TIdC_INT cdecl = nil;
-  SHA1: function(const d: PByte; n: size_t; md: PByte): PByte cdecl = nil;
+  SHA1: function(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl = nil;
   SHA1_Transform: procedure(c: PSHA_CTX; const data: PByte) cdecl = nil;
 
   SHA224_Init: function(c: PSHA256_CTX): TIdC_INT cdecl = nil;
-  SHA224_Update: function(c: PSHA256_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl = nil;
+  SHA224_Update: function(c: PSHA256_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl = nil;
   SHA224_Final: function(md: PByte; c: PSHA256_CTX): TIdC_INT cdecl = nil;
-  SHA224: function(const d: PByte; n: size_t; md: PByte): PByte cdecl = nil;
+  SHA224: function(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl = nil;
 
   SHA256_Init: function(c: PSHA256_CTX): TIdC_INT cdecl = nil;
-  SHA256_Update: function(c: PSHA256_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl = nil;
+  SHA256_Update: function(c: PSHA256_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl = nil;
   SHA256_Final: function(md: PByte; c: PSHA256_CTX): TIdC_INT cdecl = nil;
-  SHA256: function(const d: PByte; n: size_t; md: PByte): PByte cdecl = nil;
+  SHA256: function(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl = nil;
   SHA256_Transform: procedure(c: PSHA256_CTX; const data: PByte) cdecl = nil;
 
   SHA384_Init: function(c: PSHA512_CTX): TIdC_INT cdecl = nil;
-  SHA384_Update: function(c: PSHA512_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl = nil;
+  SHA384_Update: function(c: PSHA512_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl = nil;
   SHA384_Final: function(md: PByte; c: PSHA512_CTX): TIdC_INT cdecl = nil;
-  SHA384: function(const d: PByte; n: size_t; md: PByte): PByte cdecl = nil;
+  SHA384: function(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl = nil;
 
   SHA512_Init: function(c: PSHA512_CTX): TIdC_INT cdecl = nil;
-  SHA512_Update: function(c: PSHA512_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl = nil;
+  SHA512_Update: function(c: PSHA512_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl = nil;
   SHA512_Final: function(md: PByte; c: PSHA512_CTX): TIdC_INT cdecl = nil;
-  SHA512: function(const d: PByte; n: size_t; md: PByte): PByte cdecl = nil;
+  SHA512: function(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl = nil;
   SHA512_Transform: procedure(c: PSHA512_CTX; const data: PByte) cdecl = nil;
 
 implementation

@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_x509_vfy;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_x509_vfy;
 
 interface
 
@@ -448,7 +474,7 @@ var
   X509_STORE_CTX_set_trust: function(ctx: PX509_STORE_CTX; trust: TIdC_INT): TIdC_INT cdecl = nil;
   X509_STORE_CTX_purpose_inherit: function(ctx: PX509_STORE_CTX; def_purpose: TIdC_INT; purpose: TIdC_INT; trust: TIdC_INT): TIdC_INT cdecl = nil;
   X509_STORE_CTX_set_flags: procedure(ctx: PX509_STORE_CTX; flags: TIdC_ULONG) cdecl = nil;
-//  procedure X509_STORE_CTX_set_time(ctx: PX509_STORE_CTX; flags: TIdC_ULONG; t: time_t);
+//  procedure X509_STORE_CTX_set_time(ctx: PX509_STORE_CTX; flags: TIdC_ULONG; t: TIdC_TIMET);
 
   X509_STORE_CTX_get0_policy_tree: function(ctx: PX509_STORE_CTX): PX509_POLICY_TREE cdecl = nil;
   X509_STORE_CTX_get_explicit_policy: function(ctx: PX509_STORE_CTX): TIdC_INT cdecl = nil;
@@ -478,8 +504,8 @@ var
   X509_VERIFY_PARAM_set_trust: function(param: PX509_VERIFY_PARAM; trust: TIdC_INT): TIdC_INT cdecl = nil;
   X509_VERIFY_PARAM_set_depth: procedure(param: PX509_VERIFY_PARAM; depth: TIdC_INT) cdecl = nil;
   X509_VERIFY_PARAM_set_auth_level: procedure(param: PX509_VERIFY_PARAM; auth_level: TIdC_INT) cdecl = nil;
-//  function X509_VERIFY_PARAM_get_time(const param: PX509_VERIFY_PARAM): time_t;
-//  procedure X509_VERIFY_PARAM_set_time(param: PX509_VERIFY_PARAM; t: time_t);
+//  function X509_VERIFY_PARAM_get_time(const param: PX509_VERIFY_PARAM): TIdC_TIMET;
+//  procedure X509_VERIFY_PARAM_set_time(param: PX509_VERIFY_PARAM; t: TIdC_TIMET);
   X509_VERIFY_PARAM_add0_policy: function(param: PX509_VERIFY_PARAM; policy: PASN1_OBJECT): TIdC_INT cdecl = nil;
   //TIdC_INT X509_VERIFY_PARAM_set1_policies(X509_VERIFY_PARAM *param,
   //                                    STACK_OF(ASN1_OBJECT) *policies);
@@ -487,14 +513,14 @@ var
   X509_VERIFY_PARAM_set_inh_flags: function(param: PX509_VERIFY_PARAM; flags: TIdC_UINT32): TIdC_INT cdecl = nil;
   X509_VERIFY_PARAM_get_inh_flags: function(const param: PX509_VERIFY_PARAM): TIdC_UINT32 cdecl = nil;
 
-  X509_VERIFY_PARAM_set1_host: function(param: PX509_VERIFY_PARAM; const name: PIdAnsiChar; namelen: size_t): TIdC_INT cdecl = nil;
-  X509_VERIFY_PARAM_add1_host: function(param: PX509_VERIFY_PARAM; const name: PIdAnsiChar; namelen: size_t): TIdC_INT cdecl = nil;
+  X509_VERIFY_PARAM_set1_host: function(param: PX509_VERIFY_PARAM; const name: PIdAnsiChar; namelen: TIdC_SIZET): TIdC_INT cdecl = nil;
+  X509_VERIFY_PARAM_add1_host: function(param: PX509_VERIFY_PARAM; const name: PIdAnsiChar; namelen: TIdC_SIZET): TIdC_INT cdecl = nil;
   X509_VERIFY_PARAM_set_hostflags: procedure(param: PX509_VERIFY_PARAM; flags: TIdC_UINT) cdecl = nil;
   X509_VERIFY_PARAM_get_hostflags: function(const param: PX509_VERIFY_PARAM): TIdC_UINT cdecl = nil;
   X509_VERIFY_PARAM_get0_peername: function(v1: PX509_VERIFY_PARAM): PIdAnsiChar cdecl = nil;
   X509_VERIFY_PARAM_move_peername: procedure(v1: PX509_VERIFY_PARAM; v2: PX509_VERIFY_PARAM) cdecl = nil;
-  X509_VERIFY_PARAM_set1_email: function(param: PX509_VERIFY_PARAM; const email: PIdAnsiChar; emaillen: size_t): TIdC_INT cdecl = nil;
-  X509_VERIFY_PARAM_set1_ip: function(param: PX509_VERIFY_PARAM; const ip: PByte; iplen: size_t): TIdC_INT cdecl = nil;
+  X509_VERIFY_PARAM_set1_email: function(param: PX509_VERIFY_PARAM; const email: PIdAnsiChar; emaillen: TIdC_SIZET): TIdC_INT cdecl = nil;
+  X509_VERIFY_PARAM_set1_ip: function(param: PX509_VERIFY_PARAM; const ip: PByte; iplen: TIdC_SIZET): TIdC_INT cdecl = nil;
   X509_VERIFY_PARAM_set1_ip_asc: function(param: PX509_VERIFY_PARAM; const ipasc: PIdAnsiChar): TIdC_INT cdecl = nil;
 
   X509_VERIFY_PARAM_get_depth: function(const param: PX509_VERIFY_PARAM): TIdC_INT cdecl = nil;

@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_bn;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:53
+// Generation date: 31.03.2020 10:11:53
+
+unit IdOpenSSLHeaders_bn;
 
 interface
 
@@ -385,7 +411,7 @@ type
 //int (*BN_nist_mod_func(const BIGNUM *p)) (BIGNUM *r, const BIGNUM *a,
 //                                          const BIGNUM *field, BN_CTX *ctx);
 
-  function BN_generate_dsa_nonce(&out: PBIGNUM; range: PBIGNUM; priv: PBIGNUM; const &message: PByte; message_len: size_t; ctx: PBN_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function BN_generate_dsa_nonce(&out: PBIGNUM; range: PBIGNUM; priv: PBIGNUM; const &message: PByte; message_len: TIdC_SIZET; ctx: PBN_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 
   (* Primes from RFC 2409 *)
   function BN_get_rfc2409_prime_768(bn: PBIGNUM ): PBIGNUM cdecl; external 'libcrypto-1_1.dll';

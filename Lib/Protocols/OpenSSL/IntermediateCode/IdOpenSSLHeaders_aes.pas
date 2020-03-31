@@ -1,4 +1,30 @@
-﻿unit IdOpenSSLHeaders_aes;
+﻿{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
+unit IdOpenSSLHeaders_aes;
 
 interface
 
@@ -42,15 +68,15 @@ var
   procedure AES_decrypt(const &in: PByte; &out: PByte; const key: PAES_KEY);
 
   procedure AES_ecb_encrypt(const &in: PByte; &out: PByte; const key: PAES_KEY; const enc: TIdC_INT);
-  procedure AES_cbc_encrypt(const &in: PByte; &out: PByte; length: size_t; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT);
-  procedure AES_cfb128_encrypt(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
-  procedure AES_cfb1_encrypt(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
-  procedure AES_cfb8_encrypt(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
-  procedure AES_ofb128_encrypt(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT);
+  procedure AES_cbc_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT);
+  procedure AES_cfb128_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
+  procedure AES_cfb1_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
+  procedure AES_cfb8_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
+  procedure AES_ofb128_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT);
   (* NB: the IV is _two_ blocks long *)
-  procedure AES_ige_encrypt(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT);
+  procedure AES_ige_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT);
   (* NB: the IV is _four_ blocks long *)
-  procedure AES_bi_ige_encrypt(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TIdC_INT);
+  procedure AES_bi_ige_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TIdC_INT);
 
   function AES_wrap_key(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT;
   function AES_unwrap_key(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT;

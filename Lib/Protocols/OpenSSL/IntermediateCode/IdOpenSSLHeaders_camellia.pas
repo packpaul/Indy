@@ -1,3 +1,29 @@
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
 unit IdOpenSSLHeaders_camellia;
 
 interface
@@ -48,12 +74,12 @@ var
   procedure Camellia_decrypt(const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY);
 
   procedure Camellia_ecb_encrypt( const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY; const enc: TIdC_INT);
-  procedure Camellia_cbc_encrypt( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; const enc: TIdC_INT);
-  procedure Camellia_cfb128_encrypt( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
-  procedure Camellia_cfb1_encrypt( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
-  procedure Camellia_cfb8_encrypt( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
-  procedure Camellia_ofb128_encrypt( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT);
-  procedure Camellia_ctr128_encrypt( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: TCamellia_ctr128_encrypt_ivec; ecount_buf: TCamellia_ctr128_encrypt_ecount_buf; num: PIdC_INT);
+  procedure Camellia_cbc_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; const enc: TIdC_INT);
+  procedure Camellia_cfb128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
+  procedure Camellia_cfb1_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
+  procedure Camellia_cfb8_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT);
+  procedure Camellia_ofb128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT);
+  procedure Camellia_ctr128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: TCamellia_ctr128_encrypt_ivec; ecount_buf: TCamellia_ctr128_encrypt_ecount_buf; num: PIdC_INT);
 
 implementation
 

@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_x509v3;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:53
+// Generation date: 31.03.2020 10:11:56
+
+unit IdOpenSSLHeaders_x509v3;
 
 interface
 
@@ -732,10 +758,15 @@ type
   function X509V3_EXT_REQ_add_nconf(conf: PCONF; ctx: PX509V3_CTX; const section: PIdAnsiChar; req: PX509_REQ): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function X509V3_EXT_CRL_add_nconf(conf: PCONF; ctx: PX509V3_CTX; const section: PIdAnsiChar; crl: PX509_CRL): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 
+  function X509V3_EXT_conf_nid(conf: Pointer{LHASH_OF(CONF_VALUE)}; ctx: PX509V3_CTX; ext_nid: TIdC_INT; const value: PIdAnsiChar): PX509_EXTENSION cdecl; external 'libcrypto-1_1.dll';
 //  X509_EXTENSION *X509V3_EXT_conf_nid(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; ext_nid: TIdC_INT; const value: PIdAnsiChar);
+  function X509V3_EXT_conf(conf: Pointer{LHASH_OF(CONF_VALUE)}; ctx: PX509V3_CTX; const name: PIdAnsiChar; const value: PIdAnsiChar): PX509_EXTENSION cdecl; external 'libcrypto-1_1.dll';
 //  X509_EXTENSION *X509V3_EXT_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const name: PIdAnsiChar; const value: PIdAnsiChar);
+  function X509V3_EXT_add_conf(conf: Pointer{LHASH_OF(CONF_VALUE)}; ctx: PX509V3_CTX; const section: PIdAnsiChar; cert: PX509): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 //  TIdC_INT X509V3_EXT_add_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const section: PIdAnsiChar; cert: PX509);
+  function X509V3_EXT_REQ_add_conf(conf: Pointer{LHASH_OF(CONF_VALUE)}; ctx: PX509V3_CTX; const section: PIdAnsiChar; req: PX509_REQ): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 //  TIdC_INT X509V3_EXT_REQ_add_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const section: PIdAnsiChar; req: PX509_REQ);
+  function X509V3_EXT_CRL_add_conf(conf: Pointer{LHASH_OF(CONF_VALUE)}; ctx: PX509V3_CTX; const section: PIdAnsiChar; crl: PX509_CRL): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 //  TIdC_INT X509V3_EXT_CRL_add_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const section: PIdAnsiChar; crl: PX509_CRL);
 
 //  TIdC_INT X509V3_add_value_bool_nf(const name: PIdAnsiChar; TIdC_INT asn1_bool; STACK_OF(CONF_VALUE) **extlist);
@@ -811,9 +842,9 @@ type
 //  void X509_email_free(STACK_OF(OPENSSL_STRING) *sk);
 //  STACK_OF(OPENSSL_STRING) *X509_get1_ocsp(x: PX509);
 
-  function X509_check_host(x: PX509; const chk: PIdAnsiChar; chklen: size_t; flags: TIdC_UINT; peername: PPIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function X509_check_email(x: PX509; const chk: PIdAnsiChar; chklen: size_t; flags: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function X509_check_ip(x: PX509; const chk: PByte; chklen: size_t; flags: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function X509_check_host(x: PX509; const chk: PIdAnsiChar; chklen: TIdC_SIZET; flags: TIdC_UINT; peername: PPIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function X509_check_email(x: PX509; const chk: PIdAnsiChar; chklen: TIdC_SIZET; flags: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function X509_check_ip(x: PX509; const chk: PByte; chklen: TIdC_SIZET; flags: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function X509_check_ip_asc(x: PX509; const ipasc: PIdAnsiChar; flags: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 
   function a2i_IPADDRESS(const ipasc: PIdAnsiChar): PASN1_OCTET_STRING cdecl; external 'libcrypto-1_1.dll';

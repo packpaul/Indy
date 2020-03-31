@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_crypto;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_crypto;
 
 interface
 
@@ -112,7 +138,7 @@ type
   //                            CRYPTO_EX_new *new_func, CRYPTO_EX_dup *dup_func,
   //                            CRYPTO_EX_free *free_func);
 
-  CRYPTO_mem_leaks_cb_cb = function(const str: PIdAnsiChar; len: size_t; u: Pointer): TIdC_INT;
+  CRYPTO_mem_leaks_cb_cb = function(const str: PIdAnsiChar; len: TIdC_SIZET; u: Pointer): TIdC_INT;
   CRYPTO_THREAD_run_once_init = procedure;
 
   CRYPTO_THREAD_LOCAL = type DWORD;
@@ -166,9 +192,9 @@ var
   //# define OPENSSL_secure_actual_size(ptr) \
   //        CRYPTO_secure_actual_size(ptr)
 
-  OPENSSL_strlcpy: function(dst: PIdAnsiChar; const src: PIdAnsiChar; siz: size_t): size_t cdecl = nil;
-  OPENSSL_strlcat: function(dst: PIdAnsiChar; const src: PIdAnsiChar; siz: size_t): size_t cdecl = nil;
-  OPENSSL_strnlen: function(const str: PIdAnsiChar; maxlen: size_t): size_t cdecl = nil;
+  OPENSSL_strlcpy: function(dst: PIdAnsiChar; const src: PIdAnsiChar; siz: TIdC_SIZET): TIdC_SIZET cdecl = nil;
+  OPENSSL_strlcat: function(dst: PIdAnsiChar; const src: PIdAnsiChar; siz: TIdC_SIZET): TIdC_SIZET cdecl = nil;
+  OPENSSL_strnlen: function(const str: PIdAnsiChar; maxlen: TIdC_SIZET): TIdC_SIZET cdecl = nil;
   OPENSSL_buf2hexstr: function(const buffer: PByte; len: TIdC_LONG): PIdAnsiChar cdecl = nil;
   OPENSSL_hexstr2buf: function(const str: PIdAnsiChar; len: PIdC_LONG): PByte cdecl = nil;
   OPENSSL_hexchar2int: function(c: Byte): TIdC_INT cdecl = nil;
@@ -234,37 +260,37 @@ var
   //# endif /* OPENSSL_API_COMPAT < 0x10100000L */
 
   //int CRYPTO_set_mem_functions(
-  //        void *(*m) (size_t, const char *, int),
-  //        void *(*r) (void *, size_t, const char *, int),
+  //        void *(*m) (TIdC_SIZET, const char *, int),
+  //        void *(*r) (void *, TIdC_SIZET, const char *, int),
   //        void (*f) (void *, const char *, int));
   //int CRYPTO_set_mem_debug(int flag);
   //void CRYPTO_get_mem_functions(
-  //        void *(**m) (size_t, const char *, int),
-  //        void *(**r) (void *, size_t, const char *, int),
+  //        void *(**m) (TIdC_SIZET, const char *, int),
+  //        void *(**r) (void *, TIdC_SIZET, const char *, int),
   //        void (**f) (void *, const char *, int));
 
-  CRYPTO_malloc: function(num: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
-  CRYPTO_zalloc: function(num: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
-  CRYPTO_memdup: function(const str: Pointer; siz: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_malloc: function(num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_zalloc: function(num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_memdup: function(const str: Pointer; siz: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
   CRYPTO_strdup: function(const str: PAnsiChar; const &file: PAnsiChar; line: TIdC_INT): PAnsiChar cdecl = nil;
-  CRYPTO_strndup: function(const str: PAnsiChar; s: size_t; const &file: PAnsiChar; line: TIdC_INT): PAnsiChar cdecl = nil;
+  CRYPTO_strndup: function(const str: PAnsiChar; s: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): PAnsiChar cdecl = nil;
   CRYPTO_free: procedure(ptr: Pointer; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
-  CRYPTO_clear_free: procedure(ptr: Pointer; num: size_t; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
-  CRYPTO_realloc: function(addr: Pointer; num: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
-  CRYPTO_clear_realloc: function(addr: Pointer; old_num: size_t; num: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_clear_free: procedure(ptr: Pointer; num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
+  CRYPTO_realloc: function(addr: Pointer; num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_clear_realloc: function(addr: Pointer; old_num: TIdC_SIZET; num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
 
-  CRYPTO_secure_malloc_init: function(sz: size_t; minsize: TIdC_INT): TIdC_INT cdecl = nil;
+  CRYPTO_secure_malloc_init: function(sz: TIdC_SIZET; minsize: TIdC_INT): TIdC_INT cdecl = nil;
   CRYPTO_secure_malloc_done: function: TIdC_INT cdecl = nil;
-  CRYPTO_secure_malloc: function(num: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
-  CRYPTO_secure_zalloc: function(num: size_t; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_secure_malloc: function(num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
+  CRYPTO_secure_zalloc: function(num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT): Pointer cdecl = nil;
   CRYPTO_secure_free: procedure(ptr: Pointer; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
-  CRYPTO_secure_clear_free: procedure(ptr: Pointer; num: size_t; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
+  CRYPTO_secure_clear_free: procedure(ptr: Pointer; num: TIdC_SIZET; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
   CRYPTO_secure_allocated: function(const ptr: Pointer): TIdC_INT cdecl = nil;
   CRYPTO_secure_malloc_initialized: function: TIdC_INT cdecl = nil;
-  CRYPTO_secure_actual_size: function(ptr: Pointer): size_t cdecl = nil;
-  CRYPTO_secure_used: function: size_t cdecl = nil;
+  CRYPTO_secure_actual_size: function(ptr: Pointer): TIdC_SIZET cdecl = nil;
+  CRYPTO_secure_used: function: TIdC_SIZET cdecl = nil;
 
-  OPENSSL_cleanse: procedure(ptr: Pointer; len: size_t) cdecl = nil;
+  OPENSSL_cleanse: procedure(ptr: Pointer; len: TIdC_SIZET) cdecl = nil;
 
   CRYPTO_mem_debug_push: function(const info: PAnsiChar; const &file: PAnsiChar; line: TIdC_INT): TIdC_INT cdecl = nil;
   CRYPTO_mem_debug_pop: function: TIdC_INT cdecl = nil;
@@ -276,8 +302,8 @@ var
    *   0:   called before the actual memory allocation has taken place
    *   1:   called after the actual memory allocation has taken place
    *)
-  CRYPTO_mem_debug_malloc: procedure(addr: Pointer; num: size_t; flag: TIdC_INT; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
-  CRYPTO_mem_debug_realloc: procedure(addr1: Pointer; addr2: Pointer; num: size_t; flag: TIdC_INT; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
+  CRYPTO_mem_debug_malloc: procedure(addr: Pointer; num: TIdC_SIZET; flag: TIdC_INT; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
+  CRYPTO_mem_debug_realloc: procedure(addr1: Pointer; addr2: Pointer; num: TIdC_SIZET; flag: TIdC_INT; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
   CRYPTO_mem_debug_free: procedure(addr: Pointer; flag: TIdC_INT; const &file: PAnsiChar; line: TIdC_INT) cdecl = nil;
 
   CRYPTO_mem_leaks_cb: function(cb: CRYPTO_mem_leaks_cb_cb; u: Pointer): TIdC_INT cdecl = nil;
@@ -298,7 +324,7 @@ var
 
   OPENSSL_init: procedure cdecl = nil;
 
-  // struct tm *OPENSSL_gmtime(const time_t *timer, struct tm *result);
+  // struct tm *OPENSSL_gmtime(const TIdC_TIMET *timer, struct tm *result);
 
   //function OPENSSL_gmtime_adj(struct tm *tm, int offset_day, long offset_sec): TIdC_INT;
   //function OPENSSL_gmtime_diff(int *pday, int *psec, const struct tm *from, const struct tm *to): TIdC_INT;
@@ -310,7 +336,7 @@ var
    * into a defined order as the return value when a != b is undefined, other
    * than to be non-zero.
    *)
-  CRYPTO_memcmp: function(const in_a: Pointer; const in_b: Pointer; len: size_t): TIdC_INT cdecl = nil;
+  CRYPTO_memcmp: function(const in_a: Pointer; const in_b: Pointer; len: TIdC_SIZET): TIdC_INT cdecl = nil;
 
   (* Library initialisation functions *)
   OPENSSL_cleanup: procedure cdecl = nil;

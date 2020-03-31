@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_ec;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_ec;
 
 interface
 
@@ -79,7 +105,7 @@ type
   PECDSA_SIG = ^ECDSA_SIG;
   PPECDSA_SIG = ^PECDSA_SIG;
 
-  ECDH_compute_key_KDF = function(const &in: Pointer; inlen: size_t; &out: Pointer; outlen: Psize_t): Pointer; cdecl;
+  ECDH_compute_key_KDF = function(const &in: Pointer; inlen: TIdC_SIZET; &out: Pointer; outlen: PIdC_SIZET): Pointer; cdecl;
 
   EC_KEY_METHOD_init_init = function(key: PEC_KEY): TIdC_INT; cdecl;
   EC_KEY_METHOD_init_finish = procedure(key: PEC_KEY); cdecl;
@@ -90,7 +116,7 @@ type
 
   EC_KEY_METHOD_keygen_keygen = function(key: PEC_KEY): TIdC_INT; cdecl;
 
-  EC_KEY_METHOD_compute_key_ckey = function(psec: PPByte; pseclen: PSize_t; const pub_key: PEC_POINT; const ecdh: PEC_KEY): TIdC_INT; cdecl;
+  EC_KEY_METHOD_compute_key_ckey = function(psec: PPByte; pseclen: PIdC_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY): TIdC_INT; cdecl;
 
   EC_KEY_METHOD_sign_sign = function(&type: TIdC_INT; const dgst: PByte; dlen: TIdC_INT; sig: PByte; siglen: PIdC_UINT; const kinv: PBIGNUM; const r: PBIGNUM; eckey: PEC_KEY): TIdC_INT; cdecl;
   EC_KEY_METHOD_sign_sign_setup = function(eckey: PEC_KEY; ctx_in: PBN_CTX; kinvp: PPBIGNUM; rp: PPBIGNUM): TIdC_INT; cdecl;
@@ -157,8 +183,8 @@ var
   EC_GROUP_get_point_conversion_form: function(const group: PEC_GROUP): point_conversion_form_t cdecl = nil;
 
   EC_GROUP_get0_seed: function(const x: PEC_GROUP): PByte cdecl = nil;
-  EC_GROUP_get_seed_len: function(const x: PEC_GROUP): size_t cdecl = nil;
-  EC_GROUP_set_seed: function(x: PEC_GROUP; const p: PByte; len: size_t): size_t cdecl = nil;
+  EC_GROUP_get_seed_len: function(const x: PEC_GROUP): TIdC_SIZET cdecl = nil;
+  EC_GROUP_set_seed: function(x: PEC_GROUP; const p: PByte; len: TIdC_SIZET): TIdC_SIZET cdecl = nil;
 
   EC_GROUP_set_curve: function(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TIdC_INT cdecl = nil;
   EC_GROUP_get_curve: function(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TIdC_INT cdecl = nil;
@@ -180,7 +206,7 @@ var
   EC_GROUP_new_from_ecpkparameters: function(const params: PECPKPARAMETERS): PEC_GROUP cdecl = nil;
   EC_GROUP_get_ecpkparameters: function(const group: PEC_GROUP; params: PECPKPARAMETERS): PECPKPARAMETERS cdecl = nil;
 
-  EC_get_builtin_curves: function(r: PEC_builtin_curve; nitems: size_t): size_t cdecl = nil;
+  EC_get_builtin_curves: function(r: PEC_builtin_curve; nitems: TIdC_SIZET): TIdC_SIZET cdecl = nil;
 
   EC_curve_nid2nist: function(nid: TIdC_INT): PIdAnsiChar cdecl = nil;
   EC_curve_nist2nid: function(const name: PIdAnsiChar): TIdC_INT cdecl = nil;
@@ -204,9 +230,9 @@ var
   EC_POINT_get_affine_coordinates_GF2m: function(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TIdC_INT cdecl = nil;
   EC_POINT_set_compressed_coordinates_GF2m: function(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TIdC_INT; ctx: PBN_CTX): TIdC_INT cdecl = nil;
 
-  EC_POINT_point2oct: function(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: size_T; ctx: PBN_CTX): size_t cdecl = nil;
-  EC_POINT_oct2point: function(const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: size_t; ctx: PBN_CTX): TIdC_INT cdecl = nil;
-  EC_POINT_point2buf: function(const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): size_t cdecl = nil;
+  EC_POINT_point2oct: function(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: TIdC_SIZET; ctx: PBN_CTX): TIdC_SIZET cdecl = nil;
+  EC_POINT_oct2point: function(const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: TIdC_SIZET; ctx: PBN_CTX): TIdC_INT cdecl = nil;
+  EC_POINT_point2buf: function(const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TIdC_SIZET cdecl = nil;
   EC_POINT_point2bn: function(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; bn: PBIGNUM; ctx: PBN_CTX): PBIGNUM cdecl = nil;
   EC_POINT_bn2point: function(const group: PEC_GROUP; const bn: PBIGNUM; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT cdecl = nil;
   EC_POINT_point2hex: function(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; ctx: PBN_CTX): PIdAnsiChar cdecl = nil;
@@ -219,8 +245,8 @@ var
   EC_POINT_is_on_curve: function(const group: PEC_GROUP; const point: PEC_POINT; ctx: PBN_CTX): TIdC_INT cdecl = nil;
   EC_POINT_cmp: function(const group: PEC_GROUP; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TIdC_INT cdecl = nil;
   EC_POINT_make_affine: function(const group: PEC_GROUP; point: PEC_POINT; ctx: PBN_CTX): TIdC_INT cdecl = nil;
-  EC_POINTs_make_affine: function(const group: PEC_METHOD; num: size_t; points: PPEC_POINT; ctx: PBN_CTX): TIdC_INT cdecl = nil;
-  EC_POINTs_mul: function(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: size_t; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TIdC_INT cdecl = nil;
+  EC_POINTs_make_affine: function(const group: PEC_METHOD; num: TIdC_SIZET; points: PPEC_POINT; ctx: PBN_CTX): TIdC_INT cdecl = nil;
+  EC_POINTs_mul: function(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: TIdC_SIZET; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TIdC_INT cdecl = nil;
   EC_POINT_mul: function(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; const q: PEC_POINT; const m: PBIGNUM; ctx: PBN_CTX): TIdC_INT cdecl = nil;
 
   EC_GROUP_precompute_mult: function(group: PEC_GROUP; ctx: PBN_CTX): TIdC_INT cdecl = nil;
@@ -271,11 +297,11 @@ var
   EC_KEY_check_key: function(const key: PEC_KEY): TIdC_INT cdecl = nil;
   EC_KEY_can_sign: function(const eckey: PEC_KEY): TIdC_INT cdecl = nil;
   EC_KEY_set_public_key_affine_coordinates: function(key: PEC_KEY; x: PBIGNUM; y: PBIGNUM): TIdC_INT cdecl = nil;
-  EC_KEY_key2buf: function(const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): size_t cdecl = nil;
-  EC_KEY_oct2key: function(key: PEC_KEY; const buf: PByte; len: size_t; ctx: PBN_CTX): TIdC_INT cdecl = nil;
-  EC_KEY_oct2priv: function(key: PEC_KEY; const buf: PByte; len: size_t): TIdC_INT cdecl = nil;
-  EC_KEY_priv2oct: function(const key: PEC_KEY; buf: PByte; len: size_t): size_t cdecl = nil;
-  EC_KEY_priv2buf: function(const eckey: PEC_KEY; buf: PPByte): size_t cdecl = nil;
+  EC_KEY_key2buf: function(const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TIdC_SIZET cdecl = nil;
+  EC_KEY_oct2key: function(key: PEC_KEY; const buf: PByte; len: TIdC_SIZET; ctx: PBN_CTX): TIdC_INT cdecl = nil;
+  EC_KEY_oct2priv: function(key: PEC_KEY; const buf: PByte; len: TIdC_SIZET): TIdC_INT cdecl = nil;
+  EC_KEY_priv2oct: function(const key: PEC_KEY; buf: PByte; len: TIdC_SIZET): TIdC_SIZET cdecl = nil;
+  EC_KEY_priv2buf: function(const eckey: PEC_KEY; buf: PPByte): TIdC_SIZET cdecl = nil;
 
   d2i_ECPrivateKey: function(key: PPEC_KEY; const &in: PPByte; len: TIdC_LONG): PEC_KEY cdecl = nil;
   i2d_ECPrivateKey: function(key: PEC_KEY; &out: PPByte): TIdC_INT cdecl = nil;
@@ -292,8 +318,8 @@ var
   EC_KEY_set_method: function(key: PEC_KEY; const meth: PEC_KEY_METHOD): TIdC_INT cdecl = nil;
   EC_KEY_new_method: function(engine: PENGINE): PEC_KEY cdecl = nil;
 
-  ECDH_KDF_X9_62: function(&out: PByte; outlen: size_t; const Z: PByte; Zlen: size_t; const sinfo: PByte; sinfolen: size_t; const md: PEVP_MD): TIdC_INT cdecl = nil;
-  ECDH_compute_key: function(&out: Pointer; oulen: size_t; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TIdC_INT cdecl = nil;
+  ECDH_KDF_X9_62: function(&out: PByte; outlen: TIdC_SIZET; const Z: PByte; Zlen: TIdC_SIZET; const sinfo: PByte; sinfolen: TIdC_SIZET; const md: PEVP_MD): TIdC_INT cdecl = nil;
+  ECDH_compute_key: function(&out: Pointer; oulen: TIdC_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TIdC_INT cdecl = nil;
 
   ECDSA_SIG_new: function: PECDSA_SIG cdecl = nil;
   ECDSA_SIG_free: procedure(sig: PECDSA_SIG) cdecl = nil;

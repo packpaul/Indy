@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_err;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_err;
 
 interface
 
@@ -159,7 +185,7 @@ type
   ERR_STRING_DATA = ERR_string_data_st;
   PERR_STRING_DATA = ^ERR_STRING_DATA;
 
-  ERR_print_errors_cb_cb = function(str: PIdAnsiChar; len: Size_t; u: Pointer): TIdC_INT; cdecl;
+  ERR_print_errors_cb_cb = function(str: PIdAnsiChar; len: TIdC_SIZET; u: Pointer): TIdC_INT; cdecl;
 
 {$REGION 'Generated loading and unloading methods'}
 function Load(const ADllHandle: THandle): TArray<string>;
@@ -186,7 +212,7 @@ var
 
   ERR_clear_error: procedure cdecl = nil;
   ERR_error_string: function(e: TIdC_ULONG; buf: PIdAnsiChar): PIdAnsiChar cdecl = nil;
-  ERR_error_string_n: procedure(e: TIdC_ULONG; buf: PIdAnsiChar; len: size_t) cdecl = nil;
+  ERR_error_string_n: procedure(e: TIdC_ULONG; buf: PIdAnsiChar; len: TIdC_SIZET) cdecl = nil;
   ERR_lib_error_string: function(e: TIdC_ULONG): PIdAnsiChar cdecl = nil;
   ERR_func_error_string: function(e: TIdC_ULONG): PIdAnsiChar cdecl = nil;
   ERR_reason_error_string: function(e: TIdC_ULONG): PIdAnsiChar cdecl = nil;

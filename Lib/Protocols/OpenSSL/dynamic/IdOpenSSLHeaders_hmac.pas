@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_hmac;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_hmac;
 
 interface
 
@@ -23,15 +49,15 @@ procedure UnLoad;
 {$ENDREGION}
 
 var
-  HMAC_size: function(const e: PHMAC_CTX): size_t cdecl = nil;
+  HMAC_size: function(const e: PHMAC_CTX): TIdC_SIZET cdecl = nil;
   HMAC_CTX_new: function: PHMAC_CTX cdecl = nil;
   HMAC_CTX_reset: function(ctx: PHMAC_CTX): TIdC_INT cdecl = nil;
   HMAC_CTX_free: procedure(ctx: PHMAC_CTX) cdecl = nil;
 
   HMAC_Init_ex: function(ctx: PHMAC_CTX; const key: Pointer; len: TIdC_INT; const md: PEVP_MD; impl: PENGINE): TIdC_INT cdecl = nil;
-  HMAC_Update: function(ctx: PHMAC_CTX; const data: PByte; len: size_t): TIdC_INT cdecl = nil;
+  HMAC_Update: function(ctx: PHMAC_CTX; const data: PByte; len: TIdC_SIZET): TIdC_INT cdecl = nil;
   HMAC_Final: function(ctx: PHMAC_CTX; md: PByte; len: PByte): TIdC_INT cdecl = nil;
-  HMAC: function(const evp_md: PEVP_MD; const key: Pointer; key_len: TIdC_INT; const d: PByte; n: size_t; md: PByte; md_len: PIdC_INT): PByte cdecl = nil;
+  HMAC: function(const evp_md: PEVP_MD; const key: Pointer; key_len: TIdC_INT; const d: PByte; n: TIdC_SIZET; md: PByte; md_len: PIdC_INT): PByte cdecl = nil;
   HMAC_CTX_copy: function(dctx: PHMAC_CTX; sctx: PHMAC_CTX): TIdC_INT cdecl = nil;
 
   HMAC_CTX_set_flags: procedure(ctx: PHMAC_CTX; flags: TIdC_ULONG) cdecl = nil;

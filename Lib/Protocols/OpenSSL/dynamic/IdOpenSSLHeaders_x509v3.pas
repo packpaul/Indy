@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_x509v3;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_x509v3;
 
 interface
 
@@ -738,10 +764,15 @@ var
   X509V3_EXT_REQ_add_nconf: function(conf: PCONF; ctx: PX509V3_CTX; const section: PIdAnsiChar; req: PX509_REQ): TIdC_INT cdecl = nil;
   X509V3_EXT_CRL_add_nconf: function(conf: PCONF; ctx: PX509V3_CTX; const section: PIdAnsiChar; crl: PX509_CRL): TIdC_INT cdecl = nil;
 
+  X509V3_EXT_conf_nid: function(conf: Pointer; ctx: PX509V3_CTX; ext_nid: TIdC_INT; const value: PIdAnsiChar): PX509_EXTENSION cdecl = nil;
 //  X509_EXTENSION *X509V3_EXT_conf_nid(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; ext_nid: TIdC_INT; const value: PIdAnsiChar);
+  X509V3_EXT_conf: function(conf: Pointer; ctx: PX509V3_CTX; const name: PIdAnsiChar; const value: PIdAnsiChar): PX509_EXTENSION cdecl = nil;
 //  X509_EXTENSION *X509V3_EXT_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const name: PIdAnsiChar; const value: PIdAnsiChar);
+  X509V3_EXT_add_conf: function(conf: Pointer; ctx: PX509V3_CTX; const section: PIdAnsiChar; cert: PX509): TIdC_INT cdecl = nil;
 //  TIdC_INT X509V3_EXT_add_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const section: PIdAnsiChar; cert: PX509);
+  X509V3_EXT_REQ_add_conf: function(conf: Pointer; ctx: PX509V3_CTX; const section: PIdAnsiChar; req: PX509_REQ): TIdC_INT cdecl = nil;
 //  TIdC_INT X509V3_EXT_REQ_add_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const section: PIdAnsiChar; req: PX509_REQ);
+  X509V3_EXT_CRL_add_conf: function(conf: Pointer; ctx: PX509V3_CTX; const section: PIdAnsiChar; crl: PX509_CRL): TIdC_INT cdecl = nil;
 //  TIdC_INT X509V3_EXT_CRL_add_conf(LHASH_OF(CONF_VALUE) *conf; ctx: PX509V3_CTX; const section: PIdAnsiChar; crl: PX509_CRL);
 
 //  TIdC_INT X509V3_add_value_bool_nf(const name: PIdAnsiChar; TIdC_INT asn1_bool; STACK_OF(CONF_VALUE) **extlist);
@@ -817,9 +848,9 @@ var
 //  void X509_email_free(STACK_OF(OPENSSL_STRING) *sk);
 //  STACK_OF(OPENSSL_STRING) *X509_get1_ocsp(x: PX509);
 
-  X509_check_host: function(x: PX509; const chk: PIdAnsiChar; chklen: size_t; flags: TIdC_UINT; peername: PPIdAnsiChar): TIdC_INT cdecl = nil;
-  X509_check_email: function(x: PX509; const chk: PIdAnsiChar; chklen: size_t; flags: TIdC_UINT): TIdC_INT cdecl = nil;
-  X509_check_ip: function(x: PX509; const chk: PByte; chklen: size_t; flags: TIdC_UINT): TIdC_INT cdecl = nil;
+  X509_check_host: function(x: PX509; const chk: PIdAnsiChar; chklen: TIdC_SIZET; flags: TIdC_UINT; peername: PPIdAnsiChar): TIdC_INT cdecl = nil;
+  X509_check_email: function(x: PX509; const chk: PIdAnsiChar; chklen: TIdC_SIZET; flags: TIdC_UINT): TIdC_INT cdecl = nil;
+  X509_check_ip: function(x: PX509; const chk: PByte; chklen: TIdC_SIZET; flags: TIdC_UINT): TIdC_INT cdecl = nil;
   X509_check_ip_asc: function(x: PX509; const ipasc: PIdAnsiChar; flags: TIdC_UINT): TIdC_INT cdecl = nil;
 
   a2i_IPADDRESS: function(const ipasc: PIdAnsiChar): PASN1_OCTET_STRING cdecl = nil;
@@ -938,6 +969,11 @@ begin
     X509V3_EXT_add_nconf := LoadFunction('X509V3_EXT_add_nconf', LFailed);
     X509V3_EXT_REQ_add_nconf := LoadFunction('X509V3_EXT_REQ_add_nconf', LFailed);
     X509V3_EXT_CRL_add_nconf := LoadFunction('X509V3_EXT_CRL_add_nconf', LFailed);
+    X509V3_EXT_conf_nid := LoadFunction('X509V3_EXT_conf_nid', LFailed);
+    X509V3_EXT_conf := LoadFunction('X509V3_EXT_conf', LFailed);
+    X509V3_EXT_add_conf := LoadFunction('X509V3_EXT_add_conf', LFailed);
+    X509V3_EXT_REQ_add_conf := LoadFunction('X509V3_EXT_REQ_add_conf', LFailed);
+    X509V3_EXT_CRL_add_conf := LoadFunction('X509V3_EXT_CRL_add_conf', LFailed);
     X509V3_set_nconf := LoadFunction('X509V3_set_nconf', LFailed);
     X509V3_get_string := LoadFunction('X509V3_get_string', LFailed);
     X509V3_string_free := LoadFunction('X509V3_string_free', LFailed);
@@ -1024,6 +1060,11 @@ begin
   X509V3_EXT_add_nconf := nil;
   X509V3_EXT_REQ_add_nconf := nil;
   X509V3_EXT_CRL_add_nconf := nil;
+  X509V3_EXT_conf_nid := nil;
+  X509V3_EXT_conf := nil;
+  X509V3_EXT_add_conf := nil;
+  X509V3_EXT_REQ_add_conf := nil;
+  X509V3_EXT_CRL_add_conf := nil;
   X509V3_set_nconf := nil;
   X509V3_get_string := nil;
   X509V3_string_free := nil;

@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_sha;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:53
+// Generation date: 31.03.2020 10:11:56
+
+unit IdOpenSSLHeaders_sha;
 
 interface
 
@@ -71,31 +97,31 @@ type
   PSHA512_CTX = ^SHA512_CTX;
 
   function SHA1_Init(c: PSHA_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA1_Update(c: PSHA_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SHA1_Update(c: PSHA_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function SHA1_Final(md: PByte; c: PSHA_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA1(const d: PByte; n: size_t; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
+  function SHA1(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
   procedure SHA1_Transform(c: PSHA_CTX; const data: PByte) cdecl; external 'libcrypto-1_1.dll';
 
   function SHA224_Init(c: PSHA256_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA224_Update(c: PSHA256_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SHA224_Update(c: PSHA256_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function SHA224_Final(md: PByte; c: PSHA256_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA224(const d: PByte; n: size_t; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
+  function SHA224(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
 
   function SHA256_Init(c: PSHA256_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA256_Update(c: PSHA256_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SHA256_Update(c: PSHA256_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function SHA256_Final(md: PByte; c: PSHA256_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA256(const d: PByte; n: size_t; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
+  function SHA256(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
   procedure SHA256_Transform(c: PSHA256_CTX; const data: PByte) cdecl; external 'libcrypto-1_1.dll';
 
   function SHA384_Init(c: PSHA512_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA384_Update(c: PSHA512_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SHA384_Update(c: PSHA512_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function SHA384_Final(md: PByte; c: PSHA512_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA384(const d: PByte; n: size_t; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
+  function SHA384(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
 
   function SHA512_Init(c: PSHA512_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA512_Update(c: PSHA512_CTX; const data: Pointer; len: size_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SHA512_Update(c: PSHA512_CTX; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function SHA512_Final(md: PByte; c: PSHA512_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SHA512(const d: PByte; n: size_t; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
+  function SHA512(const d: PByte; n: TIdC_SIZET; md: PByte): PByte cdecl; external 'libcrypto-1_1.dll';
   procedure SHA512_Transform(c: PSHA512_CTX; const data: PByte) cdecl; external 'libcrypto-1_1.dll';
 
 implementation

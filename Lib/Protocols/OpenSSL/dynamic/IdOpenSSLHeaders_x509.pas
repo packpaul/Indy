@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_x509;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 26.03.2020 10:32:31
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_x509;
 
 interface
 
@@ -173,9 +199,6 @@ type
   //DEFINE_STACK_OF(X509_NAME_ENTRY)
   //
   //DEFINE_STACK_OF(X509_NAME)
-  X509_NAME = type Pointer; //////////////////////////////////////////////
-  PX509_NAME = ^X509_NAME;  //////////////////////////////////////////////
-  PPX509_NAME = ^PX509_NAME;
 
   X509_EXTENSION = type Pointer; // X509_extension_st
   PX509_EXTENSION = ^X509_EXTENSION;
@@ -474,11 +497,11 @@ var
   X509_NAME_dup: function(xn: PX509_NAME): PX509_NAME cdecl = nil;
   X509_NAME_ENTRY_dup: function(ne: PX509_NAME_ENTRY): PX509_NAME_ENTRY cdecl = nil;
 
-//  function X509_cmp_time(const s: PASN1_TIME; t: Ptime_t): TIdC_INT;
-//  function X509_cmp_current_time(const s: PASN1_TIME): TIdC_INT;
-//  function X509_time_adj(s: PASN1_TIME; adj: TIdC_LONG; t: Ptime_t): PASN1_TIME;
-//  function X509_time_adj_ex(s: PASN1_TIME; offset_day: TIdC_INT; offset_sec: TIdC_LONG; t: Ptime_t): PASN1_TIME;
-//  function X509_gmtime_adj(s: PASN1_TIME; adj: TIdC_LONG): PASN1_TIME;
+  X509_cmp_time: function(const s: PASN1_TIME; t: PIdC_TIMET): TIdC_INT cdecl = nil;
+  X509_cmp_current_time: function(const s: PASN1_TIME): TIdC_INT cdecl = nil;
+  X509_time_adj: function(s: PASN1_TIME; adj: TIdC_LONG; t: PIdC_TIMET): PASN1_TIME cdecl = nil;
+  X509_time_adj_ex: function(s: PASN1_TIME; offset_day: TIdC_INT; offset_sec: TIdC_LONG; t: PIdC_TIMET): PASN1_TIME cdecl = nil;
+  X509_gmtime_adj: function(s: PASN1_TIME; adj: TIdC_LONG): PASN1_TIME cdecl = nil;
 
   X509_get_default_cert_area: function: PIdAnsiChar cdecl = nil;
   X509_get_default_cert_dir: function: PIdAnsiChar cdecl = nil;
@@ -808,7 +831,7 @@ var
   X509_NAME_ENTRY_get_data: function(const ne: PX509_NAME_ENTRY): ASN1_STRING cdecl = nil;
   X509_NAME_ENTRY_set: function(const ne: PX509_NAME_ENTRY): TIdC_INT cdecl = nil;
 
-  X509_NAME_get0_der: function(nm: PX509_NAME; const pder: PPByte; pderlen: Psize_t): TIdC_INT cdecl = nil;
+  X509_NAME_get0_der: function(nm: PX509_NAME; const pder: PPByte; pderlen: PIdC_SIZET): TIdC_INT cdecl = nil;
 
   //TIdC_INT X509v3_get_ext_count(const STACK_OF(X509_EXTENSION) *x);
   //TIdC_INT X509v3_get_ext_by_NID(const STACK_OF(X509_EXTENSION) *x,
@@ -1050,6 +1073,11 @@ begin
     X509_ALGOR_cmp := LoadFunction('X509_ALGOR_cmp', LFailed);
     X509_NAME_dup := LoadFunction('X509_NAME_dup', LFailed);
     X509_NAME_ENTRY_dup := LoadFunction('X509_NAME_ENTRY_dup', LFailed);
+    X509_cmp_time := LoadFunction('X509_cmp_time', LFailed);
+    X509_cmp_current_time := LoadFunction('X509_cmp_current_time', LFailed);
+    X509_time_adj := LoadFunction('X509_time_adj', LFailed);
+    X509_time_adj_ex := LoadFunction('X509_time_adj_ex', LFailed);
+    X509_gmtime_adj := LoadFunction('X509_gmtime_adj', LFailed);
     X509_get_default_cert_area := LoadFunction('X509_get_default_cert_area', LFailed);
     X509_get_default_cert_dir := LoadFunction('X509_get_default_cert_dir', LFailed);
     X509_get_default_cert_file := LoadFunction('X509_get_default_cert_file', LFailed);
@@ -1428,6 +1456,11 @@ begin
   X509_ALGOR_cmp := nil;
   X509_NAME_dup := nil;
   X509_NAME_ENTRY_dup := nil;
+  X509_cmp_time := nil;
+  X509_cmp_current_time := nil;
+  X509_time_adj := nil;
+  X509_time_adj_ex := nil;
+  X509_gmtime_adj := nil;
   X509_get_default_cert_area := nil;
   X509_get_default_cert_dir := nil;
   X509_get_default_cert_file := nil;

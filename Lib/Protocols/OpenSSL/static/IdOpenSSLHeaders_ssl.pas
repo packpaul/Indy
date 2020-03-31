@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_ssl;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 16.03.2020 14:04:26
+// Generation date: 31.03.2020 10:11:56
+
+unit IdOpenSSLHeaders_ssl;
 
 interface
 
@@ -912,13 +938,13 @@ type
   //DEFINE_STACK_OF(SRTP_PROTECTION_PROFILE)
 
   (* Typedefs for handling custom extensions *)
-  custom_ext_add_cb = function (s: PSSL; ext_type: TIdC_UINT; const &&out: PByte; outlen: PSize_t; al: PIdC_INT; add_arg: Pointer): TIdC_INT; cdecl;
+  custom_ext_add_cb = function (s: PSSL; ext_type: TIdC_UINT; const &&out: PByte; outlen: PIdC_SIZET; al: PIdC_INT; add_arg: Pointer): TIdC_INT; cdecl;
   custom_ext_free_cb = procedure (s: PSSL; ext_type: TIdC_UINT; const &out: PByte; add_arg: Pointer); cdecl;
-  custom_ext_parse_cb = function (s: PSSL; ext_type: TIdC_UINT; const &in: PByte; inlen: Size_t; al: PIdC_INT; parse_arg: Pointer): TIdC_INT; cdecl;
+  custom_ext_parse_cb = function (s: PSSL; ext_type: TIdC_UINT; const &in: PByte; inlen: TIdC_SIZET; al: PIdC_INT; parse_arg: Pointer): TIdC_INT; cdecl;
 
-  SSL_custom_ext_add_cb_ex = function (s: PSSL; ext_type: TIdC_UINT; context: TIdC_UINT; const &out: PByte; outlen: PSize_t; x: Px509; chainidx: Size_t; al: PIdC_INT; add_arg: Pointer): TIdC_INT; cdecl;
+  SSL_custom_ext_add_cb_ex = function (s: PSSL; ext_type: TIdC_UINT; context: TIdC_UINT; const &out: PByte; outlen: PIdC_SIZET; x: Px509; chainidx: TIdC_SIZET; al: PIdC_INT; add_arg: Pointer): TIdC_INT; cdecl;
   SSL_custom_ext_free_cb_ex = procedure (s: PSSL; ext_type: TIdC_UINT; context: TIdC_UINT; const &out: PByte; add_arg: Pointer); cdecl;
-  SSL_custom_ext_parse_cb_ex = function (s: PSSL; ext_type: TIdC_UINT; context: TIdC_UINT; const &in: PByte; inlen: Size_t; x: Px509; chainidx: Size_t; al: PIdC_INT; parse_arg: Pointer): TIdC_INT; cdecl;
+  SSL_custom_ext_parse_cb_ex = function (s: PSSL; ext_type: TIdC_UINT; context: TIdC_UINT; const &in: PByte; inlen: TIdC_SIZET; x: Px509; chainidx: TIdC_SIZET; al: PIdC_INT; parse_arg: Pointer): TIdC_INT; cdecl;
 
   (* Typedef for verification callback *)
   SSL_verify_cb = function (preverify_ok: TIdC_INT; x509_ctx: PX509_STORE_CTX): TIdC_INT; cdecl;
@@ -944,14 +970,14 @@ type
 
   SSL_CTX_cookie_verify_cb = function (ssl: PSSL; cookie: PByte; cookie_len: PIdC_UINT): TIdC_INT; cdecl;
   SSL_CTX_set_cookie_verify_cb_app_verify_cookie_cb = function (ssl: PSSL; const cookie: PByte; cookie_len: TIdC_UINT): TIdC_INT; cdecl;
-  SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb = function (ssl: PSSL; cookie: PByte; cookie_len: PSize_t): TIdC_INT; cdecl;
-  SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb = function (ssl: PSSL; const cookie: PByte; cookie_len: Size_t): TIdC_INT; cdecl;
+  SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb = function (ssl: PSSL; cookie: PByte; cookie_len: PIdC_SIZET): TIdC_INT; cdecl;
+  SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb = function (ssl: PSSL; const cookie: PByte; cookie_len: TIdC_SIZET): TIdC_INT; cdecl;
 
   SSL_CTX_alpn_select_cb_func = function (ssl: PSSL; const &out: PPByte; outlen: PByte; const &in: PByte; inlen: TIdC_UINT; arg: Pointer): TIdC_INT; cdecl;
   SSL_psk_client_cb_func = function (ssl: PSSL; const hint: PIdAnsiChar; identity: PIdAnsiChar; max_identity_len: TIdC_UINT; psk: PByte; max_psk_len: TIdC_UINT): TIdC_UINT; cdecl;
   SSL_psk_server_cb_func = function (ssl: PSSL; const identity: PIdAnsiChar; psk: PByte; max_psk_len: TIdC_UINT): TIdC_UINT; cdecl;
-  SSL_psk_find_session_cb_func = function (ssl: PSSL; const identity: PByte; identity_len: Size_t; sess: PPSSL_SESSION): TIdC_INT; cdecl;
-  SSL_psk_use_session_cb_func = function (ssl: PSSL; const md: PEVP_MD; const id: PPByte; idlen: PSize_t; sess: PPSSL_SESSION): TIdC_INT; cdecl;
+  SSL_psk_find_session_cb_func = function (ssl: PSSL; const identity: PByte; identity_len: TIdC_SIZET; sess: PPSSL_SESSION): TIdC_INT; cdecl;
+  SSL_psk_use_session_cb_func = function (ssl: PSSL; const md: PEVP_MD; const id: PPByte; idlen: PIdC_SIZET; sess: PPSSL_SESSION): TIdC_INT; cdecl;
 
   (*
    * A callback for logging out TLS key material. This callback should log out
@@ -1038,8 +1064,8 @@ type
   SSL_set_tmp_dh_callback_dh = function (ssl: PSSL; is_export: TIdC_INT; keylength: TIdC_INT): PDH; cdecl;
   SSL_CTX_set_not_resumable_session_callback_cb = function (ssl: PSSL; is_forward_secure: TIdC_INT): TIdC_INT; cdecl;
   SSL_set_not_resumable_session_callback_cb = function (ssl: PSSL; is_forward_secure: TIdC_INT): TIdC_INT; cdecl;
-  SSL_CTX_set_record_padding_callback_cb = function (ssl: PSSL; &type: TIdC_INT; len: Size_t; arg: Pointer): Size_t; cdecl;
-  SSL_set_record_padding_callback_cb = function (ssl: PSSL; &type: TIdC_INT; len: Size_t; arg: Pointer): Size_t; cdecl;
+  SSL_CTX_set_record_padding_callback_cb = function (ssl: PSSL; &type: TIdC_INT; len: TIdC_SIZET; arg: Pointer): TIdC_SIZET; cdecl;
+  SSL_set_record_padding_callback_cb = function (ssl: PSSL; &type: TIdC_INT; len: TIdC_SIZET; arg: Pointer): TIdC_SIZET; cdecl;
   
   (*
    * The validation type enumerates the available behaviours of the built-in SSL
@@ -1059,7 +1085,7 @@ type
 
   SSL_CTX_generate_session_ticket_fn = function(s: PSSL; arg: Pointer): TIdC_INT; cdecl;
 
-  SSL_CTX_decrypt_session_ticket_fn = function (s: PSSL; ss: PSSL_SESSION; const keyname: PByte; keyname_length: Size_t; status: SSL_TICKET_STATUS; arg: Pointer): SSL_TICKET_RETURN; cdecl;
+  SSL_CTX_decrypt_session_ticket_fn = function (s: PSSL; ss: PSSL_SESSION; const keyname: PByte; keyname_length: TIdC_SIZET; status: SSL_TICKET_STATUS; arg: Pointer): SSL_TICKET_RETURN; cdecl;
 
   DTLS_timer_cb = function(s: PSSL; timer_us: TIdC_UINT): TIdC_UINT; cdecl;
   SSL_allow_early_data_cb_fn = function(s: PSSL; arg: Pointer): TIdC_INT; cdecl;
@@ -1199,11 +1225,11 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   //void SSL_CTX_set_msg_callback(ctx: PSSL_CTX,
   //                              void (*cb) (TIdC_INT write_p, TIdC_INT version,
   //                                          TIdC_INT content_type, const void *buf,
-  //                                          size_t len, ssl: PSSL, void *arg));
+  //                                          TIdC_SIZET len, ssl: PSSL, void *arg));
   //void SSL_set_msg_callback(ssl: PSSL,
   //                          void (*cb) (TIdC_INT write_p, TIdC_INT version,
   //                                      TIdC_INT content_type, const void *buf,
-  //                                      size_t len, ssl: PSSL, void *arg));
+  //                                      TIdC_SIZET len, ssl: PSSL, void *arg));
   //# define SSL_CTX_set_msg_callback_arg(ctx, arg) SSL_CTX_ctrl((ctx), SSL_CTRL_SET_MSG_CALLBACK_ARG, 0, (arg))
   //# define SSL_set_msg_callback_arg(ssl, arg) SSL_ctrl((ssl), SSL_CTRL_SET_MSG_CALLBACK_ARG, 0, (arg))
   //
@@ -1386,8 +1412,8 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
    *   -- that we expected from peer (SSL_get_peer_finished).
    * Returns length (0 == no Finished so far), copies up to 'count' bytes.
    *)
-  function SSL_get_finished(const s: PSSL; buf: Pointer; count: Size_t): Size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_get_peer_finished(const s: PSSL; buf: Pointer; count: Size_t): Size_t cdecl; external 'libssl-1_1.dll';
+  function SSL_get_finished(const s: PSSL; buf: Pointer; count: TIdC_SIZET): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_get_peer_finished(const s: PSSL; buf: Pointer; count: TIdC_SIZET): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
 
   //# if OPENSSL_API_COMPAT < 0x10100000L
   //#  define OpenSSL_add_ssl_algorithms()   SSL_library_init()
@@ -1513,8 +1539,8 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   //                                STACK_OF(X509) *chain, TIdC_INT override);
 
   (* Set serverinfo data for the current active cert. *)
-  function SSL_CTX_use_serverinfo(ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_CTX_use_serverinfo_ex(ctx: PSSL_CTX; version: TIdC_UINT; const serverinfo: PByte; serverinfo_length: size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_use_serverinfo(ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_use_serverinfo_ex(ctx: PSSL_CTX; version: TIdC_UINT; const serverinfo: PByte; serverinfo_length: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_CTX_use_serverinfo_file(ctx: PSSL_CTX; const &file: PIdAnsiChar): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
   function SSL_use_RSAPrivateKey_file(ssl: PSSL; const &file: PIdAnsiChar; &type: TIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
@@ -1554,13 +1580,13 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
 
   function SSL_SESSION_get0_hostname(const s: PSSL_SESSION): PIdAnsiChar cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_set1_hostname(s: PSSL_SESSION; const hostname: PIdAnsiChar): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  procedure SSL_SESSION_get0_alpn_selected(const s: PSSL_SESSION; const alpn: PPByte; len: PSize_t) cdecl; external 'libssl-1_1.dll';
-  function SSL_SESSION_set1_alpn_selected(s: PSSL_SESSION; const alpn: PByte; len: size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  procedure SSL_SESSION_get0_alpn_selected(const s: PSSL_SESSION; const alpn: PPByte; len: PIdC_SIZET) cdecl; external 'libssl-1_1.dll';
+  function SSL_SESSION_set1_alpn_selected(s: PSSL_SESSION; const alpn: PByte; len: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_get0_cipher(const s: PSSL_SESSION): PSSL_CIPHER cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_set_cipher(s: PSSL_SESSION; const cipher: PSSL_CIPHER): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_has_ticket(const s: PSSL_SESSION): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_get_ticket_lifetime_hint(const s: PSSL_SESSION): TIdC_ULONG cdecl; external 'libssl-1_1.dll';
-  procedure SSL_SESSION_get0_ticket(const s: PSSL_SESSION; const tick: PPByte; len: PSize_t) cdecl; external 'libssl-1_1.dll';
+  procedure SSL_SESSION_get0_ticket(const s: PSSL_SESSION; const tick: PPByte; len: PIdC_SIZET) cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_get_max_early_data(const s: PSSL_SESSION): TIdC_UINT32 cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_set_max_early_data(s: PSSL_SESSION; max_early_data: TIdC_UINT32): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_copy_session_id(&to: PSSL; const from: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
@@ -1638,9 +1664,9 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   function SSL_CTX_dane_enable(ctx: PSSL_CTX): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_CTX_dane_mtype_set(ctx: PSSL_CTX; const md: PEVP_MD; mtype: TIdC_UINT8; ord: TIdC_UINT8): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_dane_enable(s: PSSL; const basedomain: PIdAnsiChar): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_dane_tlsa_add(s: PSSL; usage: TIdC_UINT8; selector: TIdC_UINT8; mtype: TIdC_UINT8; const data: PByte; dlen: size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_dane_tlsa_add(s: PSSL; usage: TIdC_UINT8; selector: TIdC_UINT8; mtype: TIdC_UINT8; const data: PByte; dlen: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_get0_dane_authority(s: PSSL; mcert: PPX509; mspki: PPEVP_PKEY): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get0_dane_tlsa(s: PSSL; usage: PIdC_UINT8; selector: PIdC_UINT8; mtype: PIdC_UINT8; const data: PPByte; dlen: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get0_dane_tlsa(s: PSSL; usage: PIdC_UINT8; selector: PIdC_UINT8; mtype: PIdC_UINT8; const data: PPByte; dlen: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   (*
    * Bridge opacity barrier between libcrypt and libssl, also needed to support
    * offline testing in test/danetest.c
@@ -1685,12 +1711,12 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   procedure SSL_CTX_set_client_hello_cb(c: PSSL_CTX; cb: SSL_client_hello_cb_fn; arg: Pointer) cdecl; external 'libssl-1_1.dll';
   function SSL_client_hello_isv2(s: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_client_hello_get0_legacy_version(s: PSSL): TIdC_UINT cdecl; external 'libssl-1_1.dll';
-  function SSL_client_hello_get0_random(s: PSSL; const &out: PPByte): Size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_client_hello_get0_session_id(s: PSSL; const &out: PPByte): Size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_client_hello_get0_ciphers(s: PSSL; const &out: PPByte): Size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_client_hello_get0_compression_methods(s: PSSL; const &out: PPByte): Size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_client_hello_get1_extensions_present(s: PSSL; &out: PPIdC_INT; outlen: PSize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_client_hello_get0_ext(s: PSSL; &type: TIdC_UINT; const &out: PPByte; outlen: PSize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_client_hello_get0_random(s: PSSL; const &out: PPByte): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_client_hello_get0_session_id(s: PSSL; const &out: PPByte): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_client_hello_get0_ciphers(s: PSSL; const &out: PPByte): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_client_hello_get0_compression_methods(s: PSSL; const &out: PPByte): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_client_hello_get1_extensions_present(s: PSSL; &out: PPIdC_INT; outlen: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_client_hello_get0_ext(s: PSSL; &type: TIdC_UINT; const &out: PPByte; outlen: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   procedure SSL_certs_clear(s: PSSL) cdecl; external 'libssl-1_1.dll';
   procedure SSL_free(ssl: PSSL) cdecl; external 'libssl-1_1.dll';
 
@@ -1698,20 +1724,20 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
    * Windows application developer has to include windows.h to use these.
    *)
   function SSL_waiting_for_async(s: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get_all_async_fds(s: PSSL; fds: POSSL_ASYNC_FD; numfds: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get_changed_async_fds(s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: Psize_t; delfd: POSSL_ASYNC_FD; numdelfds: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get_all_async_fds(s: PSSL; fds: POSSL_ASYNC_FD; numfds: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get_changed_async_fds(s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: PIdC_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_accept(ssl: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_stateless(s: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_connect(ssl: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_read(ssl: PSSL; buf: Pointer; num: TIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_read_ex(ssl: PSSL; buf: Pointer; num: size_t; readbytes: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_read_ex(ssl: PSSL; buf: Pointer; num: TIdC_SIZET; readbytes: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
-  function SSL_read_early_data(s: PSSL; buf: Pointer; num: size_t; readbytes: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_read_early_data(s: PSSL; buf: Pointer; num: TIdC_SIZET; readbytes: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_peek(ssl: PSSL; buf: Pointer; num: TIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_peek_ex(ssl: PSSL; buf: Pointer; num: size_t; readbytes: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_peek_ex(ssl: PSSL; buf: Pointer; num: TIdC_SIZET; readbytes: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_write(ssl: PSSL; const buf: Pointer; num: TIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_write_ex(s: PSSL; const buf: Pointer; num: size_t; written: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_write_early_data(s: PSSL; const buf: Pointer; num: size_t; written: Psize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_write_ex(s: PSSL; const buf: Pointer; num: TIdC_SIZET; written: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_write_early_data(s: PSSL; const buf: Pointer; num: TIdC_SIZET; written: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_callback_ctrl(v1: PSSL; v2: TIdC_INT; v3: SSL_callback_ctrl_v3): TIdC_LONG cdecl; external 'libssl-1_1.dll';
 
   function SSL_ctrl(ssl: PSSL; cmd: TIdC_INT; larg: TIdC_LONG; parg: Pointer): TIdC_LONG cdecl; external 'libssl-1_1.dll';
@@ -1735,7 +1761,7 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   //__owur const SSL_METHOD *DTLS_server_method(void); /* DTLS 1.0 and 1.2 */
   //__owur const SSL_METHOD *DTLS_client_method(void); /* DTLS 1.0 and 1.2 */
   //
-  //__owur size_t DTLS_get_data_mtu(const s: PSSL);
+  //__owur TIdC_SIZET DTLS_get_data_mtu(const s: PSSL);
   //
   //__owur STACK_OF(SSL_CIPHER) *SSL_get_ciphers(const s: PSSL);
   //__owur STACK_OF(SSL_CIPHER) *SSL_CTX_get_ciphers(const ctx: PSSL_CTX);
@@ -1826,10 +1852,10 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   function SSL_get_verify_result(const ssl: PSSL): TIdC_LONG cdecl; external 'libssl-1_1.dll';
   //__owur STACK_OF(X509) *SSL_get0_verified_chain(const s: PSSL);
 
-  function SSL_get_client_random(const ssl: PSSL; &out: PByte; outlen: size_t): size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_get_server_random(const ssl: PSSL; &out: PByte; outlen: size_t): size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_SESSION_get_master_key(const sess: PSSL_SESSION; &out: PByte; outlen: size_t): size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_SESSION_set1_master_key(sess: PSSL_SESSION; const &in: PByte; len: size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get_client_random(const ssl: PSSL; &out: PByte; outlen: TIdC_SIZET): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_get_server_random(const ssl: PSSL; &out: PByte; outlen: TIdC_SIZET): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_SESSION_get_master_key(const sess: PSSL_SESSION; &out: PByte; outlen: TIdC_SIZET): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_SESSION_set1_master_key(sess: PSSL_SESSION; const &in: PByte; len: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_SESSION_get_max_fragment_length(const sess: PSSL_SESSION): TIdC_UINT8 cdecl; external 'libssl-1_1.dll';
 
   //#define SSL_get_ex_new_index(l, p, newf, dupf, freef) \
@@ -1875,8 +1901,8 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   //# define SSL_set_max_pipelines(ssl,m) \
   //        SSL_ctrl(ssl,SSL_CTRL_SET_MAX_PIPELINES,m,NULL)
 
-  procedure SSL_CTX_set_default_read_buffer_len(ctx: PSSL_CTX; len: Size_t) cdecl; external 'libssl-1_1.dll';
-  procedure SSL_set_default_read_buffer_len(s: PSSL; len: Size_t) cdecl; external 'libssl-1_1.dll';
+  procedure SSL_CTX_set_default_read_buffer_len(ctx: PSSL_CTX; len: TIdC_SIZET) cdecl; external 'libssl-1_1.dll';
+  procedure SSL_set_default_read_buffer_len(s: PSSL; len: TIdC_SIZET) cdecl; external 'libssl-1_1.dll';
 
   procedure SSL_CTX_set_tmp_dh_callback(ctx: PSSL_CTX; dh: SSL_CTX_set_tmp_dh_callback_dh) cdecl; external 'libssl-1_1.dll';
   procedure SSL_set_tmp_dh_callback(ssl: PSSL; dh: SSL_set_tmp_dh_callback_dh) cdecl; external 'libssl-1_1.dll';
@@ -1897,7 +1923,7 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   function SSL_CIPHER_find(ssl: PSSL; const ptr: PByte): PSSL_CIPHER cdecl; external 'libssl-1_1.dll';
   function SSL_CIPHER_get_cipher_nid(const c: PSSL_CIPHEr): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_CIPHER_get_digest_nid(const c: PSSL_CIPHEr): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  //TIdC_INT SSL_bytes_to_cipher_list(s: PSSL, const Byte *bytes, size_t len,
+  //TIdC_INT SSL_bytes_to_cipher_list(s: PSSL, const Byte *bytes, TIdC_SIZET len,
   //                             TIdC_INT isv2format, STACK_OF(SSL_CIPHER) **sk,
   //                             STACK_OF(SSL_CIPHER) **scsvs);
 
@@ -1917,17 +1943,17 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
 
   procedure SSL_CTX_set_record_padding_callback_arg(ctx: PSSL_CTX; arg: Pointer) cdecl; external 'libssl-1_1.dll';
   function SSL_CTX_get_record_padding_callback_arg(const ctx: PSSL_CTX): Pointer cdecl; external 'libssl-1_1.dll';
-  function SSL_CTX_set_block_padding(ctx: PSSL_CTX; block_size: Size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_set_block_padding(ctx: PSSL_CTX; block_size: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
   procedure SSL_set_record_padding_callback(ssl: PSSL; cb: SSL_set_record_padding_callback_cb) cdecl; external 'libssl-1_1.dll';
 
   procedure SSL_set_record_padding_callback_arg(ssl: PSSL; arg: Pointer) cdecl; external 'libssl-1_1.dll';
   function SSL_get_record_padding_callback_arg(const ssl: PSSL): Pointer cdecl; external 'libssl-1_1.dll';
-  function SSL_set_block_padding(ssl: PSSL; block_size: Size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_set_num_tickets(s: PSSL; num_tickets: Size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get_num_tickets(const s: PSSL): Size_t cdecl; external 'libssl-1_1.dll';
-  function SSL_CTX_set_num_tickets(ctx: PSSL_CTX; num_tickets: Size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_CTX_get_num_tickets(const ctx: PSSL_CTX): Size_t cdecl; external 'libssl-1_1.dll';
+  function SSL_set_block_padding(ssl: PSSL; block_size: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_set_num_tickets(s: PSSL; num_tickets: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get_num_tickets(const s: PSSL): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_set_num_tickets(ctx: PSSL_CTX; num_tickets: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_get_num_tickets(const ctx: PSSL_CTX): TIdC_SIZET cdecl; external 'libssl-1_1.dll';
 
   //# if OPENSSL_API_COMPAT < 0x10100000L
   //#  define SSL_cache_hit(s) SSL_session_reused(s)
@@ -1952,7 +1978,7 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   function SSL_config(s: PSSL; const name: PIdAnsiChar): TIdC_INT cdecl; external 'libssl-1_1.dll';
   function SSL_CTX_config(ctx: PSSL_CTX; const name: PIdAnsiChar): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
-  procedure SSL_trace(write_p: TIdC_INT; version: TIdC_INT; content_type: TIdC_INT; const buf: Pointer; len: Size_t; ssl: PSSL; arg: Pointer) cdecl; external 'libssl-1_1.dll';
+  procedure SSL_trace(write_p: TIdC_INT; version: TIdC_INT; content_type: TIdC_INT; const buf: Pointer; len: TIdC_SIZET; ssl: PSSL; arg: Pointer) cdecl; external 'libssl-1_1.dll';
 
   function DTLSv1_listen(s: PSSL; client: PBIO_ADDr): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
@@ -2056,8 +2082,8 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
 
   function SSL_CTX_set_session_ticket_cb(ctx: PSSL_CTX; gen_cb: SSL_CTX_generate_session_ticket_fn; dec_cb: SSL_CTX_decrypt_session_ticket_fn; arg: Pointer): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
-  function SSL_SESSION_set1_ticket_appdata(ss: PSSL_SESSION; const data: Pointer; len: Size_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_SESSION_get0_ticket_appdata(ss: PSSL_SESSION; data: PPointer; len: PSize_t): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_SESSION_set1_ticket_appdata(ss: PSSL_SESSION; const data: Pointer; len: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_SESSION_get0_ticket_appdata(ss: PSSL_SESSION; data: PPointer; len: PIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
 
   //extern const PIdAnsiChar SSL_version_str[];
 

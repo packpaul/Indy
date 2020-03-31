@@ -1,3 +1,29 @@
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
 unit IdOpenSSLHeaders_x509;
 
 interface
@@ -167,9 +193,6 @@ type
   //DEFINE_STACK_OF(X509_NAME_ENTRY)
   //
   //DEFINE_STACK_OF(X509_NAME)
-  X509_NAME = type Pointer; //////////////////////////////////////////////
-  PX509_NAME = ^X509_NAME;  //////////////////////////////////////////////
-  PPX509_NAME = ^PX509_NAME;
 
   X509_EXTENSION = type Pointer; // X509_extension_st
   PX509_EXTENSION = ^X509_EXTENSION;
@@ -463,11 +486,11 @@ var
   function X509_NAME_dup(xn: PX509_NAME): PX509_NAME;
   function X509_NAME_ENTRY_dup(ne: PX509_NAME_ENTRY): PX509_NAME_ENTRY;
 
-//  function X509_cmp_time(const s: PASN1_TIME; t: Ptime_t): TIdC_INT;
-//  function X509_cmp_current_time(const s: PASN1_TIME): TIdC_INT;
-//  function X509_time_adj(s: PASN1_TIME; adj: TIdC_LONG; t: Ptime_t): PASN1_TIME;
-//  function X509_time_adj_ex(s: PASN1_TIME; offset_day: TIdC_INT; offset_sec: TIdC_LONG; t: Ptime_t): PASN1_TIME;
-//  function X509_gmtime_adj(s: PASN1_TIME; adj: TIdC_LONG): PASN1_TIME;
+  function X509_cmp_time(const s: PASN1_TIME; t: PIdC_TIMET): TIdC_INT;
+  function X509_cmp_current_time(const s: PASN1_TIME): TIdC_INT;
+  function X509_time_adj(s: PASN1_TIME; adj: TIdC_LONG; t: PIdC_TIMET): PASN1_TIME;
+  function X509_time_adj_ex(s: PASN1_TIME; offset_day: TIdC_INT; offset_sec: TIdC_LONG; t: PIdC_TIMET): PASN1_TIME;
+  function X509_gmtime_adj(s: PASN1_TIME; adj: TIdC_LONG): PASN1_TIME;
 
   function X509_get_default_cert_area: PIdAnsiChar;
   function X509_get_default_cert_dir: PIdAnsiChar;
@@ -797,7 +820,7 @@ var
   function X509_NAME_ENTRY_get_data(const ne: PX509_NAME_ENTRY): ASN1_STRING;
   function X509_NAME_ENTRY_set(const ne: PX509_NAME_ENTRY): TIdC_INT;
 
-  function X509_NAME_get0_der(nm: PX509_NAME; const pder: PPByte; pderlen: Psize_t): TIdC_INT;
+  function X509_NAME_get0_der(nm: PX509_NAME; const pder: PPByte; pderlen: PIdC_SIZET): TIdC_INT;
 
   //TIdC_INT X509v3_get_ext_count(const STACK_OF(X509_EXTENSION) *x);
   //TIdC_INT X509v3_get_ext_by_NID(const STACK_OF(X509_EXTENSION) *x,

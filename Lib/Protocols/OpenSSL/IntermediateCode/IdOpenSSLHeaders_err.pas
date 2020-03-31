@@ -1,3 +1,29 @@
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
 unit IdOpenSSLHeaders_err;
 
 interface
@@ -152,7 +178,7 @@ type
   end;
   ERR_STRING_DATA = ERR_string_data_st;
   PERR_STRING_DATA = ^ERR_STRING_DATA;
-  ERR_print_errors_cb_cb = function(str: PIdAnsiChar; len: Size_t; u: Pointer): TIdC_INT; cdecl;
+  ERR_print_errors_cb_cb = function(str: PIdAnsiChar; len: TIdC_SIZET; u: Pointer): TIdC_INT; cdecl;
 
 var
 // DEFINE_LHASH_OF(ERR_STRING_DATA);
@@ -174,7 +200,7 @@ var
 
   procedure ERR_clear_error;
   function ERR_error_string(e: TIdC_ULONG; buf: PIdAnsiChar): PIdAnsiChar;
-  procedure ERR_error_string_n(e: TIdC_ULONG; buf: PIdAnsiChar; len: size_t);
+  procedure ERR_error_string_n(e: TIdC_ULONG; buf: PIdAnsiChar; len: TIdC_SIZET);
   function ERR_lib_error_string(e: TIdC_ULONG): PIdAnsiChar;
   function ERR_func_error_string(e: TIdC_ULONG): PIdAnsiChar;
   function ERR_reason_error_string(e: TIdC_ULONG): PIdAnsiChar;

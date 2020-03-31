@@ -1,3 +1,29 @@
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
 unit IdOpenSSLHeaders_asn1;
 
 interface
@@ -488,14 +514,14 @@ var
   // DECLARE_ASN1_FUNCTIONS(ASN1_ENUMERATED)
 
   function ASN1_UTCTIME_check(const a: PASN1_UTCTIME): TIdC_INT;
-  function ASN1_UTCTIME_set(s: PASN1_UTCTIME; t: time_t): PASN1_UTCTIME;
-  function ASN1_UTCTIME_adj(s: PASN1_UTCTIME; t: time_t; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_UTCTIME;
+  function ASN1_UTCTIME_set(s: PASN1_UTCTIME; t: TIdC_TIMET): PASN1_UTCTIME;
+  function ASN1_UTCTIME_adj(s: PASN1_UTCTIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_UTCTIME;
   function ASN1_UTCTIME_set_string(s: PASN1_UTCTIME; const str: PAnsiChar): TIdC_INT;
-  function ASN1_UTCTIME_cmp_time_t(const s: PASN1_UTCTIME; t: time_t): TIdC_INT;
+  function ASN1_UTCTIME_cmp_time_t(const s: PASN1_UTCTIME; t: TIdC_TIMET): TIdC_INT;
 
   function ASN1_GENERALIZEDTIME_check(const a: PASN1_GENERALIZEDTIME): TIdC_INT;
-  function ASN1_GENERALIZEDTIME_set(s: PASN1_GENERALIZEDTIME; t: time_t): PASN1_GENERALIZEDTIME;
-  function ASN1_GENERALIZEDTIME_adj(s: PASN1_GENERALIZEDTIME; t: time_t; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_GENERALIZEDTIME;
+  function ASN1_GENERALIZEDTIME_set(s: PASN1_GENERALIZEDTIME; t: TIdC_TIMET): PASN1_GENERALIZEDTIME;
+  function ASN1_GENERALIZEDTIME_adj(s: PASN1_GENERALIZEDTIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_GENERALIZEDTIME;
   function ASN1_GENERALIZEDTIME_set_string(s: pASN1_GENERALIZEDTIME; const str: PAnsiChar): TIdC_INT;
 
   function ASN1_TIME_diff(pday: PIdC_INT; psec: PIdC_INT; const from: PASN1_TIME; const &to: PASN1_TIME): TIdC_INT;
@@ -528,15 +554,15 @@ var
 
   // DECLARE_ASN1_ITEM(ASN1_OCTET_STRING_NDEF)
 
-  function ASN1_TIME_set(s: PASN1_TIME; t: time_t): PASN1_TIME;
-  function ASN1_TIME_adj(s: PASN1_TIME; t: time_t; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_TIME;
+  function ASN1_TIME_set(s: PASN1_TIME; t: TIdC_TIMET): PASN1_TIME;
+  function ASN1_TIME_adj(s: PASN1_TIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_TIME;
   function ASN1_TIME_check(const t: PASN1_TIME): TIdC_INT;
   function ASN1_TIME_to_generalizedtime(const t: PASN1_TIME; &out: PPASN1_GENERALIZEDTIME): PASN1_GENERALIZEDTIME;
   function ASN1_TIME_set_string(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT;
   function ASN1_TIME_set_string_X509(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT;
   //function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: Ptm): TIdC_INT;
   function ASN1_TIME_normalize(s: PASN1_TIME): TIdC_INT;
-  function ASN1_TIME_cmp_time_t(const s: PASN1_TIME; t: time_t): TIdC_INT;
+  function ASN1_TIME_cmp_time_t(const s: PASN1_TIME; t: TIdC_TIMET): TIdC_INT;
   function ASN1_TIME_compare(const a: PASN1_TIME; const b: PASN1_TIME): TIdC_INT;
 
   function i2a_ASN1_INTEGER(bp: PBIO; const a: PASN1_INTEGER): TIdC_INT;
@@ -660,7 +686,7 @@ var
   function ASN1_TIME_print(fp: PBIO; const a: PASN1_TIME): TIdC_INT;
   function ASN1_STRING_print(bp: PBIO; const v: PASN1_STRING): TIdC_INT;
   function ASN1_STRING_print_ex(&out: PBIO; const str: PASN1_STRING; flags: TIdC_ULONG): TIdC_INT;
-  function ASN1_buf_print(bp: PBIO; const buf: PByte; buflen: size_t; off: TIdC_INT): TIdC_INT;
+  function ASN1_buf_print(bp: PBIO; const buf: PByte; buflen: TIdC_SIZET; off: TIdC_INT): TIdC_INT;
   function ASN1_bn_print(bp: PBIO; const number: PIdAnsiChar; const num: PBIGNUM; buf: PByte; off: TIdC_INT): TIdC_INT;
   function ASN1_parse(bp: PBIO; const pp: PByte; len: TIdC_LONG; indent: TIdC_INT): TIdC_INT;
   function ASN1_parse_dump(bp: PPBIO; const pp: PByte; len: TIdC_LONG; indent: TIdC_INT; dump: TIdC_INT): TIdC_INT;
@@ -742,7 +768,7 @@ var
   function SMIME_text(&in: PBIO; &out: PBIO): TIdC_INT;
 
   function ASN1_ITEM_lookup(const name: PIdAnsiChar): PASN1_ITEM;
-  function ASN1_ITEM_get(i: size_t): PASN1_ITEM;
+  function ASN1_ITEM_get(i: TIdC_SIZET): PASN1_ITEM;
 
 implementation
 

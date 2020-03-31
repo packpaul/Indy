@@ -1,3 +1,29 @@
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
+
 unit IdOpenSSLHeaders_tls1;
 
 interface
@@ -1082,7 +1108,7 @@ var
    * flag controls whether a context is included.) It returns 1 on success and
    * 0 or -1 otherwise.
    *)
-  function SSL_export_keying_material(s: PSSL; &out: PByte; olen: size_t; const &label: PIdAnsiChar; llen: size_t; const context: PByte; contextlen: size_t; use_context: TIdC_INT): TIdC_INT;
+  function SSL_export_keying_material(s: PSSL; &out: PByte; olen: TIdC_SIZET; const &label: PIdAnsiChar; llen: TIdC_SIZET; const context: PByte; contextlen: TIdC_SIZET; use_context: TIdC_INT): TIdC_INT;
 
   (*
    * SSL_export_keying_material_early exports a value derived from the
@@ -1091,7 +1117,7 @@ var
    * |olen| bytes to |out| given a label and optional context. It
    * returns 1 on success and 0 otherwise.
    *)
-  function SSL_export_keying_material_early(s: PSSL; &out: PByte; olen: size_t; const &label: PIdAnsiChar; llen: size_t; const context: PByte; contextlen: size_t): TIdC_INT;
+  function SSL_export_keying_material_early(s: PSSL; &out: PByte; olen: TIdC_SIZET; const &label: PIdAnsiChar; llen: TIdC_SIZET; const context: PByte; contextlen: TIdC_SIZET): TIdC_INT;
 
   function SSL_get_peer_signature_type_nid(const s: PSSl; pnid: PIdC_INT): TIdC_INT;
   function SSL_get_signature_type_nid(const s: PSSl; pnid: PIdC_INT): TIdC_INT;
@@ -1165,7 +1191,6 @@ var
   //                (void (*)(void))cb)
 
 implementation
-
 uses
   IdOpenSSLHeaders_ssl;
 

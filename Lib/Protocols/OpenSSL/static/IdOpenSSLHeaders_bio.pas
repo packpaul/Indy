@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_bio;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 28.03.2020 11:31:43
+// Generation date: 31.03.2020 10:11:53
+
+unit IdOpenSSLHeaders_bio;
 
 interface
 
@@ -272,7 +298,7 @@ type
   PPBIO_ADDRINFO = ^PBIO_ADDRINFO;
   BIO_callback_fn = function(b: PBIO; oper: TIdC_INT; const argp: PIdAnsiChar; 
     argi: TIdC_INT; argl: TIdC_LONG; ret: TIdC_LONG): TIdC_LONG;
-  BIO_callback_fn_ex = function(b: PBIO; oper: TIdC_INT; const argp: PIdAnsiChar; len: size_t; argi: TIdC_INT; argl: TIdC_LONG; ret: TIdC_INT; processed: PSize_t): TIdC_LONG;
+  BIO_callback_fn_ex = function(b: PBIO; oper: TIdC_INT; const argp: PIdAnsiChar; len: TIdC_SIZET; argi: TIdC_INT; argl: TIdC_LONG; ret: TIdC_INT; processed: PIdC_SIZET): TIdC_LONG;
   BIO_METHOD = Pointer; // bio_method_st
   PBIO_METHOD = ^BIO_METHOD;
   BIO_info_cb = function(v1: PBIO; v2: TIdC_INT; v3: TIdC_INT): TIdC_INT;
@@ -478,8 +504,8 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
 //  {$HPPEMIT '# define BIO_pending(b)          (int)BIO_ctrl(b,BIO_CTRL_PENDING,0,NULL)'}
 //  {$HPPEMIT '# define BIO_wpending(b)         (int)BIO_ctrl(b,BIO_CTRL_WPENDING,0,NULL)'}
   (* ...pending macros have inappropriate return type *)
-  function BIO_ctrl_pending(b: PBIO): size_t cdecl; external 'libcrypto-1_1.dll';
-  function BIO_ctrl_wpending(b: PBIO): size_t cdecl; external 'libcrypto-1_1.dll';
+  function BIO_ctrl_pending(b: PBIO): TIdC_SIZET cdecl; external 'libcrypto-1_1.dll';
+  function BIO_ctrl_wpending(b: PBIO): TIdC_SIZET cdecl; external 'libcrypto-1_1.dll';
 //  {$HPPEMIT '# define BIO_flush(b)            (int)BIO_ctrl(b,BIO_CTRL_FLUSH,0,NULL)'}
 //  {$HPPEMIT '# define BIO_get_info_callback(b,cbp(int)BIO_ctrl(b,BIO_CTRL_GET_CALLBACK,0,'}
 //                                                     cbp)
@@ -491,15 +517,15 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
 //
 //  (* For BIO_s_bio() *)
 //  {$HPPEMIT '# define BIO_set_write_buf_size(b,size(int)BIO_ctrl(b,BIO_C_SET_WRITE_BUF_SIZE,size,NULL)'}
-//  {$HPPEMIT '# define BIO_get_write_buf_size(b,size(size_t)BIO_ctrl(b,BIO_C_GET_WRITE_BUF_SIZE,size,NULL)'}
+//  {$HPPEMIT '# define BIO_get_write_buf_size(b,size(TIdC_SIZET)BIO_ctrl(b,BIO_C_GET_WRITE_BUF_SIZE,size,NULL)'}
 //  {$HPPEMIT '# define BIO_make_bio_pair(b1,b2)   (int)BIO_ctrl(b1,BIO_C_MAKE_BIO_PAIR,0,b2)'}
 //  {$HPPEMIT '# define BIO_destroy_bio_pair(b)    (int)BIO_ctrl(b,BIO_C_DESTROY_BIO_PAIR,0,NULL)'}
 //  {$HPPEMIT '# define BIO_shutdown_wr(b(int)BIO_ctrl(b, BIO_C_SHUTDOWN_WR, 0, NULL)'}
 //  (* macros with inappropriate type -- but ...pending macros use int too: *)
 //  {$HPPEMIT '# define BIO_get_write_guarantee(b(int)BIO_ctrl(b,BIO_C_GET_WRITE_GUARANTEE,0,NULL)'}
 //  {$HPPEMIT '# define BIO_get_read_request(b)    (int)BIO_ctrl(b,BIO_C_GET_READ_REQUEST,0,NULL)'}
-  function BIO_ctrl_get_write_guarantee(b: PBIO): size_t cdecl; external 'libcrypto-1_1.dll';
-  function BIO_ctrl_get_read_request(b: PBIO): size_t cdecl; external 'libcrypto-1_1.dll';
+  function BIO_ctrl_get_write_guarantee(b: PBIO): TIdC_SIZET cdecl; external 'libcrypto-1_1.dll';
+  function BIO_ctrl_get_read_request(b: PBIO): TIdC_SIZET cdecl; external 'libcrypto-1_1.dll';
   function BIO_ctrl_reset_read_request(b: PBIO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 
   (* ctrl macros for dgram *)
@@ -546,10 +572,10 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
   procedure BIO_vfree(a: PBIO) cdecl; external 'libcrypto-1_1.dll';
   function BIO_up_ref(a: PBIO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_read(b: PBIO; data: Pointer; dlen: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function BIO_read_ex(b: PBIO; data: Pointer; dlen: size_t; readbytes: Psize_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function BIO_read_ex(b: PBIO; data: Pointer; dlen: TIdC_SIZET; readbytes: PIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_gets( bp: PBIO; buf: PIdAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_write(b: PBIO; const data: Pointer; dlen: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function BIO_write_ex(b: PBIO; const data: Pointer; dlen: size_t; written: Psize_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function BIO_write_ex(b: PBIO; const data: Pointer; dlen: TIdC_SIZET; written: PIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_puts(bp: PBIO; const buf: PIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_indent(b: PBIO; indent: TIdC_INT; max: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_ctrl(bp: PBIO; cmd: TIdC_INT; larg: TIdC_LONG; parg: Pointer): TIdC_LONG cdecl; external 'libcrypto-1_1.dll';
@@ -610,9 +636,9 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
   function BIO_fd_non_fatal_error(error: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 //  function BIO_dump_cb(
 //    Pointer data: cb(;
-//    len: size_t;
+//    len: TIdC_SIZET;
 //    function: Pointer): u: TIdC_INT, Pointer function ,  PIdAnsiChar s, TIdC_INT len): u;
-//  function BIO_dump_indent_cb(TIdC_INT (cb( Pointer data, size_t len, Pointer function ): u: TIdC_INT, Pointer function ,  PIdAnsiChar s, TIdC_INT len, TIdC_INT indent): u;
+//  function BIO_dump_indent_cb(TIdC_INT (cb( Pointer data, TIdC_SIZET len, Pointer function ): u: TIdC_INT, Pointer function ,  PIdAnsiChar s, TIdC_INT len, TIdC_INT indent): u;
   function BIO_dump(b: PBIO; const bytes: PIdAnsiChar; len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_dump_indent(b: PBIO; const bytes: PIdAnsiChar; len: TIdC_INT; indent: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 
@@ -622,11 +648,11 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
   function BIO_hex_string(&out: PBIO; indent: TIdC_INT; width: TIdC_INT; data: PByte; datalen: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
 
   function BIO_ADDR_new: PBIO_ADDR cdecl; external 'libcrypto-1_1.dll';
-  function BIO_ADDR_rawmake(ap: PBIO_ADDR; familiy: TIdC_INT; const where: Pointer; wherelen: size_t; port: TIdC_SHORT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function BIO_ADDR_rawmake(ap: PBIO_ADDR; familiy: TIdC_INT; const where: Pointer; wherelen: TIdC_SIZET; port: TIdC_SHORT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   procedure BIO_ADDR_free(a: PBIO_ADDR) cdecl; external 'libcrypto-1_1.dll';
   procedure BIO_ADDR_clear(ap: PBIO_ADDR) cdecl; external 'libcrypto-1_1.dll';
   function BIO_ADDR_family(const ap: PBIO_ADDR): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function BIO_ADDR_rawaddress(const ap: PBIO_ADDR; p: Pointer; l: Psize_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function BIO_ADDR_rawaddress(const ap: PBIO_ADDR; p: Pointer; l: PIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   function BIO_ADDR_rawport(const ap: PBIO_ADDR): TIdC_SHORT cdecl; external 'libcrypto-1_1.dll';
   function BIO_ADDR_hostname_string(const ap: PBIO_ADDR; numeric: TIdC_INT): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
   function BIO_ADDR_service_string(const ap: PBIO_ADDR; numeric: TIdC_INT): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
@@ -665,7 +691,7 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
 
   function BIO_new_fd(fd: TIdC_INT; close_flag: TIdC_INT): PBIO cdecl; external 'libcrypto-1_1.dll';
 
-  function BIO_new_bio_pair(bio1: PPBIO; writebuf1: size_t; bio2: PPBIO; writebuf2: size_t): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function BIO_new_bio_pair(bio1: PPBIO; writebuf1: TIdC_SIZET; bio2: PPBIO; writebuf2: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
   (*
    * If successful, returns 1 and in *bio1, *bio2 two BIO pair endpoints.
    * Otherwise returns 0 and sets *bio1 and *bio2 to NULL. Size 0 uses default
@@ -677,18 +703,18 @@ function BIO_do_handshake(b: PBIO): TIdC_LONG;
 //  BIO_METHOD *BIO_meth_new(int type, const char *name);
 //  void BIO_meth_free(BIO_METHOD *biom);
 //  int (*BIO_meth_get_write(const BIO_METHOD *biom)) (BIO *, const char *, int);
-//  int (*BIO_meth_get_write_ex(const BIO_METHOD *biom)) (BIO *, const char *, size_t,
-//                                                  size_t *);
+//  int (*BIO_meth_get_write_ex(const BIO_METHOD *biom)) (BIO *, const char *, TIdC_SIZET,
+//                                                  TIdC_SIZET *);
 //  int BIO_meth_set_write(BIO_METHOD *biom,
 //                         int (*write) (BIO *, const char *, int));
 //  int BIO_meth_set_write_ex(BIO_METHOD *biom,
-//                         int (*bwrite) (BIO *, const char *, size_t, size_t *));
+//                         int (*bwrite) (BIO *, const char *, TIdC_SIZET, TIdC_SIZET *));
 //  int (*BIO_meth_get_read(const BIO_METHOD *biom)) (BIO *, char *, int);
-//  int (*BIO_meth_get_read_ex(const BIO_METHOD *biom)) (BIO *, char *, size_t, size_t *);
+//  int (*BIO_meth_get_read_ex(const BIO_METHOD *biom)) (BIO *, char *, TIdC_SIZET, TIdC_SIZET *);
 //  int BIO_meth_set_read(BIO_METHOD *biom,
 //                        int (*read) (BIO *, char *, int));
 //  int BIO_meth_set_read_ex(BIO_METHOD *biom,
-//                           int (*bread) (BIO *, char *, size_t, size_t *));
+//                           int (*bread) (BIO *, char *, TIdC_SIZET, TIdC_SIZET *));
 //  int (*BIO_meth_get_puts(const BIO_METHOD *biom)) (BIO *, const char *);
 //  int BIO_meth_set_puts(BIO_METHOD *biom,
 //                        int (*puts) (BIO *, const char *));

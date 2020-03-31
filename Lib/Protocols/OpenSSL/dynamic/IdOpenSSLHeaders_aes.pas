@@ -1,10 +1,36 @@
-﻿unit IdOpenSSLHeaders_aes;
+﻿{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_aes;
 
 interface
 
@@ -53,15 +79,15 @@ var
   AES_decrypt: procedure(const &in: PByte; &out: PByte; const key: PAES_KEY) cdecl = nil;
 
   AES_ecb_encrypt: procedure(const &in: PByte; &out: PByte; const key: PAES_KEY; const enc: TIdC_INT) cdecl = nil;
-  AES_cbc_encrypt: procedure(const &in: PByte; &out: PByte; length: size_t; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
-  AES_cfb128_encrypt: procedure(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
-  AES_cfb1_encrypt: procedure(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
-  AES_cfb8_encrypt: procedure(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
-  AES_ofb128_encrypt: procedure(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; num: PIdC_INT) cdecl = nil;
+  AES_cbc_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
+  AES_cfb128_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
+  AES_cfb1_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
+  AES_cfb8_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
+  AES_ofb128_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT) cdecl = nil;
   (* NB: the IV is _two_ blocks long *)
-  AES_ige_encrypt: procedure(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
+  AES_ige_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
   (* NB: the IV is _four_ blocks long *)
-  AES_bi_ige_encrypt: procedure(const &in: PByte; &out: PByte; length: size_T; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
+  AES_bi_ige_encrypt: procedure(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
 
   AES_wrap_key: function(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT cdecl = nil;
   AES_unwrap_key: function(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT cdecl = nil;

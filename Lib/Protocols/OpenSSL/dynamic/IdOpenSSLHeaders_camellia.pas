@@ -1,10 +1,36 @@
-unit IdOpenSSLHeaders_camellia;
+{******************************************************************************}
+{                                                                              }
+{            Indy (Internet Direct) - Internet Protocols Simplified            }
+{                                                                              }
+{            https://www.indyproject.org/                                      }
+{            https://gitter.im/IndySockets/Indy                                }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{  This file is part of the Indy (Internet Direct) project, and is offered     }
+{  under the dual-licensing agreement described on the Indy website.           }
+{  (https://www.indyproject.org/license/)                                      }
+{                                                                              }
+{  Copyright:                                                                  }
+{   (c) 1993-2020, Chad Z. Hower and the Indy Pit Crew. All rights reserved.   }
+{                                                                              }
+{******************************************************************************}
+{                                                                              }
+{        Originally written by: Fabian S. Biehn                                }
+{                               fbiehn@aagon.com (German & English)            }
+{                                                                              }
+{        Contributers:                                                         }
+{                               Here could be your name                        }
+{                                                                              }
+{******************************************************************************}
 
 // This File is generated!
 // Any modification should be in the respone unit in the 
 // responding unit in the "intermediate" folder! 
 
-// Generation date: 27.01.2020 13:25:51
+// Generation date: 31.03.2020 10:34:11
+
+unit IdOpenSSLHeaders_camellia;
 
 interface
 
@@ -59,12 +85,12 @@ var
   Camellia_decrypt: procedure(const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY) cdecl = nil;
 
   Camellia_ecb_encrypt: procedure( const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY; const enc: TIdC_INT) cdecl = nil;
-  Camellia_cbc_encrypt: procedure( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
-  Camellia_cfb128_encrypt: procedure( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
-  Camellia_cfb1_encrypt: procedure( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
-  Camellia_cfb8_encrypt: procedure( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
-  Camellia_ofb128_encrypt: procedure( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT) cdecl = nil;
-  Camellia_ctr128_encrypt: procedure( const &in: PByte; const &out: PByte; length: size_t; const key: PCAMELLIA_KEY; ivec: TCamellia_ctr128_encrypt_ivec; ecount_buf: TCamellia_ctr128_encrypt_ecount_buf; num: PIdC_INT) cdecl = nil;
+  Camellia_cbc_encrypt: procedure( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; const enc: TIdC_INT) cdecl = nil;
+  Camellia_cfb128_encrypt: procedure( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
+  Camellia_cfb1_encrypt: procedure( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
+  Camellia_cfb8_encrypt: procedure( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl = nil;
+  Camellia_ofb128_encrypt: procedure( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT) cdecl = nil;
+  Camellia_ctr128_encrypt: procedure( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: TCamellia_ctr128_encrypt_ivec; ecount_buf: TCamellia_ctr128_encrypt_ecount_buf; num: PIdC_INT) cdecl = nil;
 
 implementation
 
