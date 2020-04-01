@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 01.04.2020 15:20:11
 
 unit IdOpenSSLHeaders_pem;
 
@@ -43,6 +43,7 @@ uses
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
+  IdOpenSSLHeaders_ec,
   IdOpenSSLHeaders_ossl_typ,
   IdOpenSSLHeaders_pkcs7,
   IdOpenSSLHeaders_x509;
@@ -146,53 +147,52 @@ var
 
   PEM_read_bio_PKCS8_PRIV_KEY_INFO: function(bp: PBIO; x: PPPKCS8_PRIV_KEY_INFO; cb: pem_password_cb; u: Pointer): PPKCS8_PRIV_KEY_INFO cdecl = nil;
   PEM_write_bio_PKCS8_PRIV_KEY_INFO: function(bp: PBIO; x: PPKCS8_PRIV_KEY_INFO): TIdC_INT cdecl = nil;
-//
-//  // RSA
-//  function PEM_read_bio_RSAPrivateKey(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA;
-//  function PEM_write_bio_RSAPrivateKey(bp: PBIO; x: PRSA; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT;
-//
-//  function PEM_read_bio_RSAPublicKey(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA;
-//  function PEM_write_bio_RSAPublicKey(bp: PBIO; const x: PRSA): TIdC_INT;
-//
-//  function PEM_read_bio_RSA_PUBKEY(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA;
-//  function PEM_write_bio_RSA_PUBKEY(bp: PBIO; x: PRSA): TIdC_INT;
-//  // ~RSA
-//
-//  // DSA
-//  function PEM_read_bio_DSAPrivateKey(bp: PBIO; x: PPDSA; cb: pem_password_cb; u: Pointer): PDSA;
-//  function PEM_write_bio_DSAPrivateKey(bp: PBIO; x: PDSA; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT;
-//
-//  function PEM_read_bio_DSA_PUBKEY(bp: PBIO; x: PPDSA; cb: pem_password_cb; u: Pointer): PDSA;
-//  function PEM_write_bio_DSA_PUBKEY(bp: PBIO; x: PDSA): TIdC_INT;
-//
-//  function PEM_read_bio_DSAparams(bp: PBIO; x: PPDSA; cb: pem_password_cb; u: Pointer): PDSA;
-//  function PEM_write_bio_DSAparams(bp: PBIO; const x: PDSA): TIdC_INT;
-//  // ~DSA
-//
-//  // EC
-//  function PEM_read_bio_ECPKParameters(bp: PBIO; x: PPEC_GROUP; cb: pem_password_cb; u: Pointer): PEC_GROUP;
-//  function PEM_write_bio_ECPKParameters(bp: PBIO; const x: PEC_GROUP): TIdC_INT;
-//
-//  function PEM_read_bio_ECPrivateKey(bp: PBIO; x: PPEC_KEY; cb: pem_password_cb; u: Pointer): PEC_KEY;
-//  function PEM_write_bio_ECPrivateKey(bp: PBIO; x: PEC_KEY; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT;
-//
-//  function PEM_read_bio_EC_PUBKEY(bp: PBIO; x: PPEC_KEY; cb: pem_password_cb; u: Pointer): PEC_KEY;
-//  function PEM_write_bio_EC_PUBKEY(bp: PBIO; x: PEC_KEY): TIdC_INT;
-//  // ~EC
-//
-//  // DH
-//  function PEM_read_bio_DHparams(bp: PBIO; x: PPDH; cb: pem_password_cb; u: Pointer): PDH;
-//  function PEM_write_bio_DHparams(bp: PBIO; const x: PDH): TIdC_INT;
-//
-//  function PEM_write_bio_DHxparams(bp: PBIO; const x: PDH): TIdC_INT;
-//  // ~DH
-//
-//  function PEM_read_bio_PrivateKey(bp: PBIO; x: PPEVP_PKEY; cb: pem_password_cb; u: Pointer): PEVP_PKEY;
-//  function PEM_write_bio_PrivateKey(bp: PBIO; x: PEVP_PKEY; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT;
-//
-//  function PEM_read_bio_PUBKEY(bp: PBIO; x: PPEVP_PKEY; cb: pem_password_cb; u: Pointer): PEVP_PKEY;
-//  function PEM_write_bio_PUBKEY(bp: PBIO; x: PEVP_PKEY): TIdC_INT;
 
+  // RSA
+  PEM_read_bio_RSAPrivateKey: function(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA cdecl = nil;
+  PEM_write_bio_RSAPrivateKey: function(bp: PBIO; x: PRSA; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_RSAPublicKey: function(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA cdecl = nil;
+  PEM_write_bio_RSAPublicKey: function(bp: PBIO; const x: PRSA): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_RSA_PUBKEY: function(bp: PBIO; x: PPRSA; cb: pem_password_cb; u: Pointer): PRSA cdecl = nil;
+  PEM_write_bio_RSA_PUBKEY: function(bp: PBIO; x: PRSA): TIdC_INT cdecl = nil;
+  // ~RSA
+
+  // DSA
+  PEM_read_bio_DSAPrivateKey: function(bp: PBIO; x: PPDSA; cb: pem_password_cb; u: Pointer): PDSA cdecl = nil;
+  PEM_write_bio_DSAPrivateKey: function(bp: PBIO; x: PDSA; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_DSA_PUBKEY: function(bp: PBIO; x: PPDSA; cb: pem_password_cb; u: Pointer): PDSA cdecl = nil;
+  PEM_write_bio_DSA_PUBKEY: function(bp: PBIO; x: PDSA): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_DSAparams: function(bp: PBIO; x: PPDSA; cb: pem_password_cb; u: Pointer): PDSA cdecl = nil;
+  PEM_write_bio_DSAparams: function(bp: PBIO; const x: PDSA): TIdC_INT cdecl = nil;
+  // ~DSA
+
+  // EC
+  PEM_read_bio_ECPKParameters: function(bp: PBIO; x: PPEC_GROUP; cb: pem_password_cb; u: Pointer): PEC_GROUP cdecl = nil;
+  PEM_write_bio_ECPKParameters: function(bp: PBIO; const x: PEC_GROUP): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_ECPrivateKey: function(bp: PBIO; x: PPEC_KEY; cb: pem_password_cb; u: Pointer): PEC_KEY cdecl = nil;
+  PEM_write_bio_ECPrivateKey: function(bp: PBIO; x: PEC_KEY; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_EC_PUBKEY: function(bp: PBIO; x: PPEC_KEY; cb: pem_password_cb; u: Pointer): PEC_KEY cdecl = nil;
+  PEM_write_bio_EC_PUBKEY: function(bp: PBIO; x: PEC_KEY): TIdC_INT cdecl = nil;
+  // ~EC
+
+  // DH
+  PEM_read_bio_DHparams: function(bp: PBIO; x: PPDH; cb: pem_password_cb; u: Pointer): PDH cdecl = nil;
+  PEM_write_bio_DHparams: function(bp: PBIO; const x: PDH): TIdC_INT cdecl = nil;
+
+  PEM_write_bio_DHxparams: function(bp: PBIO; const x: PDH): TIdC_INT cdecl = nil;
+  // ~DH
+
+  PEM_read_bio_PrivateKey: function(bp: PBIO; x: PPEVP_PKEY; cb: pem_password_cb; u: Pointer): PEVP_PKEY cdecl = nil;
+  PEM_write_bio_PrivateKey: function(bp: PBIO; x: PEVP_PKEY; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT cdecl = nil;
+
+  PEM_read_bio_PUBKEY: function(bp: PBIO; x: PPEVP_PKEY; cb: pem_password_cb; u: Pointer): PEVP_PKEY cdecl = nil;
+  PEM_write_bio_PUBKEY: function(bp: PBIO; x: PEVP_PKEY): TIdC_INT cdecl = nil;
 
   PEM_write_bio_PrivateKey_traditional: function(bp: PBIO; x: PEVP_PKEY; const enc: PEVP_CIPHER; kstr: PByte; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT cdecl = nil;
   PEM_write_bio_PKCS8PrivateKey_nid: function(bp: PBIO; x: PEVP_PKEY; nid: TIdC_INT; kstr: PIdAnsiChar; klen: TIdC_INT; cb: pem_password_cb; u: Pointer): TIdC_INT cdecl = nil;
@@ -265,6 +265,31 @@ begin
     PEM_write_bio_PKCS8 := LoadFunction('PEM_write_bio_PKCS8', LFailed);
     PEM_read_bio_PKCS8_PRIV_KEY_INFO := LoadFunction('PEM_read_bio_PKCS8_PRIV_KEY_INFO', LFailed);
     PEM_write_bio_PKCS8_PRIV_KEY_INFO := LoadFunction('PEM_write_bio_PKCS8_PRIV_KEY_INFO', LFailed);
+    PEM_read_bio_RSAPrivateKey := LoadFunction('PEM_read_bio_RSAPrivateKey', LFailed);
+    PEM_write_bio_RSAPrivateKey := LoadFunction('PEM_write_bio_RSAPrivateKey', LFailed);
+    PEM_read_bio_RSAPublicKey := LoadFunction('PEM_read_bio_RSAPublicKey', LFailed);
+    PEM_write_bio_RSAPublicKey := LoadFunction('PEM_write_bio_RSAPublicKey', LFailed);
+    PEM_read_bio_RSA_PUBKEY := LoadFunction('PEM_read_bio_RSA_PUBKEY', LFailed);
+    PEM_write_bio_RSA_PUBKEY := LoadFunction('PEM_write_bio_RSA_PUBKEY', LFailed);
+    PEM_read_bio_DSAPrivateKey := LoadFunction('PEM_read_bio_DSAPrivateKey', LFailed);
+    PEM_write_bio_DSAPrivateKey := LoadFunction('PEM_write_bio_DSAPrivateKey', LFailed);
+    PEM_read_bio_DSA_PUBKEY := LoadFunction('PEM_read_bio_DSA_PUBKEY', LFailed);
+    PEM_write_bio_DSA_PUBKEY := LoadFunction('PEM_write_bio_DSA_PUBKEY', LFailed);
+    PEM_read_bio_DSAparams := LoadFunction('PEM_read_bio_DSAparams', LFailed);
+    PEM_write_bio_DSAparams := LoadFunction('PEM_write_bio_DSAparams', LFailed);
+    PEM_read_bio_ECPKParameters := LoadFunction('PEM_read_bio_ECPKParameters', LFailed);
+    PEM_write_bio_ECPKParameters := LoadFunction('PEM_write_bio_ECPKParameters', LFailed);
+    PEM_read_bio_ECPrivateKey := LoadFunction('PEM_read_bio_ECPrivateKey', LFailed);
+    PEM_write_bio_ECPrivateKey := LoadFunction('PEM_write_bio_ECPrivateKey', LFailed);
+    PEM_read_bio_EC_PUBKEY := LoadFunction('PEM_read_bio_EC_PUBKEY', LFailed);
+    PEM_write_bio_EC_PUBKEY := LoadFunction('PEM_write_bio_EC_PUBKEY', LFailed);
+    PEM_read_bio_DHparams := LoadFunction('PEM_read_bio_DHparams', LFailed);
+    PEM_write_bio_DHparams := LoadFunction('PEM_write_bio_DHparams', LFailed);
+    PEM_write_bio_DHxparams := LoadFunction('PEM_write_bio_DHxparams', LFailed);
+    PEM_read_bio_PrivateKey := LoadFunction('PEM_read_bio_PrivateKey', LFailed);
+    PEM_write_bio_PrivateKey := LoadFunction('PEM_write_bio_PrivateKey', LFailed);
+    PEM_read_bio_PUBKEY := LoadFunction('PEM_read_bio_PUBKEY', LFailed);
+    PEM_write_bio_PUBKEY := LoadFunction('PEM_write_bio_PUBKEY', LFailed);
     PEM_write_bio_PrivateKey_traditional := LoadFunction('PEM_write_bio_PrivateKey_traditional', LFailed);
     PEM_write_bio_PKCS8PrivateKey_nid := LoadFunction('PEM_write_bio_PKCS8PrivateKey_nid', LFailed);
     PEM_write_bio_PKCS8PrivateKey := LoadFunction('PEM_write_bio_PKCS8PrivateKey', LFailed);
@@ -320,6 +345,31 @@ begin
   PEM_write_bio_PKCS8 := nil;
   PEM_read_bio_PKCS8_PRIV_KEY_INFO := nil;
   PEM_write_bio_PKCS8_PRIV_KEY_INFO := nil;
+  PEM_read_bio_RSAPrivateKey := nil;
+  PEM_write_bio_RSAPrivateKey := nil;
+  PEM_read_bio_RSAPublicKey := nil;
+  PEM_write_bio_RSAPublicKey := nil;
+  PEM_read_bio_RSA_PUBKEY := nil;
+  PEM_write_bio_RSA_PUBKEY := nil;
+  PEM_read_bio_DSAPrivateKey := nil;
+  PEM_write_bio_DSAPrivateKey := nil;
+  PEM_read_bio_DSA_PUBKEY := nil;
+  PEM_write_bio_DSA_PUBKEY := nil;
+  PEM_read_bio_DSAparams := nil;
+  PEM_write_bio_DSAparams := nil;
+  PEM_read_bio_ECPKParameters := nil;
+  PEM_write_bio_ECPKParameters := nil;
+  PEM_read_bio_ECPrivateKey := nil;
+  PEM_write_bio_ECPrivateKey := nil;
+  PEM_read_bio_EC_PUBKEY := nil;
+  PEM_write_bio_EC_PUBKEY := nil;
+  PEM_read_bio_DHparams := nil;
+  PEM_write_bio_DHparams := nil;
+  PEM_write_bio_DHxparams := nil;
+  PEM_read_bio_PrivateKey := nil;
+  PEM_write_bio_PrivateKey := nil;
+  PEM_read_bio_PUBKEY := nil;
+  PEM_write_bio_PUBKEY := nil;
   PEM_write_bio_PrivateKey_traditional := nil;
   PEM_write_bio_PKCS8PrivateKey_nid := nil;
   PEM_write_bio_PKCS8PrivateKey := nil;
