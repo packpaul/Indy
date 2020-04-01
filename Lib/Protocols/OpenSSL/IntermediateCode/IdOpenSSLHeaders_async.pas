@@ -34,7 +34,8 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdCTypes;
+  IdCTypes,
+  IdOpenSSLConsts;
 
 const
   ASYNC_ERR = 0;

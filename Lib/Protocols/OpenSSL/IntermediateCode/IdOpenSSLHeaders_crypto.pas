@@ -36,6 +36,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_bio,
   IdOpenSSLHeaders_ossl_typ,
   System.Types;

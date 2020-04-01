@@ -35,6 +35,7 @@ interface
 
 uses
   IdCTypes,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 var

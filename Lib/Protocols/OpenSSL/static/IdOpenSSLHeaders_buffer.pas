@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:54
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_buffer;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 const
@@ -55,12 +56,12 @@ type
     flags: TIdC_ULONG;
   end;
 
-  function BUF_MEM_new: PBUF_MEM cdecl; external 'libcrypto-1_1.dll';
-  function BUF_MEM_new_ex(flags: TIdC_ULONG): PBUF_MEM cdecl; external 'libcrypto-1_1.dll';
-  procedure BUF_MEM_free(a: PBUF_MEM) cdecl; external 'libcrypto-1_1.dll';
-  function BUF_MEM_grow(str: PBUF_MEM; len: TIdC_SIZET): TIdC_SIZET cdecl; external 'libcrypto-1_1.dll';
-  function BUF_MEM_grow_clean(str: PBUF_MEM; len: TIdC_SIZET): TIdC_SIZET cdecl; external 'libcrypto-1_1.dll';
-  procedure BUF_reverse(&out: PByte; const &in: PByte; siz: TIdC_SIZET) cdecl; external 'libcrypto-1_1.dll';
+  function BUF_MEM_new: PBUF_MEM cdecl; external CLibCrypto;
+  function BUF_MEM_new_ex(flags: TIdC_ULONG): PBUF_MEM cdecl; external CLibCrypto;
+  procedure BUF_MEM_free(a: PBUF_MEM) cdecl; external CLibCrypto;
+  function BUF_MEM_grow(str: PBUF_MEM; len: TIdC_SIZET): TIdC_SIZET cdecl; external CLibCrypto;
+  function BUF_MEM_grow_clean(str: PBUF_MEM; len: TIdC_SIZET): TIdC_SIZET cdecl; external CLibCrypto;
+  procedure BUF_reverse(&out: PByte; const &in: PByte; siz: TIdC_SIZET) cdecl; external CLibCrypto;
 
 implementation
 

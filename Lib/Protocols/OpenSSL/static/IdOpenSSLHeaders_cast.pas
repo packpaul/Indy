@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:54
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_cast;
 
@@ -40,7 +40,8 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdCTypes;
+  IdCTypes,
+  IdOpenSSLConsts;
 
 const
   CAST_ENCRYPT_CONST =  1;
@@ -60,13 +61,13 @@ type
   CAST_KEY = cast_key_st;
   PCAST_KEY = ^CAST_KEY;
 
-  procedure CAST_set_key(key: PCast_Key; len: TIdC_INT; const data: PByte) cdecl; external 'libcrypto-1_1.dll';
-  procedure CAST_ecb_encrypt(const &in: PByte; &out: PByte; const key: PCast_Key; enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure CAST_encrypt(data: PCAST_LONG; const key: PCast_Key) cdecl; external 'libcrypto-1_1.dll';
-  procedure CAST_decrypt(data: PCAST_LONG; const key: PCast_Key) cdecl; external 'libcrypto-1_1.dll';
-  procedure CAST_cbc_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; const ks: PCast_Key; iv: PByte; enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure CAST_cfb64_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; const schedule: PCast_Key; ivec: PByte; num: PIdC_INT; enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure CAST_ofb64_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; const schedule: PCast_Key; ivec: PByte; num: PIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure CAST_set_key(key: PCast_Key; len: TIdC_INT; const data: PByte) cdecl; external CLibCrypto;
+  procedure CAST_ecb_encrypt(const &in: PByte; &out: PByte; const key: PCast_Key; enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure CAST_encrypt(data: PCAST_LONG; const key: PCast_Key) cdecl; external CLibCrypto;
+  procedure CAST_decrypt(data: PCAST_LONG; const key: PCast_Key) cdecl; external CLibCrypto;
+  procedure CAST_cbc_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; const ks: PCast_Key; iv: PByte; enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure CAST_cfb64_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; const schedule: PCast_Key; ivec: PByte; num: PIdC_INT; enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure CAST_ofb64_encrypt(const &in: PByte; &out: PByte; length: TIdC_LONG; const schedule: PCast_Key; ivec: PByte; num: PIdC_INT) cdecl; external CLibCrypto;
 
 implementation
 

@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_srtp;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ,
   IdOpenSSLHeaders_ssl;
 
@@ -57,11 +58,11 @@ const
   SRTP_AEAD_AES_128_GCM = $0007;
   SRTP_AEAD_AES_256_GCM = $0008;
 
-  function SSL_CTX_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SSL_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SSL_CTX_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
+  function SSL_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
 
   //function SSL_get_srtp_profiles(s: PSSL): PSTACK_OF_SRTP_PROTECTION_PROFILE;
-  function SSL_get_selected_srtp_profile(s: PSSL): PSRTP_PROTECTION_PROFILE cdecl; external 'libcrypto-1_1.dll';
+  function SSL_get_selected_srtp_profile(s: PSSL): PSRTP_PROTECTION_PROFILE cdecl; external CLibCrypto;
 
 implementation
 

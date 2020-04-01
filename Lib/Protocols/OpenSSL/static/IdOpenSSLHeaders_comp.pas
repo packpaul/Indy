@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:55
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_comp;
 
@@ -42,22 +42,23 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_bio,
   IdOpenSSLHeaders_ossl_typ;
 
-  function COMP_CTX_new(meth: PCOMP_METHOD): PCOMP_CTX cdecl; external 'libcrypto-1_1.dll';
-  function COMP_CTX_get_method(const ctx: PCOMP_CTX): PCOMP_METHOD cdecl; external 'libcrypto-1_1.dll';
-  function COMP_CTX_get_type(const comp: PCOMP_CTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function COMP_get_type(const meth: PCOMP_METHOD): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function COMP_get_name(const meth: PCOMP_METHOD): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  procedure COMP_CTX_free(ctx: PCOMP_CTX) cdecl; external 'libcrypto-1_1.dll';
+  function COMP_CTX_new(meth: PCOMP_METHOD): PCOMP_CTX cdecl; external CLibCrypto;
+  function COMP_CTX_get_method(const ctx: PCOMP_CTX): PCOMP_METHOD cdecl; external CLibCrypto;
+  function COMP_CTX_get_type(const comp: PCOMP_CTX): TIdC_INT cdecl; external CLibCrypto;
+  function COMP_get_type(const meth: PCOMP_METHOD): TIdC_INT cdecl; external CLibCrypto;
+  function COMP_get_name(const meth: PCOMP_METHOD): PIdAnsiChar cdecl; external CLibCrypto;
+  procedure COMP_CTX_free(ctx: PCOMP_CTX) cdecl; external CLibCrypto;
 
-  function COMP_compress_block(ctx: PCOMP_CTX; &out: PByte; olen: TIdC_INT; &in: PByte; ilen: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function COMP_expand_block(ctx: PCOMP_CTX; &out: PByte; olen: TIdC_INT; &in: PByte; ilen: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function COMP_compress_block(ctx: PCOMP_CTX; &out: PByte; olen: TIdC_INT; &in: PByte; ilen: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function COMP_expand_block(ctx: PCOMP_CTX; &out: PByte; olen: TIdC_INT; &in: PByte; ilen: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
-  function COMP_zlib: PCOMP_METHOD cdecl; external 'libcrypto-1_1.dll';
+  function COMP_zlib: PCOMP_METHOD cdecl; external CLibCrypto;
 
-  function BIO_f_zlib: PBIO_METHOD cdecl; external 'libcrypto-1_1.dll';
+  function BIO_f_zlib: PBIO_METHOD cdecl; external CLibCrypto;
 
 implementation
 

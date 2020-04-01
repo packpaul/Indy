@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:51
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_asn1;
 
@@ -40,11 +40,12 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  IdCTypes,
   IdGlobal,
-  IdOpenSSlHeaders_ossl_typ,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_asn1t,
   IdOpenSSLHeaders_bio,
-  IdCTypes;
+  IdOpenSSlHeaders_ossl_typ;
 
 {$MINENUMSIZE 4}
 
@@ -465,76 +466,76 @@ type
   PBIT_STRING_BITNAME = ^BIT_STRING_BITNAME;
 
 // DECLARE_ASN1_FUNCTIONS_fname(ASN1_TYPE, ASN1_ANY, ASN1_TYPE)
-  function ASN1_TYPE_get(const a: PASN1_TYPE): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_TYPE_set(a: PASN1_TYPE; &type: TIdC_INT; value: Pointer) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TYPE_set1(a: PASN1_TYPE; &type: TIdC_INT; const value: Pointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TYPE_cmp(const a: PASN1_TYPE; const b: PASN1_TYPE): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_TYPE_get(const a: PASN1_TYPE): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASN1_TYPE_set(a: PASN1_TYPE; &type: TIdC_INT; value: Pointer) cdecl; external CLibCrypto;
+  function ASN1_TYPE_set1(a: PASN1_TYPE; &type: TIdC_INT; const value: Pointer): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TYPE_cmp(const a: PASN1_TYPE; const b: PASN1_TYPE): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_TYPE_pack_sequence(const it: PASN1_ITEM; s: Pointer; t: PPASN1_TYPE): PASN1_TYPE cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TYPE_unpack_sequence(const it: PASN1_ITEM; const t: PASN1_TYPE): Pointer cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_TYPE_pack_sequence(const it: PASN1_ITEM; s: Pointer; t: PPASN1_TYPE): PASN1_TYPE cdecl; external CLibCrypto;
+  function ASN1_TYPE_unpack_sequence(const it: PASN1_ITEM; const t: PASN1_TYPE): Pointer cdecl; external CLibCrypto;
 
-  function ASN1_OBJECT_new: PASN1_OBJECT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_OBJECT_free(a: PASN1_OBJECT) cdecl; external 'libcrypto-1_1.dll';
-  function i2d_ASN1_OBJECT(const a: PASN1_OBJECT; pp: PPByte): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function d2i_ASN1_OBJECT(a: PPASN1_OBJECT; const pp: PPByte; length: TIdC_LONG): PASN1_OBJECT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_OBJECT_new: PASN1_OBJECT cdecl; external CLibCrypto;
+  procedure ASN1_OBJECT_free(a: PASN1_OBJECT) cdecl; external CLibCrypto;
+  function i2d_ASN1_OBJECT(const a: PASN1_OBJECT; pp: PPByte): TIdC_INT cdecl; external CLibCrypto;
+  function d2i_ASN1_OBJECT(a: PPASN1_OBJECT; const pp: PPByte; length: TIdC_LONG): PASN1_OBJECT cdecl; external CLibCrypto;
 
   //DECLARE_ASN1_ITEM(ASN1_OBJECT)
   //
   //DEFINE_STACK_OF(ASN1_OBJECT)
 
-  function ASN1_STRING_new: PASN1_STRING cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_STRING_free(a: PASN1_STRING) cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_STRING_clear_free(a: PASN1_STRING) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_copy(dst: PASN1_STRING; const str: PASN1_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_dup(const a: PASN1_STRING): PASN1_STRING cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_type_new(&type: TIdC_INT): PASN1_STRING cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_cmp(const a: PASN1_STRING; const b: PASN1_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_STRING_new: PASN1_STRING cdecl; external CLibCrypto;
+  procedure ASN1_STRING_free(a: PASN1_STRING) cdecl; external CLibCrypto;
+  procedure ASN1_STRING_clear_free(a: PASN1_STRING) cdecl; external CLibCrypto;
+  function ASN1_STRING_copy(dst: PASN1_STRING; const str: PASN1_STRING): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_STRING_dup(const a: PASN1_STRING): PASN1_STRING cdecl; external CLibCrypto;
+  function ASN1_STRING_type_new(&type: TIdC_INT): PASN1_STRING cdecl; external CLibCrypto;
+  function ASN1_STRING_cmp(const a: PASN1_STRING; const b: PASN1_STRING): TIdC_INT cdecl; external CLibCrypto;
 
   (*
    * Since this is used to store all sorts of things, via macros, for now,
    * make its data void *
    *)
-  function ASN1_STRING_set(str: PASN1_STRING; const data: Pointer; len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_STRING_set0(str: PASN1_STRING; data: Pointer; len: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_length(const x: PASN1_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_STRING_length_set(x: PASN1_STRING; n: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_type(const x: PASN1_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_get0_data(const x: PASN1_STRING): PByte cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_STRING_set(str: PASN1_STRING; const data: Pointer; len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASN1_STRING_set0(str: PASN1_STRING; data: Pointer; len: TIdC_INT) cdecl; external CLibCrypto;
+  function ASN1_STRING_length(const x: PASN1_STRING): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASN1_STRING_length_set(x: PASN1_STRING; n: TIdC_INT) cdecl; external CLibCrypto;
+  function ASN1_STRING_type(const x: PASN1_STRING): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_STRING_get0_data(const x: PASN1_STRING): PByte cdecl; external CLibCrypto;
 
   //DECLARE_ASN1_FUNCTIONS(ASN1_BIT_STRING)
-  function ASN1_BIT_STRING_set(a: PASN1_BIT_STRING; d: PByte; length: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_BIT_STRING_set_bit(a: PASN1_BIT_STRING; n: TIdC_INT; value: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_BIT_STRING_get_bit(const a: PASN1_BIT_STRING; n: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_BIT_STRING_check(const a: PASN1_BIT_STRING; const flags: PByte; flags_len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_BIT_STRING_set(a: PASN1_BIT_STRING; d: PByte; length: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_BIT_STRING_set_bit(a: PASN1_BIT_STRING; n: TIdC_INT; value: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_BIT_STRING_get_bit(const a: PASN1_BIT_STRING; n: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_BIT_STRING_check(const a: PASN1_BIT_STRING; const flags: PByte; flags_len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_BIT_STRING_name_print(&out: PBIO; bs: PASN1_BIT_STRING; tbl: PBIT_STRING_BITNAME; indent: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_BIT_STRING_num_asc(const name: PIdAnsiChar; tbl: PBIT_STRING_BITNAME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_BIT_STRING_set_asc(bs: PASN1_BIT_STRING; const name: PIdAnsiChar; value: TIdC_INT; tbl: PBIT_STRING_BITNAME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_BIT_STRING_name_print(&out: PBIO; bs: PASN1_BIT_STRING; tbl: PBIT_STRING_BITNAME; indent: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_BIT_STRING_num_asc(const name: PIdAnsiChar; tbl: PBIT_STRING_BITNAME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_BIT_STRING_set_asc(bs: PASN1_BIT_STRING; const name: PIdAnsiChar; value: TIdC_INT; tbl: PBIT_STRING_BITNAME): TIdC_INT cdecl; external CLibCrypto;
 
   //DECLARE_ASN1_FUNCTIONS(ASN1_INTEGER)
-  function d2i_ASN1_UINTEGER(a: PPASN1_INTEGER; const pp: PPByte; length: TIdC_LONG): PASN1_INTEGER cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_dup(const x: PASN1_INTEGER): PASN1_INTEGER cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_cmp(const x: PASN1_INTEGER; const y: PASN1_INTEGER): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function d2i_ASN1_UINTEGER(a: PPASN1_INTEGER; const pp: PPByte; length: TIdC_LONG): PASN1_INTEGER cdecl; external CLibCrypto;
+  function ASN1_INTEGER_dup(const x: PASN1_INTEGER): PASN1_INTEGER cdecl; external CLibCrypto;
+  function ASN1_INTEGER_cmp(const x: PASN1_INTEGER; const y: PASN1_INTEGER): TIdC_INT cdecl; external CLibCrypto;
 
   // DECLARE_ASN1_FUNCTIONS(ASN1_ENUMERATED)
 
-  function ASN1_UTCTIME_check(const a: PASN1_UTCTIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_UTCTIME_set(s: PASN1_UTCTIME; t: TIdC_TIMET): PASN1_UTCTIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_UTCTIME_adj(s: PASN1_UTCTIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_UTCTIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_UTCTIME_set_string(s: PASN1_UTCTIME; const str: PAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_UTCTIME_cmp_time_t(const s: PASN1_UTCTIME; t: TIdC_TIMET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_UTCTIME_check(const a: PASN1_UTCTIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_UTCTIME_set(s: PASN1_UTCTIME; t: TIdC_TIMET): PASN1_UTCTIME cdecl; external CLibCrypto;
+  function ASN1_UTCTIME_adj(s: PASN1_UTCTIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_UTCTIME cdecl; external CLibCrypto;
+  function ASN1_UTCTIME_set_string(s: PASN1_UTCTIME; const str: PAnsiChar): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_UTCTIME_cmp_time_t(const s: PASN1_UTCTIME; t: TIdC_TIMET): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_GENERALIZEDTIME_check(const a: PASN1_GENERALIZEDTIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_GENERALIZEDTIME_set(s: PASN1_GENERALIZEDTIME; t: TIdC_TIMET): PASN1_GENERALIZEDTIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_GENERALIZEDTIME_adj(s: PASN1_GENERALIZEDTIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_GENERALIZEDTIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_GENERALIZEDTIME_set_string(s: pASN1_GENERALIZEDTIME; const str: PAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_GENERALIZEDTIME_check(const a: PASN1_GENERALIZEDTIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_GENERALIZEDTIME_set(s: PASN1_GENERALIZEDTIME; t: TIdC_TIMET): PASN1_GENERALIZEDTIME cdecl; external CLibCrypto;
+  function ASN1_GENERALIZEDTIME_adj(s: PASN1_GENERALIZEDTIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_GENERALIZEDTIME cdecl; external CLibCrypto;
+  function ASN1_GENERALIZEDTIME_set_string(s: pASN1_GENERALIZEDTIME; const str: PAnsiChar): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_TIME_diff(pday: PIdC_INT; psec: PIdC_INT; const from: PASN1_TIME; const &to: PASN1_TIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_TIME_diff(pday: PIdC_INT; psec: PIdC_INT; const from: PASN1_TIME; const &to: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
 
   // DECLARE_ASN1_FUNCTIONS(ASN1_OCTET_STRING)
-  function ASN1_OCTET_STRING_dup(const a: PASN1_OCTET_STRING): PASN1_OCTET_STRING cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_OCTET_STRING_cmp(const a: PASN1_OCTET_STRING; const b: PASN1_OCTET_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_OCTET_STRING_set(str: PASN1_OCTET_STRING; const data: PByte; len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_OCTET_STRING_dup(const a: PASN1_OCTET_STRING): PASN1_OCTET_STRING cdecl; external CLibCrypto;
+  function ASN1_OCTET_STRING_cmp(const a: PASN1_OCTET_STRING; const b: PASN1_OCTET_STRING): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_OCTET_STRING_set(str: PASN1_OCTET_STRING; const data: PByte; len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
   //DECLARE_ASN1_FUNCTIONS(ASN1_VISIBLESTRING)
   //DECLARE_ASN1_FUNCTIONS(ASN1_UNIVERSALSTRING)
@@ -542,8 +543,8 @@ type
   //DECLARE_ASN1_FUNCTIONS(ASN1_NULL)
   //DECLARE_ASN1_FUNCTIONS(ASN1_BMPSTRING)
 
-  function UTF8_getc(const str: PByte; len: TIdC_INT; val: PIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function UTF8_putc(str: PIdAnsiChar; len: TIdC_INT; value: TIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function UTF8_getc(const str: PByte; len: TIdC_INT; val: PIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
+  function UTF8_putc(str: PIdAnsiChar; len: TIdC_INT; value: TIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
 
   //DECLARE_ASN1_FUNCTIONS_name(ASN1_STRING, ASN1_PRINTABLE)
   //
@@ -559,61 +560,61 @@ type
 
   // DECLARE_ASN1_ITEM(ASN1_OCTET_STRING_NDEF)
 
-  function ASN1_TIME_set(s: PASN1_TIME; t: TIdC_TIMET): PASN1_TIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_adj(s: PASN1_TIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_TIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_check(const t: PASN1_TIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_to_generalizedtime(const t: PASN1_TIME; &out: PPASN1_GENERALIZEDTIME): PASN1_GENERALIZEDTIME cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_set_string(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_set_string_X509(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_TIME_set(s: PASN1_TIME; t: TIdC_TIMET): PASN1_TIME cdecl; external CLibCrypto;
+  function ASN1_TIME_adj(s: PASN1_TIME; t: TIdC_TIMET; offset_day: TIdC_INT; offset_sec: TIdC_LONG): PASN1_TIME cdecl; external CLibCrypto;
+  function ASN1_TIME_check(const t: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TIME_to_generalizedtime(const t: PASN1_TIME; &out: PPASN1_GENERALIZEDTIME): PASN1_GENERALIZEDTIME cdecl; external CLibCrypto;
+  function ASN1_TIME_set_string(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TIME_set_string_X509(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
   //function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: Ptm): TIdC_INT;
-  function ASN1_TIME_normalize(s: PASN1_TIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_cmp_time_t(const s: PASN1_TIME; t: TIdC_TIMET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_compare(const a: PASN1_TIME; const b: PASN1_TIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_TIME_normalize(s: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TIME_cmp_time_t(const s: PASN1_TIME; t: TIdC_TIMET): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TIME_compare(const a: PASN1_TIME; const b: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
 
-  function i2a_ASN1_INTEGER(bp: PBIO; const a: PASN1_INTEGER): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function a2i_ASN1_INTEGER(bp: PBIO; bs: PASN1_INTEGER; buf: PIdAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function i2a_ASN1_ENUMERATED(bp: PBIO; const a: PASN1_ENUMERATED): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function a2i_ASN1_ENUMERATED(bp: PBIO; bs: PASN1_ENUMERATED; buf: PIdAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function i2a_ASN1_OBJECT(bp: PBIO; const a: PASN1_OBJECT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function a2i_ASN1_STRING(bp: PBIO; bs: PASN1_STRING; buf: PAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function i2a_ASN1_STRING(bp: PBIO; const a: PASN1_STRING; &type: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function i2t_ASN1_OBJECT(buf: PAnsiChar; buf_len: TIdC_INT; const a: PASN1_OBJECT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function i2a_ASN1_INTEGER(bp: PBIO; const a: PASN1_INTEGER): TIdC_INT cdecl; external CLibCrypto;
+  function a2i_ASN1_INTEGER(bp: PBIO; bs: PASN1_INTEGER; buf: PIdAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function i2a_ASN1_ENUMERATED(bp: PBIO; const a: PASN1_ENUMERATED): TIdC_INT cdecl; external CLibCrypto;
+  function a2i_ASN1_ENUMERATED(bp: PBIO; bs: PASN1_ENUMERATED; buf: PIdAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function i2a_ASN1_OBJECT(bp: PBIO; const a: PASN1_OBJECT): TIdC_INT cdecl; external CLibCrypto;
+  function a2i_ASN1_STRING(bp: PBIO; bs: PASN1_STRING; buf: PAnsiChar; size: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function i2a_ASN1_STRING(bp: PBIO; const a: PASN1_STRING; &type: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function i2t_ASN1_OBJECT(buf: PAnsiChar; buf_len: TIdC_INT; const a: PASN1_OBJECT): TIdC_INT cdecl; external CLibCrypto;
 
-  function a2d_ASN1_OBJECT(&out: PByte; olen: TIdC_INT; const buf: PIdAnsiChar; num: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_OBJECT_create(nid: TIdC_INT; data: PByte; len: TIdC_INT; const sn: PAnsiChar; const ln: PAnsiChar): PASN1_OBJECT cdecl; external 'libcrypto-1_1.dll';
+  function a2d_ASN1_OBJECT(&out: PByte; olen: TIdC_INT; const buf: PIdAnsiChar; num: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_OBJECT_create(nid: TIdC_INT; data: PByte; len: TIdC_INT; const sn: PAnsiChar; const ln: PAnsiChar): PASN1_OBJECT cdecl; external CLibCrypto;
 
-  function ASN1_INTEGER_get_int64(pr: PIdC_Int64; const a: PASN1_INTEGER): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_set_int64(a: PASN1_INTEGER; r: TIdC_Int64): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_get_uint64(pr: PIdC_UInt64; const a: PASN1_INTEGER): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_set_uint64(a: PASN1_INTEGER; r: TIdC_UInt64): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_INTEGER_get_int64(pr: PIdC_Int64; const a: PASN1_INTEGER): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_INTEGER_set_int64(a: PASN1_INTEGER; r: TIdC_Int64): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_INTEGER_get_uint64(pr: PIdC_UInt64; const a: PASN1_INTEGER): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_INTEGER_set_uint64(a: PASN1_INTEGER; r: TIdC_UInt64): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_INTEGER_set(a: PASN1_INTEGER; v: TIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_get(const a: PASN1_INTEGER): TIdC_LONG cdecl; external 'libcrypto-1_1.dll';
-  function BN_to_ASN1_INTEGER(const bn: PBIGNUM; ai: PASN1_INTEGER): PASN1_INTEGER cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_INTEGER_to_BN(const ai: PASN1_INTEGER; bn: PBIGNUM): PBIGNUM cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_INTEGER_set(a: PASN1_INTEGER; v: TIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_INTEGER_get(const a: PASN1_INTEGER): TIdC_LONG cdecl; external CLibCrypto;
+  function BN_to_ASN1_INTEGER(const bn: PBIGNUM; ai: PASN1_INTEGER): PASN1_INTEGER cdecl; external CLibCrypto;
+  function ASN1_INTEGER_to_BN(const ai: PASN1_INTEGER; bn: PBIGNUM): PBIGNUM cdecl; external CLibCrypto;
 
-  function ASN1_ENUMERATED_get_int64(pr: PIdC_Int64; const a: PASN1_ENUMERATED): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_ENUMERATED_set_int64(a: PASN1_ENUMERATED; r: TIdC_Int64): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_ENUMERATED_get_int64(pr: PIdC_Int64; const a: PASN1_ENUMERATED): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_ENUMERATED_set_int64(a: PASN1_ENUMERATED; r: TIdC_Int64): TIdC_INT cdecl; external CLibCrypto;
 
 
-  function ASN1_ENUMERATED_set(a: PASN1_ENUMERATED; v: TIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_ENUMERATED_get(const a: PASN1_ENUMERATED): TIdC_LONG cdecl; external 'libcrypto-1_1.dll';
-  function BN_to_ASN1_ENUMERATED(const bn: PBIGNUM; ai: PASN1_ENUMERATED): PASN1_ENUMERATED cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_ENUMERATED_to_BN(const ai: PASN1_ENUMERATED; bn: PBIGNUM): PBIGNUM cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_ENUMERATED_set(a: PASN1_ENUMERATED; v: TIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_ENUMERATED_get(const a: PASN1_ENUMERATED): TIdC_LONG cdecl; external CLibCrypto;
+  function BN_to_ASN1_ENUMERATED(const bn: PBIGNUM; ai: PASN1_ENUMERATED): PASN1_ENUMERATED cdecl; external CLibCrypto;
+  function ASN1_ENUMERATED_to_BN(const ai: PASN1_ENUMERATED; bn: PBIGNUM): PBIGNUM cdecl; external CLibCrypto;
 
   (* General *)
   (* given a string, return the correct type, max is the maximum length *)
-  function ASN1_PRINTABLE_type(const s: PByte; max: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_PRINTABLE_type(const s: PByte; max: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_tag2bit(tag: TIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_tag2bit(tag: TIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
 
   (* SPECIALS *)
-  function ASN1_get_object(const pp: PPByte; plength: PIdC_LONG; ptag: PIdC_INT; pclass: PIdC_INT; omax: TIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_check_infinite_end(p: PPByte; len: TIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_const_check_infinite_end(const p: PPByte; len: TIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_put_object(pp: PPByte; constructed: TIdC_INT; length: TIdC_INT; tag: TIdC_INT; xclass: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_put_eoc(pp: PPByte): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_object_size(constructed: TIdC_INT; length: TIdC_INT; tag: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_get_object(const pp: PPByte; plength: PIdC_LONG; ptag: PIdC_INT; pclass: PIdC_INT; omax: TIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_check_infinite_end(p: PPByte; len: TIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_const_check_infinite_end(const p: PPByte; len: TIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASN1_put_object(pp: PPByte; constructed: TIdC_INT; length: TIdC_INT; tag: TIdC_INT; xclass: TIdC_INT) cdecl; external CLibCrypto;
+  function ASN1_put_eoc(pp: PPByte): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_object_size(constructed: TIdC_INT; length: TIdC_INT; tag: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
   (* Used to implement other functions *)
   //void *ASN1_dup(i2d_of_void *i2d, d2i_of_void *d2i, void *x);
@@ -628,7 +629,7 @@ type
   //                     CHECKED_D2I_OF(type, d2i), \
   //                     CHECKED_PTR_OF(const type, x)))
   //
-  function ASN1_item_dup(const it: PASN1_ITEM; x: Pointer): Pointer cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_dup(const it: PASN1_ITEM; x: Pointer): Pointer cdecl; external CLibCrypto;
 
     (* ASN1 alloc/free macros for when a type is only used internally *)
 
@@ -662,7 +663,7 @@ type
   //function ASN1_STRING_print_ex_fp(&fp: PFILE; const str: PASN1_STRING; flags: TIdC_ULONG): TIdC_INT;
   //# endif
 
-  function ASN1_STRING_to_UTF8(&out: PPByte; const &in: PASN1_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_STRING_to_UTF8(&out: PPByte; const &in: PASN1_STRING): TIdC_INT cdecl; external CLibCrypto;
 
   //void *ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x);
 
@@ -672,8 +673,8 @@ type
   //                          in, \
   //                          CHECKED_PPTR_OF(type, x)))
 
-  function ASN1_item_d2i_bio(const it: PASN1_ITEM; &in: PBIO; x: Pointer): Pointer cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_i2d_bio(i2d: Pi2d_of_void; &out: PBIO; x: PByte): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_d2i_bio(const it: PASN1_ITEM; &in: PBIO; x: Pointer): Pointer cdecl; external CLibCrypto;
+  function ASN1_i2d_bio(i2d: Pi2d_of_void; &out: PBIO; x: PByte): TIdC_INT cdecl; external CLibCrypto;
 
   //#  define ASN1_i2d_bio_of(type,i2d,out,x) \
   //    (ASN1_i2d_bio(CHECKED_I2D_OF(type, i2d), \
@@ -685,95 +686,95 @@ type
   //                  out, \
   //                  CHECKED_PTR_OF(const type, x)))
 
-  function ASN1_item_i2d_bio(const it: PASN1_ITEM; &out: PBIO; x: Pointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_UTCTIME_print(fp: PBIO; const a: PASN1_UTCTIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_GENERALIZEDTIME_print(fp: PBIO; const a: PASN1_GENERALIZEDTIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TIME_print(fp: PBIO; const a: PASN1_TIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_print(bp: PBIO; const v: PASN1_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_print_ex(&out: PBIO; const str: PASN1_STRING; flags: TIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_buf_print(bp: PBIO; const buf: PByte; buflen: TIdC_SIZET; off: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_bn_print(bp: PBIO; const number: PIdAnsiChar; const num: PBIGNUM; buf: PByte; off: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_parse(bp: PBIO; const pp: PByte; len: TIdC_LONG; indent: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_parse_dump(bp: PPBIO; const pp: PByte; len: TIdC_LONG; indent: TIdC_INT; dump: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_tag2str(tag: TIdC_INT): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_i2d_bio(const it: PASN1_ITEM; &out: PBIO; x: Pointer): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_UTCTIME_print(fp: PBIO; const a: PASN1_UTCTIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_GENERALIZEDTIME_print(fp: PBIO; const a: PASN1_GENERALIZEDTIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TIME_print(fp: PBIO; const a: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_STRING_print(bp: PBIO; const v: PASN1_STRING): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_STRING_print_ex(&out: PBIO; const str: PASN1_STRING; flags: TIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_buf_print(bp: PBIO; const buf: PByte; buflen: TIdC_SIZET; off: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_bn_print(bp: PBIO; const number: PIdAnsiChar; const num: PBIGNUM; buf: PByte; off: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_parse(bp: PBIO; const pp: PByte; len: TIdC_LONG; indent: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_parse_dump(bp: PPBIO; const pp: PByte; len: TIdC_LONG; indent: TIdC_INT; dump: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_tag2str(tag: TIdC_INT): PIdAnsiChar cdecl; external CLibCrypto;
 
   (* Used to load and write Netscape format cert *)
 
-  function ASN1_UNIVERSALSTRING_to_string(s: PASN1_UNIVERSALSTRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_UNIVERSALSTRING_to_string(s: PASN1_UNIVERSALSTRING): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_TYPE_set_octetstring(a: PASN1_TYPE; data: PByte; len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TYPE_get_octetstring(const a: PASN1_TYPE; data: PByte; max_len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TYPE_set_int_octetstring(a: PASN1_TYPE; num: TIdC_LONG; data: PByte; len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_TYPE_get_int_octetstring(const a: PASN1_TYPE; num: PIdC_LONG; data: PByte; max_len: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_TYPE_set_octetstring(a: PASN1_TYPE; data: PByte; len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TYPE_get_octetstring(const a: PASN1_TYPE; data: PByte; max_len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TYPE_set_int_octetstring(a: PASN1_TYPE; num: TIdC_LONG; data: PByte; len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_TYPE_get_int_octetstring(const a: PASN1_TYPE; num: PIdC_LONG; data: PByte; max_len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_item_unpack(const oct: PASN1_STRING; const it: PASN1_ITEM): Pointer cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_unpack(const oct: PASN1_STRING; const it: PASN1_ITEM): Pointer cdecl; external CLibCrypto;
 
-  function ASN1_item_pack(obj: Pointer; const it: PASN1_ITEM; oct: PPASN1_OCTET_STRING): PASN1_STRING cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_pack(obj: Pointer; const it: PASN1_ITEM; oct: PPASN1_OCTET_STRING): PASN1_STRING cdecl; external CLibCrypto;
 
-  procedure ASN1_STRING_set_default_mask(mask: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_set_default_mask_asc(const p: PAnsiChar): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_get_default_mask: TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_mbstring_copy(&out: PPASN1_STRING; const &in: PByte; len: TIdC_INT; inform: TIdC_INT; mask: TIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_mbstring_ncopy(&out: PPASN1_STRING; const &in: PByte; len: TIdC_INT; inform: TIdC_INT; mask: TIdC_ULONG; minsize: TIdC_LONG; maxsize: TIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  procedure ASN1_STRING_set_default_mask(mask: TIdC_ULONG) cdecl; external CLibCrypto;
+  function ASN1_STRING_set_default_mask_asc(const p: PAnsiChar): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_STRING_get_default_mask: TIdC_ULONG cdecl; external CLibCrypto;
+  function ASN1_mbstring_copy(&out: PPASN1_STRING; const &in: PByte; len: TIdC_INT; inform: TIdC_INT; mask: TIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_mbstring_ncopy(&out: PPASN1_STRING; const &in: PByte; len: TIdC_INT; inform: TIdC_INT; mask: TIdC_ULONG; minsize: TIdC_LONG; maxsize: TIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_STRING_set_by_NID(&out: PPASN1_STRING; const &in: PByte; inlen: TIdC_INT; inform: TIdC_INT; nid: TIdC_INT): PASN1_STRING cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_TABLE_get(nid: TIdC_INT): PASN1_STRING_TABLE cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_STRING_TABLE_add(v1: TIdC_INT; v2: TIdC_LONG; v3: TIdC_LONG; v4: TIdC_ULONG; v5: TIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_STRING_TABLE_cleanup cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_STRING_set_by_NID(&out: PPASN1_STRING; const &in: PByte; inlen: TIdC_INT; inform: TIdC_INT; nid: TIdC_INT): PASN1_STRING cdecl; external CLibCrypto;
+  function ASN1_STRING_TABLE_get(nid: TIdC_INT): PASN1_STRING_TABLE cdecl; external CLibCrypto;
+  function ASN1_STRING_TABLE_add(v1: TIdC_INT; v2: TIdC_LONG; v3: TIdC_LONG; v4: TIdC_ULONG; v5: TIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASN1_STRING_TABLE_cleanup cdecl; external CLibCrypto;
 
   (* ASN1 template functions *)
 
   (* Old API compatible functions *)
-  function ASN1_item_new(const it: PASN1_ITEM): PASN1_VALUE cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_item_free(val: PASN1_VALUE; const it: PASN1_ITEM) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_item_d2i(val: PPASN1_VALUE; const &in: PPByte; len: TIdC_LONG; const it: PASN1_ITEM): PASN1_VALUE cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_item_i2d(val: PASN1_VALUE; &out: PPByte; const it: PASN1_ITEM): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_item_ndef_i2d(val: PASN1_VALUE; &out: PPByte; const it: PASN1_ITEM): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_new(const it: PASN1_ITEM): PASN1_VALUE cdecl; external CLibCrypto;
+  procedure ASN1_item_free(val: PASN1_VALUE; const it: PASN1_ITEM) cdecl; external CLibCrypto;
+  function ASN1_item_d2i(val: PPASN1_VALUE; const &in: PPByte; len: TIdC_LONG; const it: PASN1_ITEM): PASN1_VALUE cdecl; external CLibCrypto;
+  function ASN1_item_i2d(val: PASN1_VALUE; &out: PPByte; const it: PASN1_ITEM): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_item_ndef_i2d(val: PASN1_VALUE; &out: PPByte; const it: PASN1_ITEM): TIdC_INT cdecl; external CLibCrypto;
 
-  procedure ASN1_add_oid_module cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_add_stable_module cdecl; external 'libcrypto-1_1.dll';
+  procedure ASN1_add_oid_module cdecl; external CLibCrypto;
+  procedure ASN1_add_stable_module cdecl; external CLibCrypto;
 
-  function ASN1_generate_nconf(const str: PAnsiChar; nconf: PCONF): PASN1_TYPE cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_generate_v3(const str: PAnsiChar; cnf: PX509V3_CTX): PASN1_TYPE cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_str2mask(const str: PByte; pmask: PIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_generate_nconf(const str: PAnsiChar; nconf: PCONF): PASN1_TYPE cdecl; external CLibCrypto;
+  function ASN1_generate_v3(const str: PAnsiChar; cnf: PX509V3_CTX): PASN1_TYPE cdecl; external CLibCrypto;
+  function ASN1_str2mask(const str: PByte; pmask: PIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_item_print(&out: PBIO; ifld: PASN1_VALUE; indent: TIdC_INT; const it: PASN1_ITEM; const pctx: PASN1_PCTX): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_PCTX_new: PASN1_PCTX cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_PCTX_free(p: PASN1_PCTX) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_PCTX_get_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_PCTX_set_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_PCTX_get_nm_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_PCTX_set_nm_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_PCTX_get_cert_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_PCTX_set_cert_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_PCTX_get_oid_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_PCTX_set_oid_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_PCTX_get_str_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_PCTX_set_str_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_print(&out: PBIO; ifld: PASN1_VALUE; indent: TIdC_INT; const it: PASN1_ITEM; const pctx: PASN1_PCTX): TIdC_INT cdecl; external CLibCrypto;
+  function ASN1_PCTX_new: PASN1_PCTX cdecl; external CLibCrypto;
+  procedure ASN1_PCTX_free(p: PASN1_PCTX) cdecl; external CLibCrypto;
+  function ASN1_PCTX_get_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure ASN1_PCTX_set_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external CLibCrypto;
+  function ASN1_PCTX_get_nm_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure ASN1_PCTX_set_nm_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external CLibCrypto;
+  function ASN1_PCTX_get_cert_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure ASN1_PCTX_set_cert_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external CLibCrypto;
+  function ASN1_PCTX_get_oid_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure ASN1_PCTX_set_oid_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external CLibCrypto;
+  function ASN1_PCTX_get_str_flags(const p: PASN1_PCTX): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure ASN1_PCTX_set_str_flags(p: PASN1_PCTX; flags: TIdC_ULONG) cdecl; external CLibCrypto;
 
   //ASN1_SCTX *ASN1_SCTX_new(int (*scan_cb) (ASN1_SCTX *ctx));
-  procedure ASN1_SCTX_free(p: PASN1_SCTX) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_SCTX_get_item(p: PASN1_SCTX): PASN1_ITEM cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_SCTX_get_template(p: PASN1_SCTX): PASN1_TEMPLATE cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_SCTX_get_flags(p: PASN1_SCTX): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_SCTX_set_app_data(p: PASN1_SCTX; data: Pointer) cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_SCTX_get_app_data(p: PASN1_SCTX): Pointer cdecl; external 'libcrypto-1_1.dll';
+  procedure ASN1_SCTX_free(p: PASN1_SCTX) cdecl; external CLibCrypto;
+  function ASN1_SCTX_get_item(p: PASN1_SCTX): PASN1_ITEM cdecl; external CLibCrypto;
+  function ASN1_SCTX_get_template(p: PASN1_SCTX): PASN1_TEMPLATE cdecl; external CLibCrypto;
+  function ASN1_SCTX_get_flags(p: PASN1_SCTX): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure ASN1_SCTX_set_app_data(p: PASN1_SCTX; data: Pointer) cdecl; external CLibCrypto;
+  function ASN1_SCTX_get_app_data(p: PASN1_SCTX): Pointer cdecl; external CLibCrypto;
 
-  function BIO_f_asn1: PBIO_METHOD cdecl; external 'libcrypto-1_1.dll';
+  function BIO_f_asn1: PBIO_METHOD cdecl; external CLibCrypto;
 
-  function BIO_new_NDEF(&out: PBIO; val: PASN1_VALUE; const it: PASN1_ITEM): PBIO cdecl; external 'libcrypto-1_1.dll';
+  function BIO_new_NDEF(&out: PBIO; val: PASN1_VALUE; const it: PASN1_ITEM): PBIO cdecl; external CLibCrypto;
 
-  function i2d_ASN1_bio_stream(&out: PBIO; val: PASN1_VALUE; &in: PBIO; flags: TIdC_INT; const it: PASN1_ITEM): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PEM_write_bio_ASN1_stream(&out: PBIO; val: PASN1_VALUE; &in: PBIO; flags: TIdC_INT; const hdr: PAnsiChar; const it: PASN1_ITEM): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function i2d_ASN1_bio_stream(&out: PBIO; val: PASN1_VALUE; &in: PBIO; flags: TIdC_INT; const it: PASN1_ITEM): TIdC_INT cdecl; external CLibCrypto;
+  function PEM_write_bio_ASN1_stream(&out: PBIO; val: PASN1_VALUE; &in: PBIO; flags: TIdC_INT; const hdr: PAnsiChar; const it: PASN1_ITEM): TIdC_INT cdecl; external CLibCrypto;
   //function SMIME_write_ASN1(bio: PBIO; val: PASN1_VALUE; data: PBIO; flags: TIdC_INT;
   //                     ctype_nid: TIdC_INT; econt_nid: TIdC_INT;
   //                     STACK_OF(X509_ALGOR) *mdalgs, const ASN1_ITEM *it): TIdC_INT;
-  function SMIME_read_ASN1(bio: PBIO; bcont: PPBIO; const it: PASN1_ITEM): PASN1_VALUE cdecl; external 'libcrypto-1_1.dll';
-  function SMIME_crlf_copy(&in: PBIO; &out: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SMIME_text(&in: PBIO; &out: PBIO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function SMIME_read_ASN1(bio: PBIO; bcont: PPBIO; const it: PASN1_ITEM): PASN1_VALUE cdecl; external CLibCrypto;
+  function SMIME_crlf_copy(&in: PBIO; &out: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function SMIME_text(&in: PBIO; &out: PBIO): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_ITEM_lookup(const name: PIdAnsiChar): PASN1_ITEM cdecl; external 'libcrypto-1_1.dll';
-  function ASN1_ITEM_get(i: TIdC_SIZET): PASN1_ITEM cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_ITEM_lookup(const name: PIdAnsiChar): PASN1_ITEM cdecl; external CLibCrypto;
+  function ASN1_ITEM_get(i: TIdC_SIZET): PASN1_ITEM cdecl; external CLibCrypto;
 
 implementation
 

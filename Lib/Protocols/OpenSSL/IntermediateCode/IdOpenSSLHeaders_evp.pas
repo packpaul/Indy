@@ -34,8 +34,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdGlobal,
   IdCTypes,
+  IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSlHeaders_bio,
   IdOpenSSLHeaders_obj_mac,
   IdOpenSSlHeaders_ossl_typ;

@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:52
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_async;
 
@@ -40,7 +40,8 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdCTypes;
+  IdCTypes,
+  IdOpenSSLConsts;
 
 const
   ASYNC_ERR = 0;
@@ -65,26 +66,26 @@ type
     const v2: Pointer; v3: OSSL_ASYNC_FD; v4: Pointer);
   ASYNC_start_job_cb = function(v1: Pointer): TIdC_INT;
 
-  function ASYNC_init_thread(max_size: TIdC_SIZET; init_size: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASYNC_cleanup_thread cdecl; external 'libcrypto-1_1.dll';
+  function ASYNC_init_thread(max_size: TIdC_SIZET; init_size: TIdC_SIZET): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASYNC_cleanup_thread cdecl; external CLibCrypto;
 
-  function ASYNC_WAIT_CTX_new: PASYNC_WAIT_CTX cdecl; external 'libcrypto-1_1.dll';
-  procedure ASYNC_WAIT_CTX_free(ctx: PASYNC_WAIT_CTX) cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_WAIT_CTX_set_wait_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer; fd: OSSL_ASYNC_FD; custom_data: Pointer; cleanup_cb: ASYNC_WAIT_CTX_set_wait_fd_cleanup): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_WAIT_CTX_get_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer; fd: POSSL_ASYNC_FD; custom_data: PPointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_WAIT_CTX_get_all_fds(ctx: PASYNC_WAIT_CTX; fd: POSSL_ASYNC_FD; numfds: PIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_WAIT_CTX_get_changed_fds(ctx: PASYNC_WAIT_CTX; addfd: POSSL_ASYNC_FD; numaddfds: PIdC_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: PIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_WAIT_CTX_clear_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASYNC_WAIT_CTX_new: PASYNC_WAIT_CTX cdecl; external CLibCrypto;
+  procedure ASYNC_WAIT_CTX_free(ctx: PASYNC_WAIT_CTX) cdecl; external CLibCrypto;
+  function ASYNC_WAIT_CTX_set_wait_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer; fd: OSSL_ASYNC_FD; custom_data: Pointer; cleanup_cb: ASYNC_WAIT_CTX_set_wait_fd_cleanup): TIdC_INT cdecl; external CLibCrypto;
+  function ASYNC_WAIT_CTX_get_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer; fd: POSSL_ASYNC_FD; custom_data: PPointer): TIdC_INT cdecl; external CLibCrypto;
+  function ASYNC_WAIT_CTX_get_all_fds(ctx: PASYNC_WAIT_CTX; fd: POSSL_ASYNC_FD; numfds: PIdC_SIZET): TIdC_INT cdecl; external CLibCrypto;
+  function ASYNC_WAIT_CTX_get_changed_fds(ctx: PASYNC_WAIT_CTX; addfd: POSSL_ASYNC_FD; numaddfds: PIdC_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: PIdC_SIZET): TIdC_INT cdecl; external CLibCrypto;
+  function ASYNC_WAIT_CTX_clear_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASYNC_is_capable: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASYNC_is_capable: TIdC_INT cdecl; external CLibCrypto;
 
-  function ASYNC_start_job(job: PPASYNC_JOB; ctx: PASYNC_WAIT_CTX; ret: PIdC_INT; func: ASYNC_start_job_cb; args: Pointer; size: TIdC_SIZET): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_pause_job: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASYNC_start_job(job: PPASYNC_JOB; ctx: PASYNC_WAIT_CTX; ret: PIdC_INT; func: ASYNC_start_job_cb; args: Pointer; size: TIdC_SIZET): TIdC_INT cdecl; external CLibCrypto;
+  function ASYNC_pause_job: TIdC_INT cdecl; external CLibCrypto;
 
-  function ASYNC_get_current_job: PASYNC_JOB cdecl; external 'libcrypto-1_1.dll';
-  function ASYNC_get_wait_ctx(job: PASYNC_JOB): PASYNC_WAIT_CTX cdecl; external 'libcrypto-1_1.dll';
-  procedure ASYNC_block_pause cdecl; external 'libcrypto-1_1.dll';
-  procedure ASYNC_unblock_pause cdecl; external 'libcrypto-1_1.dll';
+  function ASYNC_get_current_job: PASYNC_JOB cdecl; external CLibCrypto;
+  function ASYNC_get_wait_ctx(job: PASYNC_JOB): PASYNC_WAIT_CTX cdecl; external CLibCrypto;
+  procedure ASYNC_block_pause cdecl; external CLibCrypto;
+  procedure ASYNC_unblock_pause cdecl; external CLibCrypto;
 
 implementation
 

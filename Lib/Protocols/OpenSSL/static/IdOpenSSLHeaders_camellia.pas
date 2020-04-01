@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:54
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_camellia;
 
@@ -41,7 +41,8 @@ interface
 
 uses
   IdCTypes,
-  IdGlobal;
+  IdGlobal,
+  IdOpenSSLConsts;
 
 const
   // Added '_CONST' to avoid name clashes
@@ -73,18 +74,18 @@ type
   TCamellia_ctr128_encrypt_ivec = array[0 .. CAMELLIA_TABLE_WORD_LEN - 1] of Byte;
   TCamellia_ctr128_encrypt_ecount_buf = array[0 .. CAMELLIA_TABLE_WORD_LEN - 1] of Byte;
 
-  function Camellia_set_key(const userKey: PByte; const bits: TIdC_INT; key: PCAMELLIA_KEY): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function Camellia_set_key(const userKey: PByte; const bits: TIdC_INT; key: PCAMELLIA_KEY): TIdC_INT cdecl; external CLibCrypto;
 
-  procedure Camellia_encrypt(const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_decrypt(const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY) cdecl; external 'libcrypto-1_1.dll';
+  procedure Camellia_encrypt(const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY) cdecl; external CLibCrypto;
+  procedure Camellia_decrypt(const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY) cdecl; external CLibCrypto;
 
-  procedure Camellia_ecb_encrypt( const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_cbc_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_cfb128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_cfb1_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_cfb8_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_ofb128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure Camellia_ctr128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: TCamellia_ctr128_encrypt_ivec; ecount_buf: TCamellia_ctr128_encrypt_ecount_buf; num: PIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure Camellia_ecb_encrypt( const &in: PByte; const &out: PByte; const key: PCAMELLIA_KEY; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure Camellia_cbc_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure Camellia_cfb128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure Camellia_cfb1_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure Camellia_cfb8_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure Camellia_ofb128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: PByte; num: PIdC_INT) cdecl; external CLibCrypto;
+  procedure Camellia_ctr128_encrypt( const &in: PByte; const &out: PByte; length: TIdC_SIZET; const key: PCAMELLIA_KEY; ivec: TCamellia_ctr128_encrypt_ivec; ecount_buf: TCamellia_ctr128_encrypt_ecount_buf; num: PIdC_INT) cdecl; external CLibCrypto;
 
 implementation
 

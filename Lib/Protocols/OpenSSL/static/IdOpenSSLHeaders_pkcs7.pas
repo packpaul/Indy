@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_pkcs7;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 const
@@ -214,13 +215,13 @@ type
   //function i2d_PKCS7_ISSUER_AND_SERIAL(const a: PPKCS7_ISSUER_AND_SERIAL; &out: PByte): TIdC_INT;
   //function PKCS7_ISSUER_AND_SERIAL_it: PASN1_ITEM;
 
-  function PKCS7_ISSUER_AND_SERIAL_digest(data: PPKCS7_ISSUER_AND_SERIAL; const &type: PEVP_MD; md: PByte; len: PIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_ISSUER_AND_SERIAL_digest(data: PPKCS7_ISSUER_AND_SERIAL; const &type: PEVP_MD; md: PByte; len: PIdC_UINT): TIdC_INT cdecl; external CLibCrypto;
 
-  function PKCS7_dup(p7: PPKCS7): PPKCS7 cdecl; external 'libcrypto-1_1.dll';
-  function d2i_PKCS7_bio(bp: PBIO; p7: PPPKCS7): PPKCS7 cdecl; external 'libcrypto-1_1.dll';
-  function i2d_PKCS7_bio(bp: PBIO; p7: PPKCS7): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function i2d_PKCS7_bio_stream(&out: PBIO; p7: PPKCS7; &in: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PEM_write_bio_PKCS7_stream(&out: PBIO; p7: PPKCS7; &in: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_dup(p7: PPKCS7): PPKCS7 cdecl; external CLibCrypto;
+  function d2i_PKCS7_bio(bp: PBIO; p7: PPPKCS7): PPKCS7 cdecl; external CLibCrypto;
+  function i2d_PKCS7_bio(bp: PBIO; p7: PPKCS7): TIdC_INT cdecl; external CLibCrypto;
+  function i2d_PKCS7_bio_stream(&out: PBIO; p7: PPKCS7; &in: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function PEM_write_bio_PKCS7_stream(&out: PBIO; p7: PPKCS7; &in: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
 //  function PKCS7_SIGNER_INFO_new: PPKCS7_SIGNER_INFO;
 //  procedure PKCS7_SIGNER_INFO_free(a: PPKCS7_SIGNER_INFO);
@@ -283,68 +284,68 @@ type
 //  function i2d_PKCS7_NDEF(const a: PPKCS7; &out: PPByte): TIdC_INT;
 //  function PKCS7_print_ctx(&out: PBIO; const x: PPKCS7; indent: TIdC_INT; const pctx: PASN1_PCTX): TIdC_INT;
 
-  function PKCS7_ctrl(p7: PPKCS7; cmd: TIdC_INT; larg: TIdC_LONG; parg: PIdAnsiChar): TIdC_LONG cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_ctrl(p7: PPKCS7; cmd: TIdC_INT; larg: TIdC_LONG; parg: PIdAnsiChar): TIdC_LONG cdecl; external CLibCrypto;
 
-  function PKCS7_set_type(p7: PPKCS7; &type: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_set0_type_other(p7: PPKCS7; &type: TIdC_INT; other: PASN1_TYPE): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_set_content(p7: PPKCS7; p7_data: PPKCS7): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_SIGNER_INFO_set(p7i: PPKCS7_SIGNER_INFO; x509: PX509; pkey: PEVP_PKEY; const dgst: PEVP_MD): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_SIGNER_INFO_sign(si: PPKCS7_SIGNER_INFO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add_signer(p7: PPKCS7; p7i: PPKCS7_SIGNER_INFO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add_certificate(p7: PPKCS7; x509: PX509): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add_crl(p7: PPKCS7; x509: PX509_CRL): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_content_new(p7: PPKCS7; nid: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_dataVerify(cert_store: PX509_STORE; ctx: PX509_STORE_CTX; bio: PBIO; p7: PPKCS7; si: PPKCS7_SIGNER_INFO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_signatureVerify(bio: PBIO; p7: PPKCS7; si: PPKCS7_SIGNER_INFO; x509: PX509): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_set_type(p7: PPKCS7; &type: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_set0_type_other(p7: PPKCS7; &type: TIdC_INT; other: PASN1_TYPE): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_set_content(p7: PPKCS7; p7_data: PPKCS7): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_SIGNER_INFO_set(p7i: PPKCS7_SIGNER_INFO; x509: PX509; pkey: PEVP_PKEY; const dgst: PEVP_MD): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_SIGNER_INFO_sign(si: PPKCS7_SIGNER_INFO): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_add_signer(p7: PPKCS7; p7i: PPKCS7_SIGNER_INFO): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_add_certificate(p7: PPKCS7; x509: PX509): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_add_crl(p7: PPKCS7; x509: PX509_CRL): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_content_new(p7: PPKCS7; nid: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_dataVerify(cert_store: PX509_STORE; ctx: PX509_STORE_CTX; bio: PBIO; p7: PPKCS7; si: PPKCS7_SIGNER_INFO): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_signatureVerify(bio: PBIO; p7: PPKCS7; si: PPKCS7_SIGNER_INFO; x509: PX509): TIdC_INT cdecl; external CLibCrypto;
 
-  function PKCS7_dataInit(p7: PPKCS7; bio: PBIO): PBIO cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_dataFinal(p7: PPKCS7; bio: PBIO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_dataDecode(p7: PPKCS7; pkey: PEVP_PKEY; in_bio: PBIO; pcert: PX509): PBIO cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_dataInit(p7: PPKCS7; bio: PBIO): PBIO cdecl; external CLibCrypto;
+  function PKCS7_dataFinal(p7: PPKCS7; bio: PBIO): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_dataDecode(p7: PPKCS7; pkey: PEVP_PKEY; in_bio: PBIO; pcert: PX509): PBIO cdecl; external CLibCrypto;
 
-  function PKCS7_add_signature(p7: PPKCS7; x509: PX509; pkey: PEVP_PKEY; const dgst: PEVP_MD): PPKCS7_SIGNER_INFO cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_cert_from_signer_info(p7: PPKCS7; si: PPKCS7_SIGNER_INFO): PX509 cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_set_digest(p7: PPKCS7; const md: PEVP_MD): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_add_signature(p7: PPKCS7; x509: PX509; pkey: PEVP_PKEY; const dgst: PEVP_MD): PPKCS7_SIGNER_INFO cdecl; external CLibCrypto;
+  function PKCS7_cert_from_signer_info(p7: PPKCS7; si: PPKCS7_SIGNER_INFO): PX509 cdecl; external CLibCrypto;
+  function PKCS7_set_digest(p7: PPKCS7; const md: PEVP_MD): TIdC_INT cdecl; external CLibCrypto;
 //  function PKCS7_get_signer_info(p7: PPKCS7): PSTACK_OF_PKCS7_SIGNER_INFO;
 
-  function PKCS7_add_recipient(p7: PPKCS7; x509: PX509): PPKCS7_RECIP_INFO cdecl; external 'libcrypto-1_1.dll';
-  procedure PKCS7_SIGNER_INFO_get0_algs(si: PPKCS7_SIGNER_INFO; pk: PPEVP_PKEY; pdig: PPX509_ALGOR; psig: PPX509_ALGOR) cdecl; external 'libcrypto-1_1.dll';
-  procedure PKCS7_RECIP_INFO_get0_alg(ri: PPKCS7_RECIP_INFO; penc: PPX509_ALGOR) cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add_recipient_info(p7: PPKCS7; ri: PPKCS7_RECIP_INFO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_RECIP_INFO_set(p7i: PPKCS7_RECIP_INFO; x509: PX509): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_set_cipher(p7: PPKCS7; const cipher: PEVP_CIPHER): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_stream(boundary: PPPByte; p7: PPKCS7): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_add_recipient(p7: PPKCS7; x509: PX509): PPKCS7_RECIP_INFO cdecl; external CLibCrypto;
+  procedure PKCS7_SIGNER_INFO_get0_algs(si: PPKCS7_SIGNER_INFO; pk: PPEVP_PKEY; pdig: PPX509_ALGOR; psig: PPX509_ALGOR) cdecl; external CLibCrypto;
+  procedure PKCS7_RECIP_INFO_get0_alg(ri: PPKCS7_RECIP_INFO; penc: PPX509_ALGOR) cdecl; external CLibCrypto;
+  function PKCS7_add_recipient_info(p7: PPKCS7; ri: PPKCS7_RECIP_INFO): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_RECIP_INFO_set(p7i: PPKCS7_RECIP_INFO; x509: PX509): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_set_cipher(p7: PPKCS7; const cipher: PEVP_CIPHER): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_stream(boundary: PPPByte; p7: PPKCS7): TIdC_INT cdecl; external CLibCrypto;
 
-  function PKCS7_get_issuer_and_serial(p7: PPKCS7; idx: TIdC_INT): PPKCS7_ISSUER_AND_SERIAL cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_get_issuer_and_serial(p7: PPKCS7; idx: TIdC_INT): PPKCS7_ISSUER_AND_SERIAL cdecl; external CLibCrypto;
   //function PKCS7_digest_from_attributes(sk: Pointer{PSTACK_OF_X509_ATTRIBUTE}): PASN1_OCTET_STRING;
-  function PKCS7_add_signed_attribute(p7si: PPKCS7_SIGNER_INFO; nid: TIdC_INT; &type: TIdC_INT; data: Pointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add_attribute(p7si: PPKCS7_SIGNER_INFO; nid: TIdC_INT; atrtype: TIdC_INT; value: Pointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_get_attribute(si: PPKCS7_SIGNER_INFO; nid: TIdC_INT): PASN1_TYPE cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_get_signed_attribute(si: PPKCS7_SIGNER_INFO; nid: TIdC_INT): PASN1_TYPE cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_add_signed_attribute(p7si: PPKCS7_SIGNER_INFO; nid: TIdC_INT; &type: TIdC_INT; data: Pointer): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_add_attribute(p7si: PPKCS7_SIGNER_INFO; nid: TIdC_INT; atrtype: TIdC_INT; value: Pointer): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_get_attribute(si: PPKCS7_SIGNER_INFO; nid: TIdC_INT): PASN1_TYPE cdecl; external CLibCrypto;
+  function PKCS7_get_signed_attribute(si: PPKCS7_SIGNER_INFO; nid: TIdC_INT): PASN1_TYPE cdecl; external CLibCrypto;
   //function PKCS7_set_signed_attributes(p7si: PPKCS7_SIGNER_INFO; sk: PSTACK_OF_X509): TIdC_INT;
   //function PKCS7_set_attributes(p7si: PPKCS7_SIGNER_INFO; sk: PSTACK_OF_X509_ATTRIBUTE): TIdC_INT;
 
   //function PKCS7_sign(signcert: PX509; pkey: PEVP_PKEY; certs: PSTACK_OF_X509; data: PBIO; flags: TIdC_INT): PPKCS7;
 
-  function PKCS7_sign_add_signer(p7: PPKCS7; signcert: PX509; pkey: PEVP_PKEY; const md: PEVP_MD; flags: TIdC_INT): PPKCS7_SIGNER_INFO cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_sign_add_signer(p7: PPKCS7; signcert: PX509; pkey: PEVP_PKEY; const md: PEVP_MD; flags: TIdC_INT): PPKCS7_SIGNER_INFO cdecl; external CLibCrypto;
 
-  function PKCS7_final(p7: PPKCS7; data: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_final(p7: PPKCS7; data: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
   //function PKCS7_verify(p7: PPKCS7; certs: PSTACK_OF_X509; store: PX509_STORE; indata: PBIO; &out: PBIO; flags: TIdC_INT): TIdC_INT;
   //function PKCS7_get0_signers(p7: PPKCS7; certs: PSTACK_OF_X509; flags: TIdC_INT): PSTACK_OF_X509;
   //function PKCS7_encrypt(certs: PSTACK_OF_X509; &in: PBIO; const cipher: PEVP_CIPHER; flags: TIdC_INT): PPKCS7;
-  function PKCS7_decrypt(p7: PPKCS7; pkey: PEVP_PKEY; cert: PX509; data: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_decrypt(p7: PPKCS7; pkey: PEVP_PKEY; cert: PX509; data: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
   //function PKCS7_add_attrib_smimecap(si: PPKCS7_SIGNER_INFO; cap: PSTACK_OF_X509_ALGOR): TIdC_INT;
   //function PKCS7_get_smimecap(si: PPKCS7_SIGNER_INFO): PSTACK_OF_X509_ALGOR;
   //function PKCS7_simple_smimecap(sk: PSTACK_OF_X509_ALGOR; nid: TIdC_INT; arg: TIdC_INT): TIdC_INT;
 
-  function PKCS7_add_attrib_content_type(si: PPKCS7_SIGNER_INFO; coid: PASN1_OBJECT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add0_attrib_signing_time(si: PPKCS7_SIGNER_INFO; t: PASN1_TIME): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function PKCS7_add1_attrib_digest(si: PPKCS7_SIGNER_INFO; const md: PByte; mdlen: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function PKCS7_add_attrib_content_type(si: PPKCS7_SIGNER_INFO; coid: PASN1_OBJECT): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_add0_attrib_signing_time(si: PPKCS7_SIGNER_INFO; t: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
+  function PKCS7_add1_attrib_digest(si: PPKCS7_SIGNER_INFO; const md: PByte; mdlen: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
-  function SMIME_write_PKCS7(bio: PBIO; p7: PPKCS7; data: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function SMIME_read_PKCS7(bio: PBIO; bcont: PPBIO): PPKCS7 cdecl; external 'libcrypto-1_1.dll';
+  function SMIME_write_PKCS7(bio: PBIO; p7: PPKCS7; data: PBIO; flags: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
+  function SMIME_read_PKCS7(bio: PBIO; bcont: PPBIO): PPKCS7 cdecl; external CLibCrypto;
 
-  function BIO_new_PKCS7(&out: PBIO; p7: PPKCS7): PBIO cdecl; external 'libcrypto-1_1.dll';
+  function BIO_new_PKCS7(&out: PBIO; p7: PPKCS7): PBIO cdecl; external CLibCrypto;
 
 implementation
 

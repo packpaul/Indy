@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_err;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 const
@@ -189,42 +190,42 @@ type
 
 // DEFINE_LHASH_OF(ERR_STRING_DATA);
 
-  procedure ERR_put_error(lib: TIdC_INT; func: TIdC_INT; reason: TIdC_INT; &file: PIdAnsiChar; line: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure ERR_set_error_data(data: PIdAnsiChar; flags: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure ERR_put_error(lib: TIdC_INT; func: TIdC_INT; reason: TIdC_INT; &file: PIdAnsiChar; line: TIdC_INT) cdecl; external CLibCrypto;
+  procedure ERR_set_error_data(data: PIdAnsiChar; flags: TIdC_INT) cdecl; external CLibCrypto;
   
-  function ERR_get_error: TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ERR_get_error_line(&file: PPIdAnsiChar; line: PIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ERR_get_error_line_data(&file: PPIdAnsiChar; line: PIdC_INT; data: PPIdAnsiChar; flags: PIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
+  function ERR_get_error: TIdC_ULONG cdecl; external CLibCrypto;
+  function ERR_get_error_line(&file: PPIdAnsiChar; line: PIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
+  function ERR_get_error_line_data(&file: PPIdAnsiChar; line: PIdC_INT; data: PPIdAnsiChar; flags: PIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
 
-  function ERR_peek_error: TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ERR_peek_error_line(&file: PPIdAnsiChar; line: PIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ERR_peek_error_line_data(&file: PPIdAnsiChar; line: PIdC_INT; data: PPIdAnsiChar; flags: PIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
+  function ERR_peek_error: TIdC_ULONG cdecl; external CLibCrypto;
+  function ERR_peek_error_line(&file: PPIdAnsiChar; line: PIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
+  function ERR_peek_error_line_data(&file: PPIdAnsiChar; line: PIdC_INT; data: PPIdAnsiChar; flags: PIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
 
-  function ERR_peek_last_error: TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ERR_peek_last_error_line(&file: PPIdAnsiChar; line: PIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  function ERR_peek_last_error_line_data(&file: PPIdAnsiChar; line: PIdC_INT; data: PPIdAnsiChar; flags: PIdC_INT): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
+  function ERR_peek_last_error: TIdC_ULONG cdecl; external CLibCrypto;
+  function ERR_peek_last_error_line(&file: PPIdAnsiChar; line: PIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
+  function ERR_peek_last_error_line_data(&file: PPIdAnsiChar; line: PIdC_INT; data: PPIdAnsiChar; flags: PIdC_INT): TIdC_ULONG cdecl; external CLibCrypto;
 
-  procedure ERR_clear_error cdecl; external 'libcrypto-1_1.dll';
-  function ERR_error_string(e: TIdC_ULONG; buf: PIdAnsiChar): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  procedure ERR_error_string_n(e: TIdC_ULONG; buf: PIdAnsiChar; len: TIdC_SIZET) cdecl; external 'libcrypto-1_1.dll';
-  function ERR_lib_error_string(e: TIdC_ULONG): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  function ERR_func_error_string(e: TIdC_ULONG): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  function ERR_reason_error_string(e: TIdC_ULONG): PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  procedure ERR_print_errors_cb(cb: ERR_print_errors_cb_cb; u: Pointer) cdecl; external 'libcrypto-1_1.dll';
+  procedure ERR_clear_error cdecl; external CLibCrypto;
+  function ERR_error_string(e: TIdC_ULONG; buf: PIdAnsiChar): PIdAnsiChar cdecl; external CLibCrypto;
+  procedure ERR_error_string_n(e: TIdC_ULONG; buf: PIdAnsiChar; len: TIdC_SIZET) cdecl; external CLibCrypto;
+  function ERR_lib_error_string(e: TIdC_ULONG): PIdAnsiChar cdecl; external CLibCrypto;
+  function ERR_func_error_string(e: TIdC_ULONG): PIdAnsiChar cdecl; external CLibCrypto;
+  function ERR_reason_error_string(e: TIdC_ULONG): PIdAnsiChar cdecl; external CLibCrypto;
+  procedure ERR_print_errors_cb(cb: ERR_print_errors_cb_cb; u: Pointer) cdecl; external CLibCrypto;
 
-  procedure ERR_print_errors(bp: PBIO) cdecl; external 'libcrypto-1_1.dll';
+  procedure ERR_print_errors(bp: PBIO) cdecl; external CLibCrypto;
   // void ERR_add_error_data(int num, ...);
   // procedure ERR_add_error_vdata(num: TIdC_INT; args: va_list);
-  function ERR_load_strings(lib: TIdC_INT; str: PERR_STRING_DATA): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ERR_load_strings_const(str: PERR_STRING_DATA): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ERR_unload_strings(lib: TIdC_INT; str: PERR_STRING_DATA): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ERR_load_ERR_strings: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ERR_load_strings(lib: TIdC_INT; str: PERR_STRING_DATA): TIdC_INT cdecl; external CLibCrypto;
+  function ERR_load_strings_const(str: PERR_STRING_DATA): TIdC_INT cdecl; external CLibCrypto;
+  function ERR_unload_strings(lib: TIdC_INT; str: PERR_STRING_DATA): TIdC_INT cdecl; external CLibCrypto;
+  function ERR_load_ERR_strings: TIdC_INT cdecl; external CLibCrypto;
 
-  function ERR_get_state: PERR_STATE cdecl; external 'libcrypto-1_1.dll';
-  function ERR_get_next_error_library: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ERR_set_mark: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ERR_pop_to_mark: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function ERR_clear_last_mark: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ERR_get_state: PERR_STATE cdecl; external CLibCrypto;
+  function ERR_get_next_error_library: TIdC_INT cdecl; external CLibCrypto;
+  function ERR_set_mark: TIdC_INT cdecl; external CLibCrypto;
+  function ERR_pop_to_mark: TIdC_INT cdecl; external CLibCrypto;
+  function ERR_clear_last_mark: TIdC_INT cdecl; external CLibCrypto;
 
 implementation
 

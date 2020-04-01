@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_conf_api;
 
@@ -41,22 +41,23 @@ interface
 
 uses
   IdCTypes,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_conf;
 
   //* Up until OpenSSL 0.9.5a, this was new_section */
-  function _CONF_new_section(conf: PCONF; const section: PAnsiChar): PCONF_VALUE cdecl; external 'libcrypto-1_1.dll';
+  function _CONF_new_section(conf: PCONF; const section: PAnsiChar): PCONF_VALUE cdecl; external CLibCrypto;
   //* Up until OpenSSL 0.9.5a, this was get_section */
-  function _CONF_get_section(const conf: PCONF; const section: PAnsiChar): PCONF_VALUE cdecl; external 'libcrypto-1_1.dll';
+  function _CONF_get_section(const conf: PCONF; const section: PAnsiChar): PCONF_VALUE cdecl; external CLibCrypto;
   //* Up until OpenSSL 0.9.5a, this was CONF_get_section */
   //STACK_OF(CONF_VALUE) *_CONF_get_section_values(const CONF *conf,
   //                                               const char *section);
 
-  function _CONF_add_string(conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function _CONF_get_string(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  function _CONF_get_number(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TIdC_LONG cdecl; external 'libcrypto-1_1.dll';
+  function _CONF_add_string(conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TIdC_INT cdecl; external CLibCrypto;
+  function _CONF_get_string(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar cdecl; external CLibCrypto;
+  function _CONF_get_number(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TIdC_LONG cdecl; external CLibCrypto;
 
-  function _CONF_new_data(conf: PCONF): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure _CONF_free_data(conf: PCONF) cdecl; external 'libcrypto-1_1.dll';
+  function _CONF_new_data(conf: PCONF): TIdC_INT cdecl; external CLibCrypto;
+  procedure _CONF_free_data(conf: PCONF) cdecl; external CLibCrypto;
 
 
 implementation

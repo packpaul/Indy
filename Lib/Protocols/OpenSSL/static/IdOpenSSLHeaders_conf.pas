@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_conf;
 
@@ -40,10 +40,11 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdOpenSSLHeaders_bio,
-  IdOpenSSLHeaders_ossl_typ,
+  IdCTypes,
   IdGlobal,
-  IdCTypes;
+  IdOpenSSLConsts,
+  IdOpenSSLHeaders_bio,
+  IdOpenSSLHeaders_ossl_typ;
 
 type
   CONF_parse_list_list_cb = function (const elem: PAnsiChar; len: TIdC_INT; usr: Pointer): TIdC_INT;
@@ -102,7 +103,7 @@ const
   CONF_MFLAGS_IGNORE_MISSING_FILE = $10;
   CONF_MFLAGS_DEFAULT_SECTION = $20;
 
-  function CONF_set_default_method(meth: PCONF_METHOD): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function CONF_set_default_method(meth: PCONF_METHOD): TIdC_INT cdecl; external CLibCrypto;
 //  (*
 //  void CONF_set_nconf(CONF *conf, LHASH_OF(CONF_VALUE) *hash);
 //  LHASH_OF(CONF_VALUE) *CONF_load(LHASH_OF(CONF_VALUE) *conf, const char *file, long *eline);
@@ -143,45 +144,45 @@ const
   //    LHASH_OF(CONF_VALUE) *data;
   //  end;
 
-  function NCONF_new(meth: PCONF_METHOD): PCONF cdecl; external 'libcrypto-1_1.dll';
-  function NCONF_default: PCONF_METHOD cdecl; external 'libcrypto-1_1.dll';
-  function NCONF_WIN32: PCONF_METHOD cdecl; external 'libcrypto-1_1.dll';
-  procedure NCONF_free(conf: PCONF) cdecl; external 'libcrypto-1_1.dll';
-  procedure NCONF_free_data(conf: PCONF) cdecl; external 'libcrypto-1_1.dll';
+  function NCONF_new(meth: PCONF_METHOD): PCONF cdecl; external CLibCrypto;
+  function NCONF_default: PCONF_METHOD cdecl; external CLibCrypto;
+  function NCONF_WIN32: PCONF_METHOD cdecl; external CLibCrypto;
+  procedure NCONF_free(conf: PCONF) cdecl; external CLibCrypto;
+  procedure NCONF_free_data(conf: PCONF) cdecl; external CLibCrypto;
 
-  function NCONF_load(conf: PCONF; const &file: PAnsiChar; eline: PIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function NCONF_load_bio(conf: PCONF; bp: PBIO; eline: PIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function NCONF_load(conf: PCONF; const &file: PAnsiChar; eline: PIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  function NCONF_load_bio(conf: PCONF; bp: PBIO; eline: PIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
   //STACK_OF(CONF_VALUE) *NCONF_get_section(const CONF *conf,
   //                                        const char *section);
-  function NCONF_get_string(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  function NCONF_get_number_e(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result: PIdC_LONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function NCONF_dump_bio(const conf: PCONf; out: PBIO): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function NCONF_get_string(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar cdecl; external CLibCrypto;
+  function NCONF_get_number_e(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result: PIdC_LONG): TIdC_INT cdecl; external CLibCrypto;
+  function NCONF_dump_bio(const conf: PCONf; out: PBIO): TIdC_INT cdecl; external CLibCrypto;
 
   //#define NCONF_get_number(c,g,n,r) NCONF_get_number_e(c,g,n,r)
 
   //* Module functions */
 
-  function CONF_modules_load(const cnf: PCONF; const appname: PAnsiChar; flags: TIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function CONF_modules_load_file(const filename: PAnsiChar; const appname: PAnsiChar; flags: TIdC_ULONG): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function CONF_modules_load(const cnf: PCONF; const appname: PAnsiChar; flags: TIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
+  function CONF_modules_load_file(const filename: PAnsiChar; const appname: PAnsiChar; flags: TIdC_ULONG): TIdC_INT cdecl; external CLibCrypto;
 
-  procedure CONF_modules_unload(all: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure CONF_modules_finish cdecl; external 'libcrypto-1_1.dll';
-  function CONF_module_add(const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  procedure CONF_modules_unload(all: TIdC_INT) cdecl; external CLibCrypto;
+  procedure CONF_modules_finish cdecl; external CLibCrypto;
+  function CONF_module_add(const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TIdC_INT cdecl; external CLibCrypto;
 
   //const char *CONF_imodule_get_name(const CONF_IMODULE *md);
   //const char *CONF_imodule_get_value(const CONF_IMODULE *md);
-  function CONF_imodule_get_usr_data(const md: PCONF_IMODULE): Pointer cdecl; external 'libcrypto-1_1.dll';
-  procedure CONF_imodule_set_usr_data(md: PCONF_IMODULE; usr_data: Pointer) cdecl; external 'libcrypto-1_1.dll';
-  function CONF_imodule_get_module(const md: PCONF_IMODULE): PCONF_MODULE cdecl; external 'libcrypto-1_1.dll';
-  function CONF_imodule_get_flags(const md: PCONF_IMODULE): TIdC_ULONG cdecl; external 'libcrypto-1_1.dll';
-  procedure CONF_imodule_set_flags(md: PCONF_IMODULE; flags: TIdC_ULONG) cdecl; external 'libcrypto-1_1.dll';
-  function CONF_module_get_usr_data(pmod: PCONF_MODULE): Pointer cdecl; external 'libcrypto-1_1.dll';
-  procedure CONF_module_set_usr_data(pmod: PCONF_MODULE; usr_data: Pointer) cdecl; external 'libcrypto-1_1.dll';
+  function CONF_imodule_get_usr_data(const md: PCONF_IMODULE): Pointer cdecl; external CLibCrypto;
+  procedure CONF_imodule_set_usr_data(md: PCONF_IMODULE; usr_data: Pointer) cdecl; external CLibCrypto;
+  function CONF_imodule_get_module(const md: PCONF_IMODULE): PCONF_MODULE cdecl; external CLibCrypto;
+  function CONF_imodule_get_flags(const md: PCONF_IMODULE): TIdC_ULONG cdecl; external CLibCrypto;
+  procedure CONF_imodule_set_flags(md: PCONF_IMODULE; flags: TIdC_ULONG) cdecl; external CLibCrypto;
+  function CONF_module_get_usr_data(pmod: PCONF_MODULE): Pointer cdecl; external CLibCrypto;
+  procedure CONF_module_set_usr_data(pmod: PCONF_MODULE; usr_data: Pointer) cdecl; external CLibCrypto;
 
-  function CONF_get1_default_config_file: PAnsiChar cdecl; external 'libcrypto-1_1.dll';
-  function CONF_parse_list(const list: PAnsiChar; sep: TIdC_INT; nospc: TIdC_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function CONF_get1_default_config_file: PAnsiChar cdecl; external CLibCrypto;
+  function CONF_parse_list(const list: PAnsiChar; sep: TIdC_INT; nospc: TIdC_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TIdC_INT cdecl; external CLibCrypto;
 
-  procedure OPENSSL_load_builtin_modules cdecl; external 'libcrypto-1_1.dll';
+  procedure OPENSSL_load_builtin_modules cdecl; external CLibCrypto;
 
 implementation
 

@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_txt_db;
 
@@ -41,6 +41,7 @@ interface
 
 uses
   IdCTypes,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 const
@@ -73,12 +74,12 @@ type
 
   TXT_DB_create_index_qual = function(v1: POPENSSL_STRING): TIdC_INT;
 
-  function TXT_DB_read(&in: PBIO; num: TIdC_INT): PTXT_DB cdecl; external 'libcrypto-1_1.dll';
-  function TXT_DB_write(&out: PBIO; db: PTXT_DB): TIdC_LONG cdecl; external 'libcrypto-1_1.dll';
+  function TXT_DB_read(&in: PBIO; num: TIdC_INT): PTXT_DB cdecl; external CLibCrypto;
+  function TXT_DB_write(&out: PBIO; db: PTXT_DB): TIdC_LONG cdecl; external CLibCrypto;
   //function TXT_DB_create_index(db: PTXT_DB; field: TIdC_INT; qual: TXT_DB_create_index_qual; hash: OPENSSL_LH_HashFunc; cmp: OPENSSL_LH_COMPFUNC): TIdC_INT;
-  procedure TXT_DB_free(db: PTXT_DB) cdecl; external 'libcrypto-1_1.dll';
-  function TXT_DB_get_by_index(db: PTXT_DB; idx: TIdC_INT; value: POPENSSL_STRING): POPENSSL_STRING cdecl; external 'libcrypto-1_1.dll';
-  function TXT_DB_insert(db: PTXT_DB; value: POPENSSL_STRING): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  procedure TXT_DB_free(db: PTXT_DB) cdecl; external CLibCrypto;
+  function TXT_DB_get_by_index(db: PTXT_DB; idx: TIdC_INT; value: POPENSSL_STRING): POPENSSL_STRING cdecl; external CLibCrypto;
+  function TXT_DB_insert(db: PTXT_DB; value: POPENSSL_STRING): TIdC_INT cdecl; external CLibCrypto;
 
 implementation
 

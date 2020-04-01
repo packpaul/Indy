@@ -35,7 +35,8 @@ interface
 
 uses
   IdCTypes,
-  IdGlobal;
+  IdGlobal,
+  IdOpenSSLConsts;
 
 const
   // Added '_CONST' to avoid name clashes

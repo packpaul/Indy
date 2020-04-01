@@ -34,11 +34,12 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  IdCTypes,
   IdGlobal,
-  IdOpenSSlHeaders_ossl_typ,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_asn1t,
   IdOpenSSLHeaders_bio,
-  IdCTypes;
+  IdOpenSSlHeaders_ossl_typ;
 
 {$MINENUMSIZE 4}
 

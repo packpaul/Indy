@@ -34,7 +34,8 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdCTypes;
+  IdCTypes,
+  IdOpenSSLConsts;
 
 const
   //

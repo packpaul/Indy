@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_dherr;
 
@@ -40,7 +40,8 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdCTypes;
+  IdCTypes,
+  IdOpenSSLConsts;
 
 const
   // DH function codes
@@ -99,7 +100,7 @@ const
   DH_R_SHARED_INFO_ERROR         = 113;
   DH_R_UNABLE_TO_CHECK_GENERATOR = 121;
 
-  function ERR_load_DH_strings: TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ERR_load_DH_strings: TIdC_INT cdecl; external CLibCrypto;
 
 implementation
 

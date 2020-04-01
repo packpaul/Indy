@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:52
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_asn1t;
 
@@ -40,8 +40,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdGlobal,
   IdCTypes,
+  IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
   
 type
@@ -983,12 +984,12 @@ const
 
 //* Functions used internally by the ASN1 code */
 
-  function ASN1_item_ex_new(pval: PPASN1_VALUE; const it: PASN1_ITEM): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  procedure ASN1_item_ex_free(pval: PPASN1_VALUE; const it: PASN1_ITEM) cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_ex_new(pval: PPASN1_VALUE; const it: PASN1_ITEM): TIdC_INT cdecl; external CLibCrypto;
+  procedure ASN1_item_ex_free(pval: PPASN1_VALUE; const it: PASN1_ITEM) cdecl; external CLibCrypto;
 
-  function ASN1_item_ex_d2i(pval: PPASN1_VALUE; const AIn: PPByte; len: TIdC_LONG; const it: PASN1_ITEM; tag: TIdC_INT; aclass: TIdC_INT; opt: AnsiChar; ctx: PASN1_TLC): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_ex_d2i(pval: PPASN1_VALUE; const AIn: PPByte; len: TIdC_LONG; const it: PASN1_ITEM; tag: TIdC_INT; aclass: TIdC_INT; opt: AnsiChar; ctx: PASN1_TLC): TIdC_INT cdecl; external CLibCrypto;
 
-  function ASN1_item_ex_i2d(pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TIdC_INT; aclass: TIdC_INT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function ASN1_item_ex_i2d(pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TIdC_INT; aclass: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
 
 implementation
 

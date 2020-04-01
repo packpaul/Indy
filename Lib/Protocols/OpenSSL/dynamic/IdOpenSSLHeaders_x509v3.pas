@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:34:11
+// Generation date: 01.04.2020 14:26:27
 
 unit IdOpenSSLHeaders_x509v3;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ,
   IdOpenSSLHeaders_asn1,
   IdOpenSSLHeaders_asn1t,
@@ -297,7 +298,8 @@ type
 //      void (*free_section) (void *db, STACK_OF(CONF_VALUE) *section);
 //  } X509V3_CONF_METHOD;
 
-  (* Context specific info *)
+// Moved to ossl_typ
+//  (* Context specific info *)
 //  v3_ext_ctx = record
 //    flags: TIdC_INT;
 //    issuer_cert: PX509;

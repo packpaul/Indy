@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:51
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_aes;
 
@@ -41,7 +41,8 @@ interface
 
 uses
   IdCTypes,
-  IdGlobal;
+  IdGlobal,
+  IdOpenSSLConsts;
 
 const
 // Added '_CONST' to avoid name clashes
@@ -64,27 +65,27 @@ type
   AES_KEY = aes_key_st;
   PAES_KEY = ^AES_KEY;
 
-  function AES_options: PIdAnsiChar cdecl; external 'libcrypto-1_1.dll';
+  function AES_options: PIdAnsiChar cdecl; external CLibCrypto;
 
-  function AES_set_encrypt_key(const userKey: PByte; const bits: TIdC_INT; const key: PAES_KEY): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function AES_set_decrypt_key(const userKey: PByte; const bits: TIdC_INT; const key: PAES_KEY): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function AES_set_encrypt_key(const userKey: PByte; const bits: TIdC_INT; const key: PAES_KEY): TIdC_INT cdecl; external CLibCrypto;
+  function AES_set_decrypt_key(const userKey: PByte; const bits: TIdC_INT; const key: PAES_KEY): TIdC_INT cdecl; external CLibCrypto;
 
-  procedure AES_encrypt(const &in: PByte; &out: PByte; const key: PAES_KEY) cdecl; external 'libcrypto-1_1.dll';
-  procedure AES_decrypt(const &in: PByte; &out: PByte; const key: PAES_KEY) cdecl; external 'libcrypto-1_1.dll';
+  procedure AES_encrypt(const &in: PByte; &out: PByte; const key: PAES_KEY) cdecl; external CLibCrypto;
+  procedure AES_decrypt(const &in: PByte; &out: PByte; const key: PAES_KEY) cdecl; external CLibCrypto;
 
-  procedure AES_ecb_encrypt(const &in: PByte; &out: PByte; const key: PAES_KEY; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure AES_cbc_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure AES_cfb128_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure AES_cfb1_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure AES_cfb8_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
-  procedure AES_ofb128_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure AES_ecb_encrypt(const &in: PByte; &out: PByte; const key: PAES_KEY; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure AES_cbc_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure AES_cfb128_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure AES_cfb1_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure AES_cfb8_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT; const enc: TIdC_INT) cdecl; external CLibCrypto;
+  procedure AES_ofb128_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; num: PIdC_INT) cdecl; external CLibCrypto;
   (* NB: the IV is _two_ blocks long *)
-  procedure AES_ige_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure AES_ige_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external CLibCrypto;
   (* NB: the IV is _four_ blocks long *)
-  procedure AES_bi_ige_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external 'libcrypto-1_1.dll';
+  procedure AES_bi_ige_encrypt(const &in: PByte; &out: PByte; length: TIdC_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TIdC_INT) cdecl; external CLibCrypto;
 
-  function AES_wrap_key(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
-  function AES_unwrap_key(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT cdecl; external 'libcrypto-1_1.dll';
+  function AES_wrap_key(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT cdecl; external CLibCrypto;
+  function AES_unwrap_key(key: PAES_KEY; const iv: PByte; &out: PByte; const &in: PByte; inlen: TIdC_UINT): TIdC_INT cdecl; external CLibCrypto;
 
 implementation
 

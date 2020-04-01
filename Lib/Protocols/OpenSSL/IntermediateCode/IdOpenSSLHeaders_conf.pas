@@ -34,10 +34,11 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
-  IdOpenSSLHeaders_bio,
-  IdOpenSSLHeaders_ossl_typ,
+  IdCTypes,
   IdGlobal,
-  IdCTypes;
+  IdOpenSSLConsts,
+  IdOpenSSLHeaders_bio,
+  IdOpenSSLHeaders_ossl_typ;
 
 type
   CONF_parse_list_list_cb = function (const elem: PAnsiChar; len: TIdC_INT; usr: Pointer): TIdC_INT;

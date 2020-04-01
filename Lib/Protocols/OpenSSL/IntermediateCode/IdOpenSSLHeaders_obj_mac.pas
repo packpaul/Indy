@@ -2910,7 +2910,6 @@ const
   LN_uacurve9 =    'DSTU curve 9';
   NID_uacurve9 =    1169;
 
-
 implementation
 
 end.

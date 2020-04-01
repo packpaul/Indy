@@ -60,7 +60,7 @@ begin
   if i = -1 then
     Exit;
   Result := Result.Remove(i, CSemicolon.Length);
-  Result := Result.Insert(i, Format(' cdecl; external ''%s'';', [IfThen(AShouldUseLibSSL, 'libssl-1_1.dll', 'libcrypto-1_1.dll')]));
+  Result := Result.Insert(i, Format(' cdecl; external %s;', [IfThen(AShouldUseLibSSL, 'CLibSSL', 'CLibCrypto')]));
   {TODO -oFabian S. Biehn -cStatic Linking : LibCrypto FileName}
 end;
 
@@ -286,9 +286,9 @@ const
   CHeader: array[0..4] of string =
   (
    '',
-   '// This File is generated!',
-   '// Any modification should be in the respone unit in the ',
-   '// responding unit in the "intermediate" folder! ',
+   '// This File is auto generated!',
+   '// Any change to this file should be made in the',
+   '// corresponding unit in the folder "intermediate"!',
    ''
   );
 var

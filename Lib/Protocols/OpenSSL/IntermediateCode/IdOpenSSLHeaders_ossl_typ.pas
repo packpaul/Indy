@@ -34,11 +34,10 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  IdCTypes,
   IdGlobal,
-  IdCTypes;
-
+  IdOpenSSLConsts;
 type
-
 {$REGION 'moved from unit "asn1" to prevent circular references'}
   asn1_string_st = record
     length: TIdC_INT;

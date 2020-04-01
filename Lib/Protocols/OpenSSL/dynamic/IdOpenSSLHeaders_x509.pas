@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:34:11
+// Generation date: 01.04.2020 14:26:27
 
 unit IdOpenSSLHeaders_x509;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_asn1,
   IdOpenSSLHeaders_bio,
   IdOpenSSLHeaders_evp,
@@ -217,10 +218,6 @@ type
   X509_REQ_INFO = type Pointer; // X509_req_info_st
   PX509_REQ_INFO = ^X509_REQ_INFO;
   PPX509_REQ_INFO = ^PX509_REQ_INFO;
-
-  X509_REQ = type Pointer; // X509_req_st
-  PX509_REQ = ^X509_REQ;
-  PPX509_REQ = ^PX509_REQ;
 
   X509_CERT_AUX = type Pointer; // x509_cert_aux_st
 

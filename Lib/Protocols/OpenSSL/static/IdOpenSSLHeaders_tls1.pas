@@ -24,11 +24,11 @@
 {                                                                              }
 {******************************************************************************}
 
-// This File is generated!
-// Any modification should be in the respone unit in the 
-// responding unit in the "intermediate" folder! 
+// This File is auto generated!
+// Any change to this file should be made in the
+// corresponding unit in the folder "intermediate"!
 
-// Generation date: 31.03.2020 10:11:56
+// Generation date: 01.04.2020 14:26:28
 
 unit IdOpenSSLHeaders_tls1;
 
@@ -42,6 +42,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 const
@@ -1101,11 +1102,11 @@ type
 function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
 {$ENDREGION}
 
-  function SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTx; mode: TIdC_UINT8): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: TIdC_UINT8): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTx; mode: TIdC_UINT8): TIdC_INT cdecl; external CLibSSL;
+  function SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: TIdC_UINT8): TIdC_INT cdecl; external CLibSSL;
 
-  function SSL_get_servername(const s: PSSL; const &type: TIdC_INT): PIdAnsiChar cdecl; external 'libssl-1_1.dll';
-  function SSL_get_servername_type(const s: PSSL): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get_servername(const s: PSSL; const &type: TIdC_INT): PIdAnsiChar cdecl; external CLibSSL;
+  function SSL_get_servername_type(const s: PSSL): TIdC_INT cdecl; external CLibSSL;
   (*
    * SSL_export_keying_material exports a value derived from the master secret,
    * as specified in RFC 5705. It writes |olen| bytes to |out| given a label and
@@ -1113,7 +1114,7 @@ function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
    * flag controls whether a context is included.) It returns 1 on success and
    * 0 or -1 otherwise.
    *)
-  function SSL_export_keying_material(s: PSSL; &out: PByte; olen: TIdC_SIZET; const &label: PIdAnsiChar; llen: TIdC_SIZET; const context: PByte; contextlen: TIdC_SIZET; use_context: TIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_export_keying_material(s: PSSL; &out: PByte; olen: TIdC_SIZET; const &label: PIdAnsiChar; llen: TIdC_SIZET; const context: PByte; contextlen: TIdC_SIZET; use_context: TIdC_INT): TIdC_INT cdecl; external CLibSSL;
 
   (*
    * SSL_export_keying_material_early exports a value derived from the
@@ -1122,12 +1123,12 @@ function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
    * |olen| bytes to |out| given a label and optional context. It
    * returns 1 on success and 0 otherwise.
    *)
-  function SSL_export_keying_material_early(s: PSSL; &out: PByte; olen: TIdC_SIZET; const &label: PIdAnsiChar; llen: TIdC_SIZET; const context: PByte; contextlen: TIdC_SIZET): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_export_keying_material_early(s: PSSL; &out: PByte; olen: TIdC_SIZET; const &label: PIdAnsiChar; llen: TIdC_SIZET; const context: PByte; contextlen: TIdC_SIZET): TIdC_INT cdecl; external CLibSSL;
 
-  function SSL_get_peer_signature_type_nid(const s: PSSl; pnid: PIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get_signature_type_nid(const s: PSSl; pnid: PIdC_INT): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get_sigalgs(s: PSSl; idx: TIdC_INT; psign: PIdC_INT; phash: PIdC_INT; psignandhash: PIdC_INT; rsig: PByte; rhash: PByte): TIdC_INT cdecl; external 'libssl-1_1.dll';
-  function SSL_get_shared_sigalgs(s: PSSl; idx: TIdC_INT; psign: PIdC_INT; phash: PIdC_INT; psignandhash: PIdC_INT; rsig: PByte; rhash: PByte): TIdC_INT cdecl; external 'libssl-1_1.dll';
+  function SSL_get_peer_signature_type_nid(const s: PSSl; pnid: PIdC_INT): TIdC_INT cdecl; external CLibSSL;
+  function SSL_get_signature_type_nid(const s: PSSl; pnid: PIdC_INT): TIdC_INT cdecl; external CLibSSL;
+  function SSL_get_sigalgs(s: PSSl; idx: TIdC_INT; psign: PIdC_INT; phash: PIdC_INT; psignandhash: PIdC_INT; rsig: PByte; rhash: PByte): TIdC_INT cdecl; external CLibSSL;
+  function SSL_get_shared_sigalgs(s: PSSl; idx: TIdC_INT; psign: PIdC_INT; phash: PIdC_INT; psignandhash: PIdC_INT; rsig: PByte; rhash: PByte): TIdC_INT cdecl; external CLibSSL;
 
   //__owur TIdC_INT SSL_check_chain(s: PSSL, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain);
 
@@ -1196,7 +1197,6 @@ function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
   //                (void (*)(void))cb)
 
 implementation
-
 
 uses
   IdOpenSSLHeaders_ssl;

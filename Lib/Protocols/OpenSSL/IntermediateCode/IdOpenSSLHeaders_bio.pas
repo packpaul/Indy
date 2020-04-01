@@ -36,6 +36,7 @@ interface
 uses
   IdCTypes,
   IdGlobal,
+  IdOpenSSLConsts,
   IdOpenSSlHeaders_ossl_typ;
 
 {$MINENUMSIZE 4}
