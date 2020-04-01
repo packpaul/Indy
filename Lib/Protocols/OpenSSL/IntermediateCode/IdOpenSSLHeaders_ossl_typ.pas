@@ -301,8 +301,25 @@ uses
   PKCS8_PRIV_KEY_INFO = pkcs8_priv_key_info_st;
   PPKCS8_PRIV_KEY_INFO = ^PKCS8_PRIV_KEY_INFO;
   PPPKCS8_PRIV_KEY_INFO = ^PPKCS8_PRIV_KEY_INFO;
-  
-  v3_ext_ctx = type Pointer;
+
+// moved from x509 to prevent circular references
+  X509_REQ = type Pointer; // X509_req_st
+  PX509_REQ = ^X509_REQ;
+  PPX509_REQ = ^PX509_REQ;
+
+// moved from x509v3 to prevent circular references
+  (* Context specific info *)
+  v3_ext_ctx = record
+    flags: TIdC_INT;
+    issuer_cert: PX509;
+    subject_cert: PX509;
+    subject_req: PX509_REQ;
+    crl: PX509_CRL;
+    db_meth: Pointer; //PX509V3_CONF_METHOD;
+    db: Pointer;
+  (* Maybe more here *)
+  end;
+//  v3_ext_ctx = type Pointer;
   X509V3_CTX = v3_ext_ctx;
   PX509V3_CTX = ^X509V3_CTX;
   conf_st = type Pointer;

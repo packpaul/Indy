@@ -291,7 +291,8 @@ type
 //      void (*free_section) (void *db, STACK_OF(CONF_VALUE) *section);
 //  } X509V3_CONF_METHOD;
 
-  (* Context specific info *)
+// Moved to ossl_typ
+//  (* Context specific info *)
 //  v3_ext_ctx = record
 //    flags: TIdC_INT;
 //    issuer_cert: PX509;

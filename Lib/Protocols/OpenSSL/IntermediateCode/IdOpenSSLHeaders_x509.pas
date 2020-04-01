@@ -212,10 +212,6 @@ type
   PX509_REQ_INFO = ^X509_REQ_INFO;
   PPX509_REQ_INFO = ^PX509_REQ_INFO;
 
-  X509_REQ = type Pointer; // X509_req_st
-  PX509_REQ = ^X509_REQ;
-  PPX509_REQ = ^PX509_REQ;
-
   X509_CERT_AUX = type Pointer; // x509_cert_aux_st
 
   X509_CINF = type Pointer; // x509_cinf_st
