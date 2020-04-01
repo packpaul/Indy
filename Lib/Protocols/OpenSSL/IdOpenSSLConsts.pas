@@ -2,6 +2,8 @@ unit IdOpenSSLConsts;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 const
   CLibCrypto =
     {$IFDEF CPU32}'libcrypto-1_1.dll'{$ENDIF}
