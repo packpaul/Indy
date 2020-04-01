@@ -108,8 +108,8 @@ type
     ///   sequences. Before, between, and after the certificates text is allowed
     ///   which can be used e.g. for descriptions of the certificates.
     ///   <code>
-    ///   -----BEGIN CERTIFICATE-----
-    ///   ... (CA certificate in base64 encoding) ...
+    ///   -----BEGIN CERTIFICATE-----</code></para><para><code>
+    ///   ... (CA certificate in base64 encoding) ...</code></para><para><code>
     ///   -----END CERTIFICATE-----
     ///   </code>
     ///   </para>
@@ -143,13 +143,13 @@ type
     /// <summary>
     ///   Minimum allowed TLS version. For letting OpenSSL automagic choosing
     ///   the lowest possible version use:
-    ///   <code>TIdOpenSSLVersion.Undefined</code>
+    ///   <code><see cref="IdOpenSSLTypes|TIdOpenSSLVersion"/>.Undefined</code>
     /// </summary>
     property MinimumTLSVersion: TIdOpenSSLVersion read FMinimumTLSVersion write FMinimumTLSVersion default CDefaultMinumumTLSVersion;
     /// <summary>
     ///   Maximum allowed TLS version. For letting OpenSSL automagic choosing
     ///   the highest possible version use:
-    ///   <code>TIdOpenSSLVersion.Undefined</code>
+    ///   <code><see cref="IdOpenSSLTypes|TIdOpenSSLVersion"/>.Undefined</code>
     /// </summary>
     property MaximumTLSVersion: TIdOpenSSLVersion read FMaximumTLSVersion write FMaximumTLSVersion default CDefaultMaximumTLSVersion;
     /// <summary>
