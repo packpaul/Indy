@@ -28,6 +28,8 @@ unit IdOpenSSLExceptionResourcestrings;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 resourcestring
   RIdOpenSSLSetExDataError = 'Failed to set ex data.';
   RIdOpenSSLGetExDataError = 'Failed to get ex data.';

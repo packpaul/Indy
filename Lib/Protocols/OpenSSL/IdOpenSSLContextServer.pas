@@ -28,6 +28,8 @@ unit IdOpenSSLContextServer;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdCTypes,
   IdOpenSSLContext,

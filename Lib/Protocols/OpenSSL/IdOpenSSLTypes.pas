@@ -28,6 +28,8 @@ unit IdOpenSSLTypes;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 type
   {$SCOPEDENUMS ON}
   TIdOpenSSLVersion =

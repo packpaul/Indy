@@ -28,6 +28,8 @@ unit IdOpenSSLSocket;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdGlobal,
   IdOpenSSLHeaders_ossl_typ;

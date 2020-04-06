@@ -28,6 +28,8 @@ unit IdOpenSSLSocketClient;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdOpenSSLHeaders_ossl_typ,
   IdOpenSSLSocket,

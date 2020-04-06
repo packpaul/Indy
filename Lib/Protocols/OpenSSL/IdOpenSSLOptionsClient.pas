@@ -28,6 +28,8 @@ unit IdOpenSSLOptionsClient;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   Classes,
   IdOpenSSLOptions;

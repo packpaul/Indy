@@ -28,6 +28,8 @@ unit IdOpenSSLOptions;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   Classes,
   IdOpenSSLTypes;

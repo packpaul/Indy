@@ -28,6 +28,8 @@ unit IdOpenSSLIOHandlerClient;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdGlobal,
   IdOpenSSLContext,

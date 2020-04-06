@@ -28,6 +28,8 @@ unit IdOpenSSLUtils;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdGlobal;
 

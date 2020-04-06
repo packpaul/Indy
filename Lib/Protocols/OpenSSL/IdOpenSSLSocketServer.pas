@@ -28,6 +28,8 @@ unit IdOpenSSLSocketServer;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdOpenSSLSocket,
   IdStackConsts;

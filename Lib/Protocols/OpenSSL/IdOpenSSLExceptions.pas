@@ -28,6 +28,8 @@ unit IdOpenSSLExceptions;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdCTypes,
   IdException,

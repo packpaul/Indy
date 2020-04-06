@@ -28,6 +28,8 @@ unit IdOpenSSLIOHandlerServer;
 
 interface
 
+{$i IdCompilerDefines.inc}
+
 uses
   IdOpenSSLContextServer,
   IdOpenSSLOptionsServer,
