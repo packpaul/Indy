@@ -144,17 +144,35 @@ uses
 
 class procedure EIdOpenSSLBaseError.&Raise;
 begin
-  raise Self.Create('') at ReturnAddress;
+  raise Self.Create('') at
+  {$IFNDEF FPC}
+  ReturnAddress
+  {$ELSE}
+  get_caller_addr(get_frame), get_caller_frame(get_frame)
+  {$ENDIF}
+  ;
 end;
 
 class procedure EIdOpenSSLBaseError.&Raise(const AMsg: string);
 begin
-  raise Self.Create(AMsg) at ReturnAddress;
+  raise Self.Create(AMsg) at
+  {$IFNDEF FPC}
+  ReturnAddress
+  {$ELSE}
+  get_caller_addr(get_frame), get_caller_frame(get_frame)
+  {$ENDIF}
+  ;
 end;
 
 class procedure EIdOpenSSLBaseError.RaiseFmt(const AMsg: string; const Args: array of const);
 begin
-  raise Self.Create(Format(AMsg, Args)) at ReturnAddress;
+  raise Self.Create(Format(AMsg, Args)) at
+  {$IFNDEF FPC}
+  ReturnAddress
+  {$ELSE}
+  get_caller_addr(get_frame), get_caller_frame(get_frame)
+  {$ENDIF}
+  ;
 end;
 
 { EIdOpenSSLBaseErrorStackError }
