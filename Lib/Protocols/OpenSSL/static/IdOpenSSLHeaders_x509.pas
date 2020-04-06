@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:28
+// Generation date: 03.04.2020 11:33:43
 
 unit IdOpenSSLHeaders_x509;
 
@@ -819,7 +819,7 @@ type
   function X509_NAME_ENTRY_set_object(ne: PX509_NAME_ENTRY; const obj: PASN1_OBJECT): TIdC_INT cdecl; external CLibCrypto;
   function X509_NAME_ENTRY_set_data(ne: PX509_NAME_ENTRY; &type: TIdC_INT; const bytes: PByte; len: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
   function X509_NAME_ENTRY_get_object(const ne: PX509_NAME_ENTRY): PASN1_OBJECT cdecl; external CLibCrypto;
-  function X509_NAME_ENTRY_get_data(const ne: PX509_NAME_ENTRY): ASN1_STRING cdecl; external CLibCrypto;
+  function X509_NAME_ENTRY_get_data(const ne: PX509_NAME_ENTRY): PASN1_STRING cdecl; external CLibCrypto;
   function X509_NAME_ENTRY_set(const ne: PX509_NAME_ENTRY): TIdC_INT cdecl; external CLibCrypto;
 
   function X509_NAME_get0_der(nm: PX509_NAME; const pder: PPByte; pderlen: PIdC_SIZET): TIdC_INT cdecl; external CLibCrypto;

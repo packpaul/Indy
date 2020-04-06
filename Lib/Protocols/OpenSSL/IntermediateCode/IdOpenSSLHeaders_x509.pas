@@ -814,7 +814,7 @@ var
   function X509_NAME_ENTRY_set_object(ne: PX509_NAME_ENTRY; const obj: PASN1_OBJECT): TIdC_INT;
   function X509_NAME_ENTRY_set_data(ne: PX509_NAME_ENTRY; &type: TIdC_INT; const bytes: PByte; len: TIdC_INT): TIdC_INT;
   function X509_NAME_ENTRY_get_object(const ne: PX509_NAME_ENTRY): PASN1_OBJECT;
-  function X509_NAME_ENTRY_get_data(const ne: PX509_NAME_ENTRY): ASN1_STRING;
+  function X509_NAME_ENTRY_get_data(const ne: PX509_NAME_ENTRY): PASN1_STRING;
   function X509_NAME_ENTRY_set(const ne: PX509_NAME_ENTRY): TIdC_INT;
 
   function X509_NAME_get0_der(nm: PX509_NAME; const pder: PPByte; pderlen: PIdC_SIZET): TIdC_INT;

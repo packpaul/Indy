@@ -42,7 +42,7 @@ uses
   asn1_string_st = record
     length: TIdC_INT;
     &type: TIdC_INT;
-    data: PIdAnsiChar;
+    data: PByte;
     (*
      * The value of the following field depends on the type being held.  It
      * is mostly being used for BIT_STRING so if the input data has a
