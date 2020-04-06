@@ -156,6 +156,7 @@ type
   PIdC_TIMET = ^TIdC_TIMET;
   {$ENDIF}
 
+  PPPByte = ^PPByte;
   {$ELSE}
 
   // this is necessary because Borland still doesn't support QWord
