@@ -286,6 +286,20 @@ type
   {$IFNDEF HAS_PWord}PWord = ^Word;{$ENDIF}
   {$ENDIF}
 
+  TIdC_TM = record
+    tm_sec: TIdC_INT;         (* seconds,  range 0 to 59          *)
+    tm_min: TIdC_INT;         (* minutes, range 0 to 59           *)
+    tm_hour: TIdC_INT;        (* hours, range 0 to 23             *)
+    tm_mday: TIdC_INT;        (* day of the month, range 1 to 31  *)
+    tm_mon: TIdC_INT;         (* month, range 0 to 11             *)
+    tm_year: TIdC_INT;        (* The number of years since 1900   *)
+    tm_wday: TIdC_INT;        (* day of the week, range 0 to 6    *)
+    tm_yday: TIdC_INT;        (* day in the year, range 0 to 365  *)
+    tm_isdst: TIdC_INT;       (* daylight saving time             *)
+  end;
+  PIdC_TM = ^TIdC_TM;
+  PPIdC_TM = ^PIdC_TM;
+
 implementation
 
 end.

@@ -31,11 +31,14 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  IdCTypes,
   IdGlobal;
 
 function GetPAnsiChar(const s: UTF8String): PIdAnsiChar;
 function GetPAnsiCharOrNil(const s: UTF8String): PIdAnsiChar;
 function GetString(const p: PIdAnsiChar): string;
+
+function TMToDateTime(const ATM: TIdC_TM): TDateTime;
 
 implementation
 
@@ -71,6 +74,18 @@ end;
 function GetString(const p: PIdAnsiChar): string;
 begin
   Result := string(AnsiString(p));
+end;
+
+function TMToDateTime(const ATM: TIdC_TM): TDateTime;
+begin
+  Result := EncodeDateTime(
+    ATM.tm_year + 1900,
+    ATM.tm_mon + 1,
+    ATM.tm_mday,
+    ATM.tm_hour,
+    ATM.tm_min,
+    ATM.tm_sec,
+    0);
 end;
 
 end.
