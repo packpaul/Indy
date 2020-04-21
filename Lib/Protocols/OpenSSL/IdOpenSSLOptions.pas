@@ -32,15 +32,10 @@ interface
 
 uses
   Classes,
+  IdOpenSSLPersistent,
   IdOpenSSLTypes;
 
 type
-  TIdOpenSSLPersistent = class(TPersistent)
-  public
-    procedure AssignTo(Dest: TPersistent); override;
-    function Clone: TIdOpenSSLPersistent; virtual;
-  end;
-
   TIdOpenSSLOptionsBase = class(TIdOpenSSLPersistent)
   strict private const
     CDefaultMinumumTLSVersion = TIdOpenSSLVersion.TLSv1;
@@ -63,7 +58,7 @@ type
     FAllowUnsafeLegacyRenegotiation: Boolean;
     FUseLegacyServerConnect: Boolean;
   public
-    constructor Create; virtual;
+    constructor Create; override;
     procedure AssignTo(Dest: TPersistent); override;
     function Equals(Obj: TObject): Boolean; override;
 
@@ -254,20 +249,6 @@ begin
       and (@FOnGetPassword = @LObj.FOnGetPassword)
       and (@FOnKeyLogging = @LObj.FOnKeyLogging);
   end;
-end;
-
-{ TIdOpenSSLPersistent }
-
-procedure TIdOpenSSLPersistent.AssignTo(Dest: TPersistent);
-begin
-  if not (Dest is TIdOpenSSLPersistent) then
-    inherited;
-end;
-
-function TIdOpenSSLPersistent.Clone: TIdOpenSSLPersistent;
-begin
-  Result := TIdOpenSSLOptionsClass(Self.ClassType).Create();
-  AssignTo(Result);
 end;
 
 end.
