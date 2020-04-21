@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:28
+// Generation date: 21.04.2020 08:22:59
 
 unit IdOpenSSLHeaders_asn1;
 
@@ -566,7 +566,7 @@ type
   function ASN1_TIME_to_generalizedtime(const t: PASN1_TIME; &out: PPASN1_GENERALIZEDTIME): PASN1_GENERALIZEDTIME cdecl; external CLibCrypto;
   function ASN1_TIME_set_string(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
   function ASN1_TIME_set_string_X509(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
-  //function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: Ptm): TIdC_INT;
+  function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: PIdC_TM): TIdC_INT cdecl; external CLibCrypto;
   function ASN1_TIME_normalize(s: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;
   function ASN1_TIME_cmp_time_t(const s: PASN1_TIME; t: TIdC_TIMET): TIdC_INT cdecl; external CLibCrypto;
   function ASN1_TIME_compare(const a: PASN1_TIME; const b: PASN1_TIME): TIdC_INT cdecl; external CLibCrypto;

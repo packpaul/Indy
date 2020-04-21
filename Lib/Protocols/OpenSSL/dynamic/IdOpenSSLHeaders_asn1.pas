@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 21.04.2020 08:23:00
 
 unit IdOpenSSLHeaders_asn1;
 
@@ -572,7 +572,7 @@ var
   ASN1_TIME_to_generalizedtime: function(const t: PASN1_TIME; &out: PPASN1_GENERALIZEDTIME): PASN1_GENERALIZEDTIME cdecl = nil;
   ASN1_TIME_set_string: function(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl = nil;
   ASN1_TIME_set_string_X509: function(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT cdecl = nil;
-  //function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: Ptm): TIdC_INT;
+  ASN1_TIME_to_tm: function(const s: PASN1_TIME; tm: PIdC_TM): TIdC_INT cdecl = nil;
   ASN1_TIME_normalize: function(s: PASN1_TIME): TIdC_INT cdecl = nil;
   ASN1_TIME_cmp_time_t: function(const s: PASN1_TIME; t: TIdC_TIMET): TIdC_INT cdecl = nil;
   ASN1_TIME_compare: function(const a: PASN1_TIME; const b: PASN1_TIME): TIdC_INT cdecl = nil;
@@ -857,6 +857,7 @@ begin
     ASN1_TIME_to_generalizedtime := LoadFunction('ASN1_TIME_to_generalizedtime', LFailed);
     ASN1_TIME_set_string := LoadFunction('ASN1_TIME_set_string', LFailed);
     ASN1_TIME_set_string_X509 := LoadFunction('ASN1_TIME_set_string_X509', LFailed);
+    ASN1_TIME_to_tm := LoadFunction('ASN1_TIME_to_tm', LFailed);
     ASN1_TIME_normalize := LoadFunction('ASN1_TIME_normalize', LFailed);
     ASN1_TIME_cmp_time_t := LoadFunction('ASN1_TIME_cmp_time_t', LFailed);
     ASN1_TIME_compare := LoadFunction('ASN1_TIME_compare', LFailed);
@@ -1023,6 +1024,7 @@ begin
   ASN1_TIME_to_generalizedtime := nil;
   ASN1_TIME_set_string := nil;
   ASN1_TIME_set_string_X509 := nil;
+  ASN1_TIME_to_tm := nil;
   ASN1_TIME_normalize := nil;
   ASN1_TIME_cmp_time_t := nil;
   ASN1_TIME_compare := nil;

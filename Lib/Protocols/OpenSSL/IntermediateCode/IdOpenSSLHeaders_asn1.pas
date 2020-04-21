@@ -561,7 +561,7 @@ var
   function ASN1_TIME_to_generalizedtime(const t: PASN1_TIME; &out: PPASN1_GENERALIZEDTIME): PASN1_GENERALIZEDTIME;
   function ASN1_TIME_set_string(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT;
   function ASN1_TIME_set_string_X509(s: PASN1_TIME; const str: PIdAnsiChar): TIdC_INT;
-  //function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: Ptm): TIdC_INT;
+  function ASN1_TIME_to_tm(const s: PASN1_TIME; tm: PIdC_TM): TIdC_INT;
   function ASN1_TIME_normalize(s: PASN1_TIME): TIdC_INT;
   function ASN1_TIME_cmp_time_t(const s: PASN1_TIME; t: TIdC_TIMET): TIdC_INT;
   function ASN1_TIME_compare(const a: PASN1_TIME; const b: PASN1_TIME): TIdC_INT;

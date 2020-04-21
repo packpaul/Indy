@@ -1867,7 +1867,7 @@ var
   function SSL_CTX_set_ex_data(ssl: PSSL_CTX; idx: TIdC_INT; data: Pointer): TIdC_INT;
   function SSL_CTX_get_ex_data(const ssl: PSSL_CTX; idx: TIdC_INT): Pointer;
 
-  //__owur TIdC_INT SSL_get_ex_data_X509_STORE_CTX_idx(void);
+  function SSL_get_ex_data_X509_STORE_CTX_idx: TIdC_INT;
 
   //# define SSL_CTX_get_default_read_ahead(ctx) SSL_CTX_get_read_ahead(ctx)
   //# define SSL_CTX_set_default_read_ahead(ctx,m) SSL_CTX_set_read_ahead(ctx,m)

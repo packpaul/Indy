@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 06.04.2020 08:35:46
+// Generation date: 21.04.2020 08:23:00
 
 unit IdOpenSSLHeaders_ssl;
 
@@ -1878,7 +1878,7 @@ var
   SSL_CTX_set_ex_data: function(ssl: PSSL_CTX; idx: TIdC_INT; data: Pointer): TIdC_INT cdecl = nil;
   SSL_CTX_get_ex_data: function(const ssl: PSSL_CTX; idx: TIdC_INT): Pointer cdecl = nil;
 
-  //__owur TIdC_INT SSL_get_ex_data_X509_STORE_CTX_idx(void);
+  SSL_get_ex_data_X509_STORE_CTX_idx: function: TIdC_INT cdecl = nil;
 
   //# define SSL_CTX_get_default_read_ahead(ctx) SSL_CTX_get_read_ahead(ctx)
   //# define SSL_CTX_set_default_read_ahead(ctx,m) SSL_CTX_set_read_ahead(ctx,m)
@@ -2432,6 +2432,7 @@ begin
     SSL_SESSION_get_ex_data := LoadFunction('SSL_SESSION_get_ex_data', LFailed);
     SSL_CTX_set_ex_data := LoadFunction('SSL_CTX_set_ex_data', LFailed);
     SSL_CTX_get_ex_data := LoadFunction('SSL_CTX_get_ex_data', LFailed);
+    SSL_get_ex_data_X509_STORE_CTX_idx := LoadFunction('SSL_get_ex_data_X509_STORE_CTX_idx', LFailed);
     SSL_CTX_set_default_read_buffer_len := LoadFunction('SSL_CTX_set_default_read_buffer_len', LFailed);
     SSL_set_default_read_buffer_len := LoadFunction('SSL_set_default_read_buffer_len', LFailed);
     SSL_CTX_set_tmp_dh_callback := LoadFunction('SSL_CTX_set_tmp_dh_callback', LFailed);
@@ -2819,6 +2820,7 @@ begin
   SSL_SESSION_get_ex_data := nil;
   SSL_CTX_set_ex_data := nil;
   SSL_CTX_get_ex_data := nil;
+  SSL_get_ex_data_X509_STORE_CTX_idx := nil;
   SSL_CTX_set_default_read_buffer_len := nil;
   SSL_set_default_read_buffer_len := nil;
   SSL_CTX_set_tmp_dh_callback := nil;

@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 06.04.2020 08:35:45
+// Generation date: 21.04.2020 08:22:59
 
 unit IdOpenSSLHeaders_ssl;
 
@@ -1872,7 +1872,7 @@ function SSL_get_max_proto_version(s: PSSL): TIdC_LONG;
   function SSL_CTX_set_ex_data(ssl: PSSL_CTX; idx: TIdC_INT; data: Pointer): TIdC_INT cdecl; external CLibSSL;
   function SSL_CTX_get_ex_data(const ssl: PSSL_CTX; idx: TIdC_INT): Pointer cdecl; external CLibSSL;
 
-  //__owur TIdC_INT SSL_get_ex_data_X509_STORE_CTX_idx(void);
+  function SSL_get_ex_data_X509_STORE_CTX_idx: TIdC_INT cdecl; external CLibSSL;
 
   //# define SSL_CTX_get_default_read_ahead(ctx) SSL_CTX_get_read_ahead(ctx)
   //# define SSL_CTX_set_default_read_ahead(ctx,m) SSL_CTX_set_read_ahead(ctx,m)
