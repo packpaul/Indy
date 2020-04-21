@@ -37,7 +37,8 @@ uses
   IdOpenSSLHeaders_ssl,
   IdOpenSSLOptions,
   IdOpenSSLSocket,
-  IdOpenSSLTypes;
+  IdOpenSSLTypes,
+  IdOpenSSLVersion;
 
 type
   TIdOpenSSLContext = class(TObject)

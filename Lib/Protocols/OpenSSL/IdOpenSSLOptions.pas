@@ -33,7 +33,8 @@ interface
 uses
   Classes,
   IdOpenSSLPersistent,
-  IdOpenSSLTypes;
+  IdOpenSSLTypes,
+  IdOpenSSLVersion;
 
 type
   TIdOpenSSLOptionsBase = class(TIdOpenSSLPersistent)
