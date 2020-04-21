@@ -40,15 +40,22 @@ function GetString(const p: PIdAnsiChar): string;
 
 function TMToDateTime(const ATM: TIdC_TM): TDateTime;
 
+function BoolToInt(const ABool: Boolean): Integer;
+function IntToBool(const AInt: Integer): Boolean;
+
 implementation
 
 uses
+  DateUtils,
 //{$IFDEF USE_MARSHALLED_PTRS}
 //{$IFDEF MSWINDOWS} // prevent "[dcc32 Hint] H2443 Inline function 'TMarshaller.AsUtf8'
 //  Windows,         // has not been expanded because unit 'Winapi.Windows' is not
 //{$ENDIF MSWINDOWS} // specified in USES list" ¯\_(ツ)_/¯
 //{$ENDIF}
   SysUtils;
+
+const
+  BoolConverter: array[Boolean] of Integer = (0, 1);
 
 function GetPAnsiChar(const s: UTF8String): PIdAnsiChar;
 //{$IFDEF USE_MARSHALLED_PTRS}
@@ -86,6 +93,19 @@ begin
     ATM.tm_min,
     ATM.tm_sec,
     0);
+end;
+
+function BoolToInt(const ABool: Boolean): Integer;
+begin
+  Result := BoolConverter[ABool];
+end;
+
+function IntToBool(const AInt: Integer): Boolean;
+begin
+  if BoolConverter[True] = AInt then
+    Result := True
+  else
+    Result := False;
 end;
 
 end.

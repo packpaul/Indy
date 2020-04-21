@@ -57,6 +57,7 @@ type
     FUseServerCipherPreferences: Boolean;
     FAllowUnsafeLegacyRenegotiation: Boolean;
     FUseLegacyServerConnect: Boolean;
+    FOnVerify: TVerifyCallback;
   public
     constructor Create; override;
     procedure AssignTo(Dest: TPersistent); override;
@@ -192,6 +193,12 @@ type
     ///   !!! ONLY FOR DEBUGGING, be careful with productive code !!!
     /// </remarks>
     property OnKeyLogging: TKeyLog read FOnKeyLogging write FOnKeyLogging;
+
+    /// <summary>
+    ///   Callback for custom verification of an x509 certificate.
+    ///   See <see cref="IdOpenSSLTypes|TVerifyCallback"/> for more details.
+    /// </summary>
+    property OnVerify: TVerifyCallback read FOnVerify write FOnVerify;
   end;
 
   TIdOpenSSLOptionsClass = class of TIdOpenSSLOptionsBase;
@@ -217,6 +224,7 @@ begin
     LDest.FCipherList := FCipherList;
     LDest.FOnGetPassword := FOnGetPassword;
     LDest.FOnKeyLogging := FOnKeyLogging;
+    LDest.FOnVerify := FOnVerify;
   end
 end;
 
@@ -231,6 +239,12 @@ begin
 end;
 
 function TIdOpenSSLOptionsBase.Equals(Obj: TObject): Boolean;
+
+  function EqualMethod(const ALeft, ARight: TMethod): Boolean; inline;
+  begin
+    Result := (ALeft.Code = ARight.Code) and (ALeft.Data = ARight.Data);
+  end;
+
 var
   LObj: TIdOpenSSLOptionsBase;
 begin
@@ -246,8 +260,9 @@ begin
       and (FMinimumTLSVersion = LObj.FMinimumTLSVersion)
       and (FMaximumTLSVersion = LObj.FMaximumTLSVersion)
       and (FCipherList = LObj.FCipherList)
-      and (@FOnGetPassword = @LObj.FOnGetPassword)
-      and (@FOnKeyLogging = @LObj.FOnKeyLogging);
+      and EqualMethod(TMethod(FOnGetPassword), TMethod(LObj.FOnGetPassword))
+      and EqualMethod(TMethod(FOnKeyLogging), TMethod(LObj.FOnKeyLogging))
+      and EqualMethod(TMethod(FOnVerify), TMethod(LObj.FOnVerify));
   end;
 end;
 

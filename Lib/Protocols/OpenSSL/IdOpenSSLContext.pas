@@ -106,6 +106,7 @@ uses
   IdOpenSSLHeaders_x509,
   IdOpenSSLHeaders_x509_vfy,
   IdOpenSSLUtils,
+  IdOpenSSLX509,
   Math,
   SysUtils;
 
@@ -158,26 +159,45 @@ begin
   Result := IndyMin(LPasswordByteLength, size);
 end;
 
-function VerifyCallback(preverify_ok: TIdC_INT;
-  x509_ctx: PX509_STORE_CTX): TIdC_INT; cdecl;
+function VerifyCallback(preverify_ok: TIdC_INT; x509_ctx: PX509_STORE_CTX): TIdC_INT; cdecl;
 var
-  LCert: PX509;
-  LName: PX509_NAME;
-  LIssuer, LSubject: string;
+  LCertOpenSSL: PX509;
+  LCertIndy: TIdOpenSSLX509;
+  LVerifyResult: TIdC_INT;
+  LDepth: TIdC_INT;
+  LSSL: PSSL;
+  LCtx: PSSL_CTX;
+  LContext: TIdOpenSSLContext;
+  LAccepted: Boolean;
 begin
   Result := 0;
-  LCert := X509_STORE_CTX_get_current_cert(x509_ctx);
-  if not Assigned(LCert) then
+
+  LSSL := X509_STORE_CTX_get_ex_data(x509_ctx, SSL_get_ex_data_X509_STORE_CTX_idx());
+  LCtx := SSL_get_SSL_CTX(LSSL);
+  LContext := TIdOpenSSLContext(SSL_ctx_get_ex_data(LCtx, TIdOpenSSLContext.CExDataIndexSelf));
+  if not Assigned(LContext) then
+    EIdOpenSSLGetExDataError.&Raise(RIdOpenSSLGetExDataError);
+
+  if not Assigned(LContext.FOptions.OnVerify) then
+  begin
+    Result := preverify_ok;
     Exit;
+  end;
 
-  LName := X509_get_issuer_name(LCert);
-  LIssuer := GetString(X509_NAME_oneline(LName, nil, 0));
+  LVerifyResult := X509_STORE_CTX_get_error(x509_ctx);
+  LDepth := X509_STORE_CTX_get_error_depth(x509_ctx);
 
-  LName := X509_get_subject_name(LCert);
-  LSubject := GetString(X509_NAME_oneline(LName, nil, 0));
-
-  if preverify_ok = 1 then
-    Result := 1;
+  LCertOpenSSL := X509_STORE_CTX_get_current_cert(x509_ctx);
+  if not Assigned(LCertOpenSSL) then
+    Exit;
+  LCertIndy := TIdOpenSSLX509.Create(LCertOpenSSL);
+  try
+    LAccepted := IntToBool(preverify_ok);
+    LContext.FOptions.OnVerify(LContext, LCertIndy, LVerifyResult, LDepth, LAccepted);
+    Result := BoolToInt(LAccepted);
+  finally
+    LCertIndy.Free();
+  end;
 end;
 
 procedure KeylogCallback(const ssl: PSSL; const line: PIdAnsiChar); cdecl;
