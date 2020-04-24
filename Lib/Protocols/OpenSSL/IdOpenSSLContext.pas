@@ -258,7 +258,7 @@ begin
   InitContextWithStaticValues(FContext);
 
   SetCertificate(FContext, UTF8String(FOptions.CertFile), UTF8String(FOptions.CertKey));
-  SetTLSVersions(FContext, FOptions.MinimumTLSVersion, FOptions.MaximumTLSVersion);
+  SetTLSVersions(FContext, FOptions.TLSVersionMinimum, FOptions.TLSVersionMaximum);
   SetVerifyLocations(FContext, UTF8String(FOptions.VerifyCertificate), UTF8String(FOptions.VerifyCertDirectory));
   SSL_CTX_set_verify(FContext, GetVerifyMode(FOptions), VerifyCallback);
 //  SSL_CTX_set_verify(FContext, GetVerifyMode(FOptions), nil);

@@ -49,8 +49,8 @@ type
     FCertKey: string;
     FVerifyCertificate: string;
     FVerifyCertDirectory: string;
-    FMaximumTLSVersion: TIdOpenSSLVersion;
-    FMinimumTLSVersion: TIdOpenSSLVersion;
+    FTLSVersionMaximum: TIdOpenSSLVersion;
+    FTLSVersionMinimum: TIdOpenSSLVersion;
     FCipherList: string;
     FOnGetPassword: TGetPassword;
     FOnKeyLogging: TKeyLog;
@@ -144,13 +144,13 @@ type
     ///   the lowest possible version use:
     ///   <code><see cref="IdOpenSSLTypes|TIdOpenSSLVersion"/>.Undefined</code>
     /// </summary>
-    property MinimumTLSVersion: TIdOpenSSLVersion read FMinimumTLSVersion write FMinimumTLSVersion default CDefaultMinumumTLSVersion;
+    property TLSVersionMinimum: TIdOpenSSLVersion read FTLSVersionMinimum write FTLSVersionMinimum default CDefaultMinumumTLSVersion;
     /// <summary>
     ///   Maximum allowed TLS version. For letting OpenSSL automagic choosing
     ///   the highest possible version use:
     ///   <code><see cref="IdOpenSSLTypes|TIdOpenSSLVersion"/>.Undefined</code>
     /// </summary>
-    property MaximumTLSVersion: TIdOpenSSLVersion read FMaximumTLSVersion write FMaximumTLSVersion default CDefaultMaximumTLSVersion;
+    property TLSVersionMaximum: TIdOpenSSLVersion read FTLSVersionMaximum write FTLSVersionMaximum default CDefaultMaximumTLSVersion;
     /// <summary>
     ///   <para>Sets the list of available ciphers. Only used for TLSv1.2 and below.</para>
     ///   <para>For TLSv1.3 use <see cref="CipherSuites"/>.</para>
@@ -220,8 +220,8 @@ begin
     LDest.FCertKey := FCertKey;
     LDest.FVerifyCertificate := FVerifyCertificate;
     LDest.FVerifyCertDirectory := FVerifyCertDirectory;
-    LDest.FMinimumTLSVersion := FMinimumTLSVersion;
-    LDest.FMaximumTLSVersion := FMaximumTLSVersion;
+    LDest.FTLSVersionMinimum := FTLSVersionMinimum;
+    LDest.FTLSVersionMaximum := FTLSVersionMaximum;
     LDest.FCipherList := FCipherList;
     LDest.FOnGetPassword := FOnGetPassword;
     LDest.FOnKeyLogging := FOnKeyLogging;
@@ -232,8 +232,8 @@ end;
 constructor TIdOpenSSLOptionsBase.Create;
 begin
   inherited;
-  FMinimumTLSVersion := CDefaultMinumumTLSVersion;
-  FMaximumTLSVersion := CDefaultMaximumTLSVersion;
+  FTLSVersionMinimum := CDefaultMinumumTLSVersion;
+  FTLSVersionMaximum := CDefaultMaximumTLSVersion;
   FUseServerCipherPreferences := CDefaultUseServerCipherPreferences;
   FAllowUnsafeLegacyRenegotiation := CDefaultAllowUnsafeLegacyRenegotiation;
   FUseLegacyServerConnect := CDefaultUseLegacyServerConnect;
@@ -258,8 +258,8 @@ begin
       and (FCertKey = LObj.FCertKey)
       and (FVerifyCertificate = LObj.FVerifyCertificate)
       and (FVerifyCertDirectory = LObj.FVerifyCertDirectory)
-      and (FMinimumTLSVersion = LObj.FMinimumTLSVersion)
-      and (FMaximumTLSVersion = LObj.FMaximumTLSVersion)
+      and (FTLSVersionMinimum = LObj.FTLSVersionMinimum)
+      and (FTLSVersionMaximum = LObj.FTLSVersionMaximum)
       and (FCipherList = LObj.FCipherList)
       and EqualMethod(TMethod(FOnGetPassword), TMethod(LObj.FOnGetPassword))
       and EqualMethod(TMethod(FOnKeyLogging), TMethod(LObj.FOnKeyLogging))
