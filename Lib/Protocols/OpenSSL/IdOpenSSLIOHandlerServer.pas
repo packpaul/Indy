@@ -79,12 +79,10 @@ var
 begin
   LIOHandler := MakeClientIOHandler() as TIdOpenSSLIOHandlerClientForServer;
   try
-    LIOHandler.PassThrough := True;
-//    LIOHandler.PassThrough := False;
+    LIOHandler.PassThrough := False;
     LIOHandler.Open;
     if LIOHandler.Binding.Accept(ASocket.Handle) then
     begin
-      LIOHandler.PassThrough := False;
       LIOHandler.StartSSL();
     end
     else

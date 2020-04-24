@@ -72,7 +72,7 @@ uses
 
 procedure TIdOpenSSLIOHandlerClient.EnsureContext;
 begin
-  if PassThrough or Assigned(FContext) then
+  if Assigned(FContext) then
     Exit;
   FContext := TIdOpenSSLContextClient.Create();
 

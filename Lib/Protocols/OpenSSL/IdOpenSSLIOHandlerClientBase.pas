@@ -121,6 +121,7 @@ procedure TIdOpenSSLIOHandlerClientBase.SetPassThrough(const Value: Boolean);
 begin
   if fPassThrough = Value then
     Exit;
+  inherited;
   if not Value then
   begin
     if BindingAllocated then
@@ -134,7 +135,6 @@ begin
       FreeAndNil(FTLSSocket);
     end;
   end;
-  inherited;
 end;
 
 function TIdOpenSSLIOHandlerClientBase.Readable(AMSec: Integer): Boolean;
