@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_dsa;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -90,7 +91,7 @@ type
 //# define i2d_DSAparams_bio(bp,x) ASN1_i2d_bio_of_const(DSA,i2d_DSAparams,bp,x)
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -206,105 +207,93 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    DSAparams_dup := LoadFunction('DSAparams_dup', LFailed);
-    DSA_SIG_new := LoadFunction('DSA_SIG_new', LFailed);
-    DSA_SIG_free := LoadFunction('DSA_SIG_free', LFailed);
-    i2d_DSA_SIG := LoadFunction('i2d_DSA_SIG', LFailed);
-    d2i_DSA_SIG := LoadFunction('d2i_DSA_SIG', LFailed);
-    DSA_SIG_get0 := LoadFunction('DSA_SIG_get0', LFailed);
-    DSA_SIG_set0 := LoadFunction('DSA_SIG_set0', LFailed);
-    DSA_do_sign := LoadFunction('DSA_do_sign', LFailed);
-    DSA_do_verify := LoadFunction('DSA_do_verify', LFailed);
-    DSA_OpenSSL := LoadFunction('DSA_OpenSSL', LFailed);
-    DSA_set_default_method := LoadFunction('DSA_set_default_method', LFailed);
-    DSA_get_default_method := LoadFunction('DSA_get_default_method', LFailed);
-    DSA_set_method := LoadFunction('DSA_set_method', LFailed);
-    DSA_get_method := LoadFunction('DSA_get_method', LFailed);
-    DSA_new := LoadFunction('DSA_new', LFailed);
-    DSA_new_method := LoadFunction('DSA_new_method', LFailed);
-    DSA_free := LoadFunction('DSA_free', LFailed);
-    DSA_up_ref := LoadFunction('DSA_up_ref', LFailed);
-    DSA_size := LoadFunction('DSA_size', LFailed);
-    DSA_bits := LoadFunction('DSA_bits', LFailed);
-    DSA_security_bits := LoadFunction('DSA_security_bits', LFailed);
-    DSA_sign := LoadFunction('DSA_sign', LFailed);
-    DSA_verify := LoadFunction('DSA_verify', LFailed);
-    DSA_set_ex_data := LoadFunction('DSA_set_ex_data', LFailed);
-    DSA_get_ex_data := LoadFunction('DSA_get_ex_data', LFailed);
-    d2i_DSAPublicKey := LoadFunction('d2i_DSAPublicKey', LFailed);
-    d2i_DSAPrivateKey := LoadFunction('d2i_DSAPrivateKey', LFailed);
-    d2i_DSAparams := LoadFunction('d2i_DSAparams', LFailed);
-    DSA_generate_parameters_ex := LoadFunction('DSA_generate_parameters_ex', LFailed);
-    DSA_generate_key := LoadFunction('DSA_generate_key', LFailed);
-    i2d_DSAPublicKey := LoadFunction('i2d_DSAPublicKey', LFailed);
-    i2d_DSAPrivateKey := LoadFunction('i2d_DSAPrivateKey', LFailed);
-    i2d_DSAparams := LoadFunction('i2d_DSAparams', LFailed);
-    DSAparams_print := LoadFunction('DSAparams_print', LFailed);
-    DSA_print := LoadFunction('DSA_print', LFailed);
-    DSA_dup_DH := LoadFunction('DSA_dup_DH', LFailed);
-    DSA_get0_pqg := LoadFunction('DSA_get0_pqg', LFailed);
-    DSA_set0_pqg := LoadFunction('DSA_set0_pqg', LFailed);
-    DSA_get0_key := LoadFunction('DSA_get0_key', LFailed);
-    DSA_set0_key := LoadFunction('DSA_set0_key', LFailed);
-    DSA_get0_p := LoadFunction('DSA_get0_p', LFailed);
-    DSA_get0_q := LoadFunction('DSA_get0_q', LFailed);
-    DSA_get0_g := LoadFunction('DSA_get0_g', LFailed);
-    DSA_get0_pub_key := LoadFunction('DSA_get0_pub_key', LFailed);
-    DSA_get0_priv_key := LoadFunction('DSA_get0_priv_key', LFailed);
-    DSA_clear_flags := LoadFunction('DSA_clear_flags', LFailed);
-    DSA_test_flags := LoadFunction('DSA_test_flags', LFailed);
-    DSA_set_flags := LoadFunction('DSA_set_flags', LFailed);
-    DSA_get0_engine := LoadFunction('DSA_get0_engine', LFailed);
-    DSA_meth_new := LoadFunction('DSA_meth_new', LFailed);
-    DSA_meth_free := LoadFunction('DSA_meth_free', LFailed);
-    DSA_meth_dup := LoadFunction('DSA_meth_dup', LFailed);
-    DSA_meth_get0_name := LoadFunction('DSA_meth_get0_name', LFailed);
-    DSA_meth_set1_name := LoadFunction('DSA_meth_set1_name', LFailed);
-    DSA_meth_get_flags := LoadFunction('DSA_meth_get_flags', LFailed);
-    DSA_meth_set_flags := LoadFunction('DSA_meth_set_flags', LFailed);
-    DSA_meth_get0_app_data := LoadFunction('DSA_meth_get0_app_data', LFailed);
-    DSA_meth_set0_app_data := LoadFunction('DSA_meth_set0_app_data', LFailed);
-    DSA_meth_get_sign := LoadFunction('DSA_meth_get_sign', LFailed);
-    DSA_meth_set_sign := LoadFunction('DSA_meth_set_sign', LFailed);
-    DSA_meth_get_sign_setup := LoadFunction('DSA_meth_get_sign_setup', LFailed);
-    DSA_meth_set_sign_setup := LoadFunction('DSA_meth_set_sign_setup', LFailed);
-    DSA_meth_get_verify := LoadFunction('DSA_meth_get_verify', LFailed);
-    DSA_meth_set_verify := LoadFunction('DSA_meth_set_verify', LFailed);
-    DSA_meth_get_mod_exp := LoadFunction('DSA_meth_get_mod_exp', LFailed);
-    DSA_meth_set_mod_exp := LoadFunction('DSA_meth_set_mod_exp', LFailed);
-    DSA_meth_get_bn_mod_exp := LoadFunction('DSA_meth_get_bn_mod_exp', LFailed);
-    DSA_meth_set_bn_mod_exp := LoadFunction('DSA_meth_set_bn_mod_exp', LFailed);
-    DSA_meth_get_init := LoadFunction('DSA_meth_get_init', LFailed);
-    DSA_meth_set_init := LoadFunction('DSA_meth_set_init', LFailed);
-    DSA_meth_get_finish := LoadFunction('DSA_meth_get_finish', LFailed);
-    DSA_meth_set_finish := LoadFunction('DSA_meth_set_finish', LFailed);
-    DSA_meth_get_paramgen := LoadFunction('DSA_meth_get_paramgen', LFailed);
-    DSA_meth_set_paramgen := LoadFunction('DSA_meth_set_paramgen', LFailed);
-    DSA_meth_get_keygen := LoadFunction('DSA_meth_get_keygen', LFailed);
-    DSA_meth_set_keygen := LoadFunction('DSA_meth_set_keygen', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  DSAparams_dup := LoadFunction('DSAparams_dup', AFailed);
+  DSA_SIG_new := LoadFunction('DSA_SIG_new', AFailed);
+  DSA_SIG_free := LoadFunction('DSA_SIG_free', AFailed);
+  i2d_DSA_SIG := LoadFunction('i2d_DSA_SIG', AFailed);
+  d2i_DSA_SIG := LoadFunction('d2i_DSA_SIG', AFailed);
+  DSA_SIG_get0 := LoadFunction('DSA_SIG_get0', AFailed);
+  DSA_SIG_set0 := LoadFunction('DSA_SIG_set0', AFailed);
+  DSA_do_sign := LoadFunction('DSA_do_sign', AFailed);
+  DSA_do_verify := LoadFunction('DSA_do_verify', AFailed);
+  DSA_OpenSSL := LoadFunction('DSA_OpenSSL', AFailed);
+  DSA_set_default_method := LoadFunction('DSA_set_default_method', AFailed);
+  DSA_get_default_method := LoadFunction('DSA_get_default_method', AFailed);
+  DSA_set_method := LoadFunction('DSA_set_method', AFailed);
+  DSA_get_method := LoadFunction('DSA_get_method', AFailed);
+  DSA_new := LoadFunction('DSA_new', AFailed);
+  DSA_new_method := LoadFunction('DSA_new_method', AFailed);
+  DSA_free := LoadFunction('DSA_free', AFailed);
+  DSA_up_ref := LoadFunction('DSA_up_ref', AFailed);
+  DSA_size := LoadFunction('DSA_size', AFailed);
+  DSA_bits := LoadFunction('DSA_bits', AFailed);
+  DSA_security_bits := LoadFunction('DSA_security_bits', AFailed);
+  DSA_sign := LoadFunction('DSA_sign', AFailed);
+  DSA_verify := LoadFunction('DSA_verify', AFailed);
+  DSA_set_ex_data := LoadFunction('DSA_set_ex_data', AFailed);
+  DSA_get_ex_data := LoadFunction('DSA_get_ex_data', AFailed);
+  d2i_DSAPublicKey := LoadFunction('d2i_DSAPublicKey', AFailed);
+  d2i_DSAPrivateKey := LoadFunction('d2i_DSAPrivateKey', AFailed);
+  d2i_DSAparams := LoadFunction('d2i_DSAparams', AFailed);
+  DSA_generate_parameters_ex := LoadFunction('DSA_generate_parameters_ex', AFailed);
+  DSA_generate_key := LoadFunction('DSA_generate_key', AFailed);
+  i2d_DSAPublicKey := LoadFunction('i2d_DSAPublicKey', AFailed);
+  i2d_DSAPrivateKey := LoadFunction('i2d_DSAPrivateKey', AFailed);
+  i2d_DSAparams := LoadFunction('i2d_DSAparams', AFailed);
+  DSAparams_print := LoadFunction('DSAparams_print', AFailed);
+  DSA_print := LoadFunction('DSA_print', AFailed);
+  DSA_dup_DH := LoadFunction('DSA_dup_DH', AFailed);
+  DSA_get0_pqg := LoadFunction('DSA_get0_pqg', AFailed);
+  DSA_set0_pqg := LoadFunction('DSA_set0_pqg', AFailed);
+  DSA_get0_key := LoadFunction('DSA_get0_key', AFailed);
+  DSA_set0_key := LoadFunction('DSA_set0_key', AFailed);
+  DSA_get0_p := LoadFunction('DSA_get0_p', AFailed);
+  DSA_get0_q := LoadFunction('DSA_get0_q', AFailed);
+  DSA_get0_g := LoadFunction('DSA_get0_g', AFailed);
+  DSA_get0_pub_key := LoadFunction('DSA_get0_pub_key', AFailed);
+  DSA_get0_priv_key := LoadFunction('DSA_get0_priv_key', AFailed);
+  DSA_clear_flags := LoadFunction('DSA_clear_flags', AFailed);
+  DSA_test_flags := LoadFunction('DSA_test_flags', AFailed);
+  DSA_set_flags := LoadFunction('DSA_set_flags', AFailed);
+  DSA_get0_engine := LoadFunction('DSA_get0_engine', AFailed);
+  DSA_meth_new := LoadFunction('DSA_meth_new', AFailed);
+  DSA_meth_free := LoadFunction('DSA_meth_free', AFailed);
+  DSA_meth_dup := LoadFunction('DSA_meth_dup', AFailed);
+  DSA_meth_get0_name := LoadFunction('DSA_meth_get0_name', AFailed);
+  DSA_meth_set1_name := LoadFunction('DSA_meth_set1_name', AFailed);
+  DSA_meth_get_flags := LoadFunction('DSA_meth_get_flags', AFailed);
+  DSA_meth_set_flags := LoadFunction('DSA_meth_set_flags', AFailed);
+  DSA_meth_get0_app_data := LoadFunction('DSA_meth_get0_app_data', AFailed);
+  DSA_meth_set0_app_data := LoadFunction('DSA_meth_set0_app_data', AFailed);
+  DSA_meth_get_sign := LoadFunction('DSA_meth_get_sign', AFailed);
+  DSA_meth_set_sign := LoadFunction('DSA_meth_set_sign', AFailed);
+  DSA_meth_get_sign_setup := LoadFunction('DSA_meth_get_sign_setup', AFailed);
+  DSA_meth_set_sign_setup := LoadFunction('DSA_meth_set_sign_setup', AFailed);
+  DSA_meth_get_verify := LoadFunction('DSA_meth_get_verify', AFailed);
+  DSA_meth_set_verify := LoadFunction('DSA_meth_set_verify', AFailed);
+  DSA_meth_get_mod_exp := LoadFunction('DSA_meth_get_mod_exp', AFailed);
+  DSA_meth_set_mod_exp := LoadFunction('DSA_meth_set_mod_exp', AFailed);
+  DSA_meth_get_bn_mod_exp := LoadFunction('DSA_meth_get_bn_mod_exp', AFailed);
+  DSA_meth_set_bn_mod_exp := LoadFunction('DSA_meth_set_bn_mod_exp', AFailed);
+  DSA_meth_get_init := LoadFunction('DSA_meth_get_init', AFailed);
+  DSA_meth_set_init := LoadFunction('DSA_meth_set_init', AFailed);
+  DSA_meth_get_finish := LoadFunction('DSA_meth_get_finish', AFailed);
+  DSA_meth_set_finish := LoadFunction('DSA_meth_set_finish', AFailed);
+  DSA_meth_get_paramgen := LoadFunction('DSA_meth_get_paramgen', AFailed);
+  DSA_meth_set_paramgen := LoadFunction('DSA_meth_set_paramgen', AFailed);
+  DSA_meth_get_keygen := LoadFunction('DSA_meth_get_keygen', AFailed);
+  DSA_meth_set_keygen := LoadFunction('DSA_meth_set_keygen', AFailed);
 end;
 
 procedure UnLoad;

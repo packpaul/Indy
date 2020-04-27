@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_err;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -189,7 +190,7 @@ type
   ERR_print_errors_cb_cb = function(str: PIdAnsiChar; len: TIdC_SIZET; u: Pointer): TIdC_INT; cdecl;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -235,57 +236,45 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    ERR_put_error := LoadFunction('ERR_put_error', LFailed);
-    ERR_set_error_data := LoadFunction('ERR_set_error_data', LFailed);
-    ERR_get_error := LoadFunction('ERR_get_error', LFailed);
-    ERR_get_error_line := LoadFunction('ERR_get_error_line', LFailed);
-    ERR_get_error_line_data := LoadFunction('ERR_get_error_line_data', LFailed);
-    ERR_peek_error := LoadFunction('ERR_peek_error', LFailed);
-    ERR_peek_error_line := LoadFunction('ERR_peek_error_line', LFailed);
-    ERR_peek_error_line_data := LoadFunction('ERR_peek_error_line_data', LFailed);
-    ERR_peek_last_error := LoadFunction('ERR_peek_last_error', LFailed);
-    ERR_peek_last_error_line := LoadFunction('ERR_peek_last_error_line', LFailed);
-    ERR_peek_last_error_line_data := LoadFunction('ERR_peek_last_error_line_data', LFailed);
-    ERR_clear_error := LoadFunction('ERR_clear_error', LFailed);
-    ERR_error_string := LoadFunction('ERR_error_string', LFailed);
-    ERR_error_string_n := LoadFunction('ERR_error_string_n', LFailed);
-    ERR_lib_error_string := LoadFunction('ERR_lib_error_string', LFailed);
-    ERR_func_error_string := LoadFunction('ERR_func_error_string', LFailed);
-    ERR_reason_error_string := LoadFunction('ERR_reason_error_string', LFailed);
-    ERR_print_errors_cb := LoadFunction('ERR_print_errors_cb', LFailed);
-    ERR_print_errors := LoadFunction('ERR_print_errors', LFailed);
-    ERR_load_strings := LoadFunction('ERR_load_strings', LFailed);
-    ERR_load_strings_const := LoadFunction('ERR_load_strings_const', LFailed);
-    ERR_unload_strings := LoadFunction('ERR_unload_strings', LFailed);
-    ERR_load_ERR_strings := LoadFunction('ERR_load_ERR_strings', LFailed);
-    ERR_get_state := LoadFunction('ERR_get_state', LFailed);
-    ERR_get_next_error_library := LoadFunction('ERR_get_next_error_library', LFailed);
-    ERR_set_mark := LoadFunction('ERR_set_mark', LFailed);
-    ERR_pop_to_mark := LoadFunction('ERR_pop_to_mark', LFailed);
-    ERR_clear_last_mark := LoadFunction('ERR_clear_last_mark', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  ERR_put_error := LoadFunction('ERR_put_error', AFailed);
+  ERR_set_error_data := LoadFunction('ERR_set_error_data', AFailed);
+  ERR_get_error := LoadFunction('ERR_get_error', AFailed);
+  ERR_get_error_line := LoadFunction('ERR_get_error_line', AFailed);
+  ERR_get_error_line_data := LoadFunction('ERR_get_error_line_data', AFailed);
+  ERR_peek_error := LoadFunction('ERR_peek_error', AFailed);
+  ERR_peek_error_line := LoadFunction('ERR_peek_error_line', AFailed);
+  ERR_peek_error_line_data := LoadFunction('ERR_peek_error_line_data', AFailed);
+  ERR_peek_last_error := LoadFunction('ERR_peek_last_error', AFailed);
+  ERR_peek_last_error_line := LoadFunction('ERR_peek_last_error_line', AFailed);
+  ERR_peek_last_error_line_data := LoadFunction('ERR_peek_last_error_line_data', AFailed);
+  ERR_clear_error := LoadFunction('ERR_clear_error', AFailed);
+  ERR_error_string := LoadFunction('ERR_error_string', AFailed);
+  ERR_error_string_n := LoadFunction('ERR_error_string_n', AFailed);
+  ERR_lib_error_string := LoadFunction('ERR_lib_error_string', AFailed);
+  ERR_func_error_string := LoadFunction('ERR_func_error_string', AFailed);
+  ERR_reason_error_string := LoadFunction('ERR_reason_error_string', AFailed);
+  ERR_print_errors_cb := LoadFunction('ERR_print_errors_cb', AFailed);
+  ERR_print_errors := LoadFunction('ERR_print_errors', AFailed);
+  ERR_load_strings := LoadFunction('ERR_load_strings', AFailed);
+  ERR_load_strings_const := LoadFunction('ERR_load_strings_const', AFailed);
+  ERR_unload_strings := LoadFunction('ERR_unload_strings', AFailed);
+  ERR_load_ERR_strings := LoadFunction('ERR_load_ERR_strings', AFailed);
+  ERR_get_state := LoadFunction('ERR_get_state', AFailed);
+  ERR_get_next_error_library := LoadFunction('ERR_get_next_error_library', AFailed);
+  ERR_set_mark := LoadFunction('ERR_set_mark', AFailed);
+  ERR_pop_to_mark := LoadFunction('ERR_pop_to_mark', AFailed);
+  ERR_clear_last_mark := LoadFunction('ERR_clear_last_mark', AFailed);
 end;
 
 procedure UnLoad;

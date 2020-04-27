@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_hmac;
 
@@ -40,12 +40,14 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -66,40 +68,28 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    HMAC_size := LoadFunction('HMAC_size', LFailed);
-    HMAC_CTX_new := LoadFunction('HMAC_CTX_new', LFailed);
-    HMAC_CTX_reset := LoadFunction('HMAC_CTX_reset', LFailed);
-    HMAC_CTX_free := LoadFunction('HMAC_CTX_free', LFailed);
-    HMAC_Init_ex := LoadFunction('HMAC_Init_ex', LFailed);
-    HMAC_Update := LoadFunction('HMAC_Update', LFailed);
-    HMAC_Final := LoadFunction('HMAC_Final', LFailed);
-    HMAC := LoadFunction('HMAC', LFailed);
-    HMAC_CTX_copy := LoadFunction('HMAC_CTX_copy', LFailed);
-    HMAC_CTX_set_flags := LoadFunction('HMAC_CTX_set_flags', LFailed);
-    HMAC_CTX_get_md := LoadFunction('HMAC_CTX_get_md', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  HMAC_size := LoadFunction('HMAC_size', AFailed);
+  HMAC_CTX_new := LoadFunction('HMAC_CTX_new', AFailed);
+  HMAC_CTX_reset := LoadFunction('HMAC_CTX_reset', AFailed);
+  HMAC_CTX_free := LoadFunction('HMAC_CTX_free', AFailed);
+  HMAC_Init_ex := LoadFunction('HMAC_Init_ex', AFailed);
+  HMAC_Update := LoadFunction('HMAC_Update', AFailed);
+  HMAC_Final := LoadFunction('HMAC_Final', AFailed);
+  HMAC := LoadFunction('HMAC', AFailed);
+  HMAC_CTX_copy := LoadFunction('HMAC_CTX_copy', AFailed);
+  HMAC_CTX_set_flags := LoadFunction('HMAC_CTX_set_flags', AFailed);
+  HMAC_CTX_get_md := LoadFunction('HMAC_CTX_get_md', AFailed);
 end;
 
 procedure UnLoad;

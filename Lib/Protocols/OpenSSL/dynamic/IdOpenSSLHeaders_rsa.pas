@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_rsa;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -258,7 +259,7 @@ type
 //# define RSA_get_app_data(s)             RSA_get_ex_data(s,0)
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -445,124 +446,112 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    RSA_new := LoadFunction('RSA_new', LFailed);
-    RSA_new_method := LoadFunction('RSA_new_method', LFailed);
-    RSA_bits := LoadFunction('RSA_bits', LFailed);
-    RSA_size := LoadFunction('RSA_size', LFailed);
-    RSA_security_bits := LoadFunction('RSA_security_bits', LFailed);
-    RSA_set0_key := LoadFunction('RSA_set0_key', LFailed);
-    RSA_set0_factors := LoadFunction('RSA_set0_factors', LFailed);
-    RSA_set0_crt_params := LoadFunction('RSA_set0_crt_params', LFailed);
-    RSA_get0_key := LoadFunction('RSA_get0_key', LFailed);
-    RSA_get0_factors := LoadFunction('RSA_get0_factors', LFailed);
-    RSA_get_multi_prime_extra_count := LoadFunction('RSA_get_multi_prime_extra_count', LFailed);
-    RSA_get0_crt_params := LoadFunction('RSA_get0_crt_params', LFailed);
-    RSA_get0_n := LoadFunction('RSA_get0_n', LFailed);
-    RSA_get0_e := LoadFunction('RSA_get0_e', LFailed);
-    RSA_get0_d := LoadFunction('RSA_get0_d', LFailed);
-    RSA_get0_p := LoadFunction('RSA_get0_p', LFailed);
-    RSA_get0_q := LoadFunction('RSA_get0_q', LFailed);
-    RSA_get0_dmp1 := LoadFunction('RSA_get0_dmp1', LFailed);
-    RSA_get0_dmq1 := LoadFunction('RSA_get0_dmq1', LFailed);
-    RSA_get0_iqmp := LoadFunction('RSA_get0_iqmp', LFailed);
-    RSA_clear_flags := LoadFunction('RSA_clear_flags', LFailed);
-    RSA_test_flags := LoadFunction('RSA_test_flags', LFailed);
-    RSA_set_flags := LoadFunction('RSA_set_flags', LFailed);
-    RSA_get_version := LoadFunction('RSA_get_version', LFailed);
-    RSA_get0_engine := LoadFunction('RSA_get0_engine', LFailed);
-    RSA_generate_key_ex := LoadFunction('RSA_generate_key_ex', LFailed);
-    RSA_generate_multi_prime_key := LoadFunction('RSA_generate_multi_prime_key', LFailed);
-    RSA_X931_derive_ex := LoadFunction('RSA_X931_derive_ex', LFailed);
-    RSA_X931_generate_key_ex := LoadFunction('RSA_X931_generate_key_ex', LFailed);
-    RSA_check_key := LoadFunction('RSA_check_key', LFailed);
-    RSA_check_key_ex := LoadFunction('RSA_check_key_ex', LFailed);
-    RSA_public_encrypt := LoadFunction('RSA_public_encrypt', LFailed);
-    RSA_private_encrypt := LoadFunction('RSA_private_encrypt', LFailed);
-    RSA_public_decrypt := LoadFunction('RSA_public_decrypt', LFailed);
-    RSA_private_decrypt := LoadFunction('RSA_private_decrypt', LFailed);
-    RSA_free := LoadFunction('RSA_free', LFailed);
-    RSA_up_ref := LoadFunction('RSA_up_ref', LFailed);
-    RSA_flags := LoadFunction('RSA_flags', LFailed);
-    RSA_set_default_method := LoadFunction('RSA_set_default_method', LFailed);
-    RSA_get_default_method := LoadFunction('RSA_get_default_method', LFailed);
-    RSA_null_method := LoadFunction('RSA_null_method', LFailed);
-    RSA_get_method := LoadFunction('RSA_get_method', LFailed);
-    RSA_set_method := LoadFunction('RSA_set_method', LFailed);
-    RSA_PKCS1_OpenSSL := LoadFunction('RSA_PKCS1_OpenSSL', LFailed);
-    RSA_pkey_ctx_ctrl := LoadFunction('RSA_pkey_ctx_ctrl', LFailed);
-    RSA_print := LoadFunction('RSA_print', LFailed);
-    RSA_sign := LoadFunction('RSA_sign', LFailed);
-    RSA_verify := LoadFunction('RSA_verify', LFailed);
-    RSA_sign_ASN1_OCTET_STRING := LoadFunction('RSA_sign_ASN1_OCTET_STRING', LFailed);
-    RSA_verify_ASN1_OCTET_STRING := LoadFunction('RSA_verify_ASN1_OCTET_STRING', LFailed);
-    RSA_blinding_on := LoadFunction('RSA_blinding_on', LFailed);
-    RSA_blinding_off := LoadFunction('RSA_blinding_off', LFailed);
-    RSA_setup_blinding := LoadFunction('RSA_setup_blinding', LFailed);
-    RSA_padding_add_PKCS1_type_1 := LoadFunction('RSA_padding_add_PKCS1_type_1', LFailed);
-    RSA_padding_check_PKCS1_type_1 := LoadFunction('RSA_padding_check_PKCS1_type_1', LFailed);
-    RSA_padding_add_PKCS1_type_2 := LoadFunction('RSA_padding_add_PKCS1_type_2', LFailed);
-    RSA_padding_check_PKCS1_type_2 := LoadFunction('RSA_padding_check_PKCS1_type_2', LFailed);
-    PKCS1_MGF1 := LoadFunction('PKCS1_MGF1', LFailed);
-    RSA_padding_add_PKCS1_OAEP := LoadFunction('RSA_padding_add_PKCS1_OAEP', LFailed);
-    RSA_padding_check_PKCS1_OAEP := LoadFunction('RSA_padding_check_PKCS1_OAEP', LFailed);
-    RSA_padding_add_PKCS1_OAEP_mgf1 := LoadFunction('RSA_padding_add_PKCS1_OAEP_mgf1', LFailed);
-    RSA_padding_check_PKCS1_OAEP_mgf1 := LoadFunction('RSA_padding_check_PKCS1_OAEP_mgf1', LFailed);
-    RSA_padding_add_SSLv23 := LoadFunction('RSA_padding_add_SSLv23', LFailed);
-    RSA_padding_check_SSLv23 := LoadFunction('RSA_padding_check_SSLv23', LFailed);
-    RSA_padding_add_none := LoadFunction('RSA_padding_add_none', LFailed);
-    RSA_padding_check_none := LoadFunction('RSA_padding_check_none', LFailed);
-    RSA_padding_add_X931 := LoadFunction('RSA_padding_add_X931', LFailed);
-    RSA_padding_check_X931 := LoadFunction('RSA_padding_check_X931', LFailed);
-    RSA_X931_hash_id := LoadFunction('RSA_X931_hash_id', LFailed);
-    RSA_verify_PKCS1_PSS := LoadFunction('RSA_verify_PKCS1_PSS', LFailed);
-    RSA_padding_add_PKCS1_PSS := LoadFunction('RSA_padding_add_PKCS1_PSS', LFailed);
-    RSA_verify_PKCS1_PSS_mgf1 := LoadFunction('RSA_verify_PKCS1_PSS_mgf1', LFailed);
-    RSA_padding_add_PKCS1_PSS_mgf1 := LoadFunction('RSA_padding_add_PKCS1_PSS_mgf1', LFailed);
-    RSA_set_ex_data := LoadFunction('RSA_set_ex_data', LFailed);
-    RSA_get_ex_data := LoadFunction('RSA_get_ex_data', LFailed);
-    RSAPublicKey_dup := LoadFunction('RSAPublicKey_dup', LFailed);
-    RSAPrivateKey_dup := LoadFunction('RSAPrivateKey_dup', LFailed);
-    RSA_meth_new := LoadFunction('RSA_meth_new', LFailed);
-    RSA_meth_free := LoadFunction('RSA_meth_free', LFailed);
-    RSA_meth_dup := LoadFunction('RSA_meth_dup', LFailed);
-    RSA_meth_get0_name := LoadFunction('RSA_meth_get0_name', LFailed);
-    RSA_meth_set1_name := LoadFunction('RSA_meth_set1_name', LFailed);
-    RSA_meth_get_flags := LoadFunction('RSA_meth_get_flags', LFailed);
-    RSA_meth_set_flags := LoadFunction('RSA_meth_set_flags', LFailed);
-    RSA_meth_get0_app_data := LoadFunction('RSA_meth_get0_app_data', LFailed);
-    RSA_meth_set0_app_data := LoadFunction('RSA_meth_set0_app_data', LFailed);
-    RSA_meth_set_priv_dec := LoadFunction('RSA_meth_set_priv_dec', LFailed);
-    RSA_meth_set_mod_exp := LoadFunction('RSA_meth_set_mod_exp', LFailed);
-    RSA_meth_set_bn_mod_exp := LoadFunction('RSA_meth_set_bn_mod_exp', LFailed);
-    RSA_meth_set_init := LoadFunction('RSA_meth_set_init', LFailed);
-    RSA_meth_set_finish := LoadFunction('RSA_meth_set_finish', LFailed);
-    RSA_meth_set_sign := LoadFunction('RSA_meth_set_sign', LFailed);
-    RSA_meth_set_verify := LoadFunction('RSA_meth_set_verify', LFailed);
-    RSA_meth_set_keygen := LoadFunction('RSA_meth_set_keygen', LFailed);
-    RSA_meth_set_multi_prime_keygen := LoadFunction('RSA_meth_set_multi_prime_keygen', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  RSA_new := LoadFunction('RSA_new', AFailed);
+  RSA_new_method := LoadFunction('RSA_new_method', AFailed);
+  RSA_bits := LoadFunction('RSA_bits', AFailed);
+  RSA_size := LoadFunction('RSA_size', AFailed);
+  RSA_security_bits := LoadFunction('RSA_security_bits', AFailed);
+  RSA_set0_key := LoadFunction('RSA_set0_key', AFailed);
+  RSA_set0_factors := LoadFunction('RSA_set0_factors', AFailed);
+  RSA_set0_crt_params := LoadFunction('RSA_set0_crt_params', AFailed);
+  RSA_get0_key := LoadFunction('RSA_get0_key', AFailed);
+  RSA_get0_factors := LoadFunction('RSA_get0_factors', AFailed);
+  RSA_get_multi_prime_extra_count := LoadFunction('RSA_get_multi_prime_extra_count', AFailed);
+  RSA_get0_crt_params := LoadFunction('RSA_get0_crt_params', AFailed);
+  RSA_get0_n := LoadFunction('RSA_get0_n', AFailed);
+  RSA_get0_e := LoadFunction('RSA_get0_e', AFailed);
+  RSA_get0_d := LoadFunction('RSA_get0_d', AFailed);
+  RSA_get0_p := LoadFunction('RSA_get0_p', AFailed);
+  RSA_get0_q := LoadFunction('RSA_get0_q', AFailed);
+  RSA_get0_dmp1 := LoadFunction('RSA_get0_dmp1', AFailed);
+  RSA_get0_dmq1 := LoadFunction('RSA_get0_dmq1', AFailed);
+  RSA_get0_iqmp := LoadFunction('RSA_get0_iqmp', AFailed);
+  RSA_clear_flags := LoadFunction('RSA_clear_flags', AFailed);
+  RSA_test_flags := LoadFunction('RSA_test_flags', AFailed);
+  RSA_set_flags := LoadFunction('RSA_set_flags', AFailed);
+  RSA_get_version := LoadFunction('RSA_get_version', AFailed);
+  RSA_get0_engine := LoadFunction('RSA_get0_engine', AFailed);
+  RSA_generate_key_ex := LoadFunction('RSA_generate_key_ex', AFailed);
+  RSA_generate_multi_prime_key := LoadFunction('RSA_generate_multi_prime_key', AFailed);
+  RSA_X931_derive_ex := LoadFunction('RSA_X931_derive_ex', AFailed);
+  RSA_X931_generate_key_ex := LoadFunction('RSA_X931_generate_key_ex', AFailed);
+  RSA_check_key := LoadFunction('RSA_check_key', AFailed);
+  RSA_check_key_ex := LoadFunction('RSA_check_key_ex', AFailed);
+  RSA_public_encrypt := LoadFunction('RSA_public_encrypt', AFailed);
+  RSA_private_encrypt := LoadFunction('RSA_private_encrypt', AFailed);
+  RSA_public_decrypt := LoadFunction('RSA_public_decrypt', AFailed);
+  RSA_private_decrypt := LoadFunction('RSA_private_decrypt', AFailed);
+  RSA_free := LoadFunction('RSA_free', AFailed);
+  RSA_up_ref := LoadFunction('RSA_up_ref', AFailed);
+  RSA_flags := LoadFunction('RSA_flags', AFailed);
+  RSA_set_default_method := LoadFunction('RSA_set_default_method', AFailed);
+  RSA_get_default_method := LoadFunction('RSA_get_default_method', AFailed);
+  RSA_null_method := LoadFunction('RSA_null_method', AFailed);
+  RSA_get_method := LoadFunction('RSA_get_method', AFailed);
+  RSA_set_method := LoadFunction('RSA_set_method', AFailed);
+  RSA_PKCS1_OpenSSL := LoadFunction('RSA_PKCS1_OpenSSL', AFailed);
+  RSA_pkey_ctx_ctrl := LoadFunction('RSA_pkey_ctx_ctrl', AFailed);
+  RSA_print := LoadFunction('RSA_print', AFailed);
+  RSA_sign := LoadFunction('RSA_sign', AFailed);
+  RSA_verify := LoadFunction('RSA_verify', AFailed);
+  RSA_sign_ASN1_OCTET_STRING := LoadFunction('RSA_sign_ASN1_OCTET_STRING', AFailed);
+  RSA_verify_ASN1_OCTET_STRING := LoadFunction('RSA_verify_ASN1_OCTET_STRING', AFailed);
+  RSA_blinding_on := LoadFunction('RSA_blinding_on', AFailed);
+  RSA_blinding_off := LoadFunction('RSA_blinding_off', AFailed);
+  RSA_setup_blinding := LoadFunction('RSA_setup_blinding', AFailed);
+  RSA_padding_add_PKCS1_type_1 := LoadFunction('RSA_padding_add_PKCS1_type_1', AFailed);
+  RSA_padding_check_PKCS1_type_1 := LoadFunction('RSA_padding_check_PKCS1_type_1', AFailed);
+  RSA_padding_add_PKCS1_type_2 := LoadFunction('RSA_padding_add_PKCS1_type_2', AFailed);
+  RSA_padding_check_PKCS1_type_2 := LoadFunction('RSA_padding_check_PKCS1_type_2', AFailed);
+  PKCS1_MGF1 := LoadFunction('PKCS1_MGF1', AFailed);
+  RSA_padding_add_PKCS1_OAEP := LoadFunction('RSA_padding_add_PKCS1_OAEP', AFailed);
+  RSA_padding_check_PKCS1_OAEP := LoadFunction('RSA_padding_check_PKCS1_OAEP', AFailed);
+  RSA_padding_add_PKCS1_OAEP_mgf1 := LoadFunction('RSA_padding_add_PKCS1_OAEP_mgf1', AFailed);
+  RSA_padding_check_PKCS1_OAEP_mgf1 := LoadFunction('RSA_padding_check_PKCS1_OAEP_mgf1', AFailed);
+  RSA_padding_add_SSLv23 := LoadFunction('RSA_padding_add_SSLv23', AFailed);
+  RSA_padding_check_SSLv23 := LoadFunction('RSA_padding_check_SSLv23', AFailed);
+  RSA_padding_add_none := LoadFunction('RSA_padding_add_none', AFailed);
+  RSA_padding_check_none := LoadFunction('RSA_padding_check_none', AFailed);
+  RSA_padding_add_X931 := LoadFunction('RSA_padding_add_X931', AFailed);
+  RSA_padding_check_X931 := LoadFunction('RSA_padding_check_X931', AFailed);
+  RSA_X931_hash_id := LoadFunction('RSA_X931_hash_id', AFailed);
+  RSA_verify_PKCS1_PSS := LoadFunction('RSA_verify_PKCS1_PSS', AFailed);
+  RSA_padding_add_PKCS1_PSS := LoadFunction('RSA_padding_add_PKCS1_PSS', AFailed);
+  RSA_verify_PKCS1_PSS_mgf1 := LoadFunction('RSA_verify_PKCS1_PSS_mgf1', AFailed);
+  RSA_padding_add_PKCS1_PSS_mgf1 := LoadFunction('RSA_padding_add_PKCS1_PSS_mgf1', AFailed);
+  RSA_set_ex_data := LoadFunction('RSA_set_ex_data', AFailed);
+  RSA_get_ex_data := LoadFunction('RSA_get_ex_data', AFailed);
+  RSAPublicKey_dup := LoadFunction('RSAPublicKey_dup', AFailed);
+  RSAPrivateKey_dup := LoadFunction('RSAPrivateKey_dup', AFailed);
+  RSA_meth_new := LoadFunction('RSA_meth_new', AFailed);
+  RSA_meth_free := LoadFunction('RSA_meth_free', AFailed);
+  RSA_meth_dup := LoadFunction('RSA_meth_dup', AFailed);
+  RSA_meth_get0_name := LoadFunction('RSA_meth_get0_name', AFailed);
+  RSA_meth_set1_name := LoadFunction('RSA_meth_set1_name', AFailed);
+  RSA_meth_get_flags := LoadFunction('RSA_meth_get_flags', AFailed);
+  RSA_meth_set_flags := LoadFunction('RSA_meth_set_flags', AFailed);
+  RSA_meth_get0_app_data := LoadFunction('RSA_meth_get0_app_data', AFailed);
+  RSA_meth_set0_app_data := LoadFunction('RSA_meth_set0_app_data', AFailed);
+  RSA_meth_set_priv_dec := LoadFunction('RSA_meth_set_priv_dec', AFailed);
+  RSA_meth_set_mod_exp := LoadFunction('RSA_meth_set_mod_exp', AFailed);
+  RSA_meth_set_bn_mod_exp := LoadFunction('RSA_meth_set_bn_mod_exp', AFailed);
+  RSA_meth_set_init := LoadFunction('RSA_meth_set_init', AFailed);
+  RSA_meth_set_finish := LoadFunction('RSA_meth_set_finish', AFailed);
+  RSA_meth_set_sign := LoadFunction('RSA_meth_set_sign', AFailed);
+  RSA_meth_set_verify := LoadFunction('RSA_meth_set_verify', AFailed);
+  RSA_meth_set_keygen := LoadFunction('RSA_meth_set_keygen', AFailed);
+  RSA_meth_set_multi_prime_keygen := LoadFunction('RSA_meth_set_multi_prime_keygen', AFailed);
 end;
 
 procedure UnLoad;

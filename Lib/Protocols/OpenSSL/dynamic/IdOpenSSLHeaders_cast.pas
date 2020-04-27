@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_cast;
 
@@ -40,7 +40,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts;
 
 const
@@ -62,7 +64,7 @@ type
   PCAST_KEY = ^CAST_KEY;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -77,36 +79,24 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    CAST_set_key := LoadFunction('CAST_set_key', LFailed);
-    CAST_ecb_encrypt := LoadFunction('CAST_ecb_encrypt', LFailed);
-    CAST_encrypt := LoadFunction('CAST_encrypt', LFailed);
-    CAST_decrypt := LoadFunction('CAST_decrypt', LFailed);
-    CAST_cbc_encrypt := LoadFunction('CAST_cbc_encrypt', LFailed);
-    CAST_cfb64_encrypt := LoadFunction('CAST_cfb64_encrypt', LFailed);
-    CAST_ofb64_encrypt := LoadFunction('CAST_ofb64_encrypt', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  CAST_set_key := LoadFunction('CAST_set_key', AFailed);
+  CAST_ecb_encrypt := LoadFunction('CAST_ecb_encrypt', AFailed);
+  CAST_encrypt := LoadFunction('CAST_encrypt', AFailed);
+  CAST_decrypt := LoadFunction('CAST_decrypt', AFailed);
+  CAST_cbc_encrypt := LoadFunction('CAST_cbc_encrypt', AFailed);
+  CAST_cfb64_encrypt := LoadFunction('CAST_cfb64_encrypt', AFailed);
+  CAST_ofb64_encrypt := LoadFunction('CAST_ofb64_encrypt', AFailed);
 end;
 
 procedure UnLoad;

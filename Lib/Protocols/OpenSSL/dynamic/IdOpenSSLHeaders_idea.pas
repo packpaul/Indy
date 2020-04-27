@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_idea;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts;
@@ -63,7 +64,7 @@ type
   PIDEA_KEY_SCHEDULE = ^IDEA_KEY_SCHEDULE;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -79,37 +80,25 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    IDEA_options := LoadFunction('IDEA_options', LFailed);
-    IDEA_ecb_encrypt := LoadFunction('IDEA_ecb_encrypt', LFailed);
-    IDEA_set_encrypt_key := LoadFunction('IDEA_set_encrypt_key', LFailed);
-    IDEA_set_decrypt_key := LoadFunction('IDEA_set_decrypt_key', LFailed);
-    IDEA_cbc_encrypt := LoadFunction('IDEA_cbc_encrypt', LFailed);
-    IDEA_cfb64_encrypt := LoadFunction('IDEA_cfb64_encrypt', LFailed);
-    IDEA_ofb64_encrypt := LoadFunction('IDEA_ofb64_encrypt', LFailed);
-    IDEA_encrypt := LoadFunction('IDEA_encrypt', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  IDEA_options := LoadFunction('IDEA_options', AFailed);
+  IDEA_ecb_encrypt := LoadFunction('IDEA_ecb_encrypt', AFailed);
+  IDEA_set_encrypt_key := LoadFunction('IDEA_set_encrypt_key', AFailed);
+  IDEA_set_decrypt_key := LoadFunction('IDEA_set_decrypt_key', AFailed);
+  IDEA_cbc_encrypt := LoadFunction('IDEA_cbc_encrypt', AFailed);
+  IDEA_cfb64_encrypt := LoadFunction('IDEA_cfb64_encrypt', AFailed);
+  IDEA_ofb64_encrypt := LoadFunction('IDEA_ofb64_encrypt', AFailed);
+  IDEA_encrypt := LoadFunction('IDEA_encrypt', AFailed);
 end;
 
 procedure UnLoad;

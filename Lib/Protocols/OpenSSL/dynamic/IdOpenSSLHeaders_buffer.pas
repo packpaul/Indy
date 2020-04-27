@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_buffer;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -57,7 +58,7 @@ type
   end;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -71,35 +72,23 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    BUF_MEM_new := LoadFunction('BUF_MEM_new', LFailed);
-    BUF_MEM_new_ex := LoadFunction('BUF_MEM_new_ex', LFailed);
-    BUF_MEM_free := LoadFunction('BUF_MEM_free', LFailed);
-    BUF_MEM_grow := LoadFunction('BUF_MEM_grow', LFailed);
-    BUF_MEM_grow_clean := LoadFunction('BUF_MEM_grow_clean', LFailed);
-    BUF_reverse := LoadFunction('BUF_reverse', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  BUF_MEM_new := LoadFunction('BUF_MEM_new', AFailed);
+  BUF_MEM_new_ex := LoadFunction('BUF_MEM_new_ex', AFailed);
+  BUF_MEM_free := LoadFunction('BUF_MEM_free', AFailed);
+  BUF_MEM_grow := LoadFunction('BUF_MEM_grow', AFailed);
+  BUF_MEM_grow_clean := LoadFunction('BUF_MEM_grow_clean', AFailed);
+  BUF_reverse := LoadFunction('BUF_reverse', AFailed);
 end;
 
 procedure UnLoad;

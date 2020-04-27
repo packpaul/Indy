@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_pkcs7;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -210,7 +211,7 @@ type
   PKCS7_DIGEST = pkcs7_digest_st;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -355,74 +356,62 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    PKCS7_ISSUER_AND_SERIAL_digest := LoadFunction('PKCS7_ISSUER_AND_SERIAL_digest', LFailed);
-    PKCS7_dup := LoadFunction('PKCS7_dup', LFailed);
-    d2i_PKCS7_bio := LoadFunction('d2i_PKCS7_bio', LFailed);
-    i2d_PKCS7_bio := LoadFunction('i2d_PKCS7_bio', LFailed);
-    i2d_PKCS7_bio_stream := LoadFunction('i2d_PKCS7_bio_stream', LFailed);
-    PEM_write_bio_PKCS7_stream := LoadFunction('PEM_write_bio_PKCS7_stream', LFailed);
-    PKCS7_ctrl := LoadFunction('PKCS7_ctrl', LFailed);
-    PKCS7_set_type := LoadFunction('PKCS7_set_type', LFailed);
-    PKCS7_set0_type_other := LoadFunction('PKCS7_set0_type_other', LFailed);
-    PKCS7_set_content := LoadFunction('PKCS7_set_content', LFailed);
-    PKCS7_SIGNER_INFO_set := LoadFunction('PKCS7_SIGNER_INFO_set', LFailed);
-    PKCS7_SIGNER_INFO_sign := LoadFunction('PKCS7_SIGNER_INFO_sign', LFailed);
-    PKCS7_add_signer := LoadFunction('PKCS7_add_signer', LFailed);
-    PKCS7_add_certificate := LoadFunction('PKCS7_add_certificate', LFailed);
-    PKCS7_add_crl := LoadFunction('PKCS7_add_crl', LFailed);
-    PKCS7_content_new := LoadFunction('PKCS7_content_new', LFailed);
-    PKCS7_dataVerify := LoadFunction('PKCS7_dataVerify', LFailed);
-    PKCS7_signatureVerify := LoadFunction('PKCS7_signatureVerify', LFailed);
-    PKCS7_dataInit := LoadFunction('PKCS7_dataInit', LFailed);
-    PKCS7_dataFinal := LoadFunction('PKCS7_dataFinal', LFailed);
-    PKCS7_dataDecode := LoadFunction('PKCS7_dataDecode', LFailed);
-    PKCS7_add_signature := LoadFunction('PKCS7_add_signature', LFailed);
-    PKCS7_cert_from_signer_info := LoadFunction('PKCS7_cert_from_signer_info', LFailed);
-    PKCS7_set_digest := LoadFunction('PKCS7_set_digest', LFailed);
-    PKCS7_add_recipient := LoadFunction('PKCS7_add_recipient', LFailed);
-    PKCS7_SIGNER_INFO_get0_algs := LoadFunction('PKCS7_SIGNER_INFO_get0_algs', LFailed);
-    PKCS7_RECIP_INFO_get0_alg := LoadFunction('PKCS7_RECIP_INFO_get0_alg', LFailed);
-    PKCS7_add_recipient_info := LoadFunction('PKCS7_add_recipient_info', LFailed);
-    PKCS7_RECIP_INFO_set := LoadFunction('PKCS7_RECIP_INFO_set', LFailed);
-    PKCS7_set_cipher := LoadFunction('PKCS7_set_cipher', LFailed);
-    PKCS7_stream := LoadFunction('PKCS7_stream', LFailed);
-    PKCS7_get_issuer_and_serial := LoadFunction('PKCS7_get_issuer_and_serial', LFailed);
-    PKCS7_add_signed_attribute := LoadFunction('PKCS7_add_signed_attribute', LFailed);
-    PKCS7_add_attribute := LoadFunction('PKCS7_add_attribute', LFailed);
-    PKCS7_get_attribute := LoadFunction('PKCS7_get_attribute', LFailed);
-    PKCS7_get_signed_attribute := LoadFunction('PKCS7_get_signed_attribute', LFailed);
-    PKCS7_sign_add_signer := LoadFunction('PKCS7_sign_add_signer', LFailed);
-    PKCS7_final := LoadFunction('PKCS7_final', LFailed);
-    PKCS7_decrypt := LoadFunction('PKCS7_decrypt', LFailed);
-    PKCS7_add_attrib_content_type := LoadFunction('PKCS7_add_attrib_content_type', LFailed);
-    PKCS7_add0_attrib_signing_time := LoadFunction('PKCS7_add0_attrib_signing_time', LFailed);
-    PKCS7_add1_attrib_digest := LoadFunction('PKCS7_add1_attrib_digest', LFailed);
-    SMIME_write_PKCS7 := LoadFunction('SMIME_write_PKCS7', LFailed);
-    SMIME_read_PKCS7 := LoadFunction('SMIME_read_PKCS7', LFailed);
-    BIO_new_PKCS7 := LoadFunction('BIO_new_PKCS7', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  PKCS7_ISSUER_AND_SERIAL_digest := LoadFunction('PKCS7_ISSUER_AND_SERIAL_digest', AFailed);
+  PKCS7_dup := LoadFunction('PKCS7_dup', AFailed);
+  d2i_PKCS7_bio := LoadFunction('d2i_PKCS7_bio', AFailed);
+  i2d_PKCS7_bio := LoadFunction('i2d_PKCS7_bio', AFailed);
+  i2d_PKCS7_bio_stream := LoadFunction('i2d_PKCS7_bio_stream', AFailed);
+  PEM_write_bio_PKCS7_stream := LoadFunction('PEM_write_bio_PKCS7_stream', AFailed);
+  PKCS7_ctrl := LoadFunction('PKCS7_ctrl', AFailed);
+  PKCS7_set_type := LoadFunction('PKCS7_set_type', AFailed);
+  PKCS7_set0_type_other := LoadFunction('PKCS7_set0_type_other', AFailed);
+  PKCS7_set_content := LoadFunction('PKCS7_set_content', AFailed);
+  PKCS7_SIGNER_INFO_set := LoadFunction('PKCS7_SIGNER_INFO_set', AFailed);
+  PKCS7_SIGNER_INFO_sign := LoadFunction('PKCS7_SIGNER_INFO_sign', AFailed);
+  PKCS7_add_signer := LoadFunction('PKCS7_add_signer', AFailed);
+  PKCS7_add_certificate := LoadFunction('PKCS7_add_certificate', AFailed);
+  PKCS7_add_crl := LoadFunction('PKCS7_add_crl', AFailed);
+  PKCS7_content_new := LoadFunction('PKCS7_content_new', AFailed);
+  PKCS7_dataVerify := LoadFunction('PKCS7_dataVerify', AFailed);
+  PKCS7_signatureVerify := LoadFunction('PKCS7_signatureVerify', AFailed);
+  PKCS7_dataInit := LoadFunction('PKCS7_dataInit', AFailed);
+  PKCS7_dataFinal := LoadFunction('PKCS7_dataFinal', AFailed);
+  PKCS7_dataDecode := LoadFunction('PKCS7_dataDecode', AFailed);
+  PKCS7_add_signature := LoadFunction('PKCS7_add_signature', AFailed);
+  PKCS7_cert_from_signer_info := LoadFunction('PKCS7_cert_from_signer_info', AFailed);
+  PKCS7_set_digest := LoadFunction('PKCS7_set_digest', AFailed);
+  PKCS7_add_recipient := LoadFunction('PKCS7_add_recipient', AFailed);
+  PKCS7_SIGNER_INFO_get0_algs := LoadFunction('PKCS7_SIGNER_INFO_get0_algs', AFailed);
+  PKCS7_RECIP_INFO_get0_alg := LoadFunction('PKCS7_RECIP_INFO_get0_alg', AFailed);
+  PKCS7_add_recipient_info := LoadFunction('PKCS7_add_recipient_info', AFailed);
+  PKCS7_RECIP_INFO_set := LoadFunction('PKCS7_RECIP_INFO_set', AFailed);
+  PKCS7_set_cipher := LoadFunction('PKCS7_set_cipher', AFailed);
+  PKCS7_stream := LoadFunction('PKCS7_stream', AFailed);
+  PKCS7_get_issuer_and_serial := LoadFunction('PKCS7_get_issuer_and_serial', AFailed);
+  PKCS7_add_signed_attribute := LoadFunction('PKCS7_add_signed_attribute', AFailed);
+  PKCS7_add_attribute := LoadFunction('PKCS7_add_attribute', AFailed);
+  PKCS7_get_attribute := LoadFunction('PKCS7_get_attribute', AFailed);
+  PKCS7_get_signed_attribute := LoadFunction('PKCS7_get_signed_attribute', AFailed);
+  PKCS7_sign_add_signer := LoadFunction('PKCS7_sign_add_signer', AFailed);
+  PKCS7_final := LoadFunction('PKCS7_final', AFailed);
+  PKCS7_decrypt := LoadFunction('PKCS7_decrypt', AFailed);
+  PKCS7_add_attrib_content_type := LoadFunction('PKCS7_add_attrib_content_type', AFailed);
+  PKCS7_add0_attrib_signing_time := LoadFunction('PKCS7_add0_attrib_signing_time', AFailed);
+  PKCS7_add1_attrib_digest := LoadFunction('PKCS7_add1_attrib_digest', AFailed);
+  SMIME_write_PKCS7 := LoadFunction('SMIME_write_PKCS7', AFailed);
+  SMIME_read_PKCS7 := LoadFunction('SMIME_read_PKCS7', AFailed);
+  BIO_new_PKCS7 := LoadFunction('BIO_new_PKCS7', AFailed);
 end;
 
 procedure UnLoad;

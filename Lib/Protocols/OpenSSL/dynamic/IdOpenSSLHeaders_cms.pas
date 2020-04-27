@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_cms;
 
@@ -40,7 +40,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts,
   IdOpenSSLHeaders_ossl_typ,
   IdOpenSSLHeaders_x509;
@@ -131,7 +133,7 @@ const
   CMS_ASCIICRLF                   = $80000;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -299,123 +301,111 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    CMS_get0_type := LoadFunction('CMS_get0_type', LFailed);
-    CMS_dataInit := LoadFunction('CMS_dataInit', LFailed);
-    CMS_dataFinal := LoadFunction('CMS_dataFinal', LFailed);
-    CMS_get0_content := LoadFunction('CMS_get0_content', LFailed);
-    CMS_is_detached := LoadFunction('CMS_is_detached', LFailed);
-    CMS_set_detached := LoadFunction('CMS_set_detached', LFailed);
-    CMS_stream := LoadFunction('CMS_stream', LFailed);
-    d2i_CMS_bio := LoadFunction('d2i_CMS_bio', LFailed);
-    i2d_CMS_bio := LoadFunction('i2d_CMS_bio', LFailed);
-    BIO_new_CMS := LoadFunction('BIO_new_CMS', LFailed);
-    i2d_CMS_bio_stream := LoadFunction('i2d_CMS_bio_stream', LFailed);
-    PEM_write_bio_CMS_stream := LoadFunction('PEM_write_bio_CMS_stream', LFailed);
-    SMIME_read_CMS := LoadFunction('SMIME_read_CMS', LFailed);
-    SMIME_write_CMS := LoadFunction('SMIME_write_CMS', LFailed);
-    CMS_final := LoadFunction('CMS_final', LFailed);
-    CMS_data := LoadFunction('CMS_data', LFailed);
-    CMS_data_create := LoadFunction('CMS_data_create', LFailed);
-    CMS_digest_verify := LoadFunction('CMS_digest_verify', LFailed);
-    CMS_digest_create := LoadFunction('CMS_digest_create', LFailed);
-    CMS_EncryptedData_decrypt := LoadFunction('CMS_EncryptedData_decrypt', LFailed);
-    CMS_EncryptedData_encrypt := LoadFunction('CMS_EncryptedData_encrypt', LFailed);
-    CMS_EncryptedData_set1_key := LoadFunction('CMS_EncryptedData_set1_key', LFailed);
-    CMS_decrypt := LoadFunction('CMS_decrypt', LFailed);
-    CMS_decrypt_set1_pkey := LoadFunction('CMS_decrypt_set1_pkey', LFailed);
-    CMS_decrypt_set1_key := LoadFunction('CMS_decrypt_set1_key', LFailed);
-    CMS_decrypt_set1_password := LoadFunction('CMS_decrypt_set1_password', LFailed);
-    CMS_RecipientInfo_type := LoadFunction('CMS_RecipientInfo_type', LFailed);
-    CMS_RecipientInfo_get0_pkey_ctx := LoadFunction('CMS_RecipientInfo_get0_pkey_ctx', LFailed);
-    CMS_EnvelopedData_create := LoadFunction('CMS_EnvelopedData_create', LFailed);
-    CMS_add1_recipient_cert := LoadFunction('CMS_add1_recipient_cert', LFailed);
-    CMS_RecipientInfo_set0_pkey := LoadFunction('CMS_RecipientInfo_set0_pkey', LFailed);
-    CMS_RecipientInfo_ktri_cert_cmp := LoadFunction('CMS_RecipientInfo_ktri_cert_cmp', LFailed);
-    CMS_RecipientInfo_ktri_get0_algs := LoadFunction('CMS_RecipientInfo_ktri_get0_algs', LFailed);
-    CMS_RecipientInfo_ktri_get0_signer_id := LoadFunction('CMS_RecipientInfo_ktri_get0_signer_id', LFailed);
-    CMS_add0_recipient_key := LoadFunction('CMS_add0_recipient_key', LFailed);
-    CMS_RecipientInfo_kekri_get0_id := LoadFunction('CMS_RecipientInfo_kekri_get0_id', LFailed);
-    CMS_RecipientInfo_set0_key := LoadFunction('CMS_RecipientInfo_set0_key', LFailed);
-    CMS_RecipientInfo_kekri_id_cmp := LoadFunction('CMS_RecipientInfo_kekri_id_cmp', LFailed);
-    CMS_RecipientInfo_set0_password := LoadFunction('CMS_RecipientInfo_set0_password', LFailed);
-    CMS_add0_recipient_password := LoadFunction('CMS_add0_recipient_password', LFailed);
-    CMS_RecipientInfo_decrypt := LoadFunction('CMS_RecipientInfo_decrypt', LFailed);
-    CMS_RecipientInfo_encrypt := LoadFunction('CMS_RecipientInfo_encrypt', LFailed);
-    CMS_uncompress := LoadFunction('CMS_uncompress', LFailed);
-    CMS_compress := LoadFunction('CMS_compress', LFailed);
-    CMS_set1_eContentType := LoadFunction('CMS_set1_eContentType', LFailed);
-    CMS_get0_eContentType := LoadFunction('CMS_get0_eContentType', LFailed);
-    CMS_add0_CertificateChoices := LoadFunction('CMS_add0_CertificateChoices', LFailed);
-    CMS_add0_cert := LoadFunction('CMS_add0_cert', LFailed);
-    CMS_add1_cert := LoadFunction('CMS_add1_cert', LFailed);
-    CMS_add0_RevocationInfoChoice := LoadFunction('CMS_add0_RevocationInfoChoice', LFailed);
-    CMS_add0_crl := LoadFunction('CMS_add0_crl', LFailed);
-    CMS_add1_crl := LoadFunction('CMS_add1_crl', LFailed);
-    CMS_SignedData_init := LoadFunction('CMS_SignedData_init', LFailed);
-    CMS_add1_signer := LoadFunction('CMS_add1_signer', LFailed);
-    CMS_SignerInfo_get0_pkey_ctx := LoadFunction('CMS_SignerInfo_get0_pkey_ctx', LFailed);
-    CMS_SignerInfo_get0_md_ctx := LoadFunction('CMS_SignerInfo_get0_md_ctx', LFailed);
-    CMS_SignerInfo_set1_signer_cert := LoadFunction('CMS_SignerInfo_set1_signer_cert', LFailed);
-    CMS_SignerInfo_get0_signer_id := LoadFunction('CMS_SignerInfo_get0_signer_id', LFailed);
-    CMS_SignerInfo_cert_cmp := LoadFunction('CMS_SignerInfo_cert_cmp', LFailed);
-    CMS_SignerInfo_get0_algs := LoadFunction('CMS_SignerInfo_get0_algs', LFailed);
-    CMS_SignerInfo_get0_signature := LoadFunction('CMS_SignerInfo_get0_signature', LFailed);
-    CMS_SignerInfo_sign := LoadFunction('CMS_SignerInfo_sign', LFailed);
-    CMS_SignerInfo_verify := LoadFunction('CMS_SignerInfo_verify', LFailed);
-    CMS_SignerInfo_verify_content := LoadFunction('CMS_SignerInfo_verify_content', LFailed);
-    CMS_signed_get_attr_count := LoadFunction('CMS_signed_get_attr_count', LFailed);
-    CMS_signed_get_attr_by_NID := LoadFunction('CMS_signed_get_attr_by_NID', LFailed);
-    CMS_signed_get_attr_by_OBJ := LoadFunction('CMS_signed_get_attr_by_OBJ', LFailed);
-    CMS_signed_get_attr := LoadFunction('CMS_signed_get_attr', LFailed);
-    CMS_signed_delete_attr := LoadFunction('CMS_signed_delete_attr', LFailed);
-    CMS_signed_add1_attr := LoadFunction('CMS_signed_add1_attr', LFailed);
-    CMS_signed_add1_attr_by_OBJ := LoadFunction('CMS_signed_add1_attr_by_OBJ', LFailed);
-    CMS_signed_add1_attr_by_NID := LoadFunction('CMS_signed_add1_attr_by_NID', LFailed);
-    CMS_signed_add1_attr_by_txt := LoadFunction('CMS_signed_add1_attr_by_txt', LFailed);
-    CMS_signed_get0_data_by_OBJ := LoadFunction('CMS_signed_get0_data_by_OBJ', LFailed);
-    CMS_unsigned_get_attr_count := LoadFunction('CMS_unsigned_get_attr_count', LFailed);
-    CMS_unsigned_get_attr_by_NID := LoadFunction('CMS_unsigned_get_attr_by_NID', LFailed);
-    CMS_unsigned_get_attr_by_OBJ := LoadFunction('CMS_unsigned_get_attr_by_OBJ', LFailed);
-    CMS_unsigned_get_attr := LoadFunction('CMS_unsigned_get_attr', LFailed);
-    CMS_unsigned_delete_attr := LoadFunction('CMS_unsigned_delete_attr', LFailed);
-    CMS_unsigned_add1_attr := LoadFunction('CMS_unsigned_add1_attr', LFailed);
-    CMS_unsigned_add1_attr_by_OBJ := LoadFunction('CMS_unsigned_add1_attr_by_OBJ', LFailed);
-    CMS_unsigned_add1_attr_by_NID := LoadFunction('CMS_unsigned_add1_attr_by_NID', LFailed);
-    CMS_unsigned_add1_attr_by_txt := LoadFunction('CMS_unsigned_add1_attr_by_txt', LFailed);
-    CMS_unsigned_get0_data_by_OBJ := LoadFunction('CMS_unsigned_get0_data_by_OBJ', LFailed);
-    CMS_get1_ReceiptRequest := LoadFunction('CMS_get1_ReceiptRequest', LFailed);
-    CMS_add1_ReceiptRequest := LoadFunction('CMS_add1_ReceiptRequest', LFailed);
-    CMS_RecipientInfo_kari_get0_orig_id := LoadFunction('CMS_RecipientInfo_kari_get0_orig_id', LFailed);
-    CMS_RecipientInfo_kari_orig_id_cmp := LoadFunction('CMS_RecipientInfo_kari_orig_id_cmp', LFailed);
-    CMS_RecipientEncryptedKey_get0_id := LoadFunction('CMS_RecipientEncryptedKey_get0_id', LFailed);
-    CMS_RecipientEncryptedKey_cert_cmp := LoadFunction('CMS_RecipientEncryptedKey_cert_cmp', LFailed);
-    CMS_RecipientInfo_kari_set0_pkey := LoadFunction('CMS_RecipientInfo_kari_set0_pkey', LFailed);
-    CMS_RecipientInfo_kari_get0_ctx := LoadFunction('CMS_RecipientInfo_kari_get0_ctx', LFailed);
-    CMS_RecipientInfo_kari_decrypt := LoadFunction('CMS_RecipientInfo_kari_decrypt', LFailed);
-    CMS_SharedInfo_encode := LoadFunction('CMS_SharedInfo_encode', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  CMS_get0_type := LoadFunction('CMS_get0_type', AFailed);
+  CMS_dataInit := LoadFunction('CMS_dataInit', AFailed);
+  CMS_dataFinal := LoadFunction('CMS_dataFinal', AFailed);
+  CMS_get0_content := LoadFunction('CMS_get0_content', AFailed);
+  CMS_is_detached := LoadFunction('CMS_is_detached', AFailed);
+  CMS_set_detached := LoadFunction('CMS_set_detached', AFailed);
+  CMS_stream := LoadFunction('CMS_stream', AFailed);
+  d2i_CMS_bio := LoadFunction('d2i_CMS_bio', AFailed);
+  i2d_CMS_bio := LoadFunction('i2d_CMS_bio', AFailed);
+  BIO_new_CMS := LoadFunction('BIO_new_CMS', AFailed);
+  i2d_CMS_bio_stream := LoadFunction('i2d_CMS_bio_stream', AFailed);
+  PEM_write_bio_CMS_stream := LoadFunction('PEM_write_bio_CMS_stream', AFailed);
+  SMIME_read_CMS := LoadFunction('SMIME_read_CMS', AFailed);
+  SMIME_write_CMS := LoadFunction('SMIME_write_CMS', AFailed);
+  CMS_final := LoadFunction('CMS_final', AFailed);
+  CMS_data := LoadFunction('CMS_data', AFailed);
+  CMS_data_create := LoadFunction('CMS_data_create', AFailed);
+  CMS_digest_verify := LoadFunction('CMS_digest_verify', AFailed);
+  CMS_digest_create := LoadFunction('CMS_digest_create', AFailed);
+  CMS_EncryptedData_decrypt := LoadFunction('CMS_EncryptedData_decrypt', AFailed);
+  CMS_EncryptedData_encrypt := LoadFunction('CMS_EncryptedData_encrypt', AFailed);
+  CMS_EncryptedData_set1_key := LoadFunction('CMS_EncryptedData_set1_key', AFailed);
+  CMS_decrypt := LoadFunction('CMS_decrypt', AFailed);
+  CMS_decrypt_set1_pkey := LoadFunction('CMS_decrypt_set1_pkey', AFailed);
+  CMS_decrypt_set1_key := LoadFunction('CMS_decrypt_set1_key', AFailed);
+  CMS_decrypt_set1_password := LoadFunction('CMS_decrypt_set1_password', AFailed);
+  CMS_RecipientInfo_type := LoadFunction('CMS_RecipientInfo_type', AFailed);
+  CMS_RecipientInfo_get0_pkey_ctx := LoadFunction('CMS_RecipientInfo_get0_pkey_ctx', AFailed);
+  CMS_EnvelopedData_create := LoadFunction('CMS_EnvelopedData_create', AFailed);
+  CMS_add1_recipient_cert := LoadFunction('CMS_add1_recipient_cert', AFailed);
+  CMS_RecipientInfo_set0_pkey := LoadFunction('CMS_RecipientInfo_set0_pkey', AFailed);
+  CMS_RecipientInfo_ktri_cert_cmp := LoadFunction('CMS_RecipientInfo_ktri_cert_cmp', AFailed);
+  CMS_RecipientInfo_ktri_get0_algs := LoadFunction('CMS_RecipientInfo_ktri_get0_algs', AFailed);
+  CMS_RecipientInfo_ktri_get0_signer_id := LoadFunction('CMS_RecipientInfo_ktri_get0_signer_id', AFailed);
+  CMS_add0_recipient_key := LoadFunction('CMS_add0_recipient_key', AFailed);
+  CMS_RecipientInfo_kekri_get0_id := LoadFunction('CMS_RecipientInfo_kekri_get0_id', AFailed);
+  CMS_RecipientInfo_set0_key := LoadFunction('CMS_RecipientInfo_set0_key', AFailed);
+  CMS_RecipientInfo_kekri_id_cmp := LoadFunction('CMS_RecipientInfo_kekri_id_cmp', AFailed);
+  CMS_RecipientInfo_set0_password := LoadFunction('CMS_RecipientInfo_set0_password', AFailed);
+  CMS_add0_recipient_password := LoadFunction('CMS_add0_recipient_password', AFailed);
+  CMS_RecipientInfo_decrypt := LoadFunction('CMS_RecipientInfo_decrypt', AFailed);
+  CMS_RecipientInfo_encrypt := LoadFunction('CMS_RecipientInfo_encrypt', AFailed);
+  CMS_uncompress := LoadFunction('CMS_uncompress', AFailed);
+  CMS_compress := LoadFunction('CMS_compress', AFailed);
+  CMS_set1_eContentType := LoadFunction('CMS_set1_eContentType', AFailed);
+  CMS_get0_eContentType := LoadFunction('CMS_get0_eContentType', AFailed);
+  CMS_add0_CertificateChoices := LoadFunction('CMS_add0_CertificateChoices', AFailed);
+  CMS_add0_cert := LoadFunction('CMS_add0_cert', AFailed);
+  CMS_add1_cert := LoadFunction('CMS_add1_cert', AFailed);
+  CMS_add0_RevocationInfoChoice := LoadFunction('CMS_add0_RevocationInfoChoice', AFailed);
+  CMS_add0_crl := LoadFunction('CMS_add0_crl', AFailed);
+  CMS_add1_crl := LoadFunction('CMS_add1_crl', AFailed);
+  CMS_SignedData_init := LoadFunction('CMS_SignedData_init', AFailed);
+  CMS_add1_signer := LoadFunction('CMS_add1_signer', AFailed);
+  CMS_SignerInfo_get0_pkey_ctx := LoadFunction('CMS_SignerInfo_get0_pkey_ctx', AFailed);
+  CMS_SignerInfo_get0_md_ctx := LoadFunction('CMS_SignerInfo_get0_md_ctx', AFailed);
+  CMS_SignerInfo_set1_signer_cert := LoadFunction('CMS_SignerInfo_set1_signer_cert', AFailed);
+  CMS_SignerInfo_get0_signer_id := LoadFunction('CMS_SignerInfo_get0_signer_id', AFailed);
+  CMS_SignerInfo_cert_cmp := LoadFunction('CMS_SignerInfo_cert_cmp', AFailed);
+  CMS_SignerInfo_get0_algs := LoadFunction('CMS_SignerInfo_get0_algs', AFailed);
+  CMS_SignerInfo_get0_signature := LoadFunction('CMS_SignerInfo_get0_signature', AFailed);
+  CMS_SignerInfo_sign := LoadFunction('CMS_SignerInfo_sign', AFailed);
+  CMS_SignerInfo_verify := LoadFunction('CMS_SignerInfo_verify', AFailed);
+  CMS_SignerInfo_verify_content := LoadFunction('CMS_SignerInfo_verify_content', AFailed);
+  CMS_signed_get_attr_count := LoadFunction('CMS_signed_get_attr_count', AFailed);
+  CMS_signed_get_attr_by_NID := LoadFunction('CMS_signed_get_attr_by_NID', AFailed);
+  CMS_signed_get_attr_by_OBJ := LoadFunction('CMS_signed_get_attr_by_OBJ', AFailed);
+  CMS_signed_get_attr := LoadFunction('CMS_signed_get_attr', AFailed);
+  CMS_signed_delete_attr := LoadFunction('CMS_signed_delete_attr', AFailed);
+  CMS_signed_add1_attr := LoadFunction('CMS_signed_add1_attr', AFailed);
+  CMS_signed_add1_attr_by_OBJ := LoadFunction('CMS_signed_add1_attr_by_OBJ', AFailed);
+  CMS_signed_add1_attr_by_NID := LoadFunction('CMS_signed_add1_attr_by_NID', AFailed);
+  CMS_signed_add1_attr_by_txt := LoadFunction('CMS_signed_add1_attr_by_txt', AFailed);
+  CMS_signed_get0_data_by_OBJ := LoadFunction('CMS_signed_get0_data_by_OBJ', AFailed);
+  CMS_unsigned_get_attr_count := LoadFunction('CMS_unsigned_get_attr_count', AFailed);
+  CMS_unsigned_get_attr_by_NID := LoadFunction('CMS_unsigned_get_attr_by_NID', AFailed);
+  CMS_unsigned_get_attr_by_OBJ := LoadFunction('CMS_unsigned_get_attr_by_OBJ', AFailed);
+  CMS_unsigned_get_attr := LoadFunction('CMS_unsigned_get_attr', AFailed);
+  CMS_unsigned_delete_attr := LoadFunction('CMS_unsigned_delete_attr', AFailed);
+  CMS_unsigned_add1_attr := LoadFunction('CMS_unsigned_add1_attr', AFailed);
+  CMS_unsigned_add1_attr_by_OBJ := LoadFunction('CMS_unsigned_add1_attr_by_OBJ', AFailed);
+  CMS_unsigned_add1_attr_by_NID := LoadFunction('CMS_unsigned_add1_attr_by_NID', AFailed);
+  CMS_unsigned_add1_attr_by_txt := LoadFunction('CMS_unsigned_add1_attr_by_txt', AFailed);
+  CMS_unsigned_get0_data_by_OBJ := LoadFunction('CMS_unsigned_get0_data_by_OBJ', AFailed);
+  CMS_get1_ReceiptRequest := LoadFunction('CMS_get1_ReceiptRequest', AFailed);
+  CMS_add1_ReceiptRequest := LoadFunction('CMS_add1_ReceiptRequest', AFailed);
+  CMS_RecipientInfo_kari_get0_orig_id := LoadFunction('CMS_RecipientInfo_kari_get0_orig_id', AFailed);
+  CMS_RecipientInfo_kari_orig_id_cmp := LoadFunction('CMS_RecipientInfo_kari_orig_id_cmp', AFailed);
+  CMS_RecipientEncryptedKey_get0_id := LoadFunction('CMS_RecipientEncryptedKey_get0_id', AFailed);
+  CMS_RecipientEncryptedKey_cert_cmp := LoadFunction('CMS_RecipientEncryptedKey_cert_cmp', AFailed);
+  CMS_RecipientInfo_kari_set0_pkey := LoadFunction('CMS_RecipientInfo_kari_set0_pkey', AFailed);
+  CMS_RecipientInfo_kari_get0_ctx := LoadFunction('CMS_RecipientInfo_kari_get0_ctx', AFailed);
+  CMS_RecipientInfo_kari_decrypt := LoadFunction('CMS_RecipientInfo_kari_decrypt', AFailed);
+  CMS_SharedInfo_encode := LoadFunction('CMS_SharedInfo_encode', AFailed);
 end;
 
 procedure UnLoad;

@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_conf;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -104,7 +105,7 @@ const
   CONF_MFLAGS_DEFAULT_SECTION = $20;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -192,55 +193,43 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    CONF_set_default_method := LoadFunction('CONF_set_default_method', LFailed);
-    NCONF_new := LoadFunction('NCONF_new', LFailed);
-    NCONF_default := LoadFunction('NCONF_default', LFailed);
-    NCONF_WIN32 := LoadFunction('NCONF_WIN32', LFailed);
-    NCONF_free := LoadFunction('NCONF_free', LFailed);
-    NCONF_free_data := LoadFunction('NCONF_free_data', LFailed);
-    NCONF_load := LoadFunction('NCONF_load', LFailed);
-    NCONF_load_bio := LoadFunction('NCONF_load_bio', LFailed);
-    NCONF_get_string := LoadFunction('NCONF_get_string', LFailed);
-    NCONF_get_number_e := LoadFunction('NCONF_get_number_e', LFailed);
-    NCONF_dump_bio := LoadFunction('NCONF_dump_bio', LFailed);
-    CONF_modules_load := LoadFunction('CONF_modules_load', LFailed);
-    CONF_modules_load_file := LoadFunction('CONF_modules_load_file', LFailed);
-    CONF_modules_unload := LoadFunction('CONF_modules_unload', LFailed);
-    CONF_modules_finish := LoadFunction('CONF_modules_finish', LFailed);
-    CONF_module_add := LoadFunction('CONF_module_add', LFailed);
-    CONF_imodule_get_usr_data := LoadFunction('CONF_imodule_get_usr_data', LFailed);
-    CONF_imodule_set_usr_data := LoadFunction('CONF_imodule_set_usr_data', LFailed);
-    CONF_imodule_get_module := LoadFunction('CONF_imodule_get_module', LFailed);
-    CONF_imodule_get_flags := LoadFunction('CONF_imodule_get_flags', LFailed);
-    CONF_imodule_set_flags := LoadFunction('CONF_imodule_set_flags', LFailed);
-    CONF_module_get_usr_data := LoadFunction('CONF_module_get_usr_data', LFailed);
-    CONF_module_set_usr_data := LoadFunction('CONF_module_set_usr_data', LFailed);
-    CONF_get1_default_config_file := LoadFunction('CONF_get1_default_config_file', LFailed);
-    CONF_parse_list := LoadFunction('CONF_parse_list', LFailed);
-    OPENSSL_load_builtin_modules := LoadFunction('OPENSSL_load_builtin_modules', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  CONF_set_default_method := LoadFunction('CONF_set_default_method', AFailed);
+  NCONF_new := LoadFunction('NCONF_new', AFailed);
+  NCONF_default := LoadFunction('NCONF_default', AFailed);
+  NCONF_WIN32 := LoadFunction('NCONF_WIN32', AFailed);
+  NCONF_free := LoadFunction('NCONF_free', AFailed);
+  NCONF_free_data := LoadFunction('NCONF_free_data', AFailed);
+  NCONF_load := LoadFunction('NCONF_load', AFailed);
+  NCONF_load_bio := LoadFunction('NCONF_load_bio', AFailed);
+  NCONF_get_string := LoadFunction('NCONF_get_string', AFailed);
+  NCONF_get_number_e := LoadFunction('NCONF_get_number_e', AFailed);
+  NCONF_dump_bio := LoadFunction('NCONF_dump_bio', AFailed);
+  CONF_modules_load := LoadFunction('CONF_modules_load', AFailed);
+  CONF_modules_load_file := LoadFunction('CONF_modules_load_file', AFailed);
+  CONF_modules_unload := LoadFunction('CONF_modules_unload', AFailed);
+  CONF_modules_finish := LoadFunction('CONF_modules_finish', AFailed);
+  CONF_module_add := LoadFunction('CONF_module_add', AFailed);
+  CONF_imodule_get_usr_data := LoadFunction('CONF_imodule_get_usr_data', AFailed);
+  CONF_imodule_set_usr_data := LoadFunction('CONF_imodule_set_usr_data', AFailed);
+  CONF_imodule_get_module := LoadFunction('CONF_imodule_get_module', AFailed);
+  CONF_imodule_get_flags := LoadFunction('CONF_imodule_get_flags', AFailed);
+  CONF_imodule_set_flags := LoadFunction('CONF_imodule_set_flags', AFailed);
+  CONF_module_get_usr_data := LoadFunction('CONF_module_get_usr_data', AFailed);
+  CONF_module_set_usr_data := LoadFunction('CONF_module_set_usr_data', AFailed);
+  CONF_get1_default_config_file := LoadFunction('CONF_get1_default_config_file', AFailed);
+  CONF_parse_list := LoadFunction('CONF_parse_list', AFailed);
+  OPENSSL_load_builtin_modules := LoadFunction('OPENSSL_load_builtin_modules', AFailed);
 end;
 
 procedure UnLoad;

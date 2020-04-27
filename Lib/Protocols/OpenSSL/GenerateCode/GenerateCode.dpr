@@ -61,7 +61,6 @@ begin
     Exit;
   Result := Result.Remove(i, CSemicolon.Length);
   Result := Result.Insert(i, Format(' cdecl; external %s;', [IfThen(AShouldUseLibSSL, 'CLibSSL', 'CLibCrypto')]));
-  {TODO -oFabian S. Biehn -cStatic Linking : LibCrypto FileName}
 end;
 
 function ReplaceDynamic(const ALine: string; const AMethodList: TStringList): string;
@@ -125,6 +124,7 @@ end;
 procedure AddDynamicLoadingMethods(
   const AFile: TStringList;
   const AMethods: TStringList;
+  const AUsesIndex: Integer;
   const AVarIndex: Integer;
   const AImplementationIndex: Integer);
 
@@ -157,48 +157,24 @@ begin
     Exit;
   LOffset := AImplementationIndex + 1;
 
-  {TODO -oFabian S. Biehn -cDynamic Linking : Improve loading mechanism for different platforms & lower versions}
-  if not Find(AFile, 'uses', LOffset, LOffset) then
-  begin
-    Insert(AFile, '', LOffset);
-    Insert(AFile, 'uses', LOffset);
-  end
-  else
+  if Find(AFile, 'uses', LOffset, LOffset) then
     if Find(AFile, ';', LOffset, LOffset) then
-    begin
-      AFile[LOffset] := AFile[LOffset].Replace(';', ',');
-      Inc(LOffset)
-    end
-    else
-      Exit;
+      Inc(LOffset);
 
-  if not AFile.Text.Contains('Types') then
-    Insert(AFile, '  System.Types,', LOffset);
-  if not AFile.Text.Contains('Classes') then
-  Insert(AFile, '  System.Classes,', LOffset);
-  Insert(AFile, '  Winapi.Windows;', LOffset);
   Insert(AFile, '', LOffset);
   Insert(AFile, '{$REGION ''Generated loading and unloading methods''}', LOffSet);
-  Insert(AFile, 'function Load(const ADllHandle: THandle): TArray<string>;', LOffset);
+  Insert(AFile, 'procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);', LOffset);
   Insert(AFile, '', LOffset);
   Insert(AFile, '  function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;', LOffset);
   Insert(AFile, '  begin', LOffset);
-  Insert(AFile, '    Result := GetProcAddress(ADllHandle, PChar(AMethodName));', LOffset);
+  Insert(AFile, '    Result := LoadLibFunction(ADllHandle, AMethodName);', LOffset);
   Insert(AFile, '    if not Assigned(Result) then', LOffset);
   Insert(AFile, '      AFailed.Add(AMethodName);', LOffset);
   Insert(AFile, '  end;', LOffset);
   Insert(AFile, '', LOffset);
-  Insert(AFile, 'var', LOffset);
-  Insert(AFile, '  LFailed: TStringList;', LOffset);
   Insert(AFile, 'begin', LOffset);
-  Insert(AFile, '  LFailed := TStringList.Create();', LOffset);
-  Insert(AFile, '  try', LOffset);
   for LMethod in AMethods do
-    Insert(AFile, Format('    %0:s := LoadFunction(''%0:s'', LFailed);', [LMethod]), LOffset);
-  Insert(AFile, '    Result := LFailed.ToStringArray();', LOffset);
-  Insert(AFile, '  finally', LOffset);
-  Insert(AFile, '    LFailed.Free();', LOffset);
-  Insert(AFile, '  end;', LOffset);
+    Insert(AFile, Format('  %0:s := LoadFunction(''%0:s'', AFailed);', [LMethod]), LOffset);
   Insert(AFile, 'end;', LOffset);
   Insert(AFile, '', LOffset);
 
@@ -215,9 +191,12 @@ begin
   LOffSet := Pred(AVarIndex);
   Insert(AFile, '', LOffSet);
   Insert(AFile, '{$REGION ''Generated loading and unloading methods''}', LOffSet);
-  Insert(AFile, 'function Load(const ADllHandle: THandle): TArray<string>;', LOffSet);
+  Insert(AFile, 'procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);', LOffSet);
   Insert(AFile, 'procedure UnLoad;', LOffSet);
   Insert(AFile, '{$ENDREGION}', LOffSet);
+
+  LOffSet := Succ(AUsesIndex);
+  Insert(AFile, '  Classes,', LOffset);
 //  AFile.Insert(Pred(AVarIndex), 'function Load(const ADllHandle: THandle): TArray<string>;');
 end;
 
@@ -310,11 +289,12 @@ var
   LStringListFile: TStringList;
   i: Integer;
   LVarIndex: Integer;
+  LUsesIndex: Integer;
+  LImplementationIndex: Integer;
   LSource: string;
   LTarget: string;
   LMode: TGenerateMode;
   LStringListMethods: TStringList;
-  LImplementationIndex: Integer;
   LFileName: string;
   LShouldUseLibSSL: Boolean;
 begin
@@ -332,12 +312,18 @@ begin
     LStringListMethods := TStringList.Create();
     try
       LStringListFile.LoadFromFile(LFile);
+      LUsesIndex := -1;
       LVarIndex := -1;
       LImplementationIndex := -1;
       LShouldUseLibSSL := MatchText(LFileName,
         ['IdOpenSSLHeaders_ssl.pas', 'IdOpenSSLHeaders_sslerr.pas', 'IdOpenSSLHeaders_tls1.pas']);
       for i := 0 to LStringListFile.Count - 1 do
       begin
+        // Find fist uses
+        if (LVarIndex = -1) and (LUsesIndex = -1) then
+          if LStringListFile[i].StartsWith('uses') then
+            LUsesIndex := i;
+
         // var block found?
         if (LVarIndex = -1) and LStringListFile[i].StartsWith('var') then
           LVarIndex := i;
@@ -362,7 +348,7 @@ begin
 
       case LMode of
         gmDynamic:
-          AddDynamicLoadingMethods(LStringListFile, LStringListMethods, LVarIndex, LImplementationIndex);
+          AddDynamicLoadingMethods(LStringListFile, LStringListMethods, LUsesIndex, LVarIndex, LImplementationIndex);
         gmStatic:
           if LVarIndex > -1 then
             LStringListFile.Delete(LVarIndex);

@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_async;
 
@@ -40,7 +40,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts;
 
 const
@@ -67,7 +69,7 @@ type
   ASYNC_start_job_cb = function(v1: Pointer): TIdC_INT;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -95,45 +97,33 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    ASYNC_init_thread := LoadFunction('ASYNC_init_thread', LFailed);
-    ASYNC_cleanup_thread := LoadFunction('ASYNC_cleanup_thread', LFailed);
-    ASYNC_WAIT_CTX_new := LoadFunction('ASYNC_WAIT_CTX_new', LFailed);
-    ASYNC_WAIT_CTX_free := LoadFunction('ASYNC_WAIT_CTX_free', LFailed);
-    ASYNC_WAIT_CTX_set_wait_fd := LoadFunction('ASYNC_WAIT_CTX_set_wait_fd', LFailed);
-    ASYNC_WAIT_CTX_get_fd := LoadFunction('ASYNC_WAIT_CTX_get_fd', LFailed);
-    ASYNC_WAIT_CTX_get_all_fds := LoadFunction('ASYNC_WAIT_CTX_get_all_fds', LFailed);
-    ASYNC_WAIT_CTX_get_changed_fds := LoadFunction('ASYNC_WAIT_CTX_get_changed_fds', LFailed);
-    ASYNC_WAIT_CTX_clear_fd := LoadFunction('ASYNC_WAIT_CTX_clear_fd', LFailed);
-    ASYNC_is_capable := LoadFunction('ASYNC_is_capable', LFailed);
-    ASYNC_start_job := LoadFunction('ASYNC_start_job', LFailed);
-    ASYNC_pause_job := LoadFunction('ASYNC_pause_job', LFailed);
-    ASYNC_get_current_job := LoadFunction('ASYNC_get_current_job', LFailed);
-    ASYNC_get_wait_ctx := LoadFunction('ASYNC_get_wait_ctx', LFailed);
-    ASYNC_block_pause := LoadFunction('ASYNC_block_pause', LFailed);
-    ASYNC_unblock_pause := LoadFunction('ASYNC_unblock_pause', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  ASYNC_init_thread := LoadFunction('ASYNC_init_thread', AFailed);
+  ASYNC_cleanup_thread := LoadFunction('ASYNC_cleanup_thread', AFailed);
+  ASYNC_WAIT_CTX_new := LoadFunction('ASYNC_WAIT_CTX_new', AFailed);
+  ASYNC_WAIT_CTX_free := LoadFunction('ASYNC_WAIT_CTX_free', AFailed);
+  ASYNC_WAIT_CTX_set_wait_fd := LoadFunction('ASYNC_WAIT_CTX_set_wait_fd', AFailed);
+  ASYNC_WAIT_CTX_get_fd := LoadFunction('ASYNC_WAIT_CTX_get_fd', AFailed);
+  ASYNC_WAIT_CTX_get_all_fds := LoadFunction('ASYNC_WAIT_CTX_get_all_fds', AFailed);
+  ASYNC_WAIT_CTX_get_changed_fds := LoadFunction('ASYNC_WAIT_CTX_get_changed_fds', AFailed);
+  ASYNC_WAIT_CTX_clear_fd := LoadFunction('ASYNC_WAIT_CTX_clear_fd', AFailed);
+  ASYNC_is_capable := LoadFunction('ASYNC_is_capable', AFailed);
+  ASYNC_start_job := LoadFunction('ASYNC_start_job', AFailed);
+  ASYNC_pause_job := LoadFunction('ASYNC_pause_job', AFailed);
+  ASYNC_get_current_job := LoadFunction('ASYNC_get_current_job', AFailed);
+  ASYNC_get_wait_ctx := LoadFunction('ASYNC_get_wait_ctx', AFailed);
+  ASYNC_block_pause := LoadFunction('ASYNC_block_pause', AFailed);
+  ASYNC_unblock_pause := LoadFunction('ASYNC_unblock_pause', AFailed);
 end;
 
 procedure UnLoad;

@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_conf_api;
 
@@ -40,12 +40,14 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts,
   IdOpenSSLHeaders_conf;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -68,36 +70,24 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    _CONF_new_section := LoadFunction('_CONF_new_section', LFailed);
-    _CONF_get_section := LoadFunction('_CONF_get_section', LFailed);
-    _CONF_add_string := LoadFunction('_CONF_add_string', LFailed);
-    _CONF_get_string := LoadFunction('_CONF_get_string', LFailed);
-    _CONF_get_number := LoadFunction('_CONF_get_number', LFailed);
-    _CONF_new_data := LoadFunction('_CONF_new_data', LFailed);
-    _CONF_free_data := LoadFunction('_CONF_free_data', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  _CONF_new_section := LoadFunction('_CONF_new_section', AFailed);
+  _CONF_get_section := LoadFunction('_CONF_get_section', AFailed);
+  _CONF_add_string := LoadFunction('_CONF_add_string', AFailed);
+  _CONF_get_string := LoadFunction('_CONF_get_string', AFailed);
+  _CONF_get_number := LoadFunction('_CONF_get_number', AFailed);
+  _CONF_new_data := LoadFunction('_CONF_new_data', AFailed);
+  _CONF_free_data := LoadFunction('_CONF_free_data', AFailed);
 end;
 
 procedure UnLoad;

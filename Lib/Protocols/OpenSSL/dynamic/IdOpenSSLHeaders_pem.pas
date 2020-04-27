@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 15:20:11
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_pem;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -94,7 +95,7 @@ type
   pem_password_cb = function(buf: PIdAnsiChar; size: TIdC_INT; rwflag: TIdC_INT; userdata: Pointer): TIdC_INT; cdecl;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -215,101 +216,89 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    PEM_get_EVP_CIPHER_INFO := LoadFunction('PEM_get_EVP_CIPHER_INFO', LFailed);
-    PEM_do_header := LoadFunction('PEM_do_header', LFailed);
-    PEM_read_bio := LoadFunction('PEM_read_bio', LFailed);
-    PEM_read_bio_ex := LoadFunction('PEM_read_bio_ex', LFailed);
-    PEM_bytes_read_bio_secmem := LoadFunction('PEM_bytes_read_bio_secmem', LFailed);
-    PEM_write_bio := LoadFunction('PEM_write_bio', LFailed);
-    PEM_bytes_read_bio := LoadFunction('PEM_bytes_read_bio', LFailed);
-    PEM_ASN1_read_bio := LoadFunction('PEM_ASN1_read_bio', LFailed);
-    PEM_ASN1_write_bio := LoadFunction('PEM_ASN1_write_bio', LFailed);
-    PEM_X509_INFO_write_bio := LoadFunction('PEM_X509_INFO_write_bio', LFailed);
-    PEM_SignInit := LoadFunction('PEM_SignInit', LFailed);
-    PEM_SignUpdate := LoadFunction('PEM_SignUpdate', LFailed);
-    PEM_SignFinal := LoadFunction('PEM_SignFinal', LFailed);
-    PEM_def_callback := LoadFunction('PEM_def_callback', LFailed);
-    PEM_proc_type := LoadFunction('PEM_proc_type', LFailed);
-    PEM_dek_info := LoadFunction('PEM_dek_info', LFailed);
-    PEM_read_bio_X509 := LoadFunction('PEM_read_bio_X509', LFailed);
-    PEM_write_bio_X509 := LoadFunction('PEM_write_bio_X509', LFailed);
-    PEM_read_bio_X509_AUX := LoadFunction('PEM_read_bio_X509_AUX', LFailed);
-    PEM_write_bio_X509_AUX := LoadFunction('PEM_write_bio_X509_AUX', LFailed);
-    PEM_read_bio_X509_REQ := LoadFunction('PEM_read_bio_X509_REQ', LFailed);
-    PEM_write_bio_X509_REQ := LoadFunction('PEM_write_bio_X509_REQ', LFailed);
-    PEM_write_bio_X509_REQ_NEW := LoadFunction('PEM_write_bio_X509_REQ_NEW', LFailed);
-    PEM_read_bio_X509_CRL := LoadFunction('PEM_read_bio_X509_CRL', LFailed);
-    PEM_write_bio_X509_CRL := LoadFunction('PEM_write_bio_X509_CRL', LFailed);
-    PEM_read_bio_PKCS7 := LoadFunction('PEM_read_bio_PKCS7', LFailed);
-    PEM_write_bio_PKCS7 := LoadFunction('PEM_write_bio_PKCS7', LFailed);
-    PEM_read_bio_PKCS8 := LoadFunction('PEM_read_bio_PKCS8', LFailed);
-    PEM_write_bio_PKCS8 := LoadFunction('PEM_write_bio_PKCS8', LFailed);
-    PEM_read_bio_PKCS8_PRIV_KEY_INFO := LoadFunction('PEM_read_bio_PKCS8_PRIV_KEY_INFO', LFailed);
-    PEM_write_bio_PKCS8_PRIV_KEY_INFO := LoadFunction('PEM_write_bio_PKCS8_PRIV_KEY_INFO', LFailed);
-    PEM_read_bio_RSAPrivateKey := LoadFunction('PEM_read_bio_RSAPrivateKey', LFailed);
-    PEM_write_bio_RSAPrivateKey := LoadFunction('PEM_write_bio_RSAPrivateKey', LFailed);
-    PEM_read_bio_RSAPublicKey := LoadFunction('PEM_read_bio_RSAPublicKey', LFailed);
-    PEM_write_bio_RSAPublicKey := LoadFunction('PEM_write_bio_RSAPublicKey', LFailed);
-    PEM_read_bio_RSA_PUBKEY := LoadFunction('PEM_read_bio_RSA_PUBKEY', LFailed);
-    PEM_write_bio_RSA_PUBKEY := LoadFunction('PEM_write_bio_RSA_PUBKEY', LFailed);
-    PEM_read_bio_DSAPrivateKey := LoadFunction('PEM_read_bio_DSAPrivateKey', LFailed);
-    PEM_write_bio_DSAPrivateKey := LoadFunction('PEM_write_bio_DSAPrivateKey', LFailed);
-    PEM_read_bio_DSA_PUBKEY := LoadFunction('PEM_read_bio_DSA_PUBKEY', LFailed);
-    PEM_write_bio_DSA_PUBKEY := LoadFunction('PEM_write_bio_DSA_PUBKEY', LFailed);
-    PEM_read_bio_DSAparams := LoadFunction('PEM_read_bio_DSAparams', LFailed);
-    PEM_write_bio_DSAparams := LoadFunction('PEM_write_bio_DSAparams', LFailed);
-    PEM_read_bio_ECPKParameters := LoadFunction('PEM_read_bio_ECPKParameters', LFailed);
-    PEM_write_bio_ECPKParameters := LoadFunction('PEM_write_bio_ECPKParameters', LFailed);
-    PEM_read_bio_ECPrivateKey := LoadFunction('PEM_read_bio_ECPrivateKey', LFailed);
-    PEM_write_bio_ECPrivateKey := LoadFunction('PEM_write_bio_ECPrivateKey', LFailed);
-    PEM_read_bio_EC_PUBKEY := LoadFunction('PEM_read_bio_EC_PUBKEY', LFailed);
-    PEM_write_bio_EC_PUBKEY := LoadFunction('PEM_write_bio_EC_PUBKEY', LFailed);
-    PEM_read_bio_DHparams := LoadFunction('PEM_read_bio_DHparams', LFailed);
-    PEM_write_bio_DHparams := LoadFunction('PEM_write_bio_DHparams', LFailed);
-    PEM_write_bio_DHxparams := LoadFunction('PEM_write_bio_DHxparams', LFailed);
-    PEM_read_bio_PrivateKey := LoadFunction('PEM_read_bio_PrivateKey', LFailed);
-    PEM_write_bio_PrivateKey := LoadFunction('PEM_write_bio_PrivateKey', LFailed);
-    PEM_read_bio_PUBKEY := LoadFunction('PEM_read_bio_PUBKEY', LFailed);
-    PEM_write_bio_PUBKEY := LoadFunction('PEM_write_bio_PUBKEY', LFailed);
-    PEM_write_bio_PrivateKey_traditional := LoadFunction('PEM_write_bio_PrivateKey_traditional', LFailed);
-    PEM_write_bio_PKCS8PrivateKey_nid := LoadFunction('PEM_write_bio_PKCS8PrivateKey_nid', LFailed);
-    PEM_write_bio_PKCS8PrivateKey := LoadFunction('PEM_write_bio_PKCS8PrivateKey', LFailed);
-    i2d_PKCS8PrivateKey_bio := LoadFunction('i2d_PKCS8PrivateKey_bio', LFailed);
-    i2d_PKCS8PrivateKey_nid_bio := LoadFunction('i2d_PKCS8PrivateKey_nid_bio', LFailed);
-    d2i_PKCS8PrivateKey_bio := LoadFunction('d2i_PKCS8PrivateKey_bio', LFailed);
-    PEM_read_bio_Parameters := LoadFunction('PEM_read_bio_Parameters', LFailed);
-    PEM_write_bio_Parameters := LoadFunction('PEM_write_bio_Parameters', LFailed);
-    b2i_PrivateKey := LoadFunction('b2i_PrivateKey', LFailed);
-    b2i_PublicKey := LoadFunction('b2i_PublicKey', LFailed);
-    b2i_PrivateKey_bio := LoadFunction('b2i_PrivateKey_bio', LFailed);
-    b2i_PublicKey_bio := LoadFunction('b2i_PublicKey_bio', LFailed);
-    i2b_PrivateKey_bio := LoadFunction('i2b_PrivateKey_bio', LFailed);
-    i2b_PublicKey_bio := LoadFunction('i2b_PublicKey_bio', LFailed);
-    b2i_PVK_bio := LoadFunction('b2i_PVK_bio', LFailed);
-    i2b_PVK_bio := LoadFunction('i2b_PVK_bio', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  PEM_get_EVP_CIPHER_INFO := LoadFunction('PEM_get_EVP_CIPHER_INFO', AFailed);
+  PEM_do_header := LoadFunction('PEM_do_header', AFailed);
+  PEM_read_bio := LoadFunction('PEM_read_bio', AFailed);
+  PEM_read_bio_ex := LoadFunction('PEM_read_bio_ex', AFailed);
+  PEM_bytes_read_bio_secmem := LoadFunction('PEM_bytes_read_bio_secmem', AFailed);
+  PEM_write_bio := LoadFunction('PEM_write_bio', AFailed);
+  PEM_bytes_read_bio := LoadFunction('PEM_bytes_read_bio', AFailed);
+  PEM_ASN1_read_bio := LoadFunction('PEM_ASN1_read_bio', AFailed);
+  PEM_ASN1_write_bio := LoadFunction('PEM_ASN1_write_bio', AFailed);
+  PEM_X509_INFO_write_bio := LoadFunction('PEM_X509_INFO_write_bio', AFailed);
+  PEM_SignInit := LoadFunction('PEM_SignInit', AFailed);
+  PEM_SignUpdate := LoadFunction('PEM_SignUpdate', AFailed);
+  PEM_SignFinal := LoadFunction('PEM_SignFinal', AFailed);
+  PEM_def_callback := LoadFunction('PEM_def_callback', AFailed);
+  PEM_proc_type := LoadFunction('PEM_proc_type', AFailed);
+  PEM_dek_info := LoadFunction('PEM_dek_info', AFailed);
+  PEM_read_bio_X509 := LoadFunction('PEM_read_bio_X509', AFailed);
+  PEM_write_bio_X509 := LoadFunction('PEM_write_bio_X509', AFailed);
+  PEM_read_bio_X509_AUX := LoadFunction('PEM_read_bio_X509_AUX', AFailed);
+  PEM_write_bio_X509_AUX := LoadFunction('PEM_write_bio_X509_AUX', AFailed);
+  PEM_read_bio_X509_REQ := LoadFunction('PEM_read_bio_X509_REQ', AFailed);
+  PEM_write_bio_X509_REQ := LoadFunction('PEM_write_bio_X509_REQ', AFailed);
+  PEM_write_bio_X509_REQ_NEW := LoadFunction('PEM_write_bio_X509_REQ_NEW', AFailed);
+  PEM_read_bio_X509_CRL := LoadFunction('PEM_read_bio_X509_CRL', AFailed);
+  PEM_write_bio_X509_CRL := LoadFunction('PEM_write_bio_X509_CRL', AFailed);
+  PEM_read_bio_PKCS7 := LoadFunction('PEM_read_bio_PKCS7', AFailed);
+  PEM_write_bio_PKCS7 := LoadFunction('PEM_write_bio_PKCS7', AFailed);
+  PEM_read_bio_PKCS8 := LoadFunction('PEM_read_bio_PKCS8', AFailed);
+  PEM_write_bio_PKCS8 := LoadFunction('PEM_write_bio_PKCS8', AFailed);
+  PEM_read_bio_PKCS8_PRIV_KEY_INFO := LoadFunction('PEM_read_bio_PKCS8_PRIV_KEY_INFO', AFailed);
+  PEM_write_bio_PKCS8_PRIV_KEY_INFO := LoadFunction('PEM_write_bio_PKCS8_PRIV_KEY_INFO', AFailed);
+  PEM_read_bio_RSAPrivateKey := LoadFunction('PEM_read_bio_RSAPrivateKey', AFailed);
+  PEM_write_bio_RSAPrivateKey := LoadFunction('PEM_write_bio_RSAPrivateKey', AFailed);
+  PEM_read_bio_RSAPublicKey := LoadFunction('PEM_read_bio_RSAPublicKey', AFailed);
+  PEM_write_bio_RSAPublicKey := LoadFunction('PEM_write_bio_RSAPublicKey', AFailed);
+  PEM_read_bio_RSA_PUBKEY := LoadFunction('PEM_read_bio_RSA_PUBKEY', AFailed);
+  PEM_write_bio_RSA_PUBKEY := LoadFunction('PEM_write_bio_RSA_PUBKEY', AFailed);
+  PEM_read_bio_DSAPrivateKey := LoadFunction('PEM_read_bio_DSAPrivateKey', AFailed);
+  PEM_write_bio_DSAPrivateKey := LoadFunction('PEM_write_bio_DSAPrivateKey', AFailed);
+  PEM_read_bio_DSA_PUBKEY := LoadFunction('PEM_read_bio_DSA_PUBKEY', AFailed);
+  PEM_write_bio_DSA_PUBKEY := LoadFunction('PEM_write_bio_DSA_PUBKEY', AFailed);
+  PEM_read_bio_DSAparams := LoadFunction('PEM_read_bio_DSAparams', AFailed);
+  PEM_write_bio_DSAparams := LoadFunction('PEM_write_bio_DSAparams', AFailed);
+  PEM_read_bio_ECPKParameters := LoadFunction('PEM_read_bio_ECPKParameters', AFailed);
+  PEM_write_bio_ECPKParameters := LoadFunction('PEM_write_bio_ECPKParameters', AFailed);
+  PEM_read_bio_ECPrivateKey := LoadFunction('PEM_read_bio_ECPrivateKey', AFailed);
+  PEM_write_bio_ECPrivateKey := LoadFunction('PEM_write_bio_ECPrivateKey', AFailed);
+  PEM_read_bio_EC_PUBKEY := LoadFunction('PEM_read_bio_EC_PUBKEY', AFailed);
+  PEM_write_bio_EC_PUBKEY := LoadFunction('PEM_write_bio_EC_PUBKEY', AFailed);
+  PEM_read_bio_DHparams := LoadFunction('PEM_read_bio_DHparams', AFailed);
+  PEM_write_bio_DHparams := LoadFunction('PEM_write_bio_DHparams', AFailed);
+  PEM_write_bio_DHxparams := LoadFunction('PEM_write_bio_DHxparams', AFailed);
+  PEM_read_bio_PrivateKey := LoadFunction('PEM_read_bio_PrivateKey', AFailed);
+  PEM_write_bio_PrivateKey := LoadFunction('PEM_write_bio_PrivateKey', AFailed);
+  PEM_read_bio_PUBKEY := LoadFunction('PEM_read_bio_PUBKEY', AFailed);
+  PEM_write_bio_PUBKEY := LoadFunction('PEM_write_bio_PUBKEY', AFailed);
+  PEM_write_bio_PrivateKey_traditional := LoadFunction('PEM_write_bio_PrivateKey_traditional', AFailed);
+  PEM_write_bio_PKCS8PrivateKey_nid := LoadFunction('PEM_write_bio_PKCS8PrivateKey_nid', AFailed);
+  PEM_write_bio_PKCS8PrivateKey := LoadFunction('PEM_write_bio_PKCS8PrivateKey', AFailed);
+  i2d_PKCS8PrivateKey_bio := LoadFunction('i2d_PKCS8PrivateKey_bio', AFailed);
+  i2d_PKCS8PrivateKey_nid_bio := LoadFunction('i2d_PKCS8PrivateKey_nid_bio', AFailed);
+  d2i_PKCS8PrivateKey_bio := LoadFunction('d2i_PKCS8PrivateKey_bio', AFailed);
+  PEM_read_bio_Parameters := LoadFunction('PEM_read_bio_Parameters', AFailed);
+  PEM_write_bio_Parameters := LoadFunction('PEM_write_bio_Parameters', AFailed);
+  b2i_PrivateKey := LoadFunction('b2i_PrivateKey', AFailed);
+  b2i_PublicKey := LoadFunction('b2i_PublicKey', AFailed);
+  b2i_PrivateKey_bio := LoadFunction('b2i_PrivateKey_bio', AFailed);
+  b2i_PublicKey_bio := LoadFunction('b2i_PublicKey_bio', AFailed);
+  i2b_PrivateKey_bio := LoadFunction('i2b_PrivateKey_bio', AFailed);
+  i2b_PublicKey_bio := LoadFunction('i2b_PublicKey_bio', AFailed);
+  b2i_PVK_bio := LoadFunction('b2i_PVK_bio', AFailed);
+  i2b_PVK_bio := LoadFunction('i2b_PVK_bio', AFailed);
 end;
 
 procedure UnLoad;

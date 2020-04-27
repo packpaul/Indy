@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_whrlpool;
 
@@ -40,7 +40,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts;
 
 const
@@ -64,7 +66,7 @@ type
   PWHIRLPOOL_CTX = ^WHIRLPOOL_CTX;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -77,34 +79,22 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    WHIRLPOOL_Init := LoadFunction('WHIRLPOOL_Init', LFailed);
-    WHIRLPOOL_Update := LoadFunction('WHIRLPOOL_Update', LFailed);
-    WHIRLPOOL_BitUpdate := LoadFunction('WHIRLPOOL_BitUpdate', LFailed);
-    WHIRLPOOL_Final := LoadFunction('WHIRLPOOL_Final', LFailed);
-    WHIRLPOOL := LoadFunction('WHIRLPOOL', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  WHIRLPOOL_Init := LoadFunction('WHIRLPOOL_Init', AFailed);
+  WHIRLPOOL_Update := LoadFunction('WHIRLPOOL_Update', AFailed);
+  WHIRLPOOL_BitUpdate := LoadFunction('WHIRLPOOL_BitUpdate', AFailed);
+  WHIRLPOOL_Final := LoadFunction('WHIRLPOOL_Final', AFailed);
+  WHIRLPOOL := LoadFunction('WHIRLPOOL', AFailed);
 end;
 
 procedure UnLoad;

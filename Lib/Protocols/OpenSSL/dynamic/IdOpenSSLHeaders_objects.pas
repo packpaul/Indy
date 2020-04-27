@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 03.04.2020 11:33:42
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_objects;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -58,7 +59,7 @@ type
 //# define         OBJ_create_and_add_object(a,b,c) OBJ_create(a,b,c)
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -70,7 +71,7 @@ var
   OBJ_NAME_get: function(const name: PIdAnsiChar; &type: TIdC_INT): PIdAnsiChar cdecl = nil;
   OBJ_NAME_add: function(const name: PIdAnsiChar; &type: TIdC_INT; const data: PIdAnsiChar): TIdC_INT cdecl = nil;
   OBJ_NAME_remove: function(const name: PIdAnsiChar; &type: TIdC_INT): TIdC_INT cdecl = nil;
-  OBJ_NAME_cleanup: procedure(&type: TIdC_INT); : procedure(* -1 for everything *)
+  OBJ_NAME_cleanup: procedure(&type: TIdC_INT) cdecl = nil;
 //  void OBJ_NAME_do_all(TIdC_INT &type; void (*fn) (const OBJ_NAME *; void *arg);
 //                       void *arg);
 //  void OBJ_NAME_do_all_sorted(TIdC_INT &type;
@@ -189,55 +190,43 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    OBJ_NAME_init := LoadFunction('OBJ_NAME_init', LFailed);
-    OBJ_NAME_get := LoadFunction('OBJ_NAME_get', LFailed);
-    OBJ_NAME_add := LoadFunction('OBJ_NAME_add', LFailed);
-    OBJ_NAME_remove := LoadFunction('OBJ_NAME_remove', LFailed);
-    OBJ_NAME_cleanup := LoadFunction('OBJ_NAME_cleanup', LFailed);
-    OBJ_dup := LoadFunction('OBJ_dup', LFailed);
-    OBJ_nid2obj := LoadFunction('OBJ_nid2obj', LFailed);
-    OBJ_nid2ln := LoadFunction('OBJ_nid2ln', LFailed);
-    OBJ_nid2sn := LoadFunction('OBJ_nid2sn', LFailed);
-    OBJ_obj2nid := LoadFunction('OBJ_obj2nid', LFailed);
-    OBJ_txt2obj := LoadFunction('OBJ_txt2obj', LFailed);
-    OBJ_obj2txt := LoadFunction('OBJ_obj2txt', LFailed);
-    OBJ_txt2nid := LoadFunction('OBJ_txt2nid', LFailed);
-    OBJ_ln2nid := LoadFunction('OBJ_ln2nid', LFailed);
-    OBJ_sn2nid := LoadFunction('OBJ_sn2nid', LFailed);
-    OBJ_cmp := LoadFunction('OBJ_cmp', LFailed);
-    OBJ_new_nid := LoadFunction('OBJ_new_nid', LFailed);
-    OBJ_add_object := LoadFunction('OBJ_add_object', LFailed);
-    OBJ_create := LoadFunction('OBJ_create', LFailed);
-    OBJ_create_objects := LoadFunction('OBJ_create_objects', LFailed);
-    OBJ_length := LoadFunction('OBJ_length', LFailed);
-    OBJ_get0_data := LoadFunction('OBJ_get0_data', LFailed);
-    OBJ_find_sigid_algs := LoadFunction('OBJ_find_sigid_algs', LFailed);
-    OBJ_find_sigid_by_algs := LoadFunction('OBJ_find_sigid_by_algs', LFailed);
-    OBJ_add_sigid := LoadFunction('OBJ_add_sigid', LFailed);
-    OBJ_sigid_free := LoadFunction('OBJ_sigid_free', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  OBJ_NAME_init := LoadFunction('OBJ_NAME_init', AFailed);
+  OBJ_NAME_get := LoadFunction('OBJ_NAME_get', AFailed);
+  OBJ_NAME_add := LoadFunction('OBJ_NAME_add', AFailed);
+  OBJ_NAME_remove := LoadFunction('OBJ_NAME_remove', AFailed);
+  OBJ_NAME_cleanup := LoadFunction('OBJ_NAME_cleanup', AFailed);
+  OBJ_dup := LoadFunction('OBJ_dup', AFailed);
+  OBJ_nid2obj := LoadFunction('OBJ_nid2obj', AFailed);
+  OBJ_nid2ln := LoadFunction('OBJ_nid2ln', AFailed);
+  OBJ_nid2sn := LoadFunction('OBJ_nid2sn', AFailed);
+  OBJ_obj2nid := LoadFunction('OBJ_obj2nid', AFailed);
+  OBJ_txt2obj := LoadFunction('OBJ_txt2obj', AFailed);
+  OBJ_obj2txt := LoadFunction('OBJ_obj2txt', AFailed);
+  OBJ_txt2nid := LoadFunction('OBJ_txt2nid', AFailed);
+  OBJ_ln2nid := LoadFunction('OBJ_ln2nid', AFailed);
+  OBJ_sn2nid := LoadFunction('OBJ_sn2nid', AFailed);
+  OBJ_cmp := LoadFunction('OBJ_cmp', AFailed);
+  OBJ_new_nid := LoadFunction('OBJ_new_nid', AFailed);
+  OBJ_add_object := LoadFunction('OBJ_add_object', AFailed);
+  OBJ_create := LoadFunction('OBJ_create', AFailed);
+  OBJ_create_objects := LoadFunction('OBJ_create_objects', AFailed);
+  OBJ_length := LoadFunction('OBJ_length', AFailed);
+  OBJ_get0_data := LoadFunction('OBJ_get0_data', AFailed);
+  OBJ_find_sigid_algs := LoadFunction('OBJ_find_sigid_algs', AFailed);
+  OBJ_find_sigid_by_algs := LoadFunction('OBJ_find_sigid_by_algs', AFailed);
+  OBJ_add_sigid := LoadFunction('OBJ_add_sigid', AFailed);
+  OBJ_sigid_free := LoadFunction('OBJ_sigid_free', AFailed);
 end;
 
 procedure UnLoad;

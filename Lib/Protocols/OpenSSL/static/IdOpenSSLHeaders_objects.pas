@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 03.04.2020 11:33:43
+// Generation date: 27.04.2020 14:51:27
 
 unit IdOpenSSLHeaders_objects;
 
@@ -64,7 +64,7 @@ type
   function OBJ_NAME_get(const name: PIdAnsiChar; &type: TIdC_INT): PIdAnsiChar cdecl; external CLibCrypto;
   function OBJ_NAME_add(const name: PIdAnsiChar; &type: TIdC_INT; const data: PIdAnsiChar): TIdC_INT cdecl; external CLibCrypto;
   function OBJ_NAME_remove(const name: PIdAnsiChar; &type: TIdC_INT): TIdC_INT cdecl; external CLibCrypto;
-  procedure OBJ_NAME_cleanup(&type: TIdC_INT) cdecl; external CLibCrypto; (* -1 for everything *)
+  procedure OBJ_NAME_cleanup(&type: TIdC_INT) cdecl; external CLibCrypto;
 //  void OBJ_NAME_do_all(TIdC_INT &type; void (*fn) (const OBJ_NAME *; void *arg);
 //                       void *arg);
 //  void OBJ_NAME_do_all_sorted(TIdC_INT &type;

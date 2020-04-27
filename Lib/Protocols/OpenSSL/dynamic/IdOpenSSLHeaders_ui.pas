@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_ui;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -131,7 +132,7 @@ type
   UI_method_prompt_constructor_cb = function(ui: PUI; const object_desc: PIdAnsiChar; const object_name: PIdAnsiChar): PIdAnsiChar;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -386,91 +387,79 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    UI_new := LoadFunction('UI_new', LFailed);
-    UI_new_method := LoadFunction('UI_new_method', LFailed);
-    UI_free := LoadFunction('UI_free', LFailed);
-    UI_add_input_string := LoadFunction('UI_add_input_string', LFailed);
-    UI_dup_input_string := LoadFunction('UI_dup_input_string', LFailed);
-    UI_add_verify_string := LoadFunction('UI_add_verify_string', LFailed);
-    UI_dup_verify_string := LoadFunction('UI_dup_verify_string', LFailed);
-    UI_add_input_boolean := LoadFunction('UI_add_input_boolean', LFailed);
-    UI_dup_input_boolean := LoadFunction('UI_dup_input_boolean', LFailed);
-    UI_add_info_string := LoadFunction('UI_add_info_string', LFailed);
-    UI_dup_info_string := LoadFunction('UI_dup_info_string', LFailed);
-    UI_add_error_string := LoadFunction('UI_add_error_string', LFailed);
-    UI_dup_error_string := LoadFunction('UI_dup_error_string', LFailed);
-    UI_construct_prompt := LoadFunction('UI_construct_prompt', LFailed);
-    UI_add_user_data := LoadFunction('UI_add_user_data', LFailed);
-    UI_dup_user_data := LoadFunction('UI_dup_user_data', LFailed);
-    UI_get0_user_data := LoadFunction('UI_get0_user_data', LFailed);
-    UI_get0_result := LoadFunction('UI_get0_result', LFailed);
-    UI_get_result_length := LoadFunction('UI_get_result_length', LFailed);
-    UI_process := LoadFunction('UI_process', LFailed);
-    UI_ctrl := LoadFunction('UI_ctrl', LFailed);
-    UI_set_ex_data := LoadFunction('UI_set_ex_data', LFailed);
-    UI_get_ex_data := LoadFunction('UI_get_ex_data', LFailed);
-    UI_set_default_method := LoadFunction('UI_set_default_method', LFailed);
-    UI_get_default_method := LoadFunction('UI_get_default_method', LFailed);
-    UI_get_method := LoadFunction('UI_get_method', LFailed);
-    UI_set_method := LoadFunction('UI_set_method', LFailed);
-    UI_OpenSSL := LoadFunction('UI_OpenSSL', LFailed);
-    UI_null := LoadFunction('UI_null', LFailed);
-    UI_create_method := LoadFunction('UI_create_method', LFailed);
-    UI_destroy_method := LoadFunction('UI_destroy_method', LFailed);
-    UI_method_set_opener := LoadFunction('UI_method_set_opener', LFailed);
-    UI_method_set_writer := LoadFunction('UI_method_set_writer', LFailed);
-    UI_method_set_flusher := LoadFunction('UI_method_set_flusher', LFailed);
-    UI_method_set_reader := LoadFunction('UI_method_set_reader', LFailed);
-    UI_method_set_closer := LoadFunction('UI_method_set_closer', LFailed);
-    UI_method_set_data_duplicator := LoadFunction('UI_method_set_data_duplicator', LFailed);
-    UI_method_set_prompt_constructor := LoadFunction('UI_method_set_prompt_constructor', LFailed);
-    UI_method_set_ex_data := LoadFunction('UI_method_set_ex_data', LFailed);
-    UI_method_get_opener := LoadFunction('UI_method_get_opener', LFailed);
-    UI_method_get_writer := LoadFunction('UI_method_get_writer', LFailed);
-    UI_method_get_flusher := LoadFunction('UI_method_get_flusher', LFailed);
-    UI_method_get_reader := LoadFunction('UI_method_get_reader', LFailed);
-    UI_method_get_closer := LoadFunction('UI_method_get_closer', LFailed);
-    UI_method_get_prompt_constructor := LoadFunction('UI_method_get_prompt_constructor', LFailed);
-    UI_method_get_data_duplicator := LoadFunction('UI_method_get_data_duplicator', LFailed);
-    UI_method_get_data_destructor := LoadFunction('UI_method_get_data_destructor', LFailed);
-    UI_method_get_ex_data := LoadFunction('UI_method_get_ex_data', LFailed);
-    UI_get_string_type := LoadFunction('UI_get_string_type', LFailed);
-    UI_get_input_flags := LoadFunction('UI_get_input_flags', LFailed);
-    UI_get0_output_string := LoadFunction('UI_get0_output_string', LFailed);
-    UI_get0_action_string := LoadFunction('UI_get0_action_string', LFailed);
-    UI_get0_result_string := LoadFunction('UI_get0_result_string', LFailed);
-    UI_get_result_string_length := LoadFunction('UI_get_result_string_length', LFailed);
-    UI_get0_test_string := LoadFunction('UI_get0_test_string', LFailed);
-    UI_get_result_minsize := LoadFunction('UI_get_result_minsize', LFailed);
-    UI_get_result_maxsize := LoadFunction('UI_get_result_maxsize', LFailed);
-    UI_set_result := LoadFunction('UI_set_result', LFailed);
-    UI_set_result_ex := LoadFunction('UI_set_result_ex', LFailed);
-    UI_UTIL_read_pw_string := LoadFunction('UI_UTIL_read_pw_string', LFailed);
-    UI_UTIL_read_pw := LoadFunction('UI_UTIL_read_pw', LFailed);
-    UI_UTIL_wrap_read_pem_callback := LoadFunction('UI_UTIL_wrap_read_pem_callback', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  UI_new := LoadFunction('UI_new', AFailed);
+  UI_new_method := LoadFunction('UI_new_method', AFailed);
+  UI_free := LoadFunction('UI_free', AFailed);
+  UI_add_input_string := LoadFunction('UI_add_input_string', AFailed);
+  UI_dup_input_string := LoadFunction('UI_dup_input_string', AFailed);
+  UI_add_verify_string := LoadFunction('UI_add_verify_string', AFailed);
+  UI_dup_verify_string := LoadFunction('UI_dup_verify_string', AFailed);
+  UI_add_input_boolean := LoadFunction('UI_add_input_boolean', AFailed);
+  UI_dup_input_boolean := LoadFunction('UI_dup_input_boolean', AFailed);
+  UI_add_info_string := LoadFunction('UI_add_info_string', AFailed);
+  UI_dup_info_string := LoadFunction('UI_dup_info_string', AFailed);
+  UI_add_error_string := LoadFunction('UI_add_error_string', AFailed);
+  UI_dup_error_string := LoadFunction('UI_dup_error_string', AFailed);
+  UI_construct_prompt := LoadFunction('UI_construct_prompt', AFailed);
+  UI_add_user_data := LoadFunction('UI_add_user_data', AFailed);
+  UI_dup_user_data := LoadFunction('UI_dup_user_data', AFailed);
+  UI_get0_user_data := LoadFunction('UI_get0_user_data', AFailed);
+  UI_get0_result := LoadFunction('UI_get0_result', AFailed);
+  UI_get_result_length := LoadFunction('UI_get_result_length', AFailed);
+  UI_process := LoadFunction('UI_process', AFailed);
+  UI_ctrl := LoadFunction('UI_ctrl', AFailed);
+  UI_set_ex_data := LoadFunction('UI_set_ex_data', AFailed);
+  UI_get_ex_data := LoadFunction('UI_get_ex_data', AFailed);
+  UI_set_default_method := LoadFunction('UI_set_default_method', AFailed);
+  UI_get_default_method := LoadFunction('UI_get_default_method', AFailed);
+  UI_get_method := LoadFunction('UI_get_method', AFailed);
+  UI_set_method := LoadFunction('UI_set_method', AFailed);
+  UI_OpenSSL := LoadFunction('UI_OpenSSL', AFailed);
+  UI_null := LoadFunction('UI_null', AFailed);
+  UI_create_method := LoadFunction('UI_create_method', AFailed);
+  UI_destroy_method := LoadFunction('UI_destroy_method', AFailed);
+  UI_method_set_opener := LoadFunction('UI_method_set_opener', AFailed);
+  UI_method_set_writer := LoadFunction('UI_method_set_writer', AFailed);
+  UI_method_set_flusher := LoadFunction('UI_method_set_flusher', AFailed);
+  UI_method_set_reader := LoadFunction('UI_method_set_reader', AFailed);
+  UI_method_set_closer := LoadFunction('UI_method_set_closer', AFailed);
+  UI_method_set_data_duplicator := LoadFunction('UI_method_set_data_duplicator', AFailed);
+  UI_method_set_prompt_constructor := LoadFunction('UI_method_set_prompt_constructor', AFailed);
+  UI_method_set_ex_data := LoadFunction('UI_method_set_ex_data', AFailed);
+  UI_method_get_opener := LoadFunction('UI_method_get_opener', AFailed);
+  UI_method_get_writer := LoadFunction('UI_method_get_writer', AFailed);
+  UI_method_get_flusher := LoadFunction('UI_method_get_flusher', AFailed);
+  UI_method_get_reader := LoadFunction('UI_method_get_reader', AFailed);
+  UI_method_get_closer := LoadFunction('UI_method_get_closer', AFailed);
+  UI_method_get_prompt_constructor := LoadFunction('UI_method_get_prompt_constructor', AFailed);
+  UI_method_get_data_duplicator := LoadFunction('UI_method_get_data_duplicator', AFailed);
+  UI_method_get_data_destructor := LoadFunction('UI_method_get_data_destructor', AFailed);
+  UI_method_get_ex_data := LoadFunction('UI_method_get_ex_data', AFailed);
+  UI_get_string_type := LoadFunction('UI_get_string_type', AFailed);
+  UI_get_input_flags := LoadFunction('UI_get_input_flags', AFailed);
+  UI_get0_output_string := LoadFunction('UI_get0_output_string', AFailed);
+  UI_get0_action_string := LoadFunction('UI_get0_action_string', AFailed);
+  UI_get0_result_string := LoadFunction('UI_get0_result_string', AFailed);
+  UI_get_result_string_length := LoadFunction('UI_get_result_string_length', AFailed);
+  UI_get0_test_string := LoadFunction('UI_get0_test_string', AFailed);
+  UI_get_result_minsize := LoadFunction('UI_get_result_minsize', AFailed);
+  UI_get_result_maxsize := LoadFunction('UI_get_result_maxsize', AFailed);
+  UI_set_result := LoadFunction('UI_set_result', AFailed);
+  UI_set_result_ex := LoadFunction('UI_set_result_ex', AFailed);
+  UI_UTIL_read_pw_string := LoadFunction('UI_UTIL_read_pw_string', AFailed);
+  UI_UTIL_read_pw := LoadFunction('UI_UTIL_read_pw', AFailed);
+  UI_UTIL_wrap_read_pem_callback := LoadFunction('UI_UTIL_wrap_read_pem_callback', AFailed);
 end;
 
 procedure UnLoad;

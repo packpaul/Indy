@@ -35,6 +35,7 @@ interface
 
 uses
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts;
 
 const

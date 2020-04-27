@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_aes;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts;
@@ -66,7 +67,7 @@ type
   PAES_KEY = ^AES_KEY;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -95,44 +96,32 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    AES_options := LoadFunction('AES_options', LFailed);
-    AES_set_encrypt_key := LoadFunction('AES_set_encrypt_key', LFailed);
-    AES_set_decrypt_key := LoadFunction('AES_set_decrypt_key', LFailed);
-    AES_encrypt := LoadFunction('AES_encrypt', LFailed);
-    AES_decrypt := LoadFunction('AES_decrypt', LFailed);
-    AES_ecb_encrypt := LoadFunction('AES_ecb_encrypt', LFailed);
-    AES_cbc_encrypt := LoadFunction('AES_cbc_encrypt', LFailed);
-    AES_cfb128_encrypt := LoadFunction('AES_cfb128_encrypt', LFailed);
-    AES_cfb1_encrypt := LoadFunction('AES_cfb1_encrypt', LFailed);
-    AES_cfb8_encrypt := LoadFunction('AES_cfb8_encrypt', LFailed);
-    AES_ofb128_encrypt := LoadFunction('AES_ofb128_encrypt', LFailed);
-    AES_ige_encrypt := LoadFunction('AES_ige_encrypt', LFailed);
-    AES_bi_ige_encrypt := LoadFunction('AES_bi_ige_encrypt', LFailed);
-    AES_wrap_key := LoadFunction('AES_wrap_key', LFailed);
-    AES_unwrap_key := LoadFunction('AES_unwrap_key', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  AES_options := LoadFunction('AES_options', AFailed);
+  AES_set_encrypt_key := LoadFunction('AES_set_encrypt_key', AFailed);
+  AES_set_decrypt_key := LoadFunction('AES_set_decrypt_key', AFailed);
+  AES_encrypt := LoadFunction('AES_encrypt', AFailed);
+  AES_decrypt := LoadFunction('AES_decrypt', AFailed);
+  AES_ecb_encrypt := LoadFunction('AES_ecb_encrypt', AFailed);
+  AES_cbc_encrypt := LoadFunction('AES_cbc_encrypt', AFailed);
+  AES_cfb128_encrypt := LoadFunction('AES_cfb128_encrypt', AFailed);
+  AES_cfb1_encrypt := LoadFunction('AES_cfb1_encrypt', AFailed);
+  AES_cfb8_encrypt := LoadFunction('AES_cfb8_encrypt', AFailed);
+  AES_ofb128_encrypt := LoadFunction('AES_ofb128_encrypt', AFailed);
+  AES_ige_encrypt := LoadFunction('AES_ige_encrypt', AFailed);
+  AES_bi_ige_encrypt := LoadFunction('AES_bi_ige_encrypt', AFailed);
+  AES_wrap_key := LoadFunction('AES_wrap_key', AFailed);
+  AES_unwrap_key := LoadFunction('AES_unwrap_key', AFailed);
 end;
 
 procedure UnLoad;

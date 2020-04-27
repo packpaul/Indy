@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_bn;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -78,7 +79,7 @@ type
   BN_GENCB_set_cb = function (a: TIdC_INT; b: TIdC_INT; c: PBN_GENCB): TIdC_INT; cdecl;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -436,192 +437,180 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    BN_set_flags := LoadFunction('BN_set_flags', LFailed);
-    BN_get_flags := LoadFunction('BN_get_flags', LFailed);
-    BN_with_flags := LoadFunction('BN_with_flags', LFailed);
-    BN_GENCB_call := LoadFunction('BN_GENCB_call', LFailed);
-    BN_GENCB_new := LoadFunction('BN_GENCB_new', LFailed);
-    BN_GENCB_free := LoadFunction('BN_GENCB_free', LFailed);
-    BN_GENCB_set_old := LoadFunction('BN_GENCB_set_old', LFailed);
-    BN_GENCB_set := LoadFunction('BN_GENCB_set', LFailed);
-    BN_GENCB_get_arg := LoadFunction('BN_GENCB_get_arg', LFailed);
-    BN_abs_is_word := LoadFunction('BN_abs_is_word', LFailed);
-    BN_is_zero := LoadFunction('BN_is_zero', LFailed);
-    BN_is_one := LoadFunction('BN_is_one', LFailed);
-    BN_is_word := LoadFunction('BN_is_word', LFailed);
-    BN_is_odd := LoadFunction('BN_is_odd', LFailed);
-    BN_zero_ex := LoadFunction('BN_zero_ex', LFailed);
-    BN_value_one := LoadFunction('BN_value_one', LFailed);
-    BN_options := LoadFunction('BN_options', LFailed);
-    BN_CTX_new := LoadFunction('BN_CTX_new', LFailed);
-    BN_CTX_secure_new := LoadFunction('BN_CTX_secure_new', LFailed);
-    BN_CTX_free := LoadFunction('BN_CTX_free', LFailed);
-    BN_CTX_start := LoadFunction('BN_CTX_start', LFailed);
-    BN_CTX_get := LoadFunction('BN_CTX_get', LFailed);
-    BN_CTX_end := LoadFunction('BN_CTX_end', LFailed);
-    BN_rand := LoadFunction('BN_rand', LFailed);
-    BN_priv_rand := LoadFunction('BN_priv_rand', LFailed);
-    BN_rand_range := LoadFunction('BN_rand_range', LFailed);
-    BN_priv_rand_range := LoadFunction('BN_priv_rand_range', LFailed);
-    BN_pseudo_rand := LoadFunction('BN_pseudo_rand', LFailed);
-    BN_pseudo_rand_range := LoadFunction('BN_pseudo_rand_range', LFailed);
-    BN_num_bits := LoadFunction('BN_num_bits', LFailed);
-    BN_num_bits_word := LoadFunction('BN_num_bits_word', LFailed);
-    BN_security_bits := LoadFunction('BN_security_bits', LFailed);
-    BN_new := LoadFunction('BN_new', LFailed);
-    BN_secure_new := LoadFunction('BN_secure_new', LFailed);
-    BN_clear_free := LoadFunction('BN_clear_free', LFailed);
-    BN_copy := LoadFunction('BN_copy', LFailed);
-    BN_swap := LoadFunction('BN_swap', LFailed);
-    BN_bin2bn := LoadFunction('BN_bin2bn', LFailed);
-    BN_bn2bin := LoadFunction('BN_bn2bin', LFailed);
-    BN_bn2binpad := LoadFunction('BN_bn2binpad', LFailed);
-    BN_lebin2bn := LoadFunction('BN_lebin2bn', LFailed);
-    BN_bn2lebinpad := LoadFunction('BN_bn2lebinpad', LFailed);
-    BN_mpi2bn := LoadFunction('BN_mpi2bn', LFailed);
-    BN_bn2mpi := LoadFunction('BN_bn2mpi', LFailed);
-    BN_sub := LoadFunction('BN_sub', LFailed);
-    BN_usub := LoadFunction('BN_usub', LFailed);
-    BN_uadd := LoadFunction('BN_uadd', LFailed);
-    BN_add := LoadFunction('BN_add', LFailed);
-    BN_mul := LoadFunction('BN_mul', LFailed);
-    BN_sqr := LoadFunction('BN_sqr', LFailed);
-    BN_set_negative := LoadFunction('BN_set_negative', LFailed);
-    BN_is_negative := LoadFunction('BN_is_negative', LFailed);
-    BN_div := LoadFunction('BN_div', LFailed);
-    BN_nnmod := LoadFunction('BN_nnmod', LFailed);
-    BN_mod_add := LoadFunction('BN_mod_add', LFailed);
-    BN_mod_add_quick := LoadFunction('BN_mod_add_quick', LFailed);
-    BN_mod_sub := LoadFunction('BN_mod_sub', LFailed);
-    BN_mod_sub_quick := LoadFunction('BN_mod_sub_quick', LFailed);
-    BN_mod_mul := LoadFunction('BN_mod_mul', LFailed);
-    BN_mod_sqr := LoadFunction('BN_mod_sqr', LFailed);
-    BN_mod_lshift1 := LoadFunction('BN_mod_lshift1', LFailed);
-    BN_mod_lshift1_quick := LoadFunction('BN_mod_lshift1_quick', LFailed);
-    BN_mod_lshift := LoadFunction('BN_mod_lshift', LFailed);
-    BN_mod_lshift_quick := LoadFunction('BN_mod_lshift_quick', LFailed);
-    BN_mod_word := LoadFunction('BN_mod_word', LFailed);
-    BN_div_word := LoadFunction('BN_div_word', LFailed);
-    BN_mul_word := LoadFunction('BN_mul_word', LFailed);
-    BN_add_word := LoadFunction('BN_add_word', LFailed);
-    BN_sub_word := LoadFunction('BN_sub_word', LFailed);
-    BN_set_word := LoadFunction('BN_set_word', LFailed);
-    BN_get_word := LoadFunction('BN_get_word', LFailed);
-    BN_cmp := LoadFunction('BN_cmp', LFailed);
-    BN_free := LoadFunction('BN_free', LFailed);
-    BN_is_bit_set := LoadFunction('BN_is_bit_set', LFailed);
-    BN_lshift := LoadFunction('BN_lshift', LFailed);
-    BN_lshift1 := LoadFunction('BN_lshift1', LFailed);
-    BN_exp := LoadFunction('BN_exp', LFailed);
-    BN_mod_exp := LoadFunction('BN_mod_exp', LFailed);
-    BN_mod_exp_mont := LoadFunction('BN_mod_exp_mont', LFailed);
-    BN_mod_exp_mont_consttime := LoadFunction('BN_mod_exp_mont_consttime', LFailed);
-    BN_mod_exp_mont_word := LoadFunction('BN_mod_exp_mont_word', LFailed);
-    BN_mod_exp2_mont := LoadFunction('BN_mod_exp2_mont', LFailed);
-    BN_mod_exp_simple := LoadFunction('BN_mod_exp_simple', LFailed);
-    BN_mask_bits := LoadFunction('BN_mask_bits', LFailed);
-    BN_print := LoadFunction('BN_print', LFailed);
-    BN_reciprocal := LoadFunction('BN_reciprocal', LFailed);
-    BN_rshift := LoadFunction('BN_rshift', LFailed);
-    BN_rshift1 := LoadFunction('BN_rshift1', LFailed);
-    BN_clear := LoadFunction('BN_clear', LFailed);
-    BN_dup := LoadFunction('BN_dup', LFailed);
-    BN_ucmp := LoadFunction('BN_ucmp', LFailed);
-    BN_set_bit := LoadFunction('BN_set_bit', LFailed);
-    BN_clear_bit := LoadFunction('BN_clear_bit', LFailed);
-    BN_bn2hex := LoadFunction('BN_bn2hex', LFailed);
-    BN_bn2dec := LoadFunction('BN_bn2dec', LFailed);
-    BN_hex2bn := LoadFunction('BN_hex2bn', LFailed);
-    BN_dec2bn := LoadFunction('BN_dec2bn', LFailed);
-    BN_asc2bn := LoadFunction('BN_asc2bn', LFailed);
-    BN_gcd := LoadFunction('BN_gcd', LFailed);
-    BN_kronecker := LoadFunction('BN_kronecker', LFailed);
-    BN_mod_inverse := LoadFunction('BN_mod_inverse', LFailed);
-    BN_mod_sqrt := LoadFunction('BN_mod_sqrt', LFailed);
-    BN_consttime_swap := LoadFunction('BN_consttime_swap', LFailed);
-    BN_generate_prime_ex := LoadFunction('BN_generate_prime_ex', LFailed);
-    BN_is_prime_ex := LoadFunction('BN_is_prime_ex', LFailed);
-    BN_is_prime_fasttest_ex := LoadFunction('BN_is_prime_fasttest_ex', LFailed);
-    BN_X931_generate_Xpq := LoadFunction('BN_X931_generate_Xpq', LFailed);
-    BN_X931_derive_prime_ex := LoadFunction('BN_X931_derive_prime_ex', LFailed);
-    BN_X931_generate_prime_ex := LoadFunction('BN_X931_generate_prime_ex', LFailed);
-    BN_MONT_CTX_new := LoadFunction('BN_MONT_CTX_new', LFailed);
-    BN_mod_mul_montgomery := LoadFunction('BN_mod_mul_montgomery', LFailed);
-    BN_to_montgomery := LoadFunction('BN_to_montgomery', LFailed);
-    BN_from_montgomery := LoadFunction('BN_from_montgomery', LFailed);
-    BN_MONT_CTX_free := LoadFunction('BN_MONT_CTX_free', LFailed);
-    BN_MONT_CTX_set := LoadFunction('BN_MONT_CTX_set', LFailed);
-    BN_MONT_CTX_copy := LoadFunction('BN_MONT_CTX_copy', LFailed);
-    BN_BLINDING_new := LoadFunction('BN_BLINDING_new', LFailed);
-    BN_BLINDING_free := LoadFunction('BN_BLINDING_free', LFailed);
-    BN_BLINDING_update := LoadFunction('BN_BLINDING_update', LFailed);
-    BN_BLINDING_convert := LoadFunction('BN_BLINDING_convert', LFailed);
-    BN_BLINDING_invert := LoadFunction('BN_BLINDING_invert', LFailed);
-    BN_BLINDING_convert_ex := LoadFunction('BN_BLINDING_convert_ex', LFailed);
-    BN_BLINDING_invert_ex := LoadFunction('BN_BLINDING_invert_ex', LFailed);
-    BN_BLINDING_is_current_thread := LoadFunction('BN_BLINDING_is_current_thread', LFailed);
-    BN_BLINDING_set_current_thread := LoadFunction('BN_BLINDING_set_current_thread', LFailed);
-    BN_BLINDING_lock := LoadFunction('BN_BLINDING_lock', LFailed);
-    BN_BLINDING_unlock := LoadFunction('BN_BLINDING_unlock', LFailed);
-    BN_BLINDING_get_flags := LoadFunction('BN_BLINDING_get_flags', LFailed);
-    BN_BLINDING_set_flags := LoadFunction('BN_BLINDING_set_flags', LFailed);
-    BN_RECP_CTX_free := LoadFunction('BN_RECP_CTX_free', LFailed);
-    BN_RECP_CTX_set := LoadFunction('BN_RECP_CTX_set', LFailed);
-    BN_mod_mul_reciprocal := LoadFunction('BN_mod_mul_reciprocal', LFailed);
-    BN_mod_exp_recp := LoadFunction('BN_mod_exp_recp', LFailed);
-    BN_div_recp := LoadFunction('BN_div_recp', LFailed);
-    BN_GF2m_add := LoadFunction('BN_GF2m_add', LFailed);
-    BN_GF2m_mod := LoadFunction('BN_GF2m_mod', LFailed);
-    BN_GF2m_mod_mul := LoadFunction('BN_GF2m_mod_mul', LFailed);
-    BN_GF2m_mod_sqr := LoadFunction('BN_GF2m_mod_sqr', LFailed);
-    BN_GF2m_mod_inv := LoadFunction('BN_GF2m_mod_inv', LFailed);
-    BN_GF2m_mod_div := LoadFunction('BN_GF2m_mod_div', LFailed);
-    BN_GF2m_mod_exp := LoadFunction('BN_GF2m_mod_exp', LFailed);
-    BN_GF2m_mod_sqrt := LoadFunction('BN_GF2m_mod_sqrt', LFailed);
-    BN_GF2m_mod_solve_quad := LoadFunction('BN_GF2m_mod_solve_quad', LFailed);
-    BN_nist_mod_192 := LoadFunction('BN_nist_mod_192', LFailed);
-    BN_nist_mod_224 := LoadFunction('BN_nist_mod_224', LFailed);
-    BN_nist_mod_256 := LoadFunction('BN_nist_mod_256', LFailed);
-    BN_nist_mod_384 := LoadFunction('BN_nist_mod_384', LFailed);
-    BN_nist_mod_521 := LoadFunction('BN_nist_mod_521', LFailed);
-    BN_get0_nist_prime_192 := LoadFunction('BN_get0_nist_prime_192', LFailed);
-    BN_get0_nist_prime_224 := LoadFunction('BN_get0_nist_prime_224', LFailed);
-    BN_get0_nist_prime_256 := LoadFunction('BN_get0_nist_prime_256', LFailed);
-    BN_get0_nist_prime_384 := LoadFunction('BN_get0_nist_prime_384', LFailed);
-    BN_get0_nist_prime_521 := LoadFunction('BN_get0_nist_prime_521', LFailed);
-    BN_generate_dsa_nonce := LoadFunction('BN_generate_dsa_nonce', LFailed);
-    BN_get_rfc2409_prime_768 := LoadFunction('BN_get_rfc2409_prime_768', LFailed);
-    BN_get_rfc2409_prime_1024 := LoadFunction('BN_get_rfc2409_prime_1024', LFailed);
-    BN_get_rfc3526_prime_1536 := LoadFunction('BN_get_rfc3526_prime_1536', LFailed);
-    BN_get_rfc3526_prime_2048 := LoadFunction('BN_get_rfc3526_prime_2048', LFailed);
-    BN_get_rfc3526_prime_3072 := LoadFunction('BN_get_rfc3526_prime_3072', LFailed);
-    BN_get_rfc3526_prime_4096 := LoadFunction('BN_get_rfc3526_prime_4096', LFailed);
-    BN_get_rfc3526_prime_6144 := LoadFunction('BN_get_rfc3526_prime_6144', LFailed);
-    BN_get_rfc3526_prime_8192 := LoadFunction('BN_get_rfc3526_prime_8192', LFailed);
-    BN_bntest_rand := LoadFunction('BN_bntest_rand', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  BN_set_flags := LoadFunction('BN_set_flags', AFailed);
+  BN_get_flags := LoadFunction('BN_get_flags', AFailed);
+  BN_with_flags := LoadFunction('BN_with_flags', AFailed);
+  BN_GENCB_call := LoadFunction('BN_GENCB_call', AFailed);
+  BN_GENCB_new := LoadFunction('BN_GENCB_new', AFailed);
+  BN_GENCB_free := LoadFunction('BN_GENCB_free', AFailed);
+  BN_GENCB_set_old := LoadFunction('BN_GENCB_set_old', AFailed);
+  BN_GENCB_set := LoadFunction('BN_GENCB_set', AFailed);
+  BN_GENCB_get_arg := LoadFunction('BN_GENCB_get_arg', AFailed);
+  BN_abs_is_word := LoadFunction('BN_abs_is_word', AFailed);
+  BN_is_zero := LoadFunction('BN_is_zero', AFailed);
+  BN_is_one := LoadFunction('BN_is_one', AFailed);
+  BN_is_word := LoadFunction('BN_is_word', AFailed);
+  BN_is_odd := LoadFunction('BN_is_odd', AFailed);
+  BN_zero_ex := LoadFunction('BN_zero_ex', AFailed);
+  BN_value_one := LoadFunction('BN_value_one', AFailed);
+  BN_options := LoadFunction('BN_options', AFailed);
+  BN_CTX_new := LoadFunction('BN_CTX_new', AFailed);
+  BN_CTX_secure_new := LoadFunction('BN_CTX_secure_new', AFailed);
+  BN_CTX_free := LoadFunction('BN_CTX_free', AFailed);
+  BN_CTX_start := LoadFunction('BN_CTX_start', AFailed);
+  BN_CTX_get := LoadFunction('BN_CTX_get', AFailed);
+  BN_CTX_end := LoadFunction('BN_CTX_end', AFailed);
+  BN_rand := LoadFunction('BN_rand', AFailed);
+  BN_priv_rand := LoadFunction('BN_priv_rand', AFailed);
+  BN_rand_range := LoadFunction('BN_rand_range', AFailed);
+  BN_priv_rand_range := LoadFunction('BN_priv_rand_range', AFailed);
+  BN_pseudo_rand := LoadFunction('BN_pseudo_rand', AFailed);
+  BN_pseudo_rand_range := LoadFunction('BN_pseudo_rand_range', AFailed);
+  BN_num_bits := LoadFunction('BN_num_bits', AFailed);
+  BN_num_bits_word := LoadFunction('BN_num_bits_word', AFailed);
+  BN_security_bits := LoadFunction('BN_security_bits', AFailed);
+  BN_new := LoadFunction('BN_new', AFailed);
+  BN_secure_new := LoadFunction('BN_secure_new', AFailed);
+  BN_clear_free := LoadFunction('BN_clear_free', AFailed);
+  BN_copy := LoadFunction('BN_copy', AFailed);
+  BN_swap := LoadFunction('BN_swap', AFailed);
+  BN_bin2bn := LoadFunction('BN_bin2bn', AFailed);
+  BN_bn2bin := LoadFunction('BN_bn2bin', AFailed);
+  BN_bn2binpad := LoadFunction('BN_bn2binpad', AFailed);
+  BN_lebin2bn := LoadFunction('BN_lebin2bn', AFailed);
+  BN_bn2lebinpad := LoadFunction('BN_bn2lebinpad', AFailed);
+  BN_mpi2bn := LoadFunction('BN_mpi2bn', AFailed);
+  BN_bn2mpi := LoadFunction('BN_bn2mpi', AFailed);
+  BN_sub := LoadFunction('BN_sub', AFailed);
+  BN_usub := LoadFunction('BN_usub', AFailed);
+  BN_uadd := LoadFunction('BN_uadd', AFailed);
+  BN_add := LoadFunction('BN_add', AFailed);
+  BN_mul := LoadFunction('BN_mul', AFailed);
+  BN_sqr := LoadFunction('BN_sqr', AFailed);
+  BN_set_negative := LoadFunction('BN_set_negative', AFailed);
+  BN_is_negative := LoadFunction('BN_is_negative', AFailed);
+  BN_div := LoadFunction('BN_div', AFailed);
+  BN_nnmod := LoadFunction('BN_nnmod', AFailed);
+  BN_mod_add := LoadFunction('BN_mod_add', AFailed);
+  BN_mod_add_quick := LoadFunction('BN_mod_add_quick', AFailed);
+  BN_mod_sub := LoadFunction('BN_mod_sub', AFailed);
+  BN_mod_sub_quick := LoadFunction('BN_mod_sub_quick', AFailed);
+  BN_mod_mul := LoadFunction('BN_mod_mul', AFailed);
+  BN_mod_sqr := LoadFunction('BN_mod_sqr', AFailed);
+  BN_mod_lshift1 := LoadFunction('BN_mod_lshift1', AFailed);
+  BN_mod_lshift1_quick := LoadFunction('BN_mod_lshift1_quick', AFailed);
+  BN_mod_lshift := LoadFunction('BN_mod_lshift', AFailed);
+  BN_mod_lshift_quick := LoadFunction('BN_mod_lshift_quick', AFailed);
+  BN_mod_word := LoadFunction('BN_mod_word', AFailed);
+  BN_div_word := LoadFunction('BN_div_word', AFailed);
+  BN_mul_word := LoadFunction('BN_mul_word', AFailed);
+  BN_add_word := LoadFunction('BN_add_word', AFailed);
+  BN_sub_word := LoadFunction('BN_sub_word', AFailed);
+  BN_set_word := LoadFunction('BN_set_word', AFailed);
+  BN_get_word := LoadFunction('BN_get_word', AFailed);
+  BN_cmp := LoadFunction('BN_cmp', AFailed);
+  BN_free := LoadFunction('BN_free', AFailed);
+  BN_is_bit_set := LoadFunction('BN_is_bit_set', AFailed);
+  BN_lshift := LoadFunction('BN_lshift', AFailed);
+  BN_lshift1 := LoadFunction('BN_lshift1', AFailed);
+  BN_exp := LoadFunction('BN_exp', AFailed);
+  BN_mod_exp := LoadFunction('BN_mod_exp', AFailed);
+  BN_mod_exp_mont := LoadFunction('BN_mod_exp_mont', AFailed);
+  BN_mod_exp_mont_consttime := LoadFunction('BN_mod_exp_mont_consttime', AFailed);
+  BN_mod_exp_mont_word := LoadFunction('BN_mod_exp_mont_word', AFailed);
+  BN_mod_exp2_mont := LoadFunction('BN_mod_exp2_mont', AFailed);
+  BN_mod_exp_simple := LoadFunction('BN_mod_exp_simple', AFailed);
+  BN_mask_bits := LoadFunction('BN_mask_bits', AFailed);
+  BN_print := LoadFunction('BN_print', AFailed);
+  BN_reciprocal := LoadFunction('BN_reciprocal', AFailed);
+  BN_rshift := LoadFunction('BN_rshift', AFailed);
+  BN_rshift1 := LoadFunction('BN_rshift1', AFailed);
+  BN_clear := LoadFunction('BN_clear', AFailed);
+  BN_dup := LoadFunction('BN_dup', AFailed);
+  BN_ucmp := LoadFunction('BN_ucmp', AFailed);
+  BN_set_bit := LoadFunction('BN_set_bit', AFailed);
+  BN_clear_bit := LoadFunction('BN_clear_bit', AFailed);
+  BN_bn2hex := LoadFunction('BN_bn2hex', AFailed);
+  BN_bn2dec := LoadFunction('BN_bn2dec', AFailed);
+  BN_hex2bn := LoadFunction('BN_hex2bn', AFailed);
+  BN_dec2bn := LoadFunction('BN_dec2bn', AFailed);
+  BN_asc2bn := LoadFunction('BN_asc2bn', AFailed);
+  BN_gcd := LoadFunction('BN_gcd', AFailed);
+  BN_kronecker := LoadFunction('BN_kronecker', AFailed);
+  BN_mod_inverse := LoadFunction('BN_mod_inverse', AFailed);
+  BN_mod_sqrt := LoadFunction('BN_mod_sqrt', AFailed);
+  BN_consttime_swap := LoadFunction('BN_consttime_swap', AFailed);
+  BN_generate_prime_ex := LoadFunction('BN_generate_prime_ex', AFailed);
+  BN_is_prime_ex := LoadFunction('BN_is_prime_ex', AFailed);
+  BN_is_prime_fasttest_ex := LoadFunction('BN_is_prime_fasttest_ex', AFailed);
+  BN_X931_generate_Xpq := LoadFunction('BN_X931_generate_Xpq', AFailed);
+  BN_X931_derive_prime_ex := LoadFunction('BN_X931_derive_prime_ex', AFailed);
+  BN_X931_generate_prime_ex := LoadFunction('BN_X931_generate_prime_ex', AFailed);
+  BN_MONT_CTX_new := LoadFunction('BN_MONT_CTX_new', AFailed);
+  BN_mod_mul_montgomery := LoadFunction('BN_mod_mul_montgomery', AFailed);
+  BN_to_montgomery := LoadFunction('BN_to_montgomery', AFailed);
+  BN_from_montgomery := LoadFunction('BN_from_montgomery', AFailed);
+  BN_MONT_CTX_free := LoadFunction('BN_MONT_CTX_free', AFailed);
+  BN_MONT_CTX_set := LoadFunction('BN_MONT_CTX_set', AFailed);
+  BN_MONT_CTX_copy := LoadFunction('BN_MONT_CTX_copy', AFailed);
+  BN_BLINDING_new := LoadFunction('BN_BLINDING_new', AFailed);
+  BN_BLINDING_free := LoadFunction('BN_BLINDING_free', AFailed);
+  BN_BLINDING_update := LoadFunction('BN_BLINDING_update', AFailed);
+  BN_BLINDING_convert := LoadFunction('BN_BLINDING_convert', AFailed);
+  BN_BLINDING_invert := LoadFunction('BN_BLINDING_invert', AFailed);
+  BN_BLINDING_convert_ex := LoadFunction('BN_BLINDING_convert_ex', AFailed);
+  BN_BLINDING_invert_ex := LoadFunction('BN_BLINDING_invert_ex', AFailed);
+  BN_BLINDING_is_current_thread := LoadFunction('BN_BLINDING_is_current_thread', AFailed);
+  BN_BLINDING_set_current_thread := LoadFunction('BN_BLINDING_set_current_thread', AFailed);
+  BN_BLINDING_lock := LoadFunction('BN_BLINDING_lock', AFailed);
+  BN_BLINDING_unlock := LoadFunction('BN_BLINDING_unlock', AFailed);
+  BN_BLINDING_get_flags := LoadFunction('BN_BLINDING_get_flags', AFailed);
+  BN_BLINDING_set_flags := LoadFunction('BN_BLINDING_set_flags', AFailed);
+  BN_RECP_CTX_free := LoadFunction('BN_RECP_CTX_free', AFailed);
+  BN_RECP_CTX_set := LoadFunction('BN_RECP_CTX_set', AFailed);
+  BN_mod_mul_reciprocal := LoadFunction('BN_mod_mul_reciprocal', AFailed);
+  BN_mod_exp_recp := LoadFunction('BN_mod_exp_recp', AFailed);
+  BN_div_recp := LoadFunction('BN_div_recp', AFailed);
+  BN_GF2m_add := LoadFunction('BN_GF2m_add', AFailed);
+  BN_GF2m_mod := LoadFunction('BN_GF2m_mod', AFailed);
+  BN_GF2m_mod_mul := LoadFunction('BN_GF2m_mod_mul', AFailed);
+  BN_GF2m_mod_sqr := LoadFunction('BN_GF2m_mod_sqr', AFailed);
+  BN_GF2m_mod_inv := LoadFunction('BN_GF2m_mod_inv', AFailed);
+  BN_GF2m_mod_div := LoadFunction('BN_GF2m_mod_div', AFailed);
+  BN_GF2m_mod_exp := LoadFunction('BN_GF2m_mod_exp', AFailed);
+  BN_GF2m_mod_sqrt := LoadFunction('BN_GF2m_mod_sqrt', AFailed);
+  BN_GF2m_mod_solve_quad := LoadFunction('BN_GF2m_mod_solve_quad', AFailed);
+  BN_nist_mod_192 := LoadFunction('BN_nist_mod_192', AFailed);
+  BN_nist_mod_224 := LoadFunction('BN_nist_mod_224', AFailed);
+  BN_nist_mod_256 := LoadFunction('BN_nist_mod_256', AFailed);
+  BN_nist_mod_384 := LoadFunction('BN_nist_mod_384', AFailed);
+  BN_nist_mod_521 := LoadFunction('BN_nist_mod_521', AFailed);
+  BN_get0_nist_prime_192 := LoadFunction('BN_get0_nist_prime_192', AFailed);
+  BN_get0_nist_prime_224 := LoadFunction('BN_get0_nist_prime_224', AFailed);
+  BN_get0_nist_prime_256 := LoadFunction('BN_get0_nist_prime_256', AFailed);
+  BN_get0_nist_prime_384 := LoadFunction('BN_get0_nist_prime_384', AFailed);
+  BN_get0_nist_prime_521 := LoadFunction('BN_get0_nist_prime_521', AFailed);
+  BN_generate_dsa_nonce := LoadFunction('BN_generate_dsa_nonce', AFailed);
+  BN_get_rfc2409_prime_768 := LoadFunction('BN_get_rfc2409_prime_768', AFailed);
+  BN_get_rfc2409_prime_1024 := LoadFunction('BN_get_rfc2409_prime_1024', AFailed);
+  BN_get_rfc3526_prime_1536 := LoadFunction('BN_get_rfc3526_prime_1536', AFailed);
+  BN_get_rfc3526_prime_2048 := LoadFunction('BN_get_rfc3526_prime_2048', AFailed);
+  BN_get_rfc3526_prime_3072 := LoadFunction('BN_get_rfc3526_prime_3072', AFailed);
+  BN_get_rfc3526_prime_4096 := LoadFunction('BN_get_rfc3526_prime_4096', AFailed);
+  BN_get_rfc3526_prime_6144 := LoadFunction('BN_get_rfc3526_prime_6144', AFailed);
+  BN_get_rfc3526_prime_8192 := LoadFunction('BN_get_rfc3526_prime_8192', AFailed);
+  BN_bntest_rand := LoadFunction('BN_bntest_rand', AFailed);
 end;
 
 procedure UnLoad;

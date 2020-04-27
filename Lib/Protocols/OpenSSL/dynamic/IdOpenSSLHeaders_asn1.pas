@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 21.04.2020 08:23:00
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_asn1;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -466,7 +467,7 @@ type
   PBIT_STRING_BITNAME = ^BIT_STRING_BITNAME;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -784,188 +785,176 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    ASN1_TYPE_get := LoadFunction('ASN1_TYPE_get', LFailed);
-    ASN1_TYPE_set := LoadFunction('ASN1_TYPE_set', LFailed);
-    ASN1_TYPE_set1 := LoadFunction('ASN1_TYPE_set1', LFailed);
-    ASN1_TYPE_cmp := LoadFunction('ASN1_TYPE_cmp', LFailed);
-    ASN1_TYPE_pack_sequence := LoadFunction('ASN1_TYPE_pack_sequence', LFailed);
-    ASN1_TYPE_unpack_sequence := LoadFunction('ASN1_TYPE_unpack_sequence', LFailed);
-    ASN1_OBJECT_new := LoadFunction('ASN1_OBJECT_new', LFailed);
-    ASN1_OBJECT_free := LoadFunction('ASN1_OBJECT_free', LFailed);
-    i2d_ASN1_OBJECT := LoadFunction('i2d_ASN1_OBJECT', LFailed);
-    d2i_ASN1_OBJECT := LoadFunction('d2i_ASN1_OBJECT', LFailed);
-    ASN1_STRING_new := LoadFunction('ASN1_STRING_new', LFailed);
-    ASN1_STRING_free := LoadFunction('ASN1_STRING_free', LFailed);
-    ASN1_STRING_clear_free := LoadFunction('ASN1_STRING_clear_free', LFailed);
-    ASN1_STRING_copy := LoadFunction('ASN1_STRING_copy', LFailed);
-    ASN1_STRING_dup := LoadFunction('ASN1_STRING_dup', LFailed);
-    ASN1_STRING_type_new := LoadFunction('ASN1_STRING_type_new', LFailed);
-    ASN1_STRING_cmp := LoadFunction('ASN1_STRING_cmp', LFailed);
-    ASN1_STRING_set := LoadFunction('ASN1_STRING_set', LFailed);
-    ASN1_STRING_set0 := LoadFunction('ASN1_STRING_set0', LFailed);
-    ASN1_STRING_length := LoadFunction('ASN1_STRING_length', LFailed);
-    ASN1_STRING_length_set := LoadFunction('ASN1_STRING_length_set', LFailed);
-    ASN1_STRING_type := LoadFunction('ASN1_STRING_type', LFailed);
-    ASN1_STRING_get0_data := LoadFunction('ASN1_STRING_get0_data', LFailed);
-    ASN1_BIT_STRING_set := LoadFunction('ASN1_BIT_STRING_set', LFailed);
-    ASN1_BIT_STRING_set_bit := LoadFunction('ASN1_BIT_STRING_set_bit', LFailed);
-    ASN1_BIT_STRING_get_bit := LoadFunction('ASN1_BIT_STRING_get_bit', LFailed);
-    ASN1_BIT_STRING_check := LoadFunction('ASN1_BIT_STRING_check', LFailed);
-    ASN1_BIT_STRING_name_print := LoadFunction('ASN1_BIT_STRING_name_print', LFailed);
-    ASN1_BIT_STRING_num_asc := LoadFunction('ASN1_BIT_STRING_num_asc', LFailed);
-    ASN1_BIT_STRING_set_asc := LoadFunction('ASN1_BIT_STRING_set_asc', LFailed);
-    d2i_ASN1_UINTEGER := LoadFunction('d2i_ASN1_UINTEGER', LFailed);
-    ASN1_INTEGER_dup := LoadFunction('ASN1_INTEGER_dup', LFailed);
-    ASN1_INTEGER_cmp := LoadFunction('ASN1_INTEGER_cmp', LFailed);
-    ASN1_UTCTIME_check := LoadFunction('ASN1_UTCTIME_check', LFailed);
-    ASN1_UTCTIME_set := LoadFunction('ASN1_UTCTIME_set', LFailed);
-    ASN1_UTCTIME_adj := LoadFunction('ASN1_UTCTIME_adj', LFailed);
-    ASN1_UTCTIME_set_string := LoadFunction('ASN1_UTCTIME_set_string', LFailed);
-    ASN1_UTCTIME_cmp_time_t := LoadFunction('ASN1_UTCTIME_cmp_time_t', LFailed);
-    ASN1_GENERALIZEDTIME_check := LoadFunction('ASN1_GENERALIZEDTIME_check', LFailed);
-    ASN1_GENERALIZEDTIME_set := LoadFunction('ASN1_GENERALIZEDTIME_set', LFailed);
-    ASN1_GENERALIZEDTIME_adj := LoadFunction('ASN1_GENERALIZEDTIME_adj', LFailed);
-    ASN1_GENERALIZEDTIME_set_string := LoadFunction('ASN1_GENERALIZEDTIME_set_string', LFailed);
-    ASN1_TIME_diff := LoadFunction('ASN1_TIME_diff', LFailed);
-    ASN1_OCTET_STRING_dup := LoadFunction('ASN1_OCTET_STRING_dup', LFailed);
-    ASN1_OCTET_STRING_cmp := LoadFunction('ASN1_OCTET_STRING_cmp', LFailed);
-    ASN1_OCTET_STRING_set := LoadFunction('ASN1_OCTET_STRING_set', LFailed);
-    UTF8_getc := LoadFunction('UTF8_getc', LFailed);
-    UTF8_putc := LoadFunction('UTF8_putc', LFailed);
-    ASN1_TIME_set := LoadFunction('ASN1_TIME_set', LFailed);
-    ASN1_TIME_adj := LoadFunction('ASN1_TIME_adj', LFailed);
-    ASN1_TIME_check := LoadFunction('ASN1_TIME_check', LFailed);
-    ASN1_TIME_to_generalizedtime := LoadFunction('ASN1_TIME_to_generalizedtime', LFailed);
-    ASN1_TIME_set_string := LoadFunction('ASN1_TIME_set_string', LFailed);
-    ASN1_TIME_set_string_X509 := LoadFunction('ASN1_TIME_set_string_X509', LFailed);
-    ASN1_TIME_to_tm := LoadFunction('ASN1_TIME_to_tm', LFailed);
-    ASN1_TIME_normalize := LoadFunction('ASN1_TIME_normalize', LFailed);
-    ASN1_TIME_cmp_time_t := LoadFunction('ASN1_TIME_cmp_time_t', LFailed);
-    ASN1_TIME_compare := LoadFunction('ASN1_TIME_compare', LFailed);
-    i2a_ASN1_INTEGER := LoadFunction('i2a_ASN1_INTEGER', LFailed);
-    a2i_ASN1_INTEGER := LoadFunction('a2i_ASN1_INTEGER', LFailed);
-    i2a_ASN1_ENUMERATED := LoadFunction('i2a_ASN1_ENUMERATED', LFailed);
-    a2i_ASN1_ENUMERATED := LoadFunction('a2i_ASN1_ENUMERATED', LFailed);
-    i2a_ASN1_OBJECT := LoadFunction('i2a_ASN1_OBJECT', LFailed);
-    a2i_ASN1_STRING := LoadFunction('a2i_ASN1_STRING', LFailed);
-    i2a_ASN1_STRING := LoadFunction('i2a_ASN1_STRING', LFailed);
-    i2t_ASN1_OBJECT := LoadFunction('i2t_ASN1_OBJECT', LFailed);
-    a2d_ASN1_OBJECT := LoadFunction('a2d_ASN1_OBJECT', LFailed);
-    ASN1_OBJECT_create := LoadFunction('ASN1_OBJECT_create', LFailed);
-    ASN1_INTEGER_get_int64 := LoadFunction('ASN1_INTEGER_get_int64', LFailed);
-    ASN1_INTEGER_set_int64 := LoadFunction('ASN1_INTEGER_set_int64', LFailed);
-    ASN1_INTEGER_get_uint64 := LoadFunction('ASN1_INTEGER_get_uint64', LFailed);
-    ASN1_INTEGER_set_uint64 := LoadFunction('ASN1_INTEGER_set_uint64', LFailed);
-    ASN1_INTEGER_set := LoadFunction('ASN1_INTEGER_set', LFailed);
-    ASN1_INTEGER_get := LoadFunction('ASN1_INTEGER_get', LFailed);
-    BN_to_ASN1_INTEGER := LoadFunction('BN_to_ASN1_INTEGER', LFailed);
-    ASN1_INTEGER_to_BN := LoadFunction('ASN1_INTEGER_to_BN', LFailed);
-    ASN1_ENUMERATED_get_int64 := LoadFunction('ASN1_ENUMERATED_get_int64', LFailed);
-    ASN1_ENUMERATED_set_int64 := LoadFunction('ASN1_ENUMERATED_set_int64', LFailed);
-    ASN1_ENUMERATED_set := LoadFunction('ASN1_ENUMERATED_set', LFailed);
-    ASN1_ENUMERATED_get := LoadFunction('ASN1_ENUMERATED_get', LFailed);
-    BN_to_ASN1_ENUMERATED := LoadFunction('BN_to_ASN1_ENUMERATED', LFailed);
-    ASN1_ENUMERATED_to_BN := LoadFunction('ASN1_ENUMERATED_to_BN', LFailed);
-    ASN1_PRINTABLE_type := LoadFunction('ASN1_PRINTABLE_type', LFailed);
-    ASN1_tag2bit := LoadFunction('ASN1_tag2bit', LFailed);
-    ASN1_get_object := LoadFunction('ASN1_get_object', LFailed);
-    ASN1_check_infinite_end := LoadFunction('ASN1_check_infinite_end', LFailed);
-    ASN1_const_check_infinite_end := LoadFunction('ASN1_const_check_infinite_end', LFailed);
-    ASN1_put_object := LoadFunction('ASN1_put_object', LFailed);
-    ASN1_put_eoc := LoadFunction('ASN1_put_eoc', LFailed);
-    ASN1_object_size := LoadFunction('ASN1_object_size', LFailed);
-    ASN1_item_dup := LoadFunction('ASN1_item_dup', LFailed);
-    ASN1_STRING_to_UTF8 := LoadFunction('ASN1_STRING_to_UTF8', LFailed);
-    ASN1_item_d2i_bio := LoadFunction('ASN1_item_d2i_bio', LFailed);
-    ASN1_i2d_bio := LoadFunction('ASN1_i2d_bio', LFailed);
-    ASN1_item_i2d_bio := LoadFunction('ASN1_item_i2d_bio', LFailed);
-    ASN1_UTCTIME_print := LoadFunction('ASN1_UTCTIME_print', LFailed);
-    ASN1_GENERALIZEDTIME_print := LoadFunction('ASN1_GENERALIZEDTIME_print', LFailed);
-    ASN1_TIME_print := LoadFunction('ASN1_TIME_print', LFailed);
-    ASN1_STRING_print := LoadFunction('ASN1_STRING_print', LFailed);
-    ASN1_STRING_print_ex := LoadFunction('ASN1_STRING_print_ex', LFailed);
-    ASN1_buf_print := LoadFunction('ASN1_buf_print', LFailed);
-    ASN1_bn_print := LoadFunction('ASN1_bn_print', LFailed);
-    ASN1_parse := LoadFunction('ASN1_parse', LFailed);
-    ASN1_parse_dump := LoadFunction('ASN1_parse_dump', LFailed);
-    ASN1_tag2str := LoadFunction('ASN1_tag2str', LFailed);
-    ASN1_UNIVERSALSTRING_to_string := LoadFunction('ASN1_UNIVERSALSTRING_to_string', LFailed);
-    ASN1_TYPE_set_octetstring := LoadFunction('ASN1_TYPE_set_octetstring', LFailed);
-    ASN1_TYPE_get_octetstring := LoadFunction('ASN1_TYPE_get_octetstring', LFailed);
-    ASN1_TYPE_set_int_octetstring := LoadFunction('ASN1_TYPE_set_int_octetstring', LFailed);
-    ASN1_TYPE_get_int_octetstring := LoadFunction('ASN1_TYPE_get_int_octetstring', LFailed);
-    ASN1_item_unpack := LoadFunction('ASN1_item_unpack', LFailed);
-    ASN1_item_pack := LoadFunction('ASN1_item_pack', LFailed);
-    ASN1_STRING_set_default_mask := LoadFunction('ASN1_STRING_set_default_mask', LFailed);
-    ASN1_STRING_set_default_mask_asc := LoadFunction('ASN1_STRING_set_default_mask_asc', LFailed);
-    ASN1_STRING_get_default_mask := LoadFunction('ASN1_STRING_get_default_mask', LFailed);
-    ASN1_mbstring_copy := LoadFunction('ASN1_mbstring_copy', LFailed);
-    ASN1_mbstring_ncopy := LoadFunction('ASN1_mbstring_ncopy', LFailed);
-    ASN1_STRING_set_by_NID := LoadFunction('ASN1_STRING_set_by_NID', LFailed);
-    ASN1_STRING_TABLE_get := LoadFunction('ASN1_STRING_TABLE_get', LFailed);
-    ASN1_STRING_TABLE_add := LoadFunction('ASN1_STRING_TABLE_add', LFailed);
-    ASN1_STRING_TABLE_cleanup := LoadFunction('ASN1_STRING_TABLE_cleanup', LFailed);
-    ASN1_item_new := LoadFunction('ASN1_item_new', LFailed);
-    ASN1_item_free := LoadFunction('ASN1_item_free', LFailed);
-    ASN1_item_d2i := LoadFunction('ASN1_item_d2i', LFailed);
-    ASN1_item_i2d := LoadFunction('ASN1_item_i2d', LFailed);
-    ASN1_item_ndef_i2d := LoadFunction('ASN1_item_ndef_i2d', LFailed);
-    ASN1_add_oid_module := LoadFunction('ASN1_add_oid_module', LFailed);
-    ASN1_add_stable_module := LoadFunction('ASN1_add_stable_module', LFailed);
-    ASN1_generate_nconf := LoadFunction('ASN1_generate_nconf', LFailed);
-    ASN1_generate_v3 := LoadFunction('ASN1_generate_v3', LFailed);
-    ASN1_str2mask := LoadFunction('ASN1_str2mask', LFailed);
-    ASN1_item_print := LoadFunction('ASN1_item_print', LFailed);
-    ASN1_PCTX_new := LoadFunction('ASN1_PCTX_new', LFailed);
-    ASN1_PCTX_free := LoadFunction('ASN1_PCTX_free', LFailed);
-    ASN1_PCTX_get_flags := LoadFunction('ASN1_PCTX_get_flags', LFailed);
-    ASN1_PCTX_set_flags := LoadFunction('ASN1_PCTX_set_flags', LFailed);
-    ASN1_PCTX_get_nm_flags := LoadFunction('ASN1_PCTX_get_nm_flags', LFailed);
-    ASN1_PCTX_set_nm_flags := LoadFunction('ASN1_PCTX_set_nm_flags', LFailed);
-    ASN1_PCTX_get_cert_flags := LoadFunction('ASN1_PCTX_get_cert_flags', LFailed);
-    ASN1_PCTX_set_cert_flags := LoadFunction('ASN1_PCTX_set_cert_flags', LFailed);
-    ASN1_PCTX_get_oid_flags := LoadFunction('ASN1_PCTX_get_oid_flags', LFailed);
-    ASN1_PCTX_set_oid_flags := LoadFunction('ASN1_PCTX_set_oid_flags', LFailed);
-    ASN1_PCTX_get_str_flags := LoadFunction('ASN1_PCTX_get_str_flags', LFailed);
-    ASN1_PCTX_set_str_flags := LoadFunction('ASN1_PCTX_set_str_flags', LFailed);
-    ASN1_SCTX_free := LoadFunction('ASN1_SCTX_free', LFailed);
-    ASN1_SCTX_get_item := LoadFunction('ASN1_SCTX_get_item', LFailed);
-    ASN1_SCTX_get_template := LoadFunction('ASN1_SCTX_get_template', LFailed);
-    ASN1_SCTX_get_flags := LoadFunction('ASN1_SCTX_get_flags', LFailed);
-    ASN1_SCTX_set_app_data := LoadFunction('ASN1_SCTX_set_app_data', LFailed);
-    ASN1_SCTX_get_app_data := LoadFunction('ASN1_SCTX_get_app_data', LFailed);
-    BIO_f_asn1 := LoadFunction('BIO_f_asn1', LFailed);
-    BIO_new_NDEF := LoadFunction('BIO_new_NDEF', LFailed);
-    i2d_ASN1_bio_stream := LoadFunction('i2d_ASN1_bio_stream', LFailed);
-    PEM_write_bio_ASN1_stream := LoadFunction('PEM_write_bio_ASN1_stream', LFailed);
-    SMIME_read_ASN1 := LoadFunction('SMIME_read_ASN1', LFailed);
-    SMIME_crlf_copy := LoadFunction('SMIME_crlf_copy', LFailed);
-    SMIME_text := LoadFunction('SMIME_text', LFailed);
-    ASN1_ITEM_lookup := LoadFunction('ASN1_ITEM_lookup', LFailed);
-    ASN1_ITEM_get := LoadFunction('ASN1_ITEM_get', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  ASN1_TYPE_get := LoadFunction('ASN1_TYPE_get', AFailed);
+  ASN1_TYPE_set := LoadFunction('ASN1_TYPE_set', AFailed);
+  ASN1_TYPE_set1 := LoadFunction('ASN1_TYPE_set1', AFailed);
+  ASN1_TYPE_cmp := LoadFunction('ASN1_TYPE_cmp', AFailed);
+  ASN1_TYPE_pack_sequence := LoadFunction('ASN1_TYPE_pack_sequence', AFailed);
+  ASN1_TYPE_unpack_sequence := LoadFunction('ASN1_TYPE_unpack_sequence', AFailed);
+  ASN1_OBJECT_new := LoadFunction('ASN1_OBJECT_new', AFailed);
+  ASN1_OBJECT_free := LoadFunction('ASN1_OBJECT_free', AFailed);
+  i2d_ASN1_OBJECT := LoadFunction('i2d_ASN1_OBJECT', AFailed);
+  d2i_ASN1_OBJECT := LoadFunction('d2i_ASN1_OBJECT', AFailed);
+  ASN1_STRING_new := LoadFunction('ASN1_STRING_new', AFailed);
+  ASN1_STRING_free := LoadFunction('ASN1_STRING_free', AFailed);
+  ASN1_STRING_clear_free := LoadFunction('ASN1_STRING_clear_free', AFailed);
+  ASN1_STRING_copy := LoadFunction('ASN1_STRING_copy', AFailed);
+  ASN1_STRING_dup := LoadFunction('ASN1_STRING_dup', AFailed);
+  ASN1_STRING_type_new := LoadFunction('ASN1_STRING_type_new', AFailed);
+  ASN1_STRING_cmp := LoadFunction('ASN1_STRING_cmp', AFailed);
+  ASN1_STRING_set := LoadFunction('ASN1_STRING_set', AFailed);
+  ASN1_STRING_set0 := LoadFunction('ASN1_STRING_set0', AFailed);
+  ASN1_STRING_length := LoadFunction('ASN1_STRING_length', AFailed);
+  ASN1_STRING_length_set := LoadFunction('ASN1_STRING_length_set', AFailed);
+  ASN1_STRING_type := LoadFunction('ASN1_STRING_type', AFailed);
+  ASN1_STRING_get0_data := LoadFunction('ASN1_STRING_get0_data', AFailed);
+  ASN1_BIT_STRING_set := LoadFunction('ASN1_BIT_STRING_set', AFailed);
+  ASN1_BIT_STRING_set_bit := LoadFunction('ASN1_BIT_STRING_set_bit', AFailed);
+  ASN1_BIT_STRING_get_bit := LoadFunction('ASN1_BIT_STRING_get_bit', AFailed);
+  ASN1_BIT_STRING_check := LoadFunction('ASN1_BIT_STRING_check', AFailed);
+  ASN1_BIT_STRING_name_print := LoadFunction('ASN1_BIT_STRING_name_print', AFailed);
+  ASN1_BIT_STRING_num_asc := LoadFunction('ASN1_BIT_STRING_num_asc', AFailed);
+  ASN1_BIT_STRING_set_asc := LoadFunction('ASN1_BIT_STRING_set_asc', AFailed);
+  d2i_ASN1_UINTEGER := LoadFunction('d2i_ASN1_UINTEGER', AFailed);
+  ASN1_INTEGER_dup := LoadFunction('ASN1_INTEGER_dup', AFailed);
+  ASN1_INTEGER_cmp := LoadFunction('ASN1_INTEGER_cmp', AFailed);
+  ASN1_UTCTIME_check := LoadFunction('ASN1_UTCTIME_check', AFailed);
+  ASN1_UTCTIME_set := LoadFunction('ASN1_UTCTIME_set', AFailed);
+  ASN1_UTCTIME_adj := LoadFunction('ASN1_UTCTIME_adj', AFailed);
+  ASN1_UTCTIME_set_string := LoadFunction('ASN1_UTCTIME_set_string', AFailed);
+  ASN1_UTCTIME_cmp_time_t := LoadFunction('ASN1_UTCTIME_cmp_time_t', AFailed);
+  ASN1_GENERALIZEDTIME_check := LoadFunction('ASN1_GENERALIZEDTIME_check', AFailed);
+  ASN1_GENERALIZEDTIME_set := LoadFunction('ASN1_GENERALIZEDTIME_set', AFailed);
+  ASN1_GENERALIZEDTIME_adj := LoadFunction('ASN1_GENERALIZEDTIME_adj', AFailed);
+  ASN1_GENERALIZEDTIME_set_string := LoadFunction('ASN1_GENERALIZEDTIME_set_string', AFailed);
+  ASN1_TIME_diff := LoadFunction('ASN1_TIME_diff', AFailed);
+  ASN1_OCTET_STRING_dup := LoadFunction('ASN1_OCTET_STRING_dup', AFailed);
+  ASN1_OCTET_STRING_cmp := LoadFunction('ASN1_OCTET_STRING_cmp', AFailed);
+  ASN1_OCTET_STRING_set := LoadFunction('ASN1_OCTET_STRING_set', AFailed);
+  UTF8_getc := LoadFunction('UTF8_getc', AFailed);
+  UTF8_putc := LoadFunction('UTF8_putc', AFailed);
+  ASN1_TIME_set := LoadFunction('ASN1_TIME_set', AFailed);
+  ASN1_TIME_adj := LoadFunction('ASN1_TIME_adj', AFailed);
+  ASN1_TIME_check := LoadFunction('ASN1_TIME_check', AFailed);
+  ASN1_TIME_to_generalizedtime := LoadFunction('ASN1_TIME_to_generalizedtime', AFailed);
+  ASN1_TIME_set_string := LoadFunction('ASN1_TIME_set_string', AFailed);
+  ASN1_TIME_set_string_X509 := LoadFunction('ASN1_TIME_set_string_X509', AFailed);
+  ASN1_TIME_to_tm := LoadFunction('ASN1_TIME_to_tm', AFailed);
+  ASN1_TIME_normalize := LoadFunction('ASN1_TIME_normalize', AFailed);
+  ASN1_TIME_cmp_time_t := LoadFunction('ASN1_TIME_cmp_time_t', AFailed);
+  ASN1_TIME_compare := LoadFunction('ASN1_TIME_compare', AFailed);
+  i2a_ASN1_INTEGER := LoadFunction('i2a_ASN1_INTEGER', AFailed);
+  a2i_ASN1_INTEGER := LoadFunction('a2i_ASN1_INTEGER', AFailed);
+  i2a_ASN1_ENUMERATED := LoadFunction('i2a_ASN1_ENUMERATED', AFailed);
+  a2i_ASN1_ENUMERATED := LoadFunction('a2i_ASN1_ENUMERATED', AFailed);
+  i2a_ASN1_OBJECT := LoadFunction('i2a_ASN1_OBJECT', AFailed);
+  a2i_ASN1_STRING := LoadFunction('a2i_ASN1_STRING', AFailed);
+  i2a_ASN1_STRING := LoadFunction('i2a_ASN1_STRING', AFailed);
+  i2t_ASN1_OBJECT := LoadFunction('i2t_ASN1_OBJECT', AFailed);
+  a2d_ASN1_OBJECT := LoadFunction('a2d_ASN1_OBJECT', AFailed);
+  ASN1_OBJECT_create := LoadFunction('ASN1_OBJECT_create', AFailed);
+  ASN1_INTEGER_get_int64 := LoadFunction('ASN1_INTEGER_get_int64', AFailed);
+  ASN1_INTEGER_set_int64 := LoadFunction('ASN1_INTEGER_set_int64', AFailed);
+  ASN1_INTEGER_get_uint64 := LoadFunction('ASN1_INTEGER_get_uint64', AFailed);
+  ASN1_INTEGER_set_uint64 := LoadFunction('ASN1_INTEGER_set_uint64', AFailed);
+  ASN1_INTEGER_set := LoadFunction('ASN1_INTEGER_set', AFailed);
+  ASN1_INTEGER_get := LoadFunction('ASN1_INTEGER_get', AFailed);
+  BN_to_ASN1_INTEGER := LoadFunction('BN_to_ASN1_INTEGER', AFailed);
+  ASN1_INTEGER_to_BN := LoadFunction('ASN1_INTEGER_to_BN', AFailed);
+  ASN1_ENUMERATED_get_int64 := LoadFunction('ASN1_ENUMERATED_get_int64', AFailed);
+  ASN1_ENUMERATED_set_int64 := LoadFunction('ASN1_ENUMERATED_set_int64', AFailed);
+  ASN1_ENUMERATED_set := LoadFunction('ASN1_ENUMERATED_set', AFailed);
+  ASN1_ENUMERATED_get := LoadFunction('ASN1_ENUMERATED_get', AFailed);
+  BN_to_ASN1_ENUMERATED := LoadFunction('BN_to_ASN1_ENUMERATED', AFailed);
+  ASN1_ENUMERATED_to_BN := LoadFunction('ASN1_ENUMERATED_to_BN', AFailed);
+  ASN1_PRINTABLE_type := LoadFunction('ASN1_PRINTABLE_type', AFailed);
+  ASN1_tag2bit := LoadFunction('ASN1_tag2bit', AFailed);
+  ASN1_get_object := LoadFunction('ASN1_get_object', AFailed);
+  ASN1_check_infinite_end := LoadFunction('ASN1_check_infinite_end', AFailed);
+  ASN1_const_check_infinite_end := LoadFunction('ASN1_const_check_infinite_end', AFailed);
+  ASN1_put_object := LoadFunction('ASN1_put_object', AFailed);
+  ASN1_put_eoc := LoadFunction('ASN1_put_eoc', AFailed);
+  ASN1_object_size := LoadFunction('ASN1_object_size', AFailed);
+  ASN1_item_dup := LoadFunction('ASN1_item_dup', AFailed);
+  ASN1_STRING_to_UTF8 := LoadFunction('ASN1_STRING_to_UTF8', AFailed);
+  ASN1_item_d2i_bio := LoadFunction('ASN1_item_d2i_bio', AFailed);
+  ASN1_i2d_bio := LoadFunction('ASN1_i2d_bio', AFailed);
+  ASN1_item_i2d_bio := LoadFunction('ASN1_item_i2d_bio', AFailed);
+  ASN1_UTCTIME_print := LoadFunction('ASN1_UTCTIME_print', AFailed);
+  ASN1_GENERALIZEDTIME_print := LoadFunction('ASN1_GENERALIZEDTIME_print', AFailed);
+  ASN1_TIME_print := LoadFunction('ASN1_TIME_print', AFailed);
+  ASN1_STRING_print := LoadFunction('ASN1_STRING_print', AFailed);
+  ASN1_STRING_print_ex := LoadFunction('ASN1_STRING_print_ex', AFailed);
+  ASN1_buf_print := LoadFunction('ASN1_buf_print', AFailed);
+  ASN1_bn_print := LoadFunction('ASN1_bn_print', AFailed);
+  ASN1_parse := LoadFunction('ASN1_parse', AFailed);
+  ASN1_parse_dump := LoadFunction('ASN1_parse_dump', AFailed);
+  ASN1_tag2str := LoadFunction('ASN1_tag2str', AFailed);
+  ASN1_UNIVERSALSTRING_to_string := LoadFunction('ASN1_UNIVERSALSTRING_to_string', AFailed);
+  ASN1_TYPE_set_octetstring := LoadFunction('ASN1_TYPE_set_octetstring', AFailed);
+  ASN1_TYPE_get_octetstring := LoadFunction('ASN1_TYPE_get_octetstring', AFailed);
+  ASN1_TYPE_set_int_octetstring := LoadFunction('ASN1_TYPE_set_int_octetstring', AFailed);
+  ASN1_TYPE_get_int_octetstring := LoadFunction('ASN1_TYPE_get_int_octetstring', AFailed);
+  ASN1_item_unpack := LoadFunction('ASN1_item_unpack', AFailed);
+  ASN1_item_pack := LoadFunction('ASN1_item_pack', AFailed);
+  ASN1_STRING_set_default_mask := LoadFunction('ASN1_STRING_set_default_mask', AFailed);
+  ASN1_STRING_set_default_mask_asc := LoadFunction('ASN1_STRING_set_default_mask_asc', AFailed);
+  ASN1_STRING_get_default_mask := LoadFunction('ASN1_STRING_get_default_mask', AFailed);
+  ASN1_mbstring_copy := LoadFunction('ASN1_mbstring_copy', AFailed);
+  ASN1_mbstring_ncopy := LoadFunction('ASN1_mbstring_ncopy', AFailed);
+  ASN1_STRING_set_by_NID := LoadFunction('ASN1_STRING_set_by_NID', AFailed);
+  ASN1_STRING_TABLE_get := LoadFunction('ASN1_STRING_TABLE_get', AFailed);
+  ASN1_STRING_TABLE_add := LoadFunction('ASN1_STRING_TABLE_add', AFailed);
+  ASN1_STRING_TABLE_cleanup := LoadFunction('ASN1_STRING_TABLE_cleanup', AFailed);
+  ASN1_item_new := LoadFunction('ASN1_item_new', AFailed);
+  ASN1_item_free := LoadFunction('ASN1_item_free', AFailed);
+  ASN1_item_d2i := LoadFunction('ASN1_item_d2i', AFailed);
+  ASN1_item_i2d := LoadFunction('ASN1_item_i2d', AFailed);
+  ASN1_item_ndef_i2d := LoadFunction('ASN1_item_ndef_i2d', AFailed);
+  ASN1_add_oid_module := LoadFunction('ASN1_add_oid_module', AFailed);
+  ASN1_add_stable_module := LoadFunction('ASN1_add_stable_module', AFailed);
+  ASN1_generate_nconf := LoadFunction('ASN1_generate_nconf', AFailed);
+  ASN1_generate_v3 := LoadFunction('ASN1_generate_v3', AFailed);
+  ASN1_str2mask := LoadFunction('ASN1_str2mask', AFailed);
+  ASN1_item_print := LoadFunction('ASN1_item_print', AFailed);
+  ASN1_PCTX_new := LoadFunction('ASN1_PCTX_new', AFailed);
+  ASN1_PCTX_free := LoadFunction('ASN1_PCTX_free', AFailed);
+  ASN1_PCTX_get_flags := LoadFunction('ASN1_PCTX_get_flags', AFailed);
+  ASN1_PCTX_set_flags := LoadFunction('ASN1_PCTX_set_flags', AFailed);
+  ASN1_PCTX_get_nm_flags := LoadFunction('ASN1_PCTX_get_nm_flags', AFailed);
+  ASN1_PCTX_set_nm_flags := LoadFunction('ASN1_PCTX_set_nm_flags', AFailed);
+  ASN1_PCTX_get_cert_flags := LoadFunction('ASN1_PCTX_get_cert_flags', AFailed);
+  ASN1_PCTX_set_cert_flags := LoadFunction('ASN1_PCTX_set_cert_flags', AFailed);
+  ASN1_PCTX_get_oid_flags := LoadFunction('ASN1_PCTX_get_oid_flags', AFailed);
+  ASN1_PCTX_set_oid_flags := LoadFunction('ASN1_PCTX_set_oid_flags', AFailed);
+  ASN1_PCTX_get_str_flags := LoadFunction('ASN1_PCTX_get_str_flags', AFailed);
+  ASN1_PCTX_set_str_flags := LoadFunction('ASN1_PCTX_set_str_flags', AFailed);
+  ASN1_SCTX_free := LoadFunction('ASN1_SCTX_free', AFailed);
+  ASN1_SCTX_get_item := LoadFunction('ASN1_SCTX_get_item', AFailed);
+  ASN1_SCTX_get_template := LoadFunction('ASN1_SCTX_get_template', AFailed);
+  ASN1_SCTX_get_flags := LoadFunction('ASN1_SCTX_get_flags', AFailed);
+  ASN1_SCTX_set_app_data := LoadFunction('ASN1_SCTX_set_app_data', AFailed);
+  ASN1_SCTX_get_app_data := LoadFunction('ASN1_SCTX_get_app_data', AFailed);
+  BIO_f_asn1 := LoadFunction('BIO_f_asn1', AFailed);
+  BIO_new_NDEF := LoadFunction('BIO_new_NDEF', AFailed);
+  i2d_ASN1_bio_stream := LoadFunction('i2d_ASN1_bio_stream', AFailed);
+  PEM_write_bio_ASN1_stream := LoadFunction('PEM_write_bio_ASN1_stream', AFailed);
+  SMIME_read_ASN1 := LoadFunction('SMIME_read_ASN1', AFailed);
+  SMIME_crlf_copy := LoadFunction('SMIME_crlf_copy', AFailed);
+  SMIME_text := LoadFunction('SMIME_text', AFailed);
+  ASN1_ITEM_lookup := LoadFunction('ASN1_ITEM_lookup', AFailed);
+  ASN1_ITEM_get := LoadFunction('ASN1_ITEM_get', AFailed);
 end;
 
 procedure UnLoad;

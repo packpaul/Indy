@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_srtp;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -59,7 +60,7 @@ const
   SRTP_AEAD_AES_256_GCM = $0008;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -72,32 +73,20 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    SSL_CTX_set_tlsext_use_srtp := LoadFunction('SSL_CTX_set_tlsext_use_srtp', LFailed);
-    SSL_set_tlsext_use_srtp := LoadFunction('SSL_set_tlsext_use_srtp', LFailed);
-    SSL_get_selected_srtp_profile := LoadFunction('SSL_get_selected_srtp_profile', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  SSL_CTX_set_tlsext_use_srtp := LoadFunction('SSL_CTX_set_tlsext_use_srtp', AFailed);
+  SSL_set_tlsext_use_srtp := LoadFunction('SSL_set_tlsext_use_srtp', AFailed);
+  SSL_get_selected_srtp_profile := LoadFunction('SSL_get_selected_srtp_profile', AFailed);
 end;
 
 procedure UnLoad;

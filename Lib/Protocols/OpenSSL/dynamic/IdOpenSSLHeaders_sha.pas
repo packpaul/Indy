@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_sha;
 
@@ -40,7 +40,9 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
+  IdGlobal,
   IdOpenSSLConsts;
 
 const
@@ -98,7 +100,7 @@ type
   PSHA512_CTX = ^SHA512_CTX;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -133,52 +135,40 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    SHA1_Init := LoadFunction('SHA1_Init', LFailed);
-    SHA1_Update := LoadFunction('SHA1_Update', LFailed);
-    SHA1_Final := LoadFunction('SHA1_Final', LFailed);
-    SHA1 := LoadFunction('SHA1', LFailed);
-    SHA1_Transform := LoadFunction('SHA1_Transform', LFailed);
-    SHA224_Init := LoadFunction('SHA224_Init', LFailed);
-    SHA224_Update := LoadFunction('SHA224_Update', LFailed);
-    SHA224_Final := LoadFunction('SHA224_Final', LFailed);
-    SHA224 := LoadFunction('SHA224', LFailed);
-    SHA256_Init := LoadFunction('SHA256_Init', LFailed);
-    SHA256_Update := LoadFunction('SHA256_Update', LFailed);
-    SHA256_Final := LoadFunction('SHA256_Final', LFailed);
-    SHA256 := LoadFunction('SHA256', LFailed);
-    SHA256_Transform := LoadFunction('SHA256_Transform', LFailed);
-    SHA384_Init := LoadFunction('SHA384_Init', LFailed);
-    SHA384_Update := LoadFunction('SHA384_Update', LFailed);
-    SHA384_Final := LoadFunction('SHA384_Final', LFailed);
-    SHA384 := LoadFunction('SHA384', LFailed);
-    SHA512_Init := LoadFunction('SHA512_Init', LFailed);
-    SHA512_Update := LoadFunction('SHA512_Update', LFailed);
-    SHA512_Final := LoadFunction('SHA512_Final', LFailed);
-    SHA512 := LoadFunction('SHA512', LFailed);
-    SHA512_Transform := LoadFunction('SHA512_Transform', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  SHA1_Init := LoadFunction('SHA1_Init', AFailed);
+  SHA1_Update := LoadFunction('SHA1_Update', AFailed);
+  SHA1_Final := LoadFunction('SHA1_Final', AFailed);
+  SHA1 := LoadFunction('SHA1', AFailed);
+  SHA1_Transform := LoadFunction('SHA1_Transform', AFailed);
+  SHA224_Init := LoadFunction('SHA224_Init', AFailed);
+  SHA224_Update := LoadFunction('SHA224_Update', AFailed);
+  SHA224_Final := LoadFunction('SHA224_Final', AFailed);
+  SHA224 := LoadFunction('SHA224', AFailed);
+  SHA256_Init := LoadFunction('SHA256_Init', AFailed);
+  SHA256_Update := LoadFunction('SHA256_Update', AFailed);
+  SHA256_Final := LoadFunction('SHA256_Final', AFailed);
+  SHA256 := LoadFunction('SHA256', AFailed);
+  SHA256_Transform := LoadFunction('SHA256_Transform', AFailed);
+  SHA384_Init := LoadFunction('SHA384_Init', AFailed);
+  SHA384_Update := LoadFunction('SHA384_Update', AFailed);
+  SHA384_Final := LoadFunction('SHA384_Final', AFailed);
+  SHA384 := LoadFunction('SHA384', AFailed);
+  SHA512_Init := LoadFunction('SHA512_Init', AFailed);
+  SHA512_Update := LoadFunction('SHA512_Update', AFailed);
+  SHA512_Final := LoadFunction('SHA512_Final', AFailed);
+  SHA512 := LoadFunction('SHA512', AFailed);
+  SHA512_Transform := LoadFunction('SHA512_Transform', AFailed);
 end;
 
 procedure UnLoad;

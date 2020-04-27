@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_camellia;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts;
@@ -75,7 +76,7 @@ type
   TCamellia_ctr128_encrypt_ecount_buf = array[0 .. CAMELLIA_TABLE_WORD_LEN - 1] of Byte;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -95,39 +96,27 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    Camellia_set_key := LoadFunction('Camellia_set_key', LFailed);
-    Camellia_encrypt := LoadFunction('Camellia_encrypt', LFailed);
-    Camellia_decrypt := LoadFunction('Camellia_decrypt', LFailed);
-    Camellia_ecb_encrypt := LoadFunction('Camellia_ecb_encrypt', LFailed);
-    Camellia_cbc_encrypt := LoadFunction('Camellia_cbc_encrypt', LFailed);
-    Camellia_cfb128_encrypt := LoadFunction('Camellia_cfb128_encrypt', LFailed);
-    Camellia_cfb1_encrypt := LoadFunction('Camellia_cfb1_encrypt', LFailed);
-    Camellia_cfb8_encrypt := LoadFunction('Camellia_cfb8_encrypt', LFailed);
-    Camellia_ofb128_encrypt := LoadFunction('Camellia_ofb128_encrypt', LFailed);
-    Camellia_ctr128_encrypt := LoadFunction('Camellia_ctr128_encrypt', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  Camellia_set_key := LoadFunction('Camellia_set_key', AFailed);
+  Camellia_encrypt := LoadFunction('Camellia_encrypt', AFailed);
+  Camellia_decrypt := LoadFunction('Camellia_decrypt', AFailed);
+  Camellia_ecb_encrypt := LoadFunction('Camellia_ecb_encrypt', AFailed);
+  Camellia_cbc_encrypt := LoadFunction('Camellia_cbc_encrypt', AFailed);
+  Camellia_cfb128_encrypt := LoadFunction('Camellia_cfb128_encrypt', AFailed);
+  Camellia_cfb1_encrypt := LoadFunction('Camellia_cfb1_encrypt', AFailed);
+  Camellia_cfb8_encrypt := LoadFunction('Camellia_cfb8_encrypt', AFailed);
+  Camellia_ofb128_encrypt := LoadFunction('Camellia_ofb128_encrypt', AFailed);
+  Camellia_ctr128_encrypt := LoadFunction('Camellia_ctr128_encrypt', AFailed);
 end;
 
 procedure UnLoad;

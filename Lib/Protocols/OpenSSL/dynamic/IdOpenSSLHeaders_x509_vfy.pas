@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_x509_vfy;
 
@@ -42,6 +42,7 @@ interface
 {$MINENUMSIZE 4}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -266,7 +267,7 @@ type
     const str: PIdAnsiChar; len: TIdC_INT; ret: PX509_OBJECT): TIdC_INT;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -564,187 +565,175 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    X509_STORE_set_depth := LoadFunction('X509_STORE_set_depth', LFailed);
-    X509_STORE_CTX_set_depth := LoadFunction('X509_STORE_CTX_set_depth', LFailed);
-    X509_OBJECT_up_ref_count := LoadFunction('X509_OBJECT_up_ref_count', LFailed);
-    X509_OBJECT_new := LoadFunction('X509_OBJECT_new', LFailed);
-    X509_OBJECT_free := LoadFunction('X509_OBJECT_free', LFailed);
-    X509_OBJECT_get_type := LoadFunction('X509_OBJECT_get_type', LFailed);
-    X509_OBJECT_get0_X509 := LoadFunction('X509_OBJECT_get0_X509', LFailed);
-    X509_OBJECT_set1_X509 := LoadFunction('X509_OBJECT_set1_X509', LFailed);
-    X509_OBJECT_get0_X509_CRL := LoadFunction('X509_OBJECT_get0_X509_CRL', LFailed);
-    X509_OBJECT_set1_X509_CRL := LoadFunction('X509_OBJECT_set1_X509_CRL', LFailed);
-    X509_STORE_new := LoadFunction('X509_STORE_new', LFailed);
-    X509_STORE_free := LoadFunction('X509_STORE_free', LFailed);
-    X509_STORE_lock := LoadFunction('X509_STORE_lock', LFailed);
-    X509_STORE_unlock := LoadFunction('X509_STORE_unlock', LFailed);
-    X509_STORE_up_ref := LoadFunction('X509_STORE_up_ref', LFailed);
-    X509_STORE_set_flags := LoadFunction('X509_STORE_set_flags', LFailed);
-    X509_STORE_set_purpose := LoadFunction('X509_STORE_set_purpose', LFailed);
-    X509_STORE_set_trust := LoadFunction('X509_STORE_set_trust', LFailed);
-    X509_STORE_set1_param := LoadFunction('X509_STORE_set1_param', LFailed);
-    X509_STORE_get0_param := LoadFunction('X509_STORE_get0_param', LFailed);
-    X509_STORE_set_verify := LoadFunction('X509_STORE_set_verify', LFailed);
-    X509_STORE_CTX_set_verify := LoadFunction('X509_STORE_CTX_set_verify', LFailed);
-    X509_STORE_get_verify := LoadFunction('X509_STORE_get_verify', LFailed);
-    X509_STORE_set_verify_cb := LoadFunction('X509_STORE_set_verify_cb', LFailed);
-    X509_STORE_get_verify_cb := LoadFunction('X509_STORE_get_verify_cb', LFailed);
-    X509_STORE_set_get_issuer := LoadFunction('X509_STORE_set_get_issuer', LFailed);
-    X509_STORE_get_get_issuer := LoadFunction('X509_STORE_get_get_issuer', LFailed);
-    X509_STORE_set_check_issued := LoadFunction('X509_STORE_set_check_issued', LFailed);
-    X509_STORE_get_check_issued := LoadFunction('X509_STORE_get_check_issued', LFailed);
-    X509_STORE_set_check_revocation := LoadFunction('X509_STORE_set_check_revocation', LFailed);
-    X509_STORE_get_check_revocation := LoadFunction('X509_STORE_get_check_revocation', LFailed);
-    X509_STORE_set_get_crl := LoadFunction('X509_STORE_set_get_crl', LFailed);
-    X509_STORE_get_get_crl := LoadFunction('X509_STORE_get_get_crl', LFailed);
-    X509_STORE_set_check_crl := LoadFunction('X509_STORE_set_check_crl', LFailed);
-    X509_STORE_get_check_crl := LoadFunction('X509_STORE_get_check_crl', LFailed);
-    X509_STORE_set_cert_crl := LoadFunction('X509_STORE_set_cert_crl', LFailed);
-    X509_STORE_get_cert_crl := LoadFunction('X509_STORE_get_cert_crl', LFailed);
-    X509_STORE_set_check_policy := LoadFunction('X509_STORE_set_check_policy', LFailed);
-    X509_STORE_get_check_policy := LoadFunction('X509_STORE_get_check_policy', LFailed);
-    X509_STORE_set_cleanup := LoadFunction('X509_STORE_set_cleanup', LFailed);
-    X509_STORE_get_cleanup := LoadFunction('X509_STORE_get_cleanup', LFailed);
-    X509_STORE_set_ex_data := LoadFunction('X509_STORE_set_ex_data', LFailed);
-    X509_STORE_get_ex_data := LoadFunction('X509_STORE_get_ex_data', LFailed);
-    X509_STORE_CTX_new := LoadFunction('X509_STORE_CTX_new', LFailed);
-    X509_STORE_CTX_get1_issuer := LoadFunction('X509_STORE_CTX_get1_issuer', LFailed);
-    X509_STORE_CTX_free := LoadFunction('X509_STORE_CTX_free', LFailed);
-    X509_STORE_CTX_cleanup := LoadFunction('X509_STORE_CTX_cleanup', LFailed);
-    X509_STORE_CTX_get0_store := LoadFunction('X509_STORE_CTX_get0_store', LFailed);
-    X509_STORE_CTX_get0_cert := LoadFunction('X509_STORE_CTX_get0_cert', LFailed);
-    X509_STORE_CTX_set_verify_cb := LoadFunction('X509_STORE_CTX_set_verify_cb', LFailed);
-    X509_STORE_CTX_get_verify_cb := LoadFunction('X509_STORE_CTX_get_verify_cb', LFailed);
-    X509_STORE_CTX_get_verify := LoadFunction('X509_STORE_CTX_get_verify', LFailed);
-    X509_STORE_CTX_get_get_issuer := LoadFunction('X509_STORE_CTX_get_get_issuer', LFailed);
-    X509_STORE_CTX_get_check_issued := LoadFunction('X509_STORE_CTX_get_check_issued', LFailed);
-    X509_STORE_CTX_get_check_revocation := LoadFunction('X509_STORE_CTX_get_check_revocation', LFailed);
-    X509_STORE_CTX_get_get_crl := LoadFunction('X509_STORE_CTX_get_get_crl', LFailed);
-    X509_STORE_CTX_get_check_crl := LoadFunction('X509_STORE_CTX_get_check_crl', LFailed);
-    X509_STORE_CTX_get_cert_crl := LoadFunction('X509_STORE_CTX_get_cert_crl', LFailed);
-    X509_STORE_CTX_get_check_policy := LoadFunction('X509_STORE_CTX_get_check_policy', LFailed);
-    X509_STORE_CTX_get_cleanup := LoadFunction('X509_STORE_CTX_get_cleanup', LFailed);
-    X509_STORE_add_lookup := LoadFunction('X509_STORE_add_lookup', LFailed);
-    X509_LOOKUP_hash_dir := LoadFunction('X509_LOOKUP_hash_dir', LFailed);
-    X509_LOOKUP_file := LoadFunction('X509_LOOKUP_file', LFailed);
-    X509_LOOKUP_meth_new := LoadFunction('X509_LOOKUP_meth_new', LFailed);
-    X509_LOOKUP_meth_free := LoadFunction('X509_LOOKUP_meth_free', LFailed);
-    X509_LOOKUP_meth_set_ctrl := LoadFunction('X509_LOOKUP_meth_set_ctrl', LFailed);
-    X509_LOOKUP_meth_get_ctrl := LoadFunction('X509_LOOKUP_meth_get_ctrl', LFailed);
-    X509_LOOKUP_meth_set_get_by_subject := LoadFunction('X509_LOOKUP_meth_set_get_by_subject', LFailed);
-    X509_LOOKUP_meth_get_get_by_subject := LoadFunction('X509_LOOKUP_meth_get_get_by_subject', LFailed);
-    X509_LOOKUP_meth_set_get_by_issuer_serial := LoadFunction('X509_LOOKUP_meth_set_get_by_issuer_serial', LFailed);
-    X509_LOOKUP_meth_get_get_by_issuer_serial := LoadFunction('X509_LOOKUP_meth_get_get_by_issuer_serial', LFailed);
-    X509_LOOKUP_meth_set_get_by_fingerprint := LoadFunction('X509_LOOKUP_meth_set_get_by_fingerprint', LFailed);
-    X509_LOOKUP_meth_get_get_by_fingerprint := LoadFunction('X509_LOOKUP_meth_get_get_by_fingerprint', LFailed);
-    X509_LOOKUP_meth_set_get_by_alias := LoadFunction('X509_LOOKUP_meth_set_get_by_alias', LFailed);
-    X509_LOOKUP_meth_get_get_by_alias := LoadFunction('X509_LOOKUP_meth_get_get_by_alias', LFailed);
-    X509_STORE_add_cert := LoadFunction('X509_STORE_add_cert', LFailed);
-    X509_STORE_add_crl := LoadFunction('X509_STORE_add_crl', LFailed);
-    X509_STORE_CTX_get_by_subject := LoadFunction('X509_STORE_CTX_get_by_subject', LFailed);
-    X509_STORE_CTX_get_obj_by_subject := LoadFunction('X509_STORE_CTX_get_obj_by_subject', LFailed);
-    X509_LOOKUP_ctrl := LoadFunction('X509_LOOKUP_ctrl', LFailed);
-    X509_load_cert_file := LoadFunction('X509_load_cert_file', LFailed);
-    X509_load_crl_file := LoadFunction('X509_load_crl_file', LFailed);
-    X509_load_cert_crl_file := LoadFunction('X509_load_cert_crl_file', LFailed);
-    X509_LOOKUP_new := LoadFunction('X509_LOOKUP_new', LFailed);
-    X509_LOOKUP_free := LoadFunction('X509_LOOKUP_free', LFailed);
-    X509_LOOKUP_init := LoadFunction('X509_LOOKUP_init', LFailed);
-    X509_LOOKUP_by_subject := LoadFunction('X509_LOOKUP_by_subject', LFailed);
-    X509_LOOKUP_by_issuer_serial := LoadFunction('X509_LOOKUP_by_issuer_serial', LFailed);
-    X509_LOOKUP_by_fingerprint := LoadFunction('X509_LOOKUP_by_fingerprint', LFailed);
-    X509_LOOKUP_by_alias := LoadFunction('X509_LOOKUP_by_alias', LFailed);
-    X509_LOOKUP_set_method_data := LoadFunction('X509_LOOKUP_set_method_data', LFailed);
-    X509_LOOKUP_get_method_data := LoadFunction('X509_LOOKUP_get_method_data', LFailed);
-    X509_LOOKUP_get_store := LoadFunction('X509_LOOKUP_get_store', LFailed);
-    X509_LOOKUP_shutdown := LoadFunction('X509_LOOKUP_shutdown', LFailed);
-    X509_STORE_load_locations := LoadFunction('X509_STORE_load_locations', LFailed);
-    X509_STORE_set_default_paths := LoadFunction('X509_STORE_set_default_paths', LFailed);
-    X509_STORE_CTX_set_ex_data := LoadFunction('X509_STORE_CTX_set_ex_data', LFailed);
-    X509_STORE_CTX_get_ex_data := LoadFunction('X509_STORE_CTX_get_ex_data', LFailed);
-    X509_STORE_CTX_get_error := LoadFunction('X509_STORE_CTX_get_error', LFailed);
-    X509_STORE_CTX_set_error := LoadFunction('X509_STORE_CTX_set_error', LFailed);
-    X509_STORE_CTX_get_error_depth := LoadFunction('X509_STORE_CTX_get_error_depth', LFailed);
-    X509_STORE_CTX_set_error_depth := LoadFunction('X509_STORE_CTX_set_error_depth', LFailed);
-    X509_STORE_CTX_get_current_cert := LoadFunction('X509_STORE_CTX_get_current_cert', LFailed);
-    X509_STORE_CTX_set_current_cert := LoadFunction('X509_STORE_CTX_set_current_cert', LFailed);
-    X509_STORE_CTX_get0_current_issuer := LoadFunction('X509_STORE_CTX_get0_current_issuer', LFailed);
-    X509_STORE_CTX_get0_current_crl := LoadFunction('X509_STORE_CTX_get0_current_crl', LFailed);
-    X509_STORE_CTX_get0_parent_ctx := LoadFunction('X509_STORE_CTX_get0_parent_ctx', LFailed);
-    X509_STORE_CTX_set_cert := LoadFunction('X509_STORE_CTX_set_cert', LFailed);
-    X509_STORE_CTX_set_purpose := LoadFunction('X509_STORE_CTX_set_purpose', LFailed);
-    X509_STORE_CTX_set_trust := LoadFunction('X509_STORE_CTX_set_trust', LFailed);
-    X509_STORE_CTX_purpose_inherit := LoadFunction('X509_STORE_CTX_purpose_inherit', LFailed);
-    X509_STORE_CTX_set_flags := LoadFunction('X509_STORE_CTX_set_flags', LFailed);
-    X509_STORE_CTX_get0_policy_tree := LoadFunction('X509_STORE_CTX_get0_policy_tree', LFailed);
-    X509_STORE_CTX_get_explicit_policy := LoadFunction('X509_STORE_CTX_get_explicit_policy', LFailed);
-    X509_STORE_CTX_get_num_untrusted := LoadFunction('X509_STORE_CTX_get_num_untrusted', LFailed);
-    X509_STORE_CTX_get0_param := LoadFunction('X509_STORE_CTX_get0_param', LFailed);
-    X509_STORE_CTX_set0_param := LoadFunction('X509_STORE_CTX_set0_param', LFailed);
-    X509_STORE_CTX_set_default := LoadFunction('X509_STORE_CTX_set_default', LFailed);
-    X509_STORE_CTX_set0_dane := LoadFunction('X509_STORE_CTX_set0_dane', LFailed);
-    X509_VERIFY_PARAM_new := LoadFunction('X509_VERIFY_PARAM_new', LFailed);
-    X509_VERIFY_PARAM_free := LoadFunction('X509_VERIFY_PARAM_free', LFailed);
-    X509_VERIFY_PARAM_inherit := LoadFunction('X509_VERIFY_PARAM_inherit', LFailed);
-    X509_VERIFY_PARAM_set1 := LoadFunction('X509_VERIFY_PARAM_set1', LFailed);
-    X509_VERIFY_PARAM_set1_name := LoadFunction('X509_VERIFY_PARAM_set1_name', LFailed);
-    X509_VERIFY_PARAM_set_flags := LoadFunction('X509_VERIFY_PARAM_set_flags', LFailed);
-    X509_VERIFY_PARAM_clear_flags := LoadFunction('X509_VERIFY_PARAM_clear_flags', LFailed);
-    X509_VERIFY_PARAM_get_flags := LoadFunction('X509_VERIFY_PARAM_get_flags', LFailed);
-    X509_VERIFY_PARAM_set_purpose := LoadFunction('X509_VERIFY_PARAM_set_purpose', LFailed);
-    X509_VERIFY_PARAM_set_trust := LoadFunction('X509_VERIFY_PARAM_set_trust', LFailed);
-    X509_VERIFY_PARAM_set_depth := LoadFunction('X509_VERIFY_PARAM_set_depth', LFailed);
-    X509_VERIFY_PARAM_set_auth_level := LoadFunction('X509_VERIFY_PARAM_set_auth_level', LFailed);
-    X509_VERIFY_PARAM_add0_policy := LoadFunction('X509_VERIFY_PARAM_add0_policy', LFailed);
-    X509_VERIFY_PARAM_set_inh_flags := LoadFunction('X509_VERIFY_PARAM_set_inh_flags', LFailed);
-    X509_VERIFY_PARAM_get_inh_flags := LoadFunction('X509_VERIFY_PARAM_get_inh_flags', LFailed);
-    X509_VERIFY_PARAM_set1_host := LoadFunction('X509_VERIFY_PARAM_set1_host', LFailed);
-    X509_VERIFY_PARAM_add1_host := LoadFunction('X509_VERIFY_PARAM_add1_host', LFailed);
-    X509_VERIFY_PARAM_set_hostflags := LoadFunction('X509_VERIFY_PARAM_set_hostflags', LFailed);
-    X509_VERIFY_PARAM_get_hostflags := LoadFunction('X509_VERIFY_PARAM_get_hostflags', LFailed);
-    X509_VERIFY_PARAM_get0_peername := LoadFunction('X509_VERIFY_PARAM_get0_peername', LFailed);
-    X509_VERIFY_PARAM_move_peername := LoadFunction('X509_VERIFY_PARAM_move_peername', LFailed);
-    X509_VERIFY_PARAM_set1_email := LoadFunction('X509_VERIFY_PARAM_set1_email', LFailed);
-    X509_VERIFY_PARAM_set1_ip := LoadFunction('X509_VERIFY_PARAM_set1_ip', LFailed);
-    X509_VERIFY_PARAM_set1_ip_asc := LoadFunction('X509_VERIFY_PARAM_set1_ip_asc', LFailed);
-    X509_VERIFY_PARAM_get_depth := LoadFunction('X509_VERIFY_PARAM_get_depth', LFailed);
-    X509_VERIFY_PARAM_get_auth_level := LoadFunction('X509_VERIFY_PARAM_get_auth_level', LFailed);
-    X509_VERIFY_PARAM_get0_name := LoadFunction('X509_VERIFY_PARAM_get0_name', LFailed);
-    X509_VERIFY_PARAM_add0_table := LoadFunction('X509_VERIFY_PARAM_add0_table', LFailed);
-    X509_VERIFY_PARAM_get_count := LoadFunction('X509_VERIFY_PARAM_get_count', LFailed);
-    X509_VERIFY_PARAM_get0 := LoadFunction('X509_VERIFY_PARAM_get0', LFailed);
-    X509_VERIFY_PARAM_lookup := LoadFunction('X509_VERIFY_PARAM_lookup', LFailed);
-    X509_VERIFY_PARAM_table_cleanup := LoadFunction('X509_VERIFY_PARAM_table_cleanup', LFailed);
-    X509_policy_tree_free := LoadFunction('X509_policy_tree_free', LFailed);
-    X509_policy_tree_level_count := LoadFunction('X509_policy_tree_level_count', LFailed);
-    X509_policy_tree_get0_level := LoadFunction('X509_policy_tree_get0_level', LFailed);
-    X509_policy_level_node_count := LoadFunction('X509_policy_level_node_count', LFailed);
-    X509_policy_level_get0_node := LoadFunction('X509_policy_level_get0_node', LFailed);
-    X509_policy_node_get0_policy := LoadFunction('X509_policy_node_get0_policy', LFailed);
-    X509_policy_node_get0_parent := LoadFunction('X509_policy_node_get0_parent', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  X509_STORE_set_depth := LoadFunction('X509_STORE_set_depth', AFailed);
+  X509_STORE_CTX_set_depth := LoadFunction('X509_STORE_CTX_set_depth', AFailed);
+  X509_OBJECT_up_ref_count := LoadFunction('X509_OBJECT_up_ref_count', AFailed);
+  X509_OBJECT_new := LoadFunction('X509_OBJECT_new', AFailed);
+  X509_OBJECT_free := LoadFunction('X509_OBJECT_free', AFailed);
+  X509_OBJECT_get_type := LoadFunction('X509_OBJECT_get_type', AFailed);
+  X509_OBJECT_get0_X509 := LoadFunction('X509_OBJECT_get0_X509', AFailed);
+  X509_OBJECT_set1_X509 := LoadFunction('X509_OBJECT_set1_X509', AFailed);
+  X509_OBJECT_get0_X509_CRL := LoadFunction('X509_OBJECT_get0_X509_CRL', AFailed);
+  X509_OBJECT_set1_X509_CRL := LoadFunction('X509_OBJECT_set1_X509_CRL', AFailed);
+  X509_STORE_new := LoadFunction('X509_STORE_new', AFailed);
+  X509_STORE_free := LoadFunction('X509_STORE_free', AFailed);
+  X509_STORE_lock := LoadFunction('X509_STORE_lock', AFailed);
+  X509_STORE_unlock := LoadFunction('X509_STORE_unlock', AFailed);
+  X509_STORE_up_ref := LoadFunction('X509_STORE_up_ref', AFailed);
+  X509_STORE_set_flags := LoadFunction('X509_STORE_set_flags', AFailed);
+  X509_STORE_set_purpose := LoadFunction('X509_STORE_set_purpose', AFailed);
+  X509_STORE_set_trust := LoadFunction('X509_STORE_set_trust', AFailed);
+  X509_STORE_set1_param := LoadFunction('X509_STORE_set1_param', AFailed);
+  X509_STORE_get0_param := LoadFunction('X509_STORE_get0_param', AFailed);
+  X509_STORE_set_verify := LoadFunction('X509_STORE_set_verify', AFailed);
+  X509_STORE_CTX_set_verify := LoadFunction('X509_STORE_CTX_set_verify', AFailed);
+  X509_STORE_get_verify := LoadFunction('X509_STORE_get_verify', AFailed);
+  X509_STORE_set_verify_cb := LoadFunction('X509_STORE_set_verify_cb', AFailed);
+  X509_STORE_get_verify_cb := LoadFunction('X509_STORE_get_verify_cb', AFailed);
+  X509_STORE_set_get_issuer := LoadFunction('X509_STORE_set_get_issuer', AFailed);
+  X509_STORE_get_get_issuer := LoadFunction('X509_STORE_get_get_issuer', AFailed);
+  X509_STORE_set_check_issued := LoadFunction('X509_STORE_set_check_issued', AFailed);
+  X509_STORE_get_check_issued := LoadFunction('X509_STORE_get_check_issued', AFailed);
+  X509_STORE_set_check_revocation := LoadFunction('X509_STORE_set_check_revocation', AFailed);
+  X509_STORE_get_check_revocation := LoadFunction('X509_STORE_get_check_revocation', AFailed);
+  X509_STORE_set_get_crl := LoadFunction('X509_STORE_set_get_crl', AFailed);
+  X509_STORE_get_get_crl := LoadFunction('X509_STORE_get_get_crl', AFailed);
+  X509_STORE_set_check_crl := LoadFunction('X509_STORE_set_check_crl', AFailed);
+  X509_STORE_get_check_crl := LoadFunction('X509_STORE_get_check_crl', AFailed);
+  X509_STORE_set_cert_crl := LoadFunction('X509_STORE_set_cert_crl', AFailed);
+  X509_STORE_get_cert_crl := LoadFunction('X509_STORE_get_cert_crl', AFailed);
+  X509_STORE_set_check_policy := LoadFunction('X509_STORE_set_check_policy', AFailed);
+  X509_STORE_get_check_policy := LoadFunction('X509_STORE_get_check_policy', AFailed);
+  X509_STORE_set_cleanup := LoadFunction('X509_STORE_set_cleanup', AFailed);
+  X509_STORE_get_cleanup := LoadFunction('X509_STORE_get_cleanup', AFailed);
+  X509_STORE_set_ex_data := LoadFunction('X509_STORE_set_ex_data', AFailed);
+  X509_STORE_get_ex_data := LoadFunction('X509_STORE_get_ex_data', AFailed);
+  X509_STORE_CTX_new := LoadFunction('X509_STORE_CTX_new', AFailed);
+  X509_STORE_CTX_get1_issuer := LoadFunction('X509_STORE_CTX_get1_issuer', AFailed);
+  X509_STORE_CTX_free := LoadFunction('X509_STORE_CTX_free', AFailed);
+  X509_STORE_CTX_cleanup := LoadFunction('X509_STORE_CTX_cleanup', AFailed);
+  X509_STORE_CTX_get0_store := LoadFunction('X509_STORE_CTX_get0_store', AFailed);
+  X509_STORE_CTX_get0_cert := LoadFunction('X509_STORE_CTX_get0_cert', AFailed);
+  X509_STORE_CTX_set_verify_cb := LoadFunction('X509_STORE_CTX_set_verify_cb', AFailed);
+  X509_STORE_CTX_get_verify_cb := LoadFunction('X509_STORE_CTX_get_verify_cb', AFailed);
+  X509_STORE_CTX_get_verify := LoadFunction('X509_STORE_CTX_get_verify', AFailed);
+  X509_STORE_CTX_get_get_issuer := LoadFunction('X509_STORE_CTX_get_get_issuer', AFailed);
+  X509_STORE_CTX_get_check_issued := LoadFunction('X509_STORE_CTX_get_check_issued', AFailed);
+  X509_STORE_CTX_get_check_revocation := LoadFunction('X509_STORE_CTX_get_check_revocation', AFailed);
+  X509_STORE_CTX_get_get_crl := LoadFunction('X509_STORE_CTX_get_get_crl', AFailed);
+  X509_STORE_CTX_get_check_crl := LoadFunction('X509_STORE_CTX_get_check_crl', AFailed);
+  X509_STORE_CTX_get_cert_crl := LoadFunction('X509_STORE_CTX_get_cert_crl', AFailed);
+  X509_STORE_CTX_get_check_policy := LoadFunction('X509_STORE_CTX_get_check_policy', AFailed);
+  X509_STORE_CTX_get_cleanup := LoadFunction('X509_STORE_CTX_get_cleanup', AFailed);
+  X509_STORE_add_lookup := LoadFunction('X509_STORE_add_lookup', AFailed);
+  X509_LOOKUP_hash_dir := LoadFunction('X509_LOOKUP_hash_dir', AFailed);
+  X509_LOOKUP_file := LoadFunction('X509_LOOKUP_file', AFailed);
+  X509_LOOKUP_meth_new := LoadFunction('X509_LOOKUP_meth_new', AFailed);
+  X509_LOOKUP_meth_free := LoadFunction('X509_LOOKUP_meth_free', AFailed);
+  X509_LOOKUP_meth_set_ctrl := LoadFunction('X509_LOOKUP_meth_set_ctrl', AFailed);
+  X509_LOOKUP_meth_get_ctrl := LoadFunction('X509_LOOKUP_meth_get_ctrl', AFailed);
+  X509_LOOKUP_meth_set_get_by_subject := LoadFunction('X509_LOOKUP_meth_set_get_by_subject', AFailed);
+  X509_LOOKUP_meth_get_get_by_subject := LoadFunction('X509_LOOKUP_meth_get_get_by_subject', AFailed);
+  X509_LOOKUP_meth_set_get_by_issuer_serial := LoadFunction('X509_LOOKUP_meth_set_get_by_issuer_serial', AFailed);
+  X509_LOOKUP_meth_get_get_by_issuer_serial := LoadFunction('X509_LOOKUP_meth_get_get_by_issuer_serial', AFailed);
+  X509_LOOKUP_meth_set_get_by_fingerprint := LoadFunction('X509_LOOKUP_meth_set_get_by_fingerprint', AFailed);
+  X509_LOOKUP_meth_get_get_by_fingerprint := LoadFunction('X509_LOOKUP_meth_get_get_by_fingerprint', AFailed);
+  X509_LOOKUP_meth_set_get_by_alias := LoadFunction('X509_LOOKUP_meth_set_get_by_alias', AFailed);
+  X509_LOOKUP_meth_get_get_by_alias := LoadFunction('X509_LOOKUP_meth_get_get_by_alias', AFailed);
+  X509_STORE_add_cert := LoadFunction('X509_STORE_add_cert', AFailed);
+  X509_STORE_add_crl := LoadFunction('X509_STORE_add_crl', AFailed);
+  X509_STORE_CTX_get_by_subject := LoadFunction('X509_STORE_CTX_get_by_subject', AFailed);
+  X509_STORE_CTX_get_obj_by_subject := LoadFunction('X509_STORE_CTX_get_obj_by_subject', AFailed);
+  X509_LOOKUP_ctrl := LoadFunction('X509_LOOKUP_ctrl', AFailed);
+  X509_load_cert_file := LoadFunction('X509_load_cert_file', AFailed);
+  X509_load_crl_file := LoadFunction('X509_load_crl_file', AFailed);
+  X509_load_cert_crl_file := LoadFunction('X509_load_cert_crl_file', AFailed);
+  X509_LOOKUP_new := LoadFunction('X509_LOOKUP_new', AFailed);
+  X509_LOOKUP_free := LoadFunction('X509_LOOKUP_free', AFailed);
+  X509_LOOKUP_init := LoadFunction('X509_LOOKUP_init', AFailed);
+  X509_LOOKUP_by_subject := LoadFunction('X509_LOOKUP_by_subject', AFailed);
+  X509_LOOKUP_by_issuer_serial := LoadFunction('X509_LOOKUP_by_issuer_serial', AFailed);
+  X509_LOOKUP_by_fingerprint := LoadFunction('X509_LOOKUP_by_fingerprint', AFailed);
+  X509_LOOKUP_by_alias := LoadFunction('X509_LOOKUP_by_alias', AFailed);
+  X509_LOOKUP_set_method_data := LoadFunction('X509_LOOKUP_set_method_data', AFailed);
+  X509_LOOKUP_get_method_data := LoadFunction('X509_LOOKUP_get_method_data', AFailed);
+  X509_LOOKUP_get_store := LoadFunction('X509_LOOKUP_get_store', AFailed);
+  X509_LOOKUP_shutdown := LoadFunction('X509_LOOKUP_shutdown', AFailed);
+  X509_STORE_load_locations := LoadFunction('X509_STORE_load_locations', AFailed);
+  X509_STORE_set_default_paths := LoadFunction('X509_STORE_set_default_paths', AFailed);
+  X509_STORE_CTX_set_ex_data := LoadFunction('X509_STORE_CTX_set_ex_data', AFailed);
+  X509_STORE_CTX_get_ex_data := LoadFunction('X509_STORE_CTX_get_ex_data', AFailed);
+  X509_STORE_CTX_get_error := LoadFunction('X509_STORE_CTX_get_error', AFailed);
+  X509_STORE_CTX_set_error := LoadFunction('X509_STORE_CTX_set_error', AFailed);
+  X509_STORE_CTX_get_error_depth := LoadFunction('X509_STORE_CTX_get_error_depth', AFailed);
+  X509_STORE_CTX_set_error_depth := LoadFunction('X509_STORE_CTX_set_error_depth', AFailed);
+  X509_STORE_CTX_get_current_cert := LoadFunction('X509_STORE_CTX_get_current_cert', AFailed);
+  X509_STORE_CTX_set_current_cert := LoadFunction('X509_STORE_CTX_set_current_cert', AFailed);
+  X509_STORE_CTX_get0_current_issuer := LoadFunction('X509_STORE_CTX_get0_current_issuer', AFailed);
+  X509_STORE_CTX_get0_current_crl := LoadFunction('X509_STORE_CTX_get0_current_crl', AFailed);
+  X509_STORE_CTX_get0_parent_ctx := LoadFunction('X509_STORE_CTX_get0_parent_ctx', AFailed);
+  X509_STORE_CTX_set_cert := LoadFunction('X509_STORE_CTX_set_cert', AFailed);
+  X509_STORE_CTX_set_purpose := LoadFunction('X509_STORE_CTX_set_purpose', AFailed);
+  X509_STORE_CTX_set_trust := LoadFunction('X509_STORE_CTX_set_trust', AFailed);
+  X509_STORE_CTX_purpose_inherit := LoadFunction('X509_STORE_CTX_purpose_inherit', AFailed);
+  X509_STORE_CTX_set_flags := LoadFunction('X509_STORE_CTX_set_flags', AFailed);
+  X509_STORE_CTX_get0_policy_tree := LoadFunction('X509_STORE_CTX_get0_policy_tree', AFailed);
+  X509_STORE_CTX_get_explicit_policy := LoadFunction('X509_STORE_CTX_get_explicit_policy', AFailed);
+  X509_STORE_CTX_get_num_untrusted := LoadFunction('X509_STORE_CTX_get_num_untrusted', AFailed);
+  X509_STORE_CTX_get0_param := LoadFunction('X509_STORE_CTX_get0_param', AFailed);
+  X509_STORE_CTX_set0_param := LoadFunction('X509_STORE_CTX_set0_param', AFailed);
+  X509_STORE_CTX_set_default := LoadFunction('X509_STORE_CTX_set_default', AFailed);
+  X509_STORE_CTX_set0_dane := LoadFunction('X509_STORE_CTX_set0_dane', AFailed);
+  X509_VERIFY_PARAM_new := LoadFunction('X509_VERIFY_PARAM_new', AFailed);
+  X509_VERIFY_PARAM_free := LoadFunction('X509_VERIFY_PARAM_free', AFailed);
+  X509_VERIFY_PARAM_inherit := LoadFunction('X509_VERIFY_PARAM_inherit', AFailed);
+  X509_VERIFY_PARAM_set1 := LoadFunction('X509_VERIFY_PARAM_set1', AFailed);
+  X509_VERIFY_PARAM_set1_name := LoadFunction('X509_VERIFY_PARAM_set1_name', AFailed);
+  X509_VERIFY_PARAM_set_flags := LoadFunction('X509_VERIFY_PARAM_set_flags', AFailed);
+  X509_VERIFY_PARAM_clear_flags := LoadFunction('X509_VERIFY_PARAM_clear_flags', AFailed);
+  X509_VERIFY_PARAM_get_flags := LoadFunction('X509_VERIFY_PARAM_get_flags', AFailed);
+  X509_VERIFY_PARAM_set_purpose := LoadFunction('X509_VERIFY_PARAM_set_purpose', AFailed);
+  X509_VERIFY_PARAM_set_trust := LoadFunction('X509_VERIFY_PARAM_set_trust', AFailed);
+  X509_VERIFY_PARAM_set_depth := LoadFunction('X509_VERIFY_PARAM_set_depth', AFailed);
+  X509_VERIFY_PARAM_set_auth_level := LoadFunction('X509_VERIFY_PARAM_set_auth_level', AFailed);
+  X509_VERIFY_PARAM_add0_policy := LoadFunction('X509_VERIFY_PARAM_add0_policy', AFailed);
+  X509_VERIFY_PARAM_set_inh_flags := LoadFunction('X509_VERIFY_PARAM_set_inh_flags', AFailed);
+  X509_VERIFY_PARAM_get_inh_flags := LoadFunction('X509_VERIFY_PARAM_get_inh_flags', AFailed);
+  X509_VERIFY_PARAM_set1_host := LoadFunction('X509_VERIFY_PARAM_set1_host', AFailed);
+  X509_VERIFY_PARAM_add1_host := LoadFunction('X509_VERIFY_PARAM_add1_host', AFailed);
+  X509_VERIFY_PARAM_set_hostflags := LoadFunction('X509_VERIFY_PARAM_set_hostflags', AFailed);
+  X509_VERIFY_PARAM_get_hostflags := LoadFunction('X509_VERIFY_PARAM_get_hostflags', AFailed);
+  X509_VERIFY_PARAM_get0_peername := LoadFunction('X509_VERIFY_PARAM_get0_peername', AFailed);
+  X509_VERIFY_PARAM_move_peername := LoadFunction('X509_VERIFY_PARAM_move_peername', AFailed);
+  X509_VERIFY_PARAM_set1_email := LoadFunction('X509_VERIFY_PARAM_set1_email', AFailed);
+  X509_VERIFY_PARAM_set1_ip := LoadFunction('X509_VERIFY_PARAM_set1_ip', AFailed);
+  X509_VERIFY_PARAM_set1_ip_asc := LoadFunction('X509_VERIFY_PARAM_set1_ip_asc', AFailed);
+  X509_VERIFY_PARAM_get_depth := LoadFunction('X509_VERIFY_PARAM_get_depth', AFailed);
+  X509_VERIFY_PARAM_get_auth_level := LoadFunction('X509_VERIFY_PARAM_get_auth_level', AFailed);
+  X509_VERIFY_PARAM_get0_name := LoadFunction('X509_VERIFY_PARAM_get0_name', AFailed);
+  X509_VERIFY_PARAM_add0_table := LoadFunction('X509_VERIFY_PARAM_add0_table', AFailed);
+  X509_VERIFY_PARAM_get_count := LoadFunction('X509_VERIFY_PARAM_get_count', AFailed);
+  X509_VERIFY_PARAM_get0 := LoadFunction('X509_VERIFY_PARAM_get0', AFailed);
+  X509_VERIFY_PARAM_lookup := LoadFunction('X509_VERIFY_PARAM_lookup', AFailed);
+  X509_VERIFY_PARAM_table_cleanup := LoadFunction('X509_VERIFY_PARAM_table_cleanup', AFailed);
+  X509_policy_tree_free := LoadFunction('X509_policy_tree_free', AFailed);
+  X509_policy_tree_level_count := LoadFunction('X509_policy_tree_level_count', AFailed);
+  X509_policy_tree_get0_level := LoadFunction('X509_policy_tree_get0_level', AFailed);
+  X509_policy_level_node_count := LoadFunction('X509_policy_level_node_count', AFailed);
+  X509_policy_level_get0_node := LoadFunction('X509_policy_level_get0_node', AFailed);
+  X509_policy_node_get0_policy := LoadFunction('X509_policy_node_get0_policy', AFailed);
+  X509_policy_node_get0_parent := LoadFunction('X509_policy_node_get0_parent', AFailed);
 end;
 
 procedure UnLoad;

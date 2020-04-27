@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_dh;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -101,7 +102,7 @@ type
   DH_meth_generate_params_cb = function(dh: PDH; prime_len: TIdC_INT; generator: TIdC_INT; cb: PBN_GENCB): TIdC_INT;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -309,100 +310,88 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    DHparams_dup := LoadFunction('DHparams_dup', LFailed);
-    DH_OpenSSL := LoadFunction('DH_OpenSSL', LFailed);
-    DH_set_default_method := LoadFunction('DH_set_default_method', LFailed);
-    DH_get_default_method := LoadFunction('DH_get_default_method', LFailed);
-    DH_set_method := LoadFunction('DH_set_method', LFailed);
-    DH_new_method := LoadFunction('DH_new_method', LFailed);
-    DH_new := LoadFunction('DH_new', LFailed);
-    DH_free := LoadFunction('DH_free', LFailed);
-    DH_up_ref := LoadFunction('DH_up_ref', LFailed);
-    DH_bits := LoadFunction('DH_bits', LFailed);
-    DH_size := LoadFunction('DH_size', LFailed);
-    DH_security_bits := LoadFunction('DH_security_bits', LFailed);
-    DH_set_ex_data := LoadFunction('DH_set_ex_data', LFailed);
-    DH_get_ex_data := LoadFunction('DH_get_ex_data', LFailed);
-    DH_generate_parameters_ex := LoadFunction('DH_generate_parameters_ex', LFailed);
-    DH_check_params_ex := LoadFunction('DH_check_params_ex', LFailed);
-    DH_check_ex := LoadFunction('DH_check_ex', LFailed);
-    DH_check_pub_key_ex := LoadFunction('DH_check_pub_key_ex', LFailed);
-    DH_check_params := LoadFunction('DH_check_params', LFailed);
-    DH_check := LoadFunction('DH_check', LFailed);
-    DH_check_pub_key := LoadFunction('DH_check_pub_key', LFailed);
-    DH_generate_key := LoadFunction('DH_generate_key', LFailed);
-    DH_compute_key := LoadFunction('DH_compute_key', LFailed);
-    DH_compute_key_padded := LoadFunction('DH_compute_key_padded', LFailed);
-    d2i_DHparams := LoadFunction('d2i_DHparams', LFailed);
-    i2d_DHparams := LoadFunction('i2d_DHparams', LFailed);
-    d2i_DHxparams := LoadFunction('d2i_DHxparams', LFailed);
-    i2d_DHxparams := LoadFunction('i2d_DHxparams', LFailed);
-    DHparams_print := LoadFunction('DHparams_print', LFailed);
-    DH_get_1024_160 := LoadFunction('DH_get_1024_160', LFailed);
-    DH_get_2048_224 := LoadFunction('DH_get_2048_224', LFailed);
-    DH_get_2048_256 := LoadFunction('DH_get_2048_256', LFailed);
-    DH_new_by_nid := LoadFunction('DH_new_by_nid', LFailed);
-    DH_get_nid := LoadFunction('DH_get_nid', LFailed);
-    DH_KDF_X9_42 := LoadFunction('DH_KDF_X9_42', LFailed);
-    DH_get0_pqg := LoadFunction('DH_get0_pqg', LFailed);
-    DH_set0_pqg := LoadFunction('DH_set0_pqg', LFailed);
-    DH_get0_key := LoadFunction('DH_get0_key', LFailed);
-    DH_set0_key := LoadFunction('DH_set0_key', LFailed);
-    DH_get0_p := LoadFunction('DH_get0_p', LFailed);
-    DH_get0_q := LoadFunction('DH_get0_q', LFailed);
-    DH_get0_g := LoadFunction('DH_get0_g', LFailed);
-    DH_get0_priv_key := LoadFunction('DH_get0_priv_key', LFailed);
-    DH_get0_pub_key := LoadFunction('DH_get0_pub_key', LFailed);
-    DH_clear_flags := LoadFunction('DH_clear_flags', LFailed);
-    DH_test_flags := LoadFunction('DH_test_flags', LFailed);
-    DH_set_flags := LoadFunction('DH_set_flags', LFailed);
-    DH_get0_engine := LoadFunction('DH_get0_engine', LFailed);
-    DH_get_length := LoadFunction('DH_get_length', LFailed);
-    DH_set_length := LoadFunction('DH_set_length', LFailed);
-    DH_meth_new := LoadFunction('DH_meth_new', LFailed);
-    DH_meth_free := LoadFunction('DH_meth_free', LFailed);
-    DH_meth_dup := LoadFunction('DH_meth_dup', LFailed);
-    DH_meth_get0_name := LoadFunction('DH_meth_get0_name', LFailed);
-    DH_meth_set1_name := LoadFunction('DH_meth_set1_name', LFailed);
-    DH_meth_get_flags := LoadFunction('DH_meth_get_flags', LFailed);
-    DH_meth_set_flags := LoadFunction('DH_meth_set_flags', LFailed);
-    DH_meth_get0_app_data := LoadFunction('DH_meth_get0_app_data', LFailed);
-    DH_meth_set0_app_data := LoadFunction('DH_meth_set0_app_data', LFailed);
-    DH_meth_get_generate_key := LoadFunction('DH_meth_get_generate_key', LFailed);
-    DH_meth_set_generate_key := LoadFunction('DH_meth_set_generate_key', LFailed);
-    DH_meth_get_compute_key := LoadFunction('DH_meth_get_compute_key', LFailed);
-    DH_meth_set_compute_key := LoadFunction('DH_meth_set_compute_key', LFailed);
-    DH_meth_get_bn_mod_exp := LoadFunction('DH_meth_get_bn_mod_exp', LFailed);
-    DH_meth_set_bn_mod_exp := LoadFunction('DH_meth_set_bn_mod_exp', LFailed);
-    DH_meth_get_init := LoadFunction('DH_meth_get_init', LFailed);
-    DH_meth_set_init := LoadFunction('DH_meth_set_init', LFailed);
-    DH_meth_get_finish := LoadFunction('DH_meth_get_finish', LFailed);
-    DH_meth_set_finish := LoadFunction('DH_meth_set_finish', LFailed);
-    DH_meth_get_generate_params := LoadFunction('DH_meth_get_generate_params', LFailed);
-    DH_meth_set_generate_params := LoadFunction('DH_meth_set_generate_params', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  DHparams_dup := LoadFunction('DHparams_dup', AFailed);
+  DH_OpenSSL := LoadFunction('DH_OpenSSL', AFailed);
+  DH_set_default_method := LoadFunction('DH_set_default_method', AFailed);
+  DH_get_default_method := LoadFunction('DH_get_default_method', AFailed);
+  DH_set_method := LoadFunction('DH_set_method', AFailed);
+  DH_new_method := LoadFunction('DH_new_method', AFailed);
+  DH_new := LoadFunction('DH_new', AFailed);
+  DH_free := LoadFunction('DH_free', AFailed);
+  DH_up_ref := LoadFunction('DH_up_ref', AFailed);
+  DH_bits := LoadFunction('DH_bits', AFailed);
+  DH_size := LoadFunction('DH_size', AFailed);
+  DH_security_bits := LoadFunction('DH_security_bits', AFailed);
+  DH_set_ex_data := LoadFunction('DH_set_ex_data', AFailed);
+  DH_get_ex_data := LoadFunction('DH_get_ex_data', AFailed);
+  DH_generate_parameters_ex := LoadFunction('DH_generate_parameters_ex', AFailed);
+  DH_check_params_ex := LoadFunction('DH_check_params_ex', AFailed);
+  DH_check_ex := LoadFunction('DH_check_ex', AFailed);
+  DH_check_pub_key_ex := LoadFunction('DH_check_pub_key_ex', AFailed);
+  DH_check_params := LoadFunction('DH_check_params', AFailed);
+  DH_check := LoadFunction('DH_check', AFailed);
+  DH_check_pub_key := LoadFunction('DH_check_pub_key', AFailed);
+  DH_generate_key := LoadFunction('DH_generate_key', AFailed);
+  DH_compute_key := LoadFunction('DH_compute_key', AFailed);
+  DH_compute_key_padded := LoadFunction('DH_compute_key_padded', AFailed);
+  d2i_DHparams := LoadFunction('d2i_DHparams', AFailed);
+  i2d_DHparams := LoadFunction('i2d_DHparams', AFailed);
+  d2i_DHxparams := LoadFunction('d2i_DHxparams', AFailed);
+  i2d_DHxparams := LoadFunction('i2d_DHxparams', AFailed);
+  DHparams_print := LoadFunction('DHparams_print', AFailed);
+  DH_get_1024_160 := LoadFunction('DH_get_1024_160', AFailed);
+  DH_get_2048_224 := LoadFunction('DH_get_2048_224', AFailed);
+  DH_get_2048_256 := LoadFunction('DH_get_2048_256', AFailed);
+  DH_new_by_nid := LoadFunction('DH_new_by_nid', AFailed);
+  DH_get_nid := LoadFunction('DH_get_nid', AFailed);
+  DH_KDF_X9_42 := LoadFunction('DH_KDF_X9_42', AFailed);
+  DH_get0_pqg := LoadFunction('DH_get0_pqg', AFailed);
+  DH_set0_pqg := LoadFunction('DH_set0_pqg', AFailed);
+  DH_get0_key := LoadFunction('DH_get0_key', AFailed);
+  DH_set0_key := LoadFunction('DH_set0_key', AFailed);
+  DH_get0_p := LoadFunction('DH_get0_p', AFailed);
+  DH_get0_q := LoadFunction('DH_get0_q', AFailed);
+  DH_get0_g := LoadFunction('DH_get0_g', AFailed);
+  DH_get0_priv_key := LoadFunction('DH_get0_priv_key', AFailed);
+  DH_get0_pub_key := LoadFunction('DH_get0_pub_key', AFailed);
+  DH_clear_flags := LoadFunction('DH_clear_flags', AFailed);
+  DH_test_flags := LoadFunction('DH_test_flags', AFailed);
+  DH_set_flags := LoadFunction('DH_set_flags', AFailed);
+  DH_get0_engine := LoadFunction('DH_get0_engine', AFailed);
+  DH_get_length := LoadFunction('DH_get_length', AFailed);
+  DH_set_length := LoadFunction('DH_set_length', AFailed);
+  DH_meth_new := LoadFunction('DH_meth_new', AFailed);
+  DH_meth_free := LoadFunction('DH_meth_free', AFailed);
+  DH_meth_dup := LoadFunction('DH_meth_dup', AFailed);
+  DH_meth_get0_name := LoadFunction('DH_meth_get0_name', AFailed);
+  DH_meth_set1_name := LoadFunction('DH_meth_set1_name', AFailed);
+  DH_meth_get_flags := LoadFunction('DH_meth_get_flags', AFailed);
+  DH_meth_set_flags := LoadFunction('DH_meth_set_flags', AFailed);
+  DH_meth_get0_app_data := LoadFunction('DH_meth_get0_app_data', AFailed);
+  DH_meth_set0_app_data := LoadFunction('DH_meth_set0_app_data', AFailed);
+  DH_meth_get_generate_key := LoadFunction('DH_meth_get_generate_key', AFailed);
+  DH_meth_set_generate_key := LoadFunction('DH_meth_set_generate_key', AFailed);
+  DH_meth_get_compute_key := LoadFunction('DH_meth_get_compute_key', AFailed);
+  DH_meth_set_compute_key := LoadFunction('DH_meth_set_compute_key', AFailed);
+  DH_meth_get_bn_mod_exp := LoadFunction('DH_meth_get_bn_mod_exp', AFailed);
+  DH_meth_set_bn_mod_exp := LoadFunction('DH_meth_set_bn_mod_exp', AFailed);
+  DH_meth_get_init := LoadFunction('DH_meth_get_init', AFailed);
+  DH_meth_set_init := LoadFunction('DH_meth_set_init', AFailed);
+  DH_meth_get_finish := LoadFunction('DH_meth_get_finish', AFailed);
+  DH_meth_set_finish := LoadFunction('DH_meth_set_finish', AFailed);
+  DH_meth_get_generate_params := LoadFunction('DH_meth_get_generate_params', AFailed);
+  DH_meth_set_generate_params := LoadFunction('DH_meth_set_generate_params', AFailed);
 end;
 
 procedure UnLoad;

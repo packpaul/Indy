@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 06.04.2020 16:48:38
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_crypto;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -166,7 +167,7 @@ function OPENSSL_secure_actual_size(ptr: Pointer): TIdC_SIZET;
 {$ENDREGION}
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -358,94 +359,82 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    CRYPTO_THREAD_lock_new := LoadFunction('CRYPTO_THREAD_lock_new', LFailed);
-    CRYPTO_THREAD_read_lock := LoadFunction('CRYPTO_THREAD_read_lock', LFailed);
-    CRYPTO_THREAD_write_lock := LoadFunction('CRYPTO_THREAD_write_lock', LFailed);
-    CRYPTO_THREAD_unlock := LoadFunction('CRYPTO_THREAD_unlock', LFailed);
-    CRYPTO_THREAD_lock_free := LoadFunction('CRYPTO_THREAD_lock_free', LFailed);
-    CRYPTO_atomic_add := LoadFunction('CRYPTO_atomic_add', LFailed);
-    CRYPTO_mem_ctrl := LoadFunction('CRYPTO_mem_ctrl', LFailed);
-    OPENSSL_strlcpy := LoadFunction('OPENSSL_strlcpy', LFailed);
-    OPENSSL_strlcat := LoadFunction('OPENSSL_strlcat', LFailed);
-    OPENSSL_strnlen := LoadFunction('OPENSSL_strnlen', LFailed);
-    OPENSSL_buf2hexstr := LoadFunction('OPENSSL_buf2hexstr', LFailed);
-    OPENSSL_hexstr2buf := LoadFunction('OPENSSL_hexstr2buf', LFailed);
-    OPENSSL_hexchar2int := LoadFunction('OPENSSL_hexchar2int', LFailed);
-    OpenSSL_version_num := LoadFunction('OpenSSL_version_num', LFailed);
-    OpenSSL_version := LoadFunction('OpenSSL_version', LFailed);
-    OPENSSL_issetugid := LoadFunction('OPENSSL_issetugid', LFailed);
-    CRYPTO_new_ex_data := LoadFunction('CRYPTO_new_ex_data', LFailed);
-    CRYPTO_dup_ex_data := LoadFunction('CRYPTO_dup_ex_data', LFailed);
-    CRYPTO_free_ex_data := LoadFunction('CRYPTO_free_ex_data', LFailed);
-    CRYPTO_set_ex_data := LoadFunction('CRYPTO_set_ex_data', LFailed);
-    CRYPTO_get_ex_data := LoadFunction('CRYPTO_get_ex_data', LFailed);
-    CRYPTO_malloc := LoadFunction('CRYPTO_malloc', LFailed);
-    CRYPTO_zalloc := LoadFunction('CRYPTO_zalloc', LFailed);
-    CRYPTO_memdup := LoadFunction('CRYPTO_memdup', LFailed);
-    CRYPTO_strdup := LoadFunction('CRYPTO_strdup', LFailed);
-    CRYPTO_strndup := LoadFunction('CRYPTO_strndup', LFailed);
-    CRYPTO_free := LoadFunction('CRYPTO_free', LFailed);
-    CRYPTO_clear_free := LoadFunction('CRYPTO_clear_free', LFailed);
-    CRYPTO_realloc := LoadFunction('CRYPTO_realloc', LFailed);
-    CRYPTO_clear_realloc := LoadFunction('CRYPTO_clear_realloc', LFailed);
-    CRYPTO_secure_malloc_init := LoadFunction('CRYPTO_secure_malloc_init', LFailed);
-    CRYPTO_secure_malloc_done := LoadFunction('CRYPTO_secure_malloc_done', LFailed);
-    CRYPTO_secure_malloc := LoadFunction('CRYPTO_secure_malloc', LFailed);
-    CRYPTO_secure_zalloc := LoadFunction('CRYPTO_secure_zalloc', LFailed);
-    CRYPTO_secure_free := LoadFunction('CRYPTO_secure_free', LFailed);
-    CRYPTO_secure_clear_free := LoadFunction('CRYPTO_secure_clear_free', LFailed);
-    CRYPTO_secure_allocated := LoadFunction('CRYPTO_secure_allocated', LFailed);
-    CRYPTO_secure_malloc_initialized := LoadFunction('CRYPTO_secure_malloc_initialized', LFailed);
-    CRYPTO_secure_actual_size := LoadFunction('CRYPTO_secure_actual_size', LFailed);
-    CRYPTO_secure_used := LoadFunction('CRYPTO_secure_used', LFailed);
-    OPENSSL_cleanse := LoadFunction('OPENSSL_cleanse', LFailed);
-    CRYPTO_mem_debug_push := LoadFunction('CRYPTO_mem_debug_push', LFailed);
-    CRYPTO_mem_debug_pop := LoadFunction('CRYPTO_mem_debug_pop', LFailed);
-    CRYPTO_get_alloc_counts := LoadFunction('CRYPTO_get_alloc_counts', LFailed);
-    CRYPTO_mem_debug_malloc := LoadFunction('CRYPTO_mem_debug_malloc', LFailed);
-    CRYPTO_mem_debug_realloc := LoadFunction('CRYPTO_mem_debug_realloc', LFailed);
-    CRYPTO_mem_debug_free := LoadFunction('CRYPTO_mem_debug_free', LFailed);
-    CRYPTO_mem_leaks_cb := LoadFunction('CRYPTO_mem_leaks_cb', LFailed);
-    CRYPTO_mem_leaks := LoadFunction('CRYPTO_mem_leaks', LFailed);
-    OPENSSL_isservice := LoadFunction('OPENSSL_isservice', LFailed);
-    FIPS_mode := LoadFunction('FIPS_mode', LFailed);
-    FIPS_mode_set := LoadFunction('FIPS_mode_set', LFailed);
-    OPENSSL_init := LoadFunction('OPENSSL_init', LFailed);
-    CRYPTO_memcmp := LoadFunction('CRYPTO_memcmp', LFailed);
-    OPENSSL_cleanup := LoadFunction('OPENSSL_cleanup', LFailed);
-    OPENSSL_init_crypto := LoadFunction('OPENSSL_init_crypto', LFailed);
-    OPENSSL_thread_stop := LoadFunction('OPENSSL_thread_stop', LFailed);
-    OPENSSL_INIT_new := LoadFunction('OPENSSL_INIT_new', LFailed);
-    OPENSSL_INIT_free := LoadFunction('OPENSSL_INIT_free', LFailed);
-    CRYPTO_THREAD_run_once := LoadFunction('CRYPTO_THREAD_run_once', LFailed);
-    CRYPTO_THREAD_get_local := LoadFunction('CRYPTO_THREAD_get_local', LFailed);
-    CRYPTO_THREAD_set_local := LoadFunction('CRYPTO_THREAD_set_local', LFailed);
-    CRYPTO_THREAD_cleanup_local := LoadFunction('CRYPTO_THREAD_cleanup_local', LFailed);
-    CRYPTO_THREAD_get_current_id := LoadFunction('CRYPTO_THREAD_get_current_id', LFailed);
-    CRYPTO_THREAD_compare_id := LoadFunction('CRYPTO_THREAD_compare_id', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  CRYPTO_THREAD_lock_new := LoadFunction('CRYPTO_THREAD_lock_new', AFailed);
+  CRYPTO_THREAD_read_lock := LoadFunction('CRYPTO_THREAD_read_lock', AFailed);
+  CRYPTO_THREAD_write_lock := LoadFunction('CRYPTO_THREAD_write_lock', AFailed);
+  CRYPTO_THREAD_unlock := LoadFunction('CRYPTO_THREAD_unlock', AFailed);
+  CRYPTO_THREAD_lock_free := LoadFunction('CRYPTO_THREAD_lock_free', AFailed);
+  CRYPTO_atomic_add := LoadFunction('CRYPTO_atomic_add', AFailed);
+  CRYPTO_mem_ctrl := LoadFunction('CRYPTO_mem_ctrl', AFailed);
+  OPENSSL_strlcpy := LoadFunction('OPENSSL_strlcpy', AFailed);
+  OPENSSL_strlcat := LoadFunction('OPENSSL_strlcat', AFailed);
+  OPENSSL_strnlen := LoadFunction('OPENSSL_strnlen', AFailed);
+  OPENSSL_buf2hexstr := LoadFunction('OPENSSL_buf2hexstr', AFailed);
+  OPENSSL_hexstr2buf := LoadFunction('OPENSSL_hexstr2buf', AFailed);
+  OPENSSL_hexchar2int := LoadFunction('OPENSSL_hexchar2int', AFailed);
+  OpenSSL_version_num := LoadFunction('OpenSSL_version_num', AFailed);
+  OpenSSL_version := LoadFunction('OpenSSL_version', AFailed);
+  OPENSSL_issetugid := LoadFunction('OPENSSL_issetugid', AFailed);
+  CRYPTO_new_ex_data := LoadFunction('CRYPTO_new_ex_data', AFailed);
+  CRYPTO_dup_ex_data := LoadFunction('CRYPTO_dup_ex_data', AFailed);
+  CRYPTO_free_ex_data := LoadFunction('CRYPTO_free_ex_data', AFailed);
+  CRYPTO_set_ex_data := LoadFunction('CRYPTO_set_ex_data', AFailed);
+  CRYPTO_get_ex_data := LoadFunction('CRYPTO_get_ex_data', AFailed);
+  CRYPTO_malloc := LoadFunction('CRYPTO_malloc', AFailed);
+  CRYPTO_zalloc := LoadFunction('CRYPTO_zalloc', AFailed);
+  CRYPTO_memdup := LoadFunction('CRYPTO_memdup', AFailed);
+  CRYPTO_strdup := LoadFunction('CRYPTO_strdup', AFailed);
+  CRYPTO_strndup := LoadFunction('CRYPTO_strndup', AFailed);
+  CRYPTO_free := LoadFunction('CRYPTO_free', AFailed);
+  CRYPTO_clear_free := LoadFunction('CRYPTO_clear_free', AFailed);
+  CRYPTO_realloc := LoadFunction('CRYPTO_realloc', AFailed);
+  CRYPTO_clear_realloc := LoadFunction('CRYPTO_clear_realloc', AFailed);
+  CRYPTO_secure_malloc_init := LoadFunction('CRYPTO_secure_malloc_init', AFailed);
+  CRYPTO_secure_malloc_done := LoadFunction('CRYPTO_secure_malloc_done', AFailed);
+  CRYPTO_secure_malloc := LoadFunction('CRYPTO_secure_malloc', AFailed);
+  CRYPTO_secure_zalloc := LoadFunction('CRYPTO_secure_zalloc', AFailed);
+  CRYPTO_secure_free := LoadFunction('CRYPTO_secure_free', AFailed);
+  CRYPTO_secure_clear_free := LoadFunction('CRYPTO_secure_clear_free', AFailed);
+  CRYPTO_secure_allocated := LoadFunction('CRYPTO_secure_allocated', AFailed);
+  CRYPTO_secure_malloc_initialized := LoadFunction('CRYPTO_secure_malloc_initialized', AFailed);
+  CRYPTO_secure_actual_size := LoadFunction('CRYPTO_secure_actual_size', AFailed);
+  CRYPTO_secure_used := LoadFunction('CRYPTO_secure_used', AFailed);
+  OPENSSL_cleanse := LoadFunction('OPENSSL_cleanse', AFailed);
+  CRYPTO_mem_debug_push := LoadFunction('CRYPTO_mem_debug_push', AFailed);
+  CRYPTO_mem_debug_pop := LoadFunction('CRYPTO_mem_debug_pop', AFailed);
+  CRYPTO_get_alloc_counts := LoadFunction('CRYPTO_get_alloc_counts', AFailed);
+  CRYPTO_mem_debug_malloc := LoadFunction('CRYPTO_mem_debug_malloc', AFailed);
+  CRYPTO_mem_debug_realloc := LoadFunction('CRYPTO_mem_debug_realloc', AFailed);
+  CRYPTO_mem_debug_free := LoadFunction('CRYPTO_mem_debug_free', AFailed);
+  CRYPTO_mem_leaks_cb := LoadFunction('CRYPTO_mem_leaks_cb', AFailed);
+  CRYPTO_mem_leaks := LoadFunction('CRYPTO_mem_leaks', AFailed);
+  OPENSSL_isservice := LoadFunction('OPENSSL_isservice', AFailed);
+  FIPS_mode := LoadFunction('FIPS_mode', AFailed);
+  FIPS_mode_set := LoadFunction('FIPS_mode_set', AFailed);
+  OPENSSL_init := LoadFunction('OPENSSL_init', AFailed);
+  CRYPTO_memcmp := LoadFunction('CRYPTO_memcmp', AFailed);
+  OPENSSL_cleanup := LoadFunction('OPENSSL_cleanup', AFailed);
+  OPENSSL_init_crypto := LoadFunction('OPENSSL_init_crypto', AFailed);
+  OPENSSL_thread_stop := LoadFunction('OPENSSL_thread_stop', AFailed);
+  OPENSSL_INIT_new := LoadFunction('OPENSSL_INIT_new', AFailed);
+  OPENSSL_INIT_free := LoadFunction('OPENSSL_INIT_free', AFailed);
+  CRYPTO_THREAD_run_once := LoadFunction('CRYPTO_THREAD_run_once', AFailed);
+  CRYPTO_THREAD_get_local := LoadFunction('CRYPTO_THREAD_get_local', AFailed);
+  CRYPTO_THREAD_set_local := LoadFunction('CRYPTO_THREAD_set_local', AFailed);
+  CRYPTO_THREAD_cleanup_local := LoadFunction('CRYPTO_THREAD_cleanup_local', AFailed);
+  CRYPTO_THREAD_get_current_id := LoadFunction('CRYPTO_THREAD_get_current_id', AFailed);
+  CRYPTO_THREAD_compare_id := LoadFunction('CRYPTO_THREAD_compare_id', AFailed);
 end;
 
 procedure UnLoad;

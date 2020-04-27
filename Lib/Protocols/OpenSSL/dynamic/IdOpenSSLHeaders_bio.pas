@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_bio;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -361,7 +362,7 @@ function BIO_do_accept(b: PBIO): TIdC_LONG;
 function BIO_do_handshake(b: PBIO): TIdC_LONG;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -743,154 +744,142 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    BIO_get_new_index := LoadFunction('BIO_get_new_index', LFailed);
-    BIO_set_flags := LoadFunction('BIO_set_flags', LFailed);
-    BIO_test_flags := LoadFunction('BIO_test_flags', LFailed);
-    BIO_clear_flags := LoadFunction('BIO_clear_flags', LFailed);
-    BIO_get_callback := LoadFunction('BIO_get_callback', LFailed);
-    BIO_set_callback := LoadFunction('BIO_set_callback', LFailed);
-    BIO_get_callback_ex := LoadFunction('BIO_get_callback_ex', LFailed);
-    BIO_set_callback_ex := LoadFunction('BIO_set_callback_ex', LFailed);
-    BIO_get_callback_arg := LoadFunction('BIO_get_callback_arg', LFailed);
-    BIO_set_callback_arg := LoadFunction('BIO_set_callback_arg', LFailed);
-    BIO_method_name := LoadFunction('BIO_method_name', LFailed);
-    BIO_method_type := LoadFunction('BIO_method_type', LFailed);
-    BIO_ctrl_pending := LoadFunction('BIO_ctrl_pending', LFailed);
-    BIO_ctrl_wpending := LoadFunction('BIO_ctrl_wpending', LFailed);
-    BIO_ctrl_get_write_guarantee := LoadFunction('BIO_ctrl_get_write_guarantee', LFailed);
-    BIO_ctrl_get_read_request := LoadFunction('BIO_ctrl_get_read_request', LFailed);
-    BIO_ctrl_reset_read_request := LoadFunction('BIO_ctrl_reset_read_request', LFailed);
-    BIO_set_ex_data := LoadFunction('BIO_set_ex_data', LFailed);
-    BIO_get_ex_data := LoadFunction('BIO_get_ex_data', LFailed);
-    BIO_number_read := LoadFunction('BIO_number_read', LFailed);
-    BIO_number_written := LoadFunction('BIO_number_written', LFailed);
-    BIO_s_file := LoadFunction('BIO_s_file', LFailed);
-    BIO_new_file := LoadFunction('BIO_new_file', LFailed);
-    BIO_new := LoadFunction('BIO_new', LFailed);
-    BIO_free := LoadFunction('BIO_free', LFailed);
-    BIO_set_data := LoadFunction('BIO_set_data', LFailed);
-    BIO_get_data := LoadFunction('BIO_get_data', LFailed);
-    BIO_set_init := LoadFunction('BIO_set_init', LFailed);
-    BIO_get_init := LoadFunction('BIO_get_init', LFailed);
-    BIO_set_shutdown := LoadFunction('BIO_set_shutdown', LFailed);
-    BIO_get_shutdown := LoadFunction('BIO_get_shutdown', LFailed);
-    BIO_vfree := LoadFunction('BIO_vfree', LFailed);
-    BIO_up_ref := LoadFunction('BIO_up_ref', LFailed);
-    BIO_read := LoadFunction('BIO_read', LFailed);
-    BIO_read_ex := LoadFunction('BIO_read_ex', LFailed);
-    BIO_gets := LoadFunction('BIO_gets', LFailed);
-    BIO_write := LoadFunction('BIO_write', LFailed);
-    BIO_write_ex := LoadFunction('BIO_write_ex', LFailed);
-    BIO_puts := LoadFunction('BIO_puts', LFailed);
-    BIO_indent := LoadFunction('BIO_indent', LFailed);
-    BIO_ctrl := LoadFunction('BIO_ctrl', LFailed);
-    BIO_callback_ctrl := LoadFunction('BIO_callback_ctrl', LFailed);
-    BIO_ptr_ctrl := LoadFunction('BIO_ptr_ctrl', LFailed);
-    BIO_int_ctrl := LoadFunction('BIO_int_ctrl', LFailed);
-    BIO_push := LoadFunction('BIO_push', LFailed);
-    BIO_pop := LoadFunction('BIO_pop', LFailed);
-    BIO_free_all := LoadFunction('BIO_free_all', LFailed);
-    BIO_find_type := LoadFunction('BIO_find_type', LFailed);
-    BIO_next := LoadFunction('BIO_next', LFailed);
-    BIO_set_next := LoadFunction('BIO_set_next', LFailed);
-    BIO_get_retry_BIO := LoadFunction('BIO_get_retry_BIO', LFailed);
-    BIO_get_retry_reason := LoadFunction('BIO_get_retry_reason', LFailed);
-    BIO_set_retry_reason := LoadFunction('BIO_set_retry_reason', LFailed);
-    BIO_dup_chain := LoadFunction('BIO_dup_chain', LFailed);
-    BIO_nread0 := LoadFunction('BIO_nread0', LFailed);
-    BIO_nread := LoadFunction('BIO_nread', LFailed);
-    BIO_nwrite0 := LoadFunction('BIO_nwrite0', LFailed);
-    BIO_nwrite := LoadFunction('BIO_nwrite', LFailed);
-    BIO_debug_callback := LoadFunction('BIO_debug_callback', LFailed);
-    BIO_s_mem := LoadFunction('BIO_s_mem', LFailed);
-    BIO_s_secmem := LoadFunction('BIO_s_secmem', LFailed);
-    BIO_new_mem_buf := LoadFunction('BIO_new_mem_buf', LFailed);
-    BIO_s_socket := LoadFunction('BIO_s_socket', LFailed);
-    BIO_s_connect := LoadFunction('BIO_s_connect', LFailed);
-    BIO_s_accept := LoadFunction('BIO_s_accept', LFailed);
-    BIO_s_fd := LoadFunction('BIO_s_fd', LFailed);
-    BIO_s_log := LoadFunction('BIO_s_log', LFailed);
-    BIO_s_bio := LoadFunction('BIO_s_bio', LFailed);
-    BIO_s_null := LoadFunction('BIO_s_null', LFailed);
-    BIO_f_null := LoadFunction('BIO_f_null', LFailed);
-    BIO_f_buffer := LoadFunction('BIO_f_buffer', LFailed);
-    BIO_f_linebuffer := LoadFunction('BIO_f_linebuffer', LFailed);
-    BIO_f_nbio_test := LoadFunction('BIO_f_nbio_test', LFailed);
-    BIO_s_datagram := LoadFunction('BIO_s_datagram', LFailed);
-    BIO_dgram_non_fatal_error := LoadFunction('BIO_dgram_non_fatal_error', LFailed);
-    BIO_new_dgram := LoadFunction('BIO_new_dgram', LFailed);
-    BIO_s_datagram_sctp := LoadFunction('BIO_s_datagram_sctp', LFailed);
-    BIO_new_dgram_sctp := LoadFunction('BIO_new_dgram_sctp', LFailed);
-    BIO_dgram_is_sctp := LoadFunction('BIO_dgram_is_sctp', LFailed);
-    BIO_dgram_sctp_wait_for_dry := LoadFunction('BIO_dgram_sctp_wait_for_dry', LFailed);
-    BIO_dgram_sctp_msg_waiting := LoadFunction('BIO_dgram_sctp_msg_waiting', LFailed);
-    BIO_sock_should_retry := LoadFunction('BIO_sock_should_retry', LFailed);
-    BIO_sock_non_fatal_error := LoadFunction('BIO_sock_non_fatal_error', LFailed);
-    BIO_fd_should_retry := LoadFunction('BIO_fd_should_retry', LFailed);
-    BIO_fd_non_fatal_error := LoadFunction('BIO_fd_non_fatal_error', LFailed);
-    BIO_dump := LoadFunction('BIO_dump', LFailed);
-    BIO_dump_indent := LoadFunction('BIO_dump_indent', LFailed);
-    BIO_hex_string := LoadFunction('BIO_hex_string', LFailed);
-    BIO_ADDR_new := LoadFunction('BIO_ADDR_new', LFailed);
-    BIO_ADDR_rawmake := LoadFunction('BIO_ADDR_rawmake', LFailed);
-    BIO_ADDR_free := LoadFunction('BIO_ADDR_free', LFailed);
-    BIO_ADDR_clear := LoadFunction('BIO_ADDR_clear', LFailed);
-    BIO_ADDR_family := LoadFunction('BIO_ADDR_family', LFailed);
-    BIO_ADDR_rawaddress := LoadFunction('BIO_ADDR_rawaddress', LFailed);
-    BIO_ADDR_rawport := LoadFunction('BIO_ADDR_rawport', LFailed);
-    BIO_ADDR_hostname_string := LoadFunction('BIO_ADDR_hostname_string', LFailed);
-    BIO_ADDR_service_string := LoadFunction('BIO_ADDR_service_string', LFailed);
-    BIO_ADDR_path_string := LoadFunction('BIO_ADDR_path_string', LFailed);
-    BIO_ADDRINFO_next := LoadFunction('BIO_ADDRINFO_next', LFailed);
-    BIO_ADDRINFO_family := LoadFunction('BIO_ADDRINFO_family', LFailed);
-    BIO_ADDRINFO_socktype := LoadFunction('BIO_ADDRINFO_socktype', LFailed);
-    BIO_ADDRINFO_protocol := LoadFunction('BIO_ADDRINFO_protocol', LFailed);
-    BIO_ADDRINFO_address := LoadFunction('BIO_ADDRINFO_address', LFailed);
-    BIO_ADDRINFO_free := LoadFunction('BIO_ADDRINFO_free', LFailed);
-    BIO_parse_hostserv := LoadFunction('BIO_parse_hostserv', LFailed);
-    BIO_lookup := LoadFunction('BIO_lookup', LFailed);
-    BIO_lookup_ex := LoadFunction('BIO_lookup_ex', LFailed);
-    BIO_sock_error := LoadFunction('BIO_sock_error', LFailed);
-    BIO_socket_ioctl := LoadFunction('BIO_socket_ioctl', LFailed);
-    BIO_socket_nbio := LoadFunction('BIO_socket_nbio', LFailed);
-    BIO_sock_init := LoadFunction('BIO_sock_init', LFailed);
-    BIO_set_tcp_ndelay := LoadFunction('BIO_set_tcp_ndelay', LFailed);
-    BIO_sock_info := LoadFunction('BIO_sock_info', LFailed);
-    BIO_socket := LoadFunction('BIO_socket', LFailed);
-    BIO_connect := LoadFunction('BIO_connect', LFailed);
-    BIO_bind := LoadFunction('BIO_bind', LFailed);
-    BIO_listen := LoadFunction('BIO_listen', LFailed);
-    BIO_accept_ex := LoadFunction('BIO_accept_ex', LFailed);
-    BIO_closesocket := LoadFunction('BIO_closesocket', LFailed);
-    BIO_new_socket := LoadFunction('BIO_new_socket', LFailed);
-    BIO_new_connect := LoadFunction('BIO_new_connect', LFailed);
-    BIO_new_accept := LoadFunction('BIO_new_accept', LFailed);
-    BIO_new_fd := LoadFunction('BIO_new_fd', LFailed);
-    BIO_new_bio_pair := LoadFunction('BIO_new_bio_pair', LFailed);
-    BIO_copy_next_retry := LoadFunction('BIO_copy_next_retry', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  BIO_get_new_index := LoadFunction('BIO_get_new_index', AFailed);
+  BIO_set_flags := LoadFunction('BIO_set_flags', AFailed);
+  BIO_test_flags := LoadFunction('BIO_test_flags', AFailed);
+  BIO_clear_flags := LoadFunction('BIO_clear_flags', AFailed);
+  BIO_get_callback := LoadFunction('BIO_get_callback', AFailed);
+  BIO_set_callback := LoadFunction('BIO_set_callback', AFailed);
+  BIO_get_callback_ex := LoadFunction('BIO_get_callback_ex', AFailed);
+  BIO_set_callback_ex := LoadFunction('BIO_set_callback_ex', AFailed);
+  BIO_get_callback_arg := LoadFunction('BIO_get_callback_arg', AFailed);
+  BIO_set_callback_arg := LoadFunction('BIO_set_callback_arg', AFailed);
+  BIO_method_name := LoadFunction('BIO_method_name', AFailed);
+  BIO_method_type := LoadFunction('BIO_method_type', AFailed);
+  BIO_ctrl_pending := LoadFunction('BIO_ctrl_pending', AFailed);
+  BIO_ctrl_wpending := LoadFunction('BIO_ctrl_wpending', AFailed);
+  BIO_ctrl_get_write_guarantee := LoadFunction('BIO_ctrl_get_write_guarantee', AFailed);
+  BIO_ctrl_get_read_request := LoadFunction('BIO_ctrl_get_read_request', AFailed);
+  BIO_ctrl_reset_read_request := LoadFunction('BIO_ctrl_reset_read_request', AFailed);
+  BIO_set_ex_data := LoadFunction('BIO_set_ex_data', AFailed);
+  BIO_get_ex_data := LoadFunction('BIO_get_ex_data', AFailed);
+  BIO_number_read := LoadFunction('BIO_number_read', AFailed);
+  BIO_number_written := LoadFunction('BIO_number_written', AFailed);
+  BIO_s_file := LoadFunction('BIO_s_file', AFailed);
+  BIO_new_file := LoadFunction('BIO_new_file', AFailed);
+  BIO_new := LoadFunction('BIO_new', AFailed);
+  BIO_free := LoadFunction('BIO_free', AFailed);
+  BIO_set_data := LoadFunction('BIO_set_data', AFailed);
+  BIO_get_data := LoadFunction('BIO_get_data', AFailed);
+  BIO_set_init := LoadFunction('BIO_set_init', AFailed);
+  BIO_get_init := LoadFunction('BIO_get_init', AFailed);
+  BIO_set_shutdown := LoadFunction('BIO_set_shutdown', AFailed);
+  BIO_get_shutdown := LoadFunction('BIO_get_shutdown', AFailed);
+  BIO_vfree := LoadFunction('BIO_vfree', AFailed);
+  BIO_up_ref := LoadFunction('BIO_up_ref', AFailed);
+  BIO_read := LoadFunction('BIO_read', AFailed);
+  BIO_read_ex := LoadFunction('BIO_read_ex', AFailed);
+  BIO_gets := LoadFunction('BIO_gets', AFailed);
+  BIO_write := LoadFunction('BIO_write', AFailed);
+  BIO_write_ex := LoadFunction('BIO_write_ex', AFailed);
+  BIO_puts := LoadFunction('BIO_puts', AFailed);
+  BIO_indent := LoadFunction('BIO_indent', AFailed);
+  BIO_ctrl := LoadFunction('BIO_ctrl', AFailed);
+  BIO_callback_ctrl := LoadFunction('BIO_callback_ctrl', AFailed);
+  BIO_ptr_ctrl := LoadFunction('BIO_ptr_ctrl', AFailed);
+  BIO_int_ctrl := LoadFunction('BIO_int_ctrl', AFailed);
+  BIO_push := LoadFunction('BIO_push', AFailed);
+  BIO_pop := LoadFunction('BIO_pop', AFailed);
+  BIO_free_all := LoadFunction('BIO_free_all', AFailed);
+  BIO_find_type := LoadFunction('BIO_find_type', AFailed);
+  BIO_next := LoadFunction('BIO_next', AFailed);
+  BIO_set_next := LoadFunction('BIO_set_next', AFailed);
+  BIO_get_retry_BIO := LoadFunction('BIO_get_retry_BIO', AFailed);
+  BIO_get_retry_reason := LoadFunction('BIO_get_retry_reason', AFailed);
+  BIO_set_retry_reason := LoadFunction('BIO_set_retry_reason', AFailed);
+  BIO_dup_chain := LoadFunction('BIO_dup_chain', AFailed);
+  BIO_nread0 := LoadFunction('BIO_nread0', AFailed);
+  BIO_nread := LoadFunction('BIO_nread', AFailed);
+  BIO_nwrite0 := LoadFunction('BIO_nwrite0', AFailed);
+  BIO_nwrite := LoadFunction('BIO_nwrite', AFailed);
+  BIO_debug_callback := LoadFunction('BIO_debug_callback', AFailed);
+  BIO_s_mem := LoadFunction('BIO_s_mem', AFailed);
+  BIO_s_secmem := LoadFunction('BIO_s_secmem', AFailed);
+  BIO_new_mem_buf := LoadFunction('BIO_new_mem_buf', AFailed);
+  BIO_s_socket := LoadFunction('BIO_s_socket', AFailed);
+  BIO_s_connect := LoadFunction('BIO_s_connect', AFailed);
+  BIO_s_accept := LoadFunction('BIO_s_accept', AFailed);
+  BIO_s_fd := LoadFunction('BIO_s_fd', AFailed);
+  BIO_s_log := LoadFunction('BIO_s_log', AFailed);
+  BIO_s_bio := LoadFunction('BIO_s_bio', AFailed);
+  BIO_s_null := LoadFunction('BIO_s_null', AFailed);
+  BIO_f_null := LoadFunction('BIO_f_null', AFailed);
+  BIO_f_buffer := LoadFunction('BIO_f_buffer', AFailed);
+  BIO_f_linebuffer := LoadFunction('BIO_f_linebuffer', AFailed);
+  BIO_f_nbio_test := LoadFunction('BIO_f_nbio_test', AFailed);
+  BIO_s_datagram := LoadFunction('BIO_s_datagram', AFailed);
+  BIO_dgram_non_fatal_error := LoadFunction('BIO_dgram_non_fatal_error', AFailed);
+  BIO_new_dgram := LoadFunction('BIO_new_dgram', AFailed);
+  BIO_s_datagram_sctp := LoadFunction('BIO_s_datagram_sctp', AFailed);
+  BIO_new_dgram_sctp := LoadFunction('BIO_new_dgram_sctp', AFailed);
+  BIO_dgram_is_sctp := LoadFunction('BIO_dgram_is_sctp', AFailed);
+  BIO_dgram_sctp_wait_for_dry := LoadFunction('BIO_dgram_sctp_wait_for_dry', AFailed);
+  BIO_dgram_sctp_msg_waiting := LoadFunction('BIO_dgram_sctp_msg_waiting', AFailed);
+  BIO_sock_should_retry := LoadFunction('BIO_sock_should_retry', AFailed);
+  BIO_sock_non_fatal_error := LoadFunction('BIO_sock_non_fatal_error', AFailed);
+  BIO_fd_should_retry := LoadFunction('BIO_fd_should_retry', AFailed);
+  BIO_fd_non_fatal_error := LoadFunction('BIO_fd_non_fatal_error', AFailed);
+  BIO_dump := LoadFunction('BIO_dump', AFailed);
+  BIO_dump_indent := LoadFunction('BIO_dump_indent', AFailed);
+  BIO_hex_string := LoadFunction('BIO_hex_string', AFailed);
+  BIO_ADDR_new := LoadFunction('BIO_ADDR_new', AFailed);
+  BIO_ADDR_rawmake := LoadFunction('BIO_ADDR_rawmake', AFailed);
+  BIO_ADDR_free := LoadFunction('BIO_ADDR_free', AFailed);
+  BIO_ADDR_clear := LoadFunction('BIO_ADDR_clear', AFailed);
+  BIO_ADDR_family := LoadFunction('BIO_ADDR_family', AFailed);
+  BIO_ADDR_rawaddress := LoadFunction('BIO_ADDR_rawaddress', AFailed);
+  BIO_ADDR_rawport := LoadFunction('BIO_ADDR_rawport', AFailed);
+  BIO_ADDR_hostname_string := LoadFunction('BIO_ADDR_hostname_string', AFailed);
+  BIO_ADDR_service_string := LoadFunction('BIO_ADDR_service_string', AFailed);
+  BIO_ADDR_path_string := LoadFunction('BIO_ADDR_path_string', AFailed);
+  BIO_ADDRINFO_next := LoadFunction('BIO_ADDRINFO_next', AFailed);
+  BIO_ADDRINFO_family := LoadFunction('BIO_ADDRINFO_family', AFailed);
+  BIO_ADDRINFO_socktype := LoadFunction('BIO_ADDRINFO_socktype', AFailed);
+  BIO_ADDRINFO_protocol := LoadFunction('BIO_ADDRINFO_protocol', AFailed);
+  BIO_ADDRINFO_address := LoadFunction('BIO_ADDRINFO_address', AFailed);
+  BIO_ADDRINFO_free := LoadFunction('BIO_ADDRINFO_free', AFailed);
+  BIO_parse_hostserv := LoadFunction('BIO_parse_hostserv', AFailed);
+  BIO_lookup := LoadFunction('BIO_lookup', AFailed);
+  BIO_lookup_ex := LoadFunction('BIO_lookup_ex', AFailed);
+  BIO_sock_error := LoadFunction('BIO_sock_error', AFailed);
+  BIO_socket_ioctl := LoadFunction('BIO_socket_ioctl', AFailed);
+  BIO_socket_nbio := LoadFunction('BIO_socket_nbio', AFailed);
+  BIO_sock_init := LoadFunction('BIO_sock_init', AFailed);
+  BIO_set_tcp_ndelay := LoadFunction('BIO_set_tcp_ndelay', AFailed);
+  BIO_sock_info := LoadFunction('BIO_sock_info', AFailed);
+  BIO_socket := LoadFunction('BIO_socket', AFailed);
+  BIO_connect := LoadFunction('BIO_connect', AFailed);
+  BIO_bind := LoadFunction('BIO_bind', AFailed);
+  BIO_listen := LoadFunction('BIO_listen', AFailed);
+  BIO_accept_ex := LoadFunction('BIO_accept_ex', AFailed);
+  BIO_closesocket := LoadFunction('BIO_closesocket', AFailed);
+  BIO_new_socket := LoadFunction('BIO_new_socket', AFailed);
+  BIO_new_connect := LoadFunction('BIO_new_connect', AFailed);
+  BIO_new_accept := LoadFunction('BIO_new_accept', AFailed);
+  BIO_new_fd := LoadFunction('BIO_new_fd', AFailed);
+  BIO_new_bio_pair := LoadFunction('BIO_new_bio_pair', AFailed);
+  BIO_copy_next_retry := LoadFunction('BIO_copy_next_retry', AFailed);
 end;
 
 procedure UnLoad;

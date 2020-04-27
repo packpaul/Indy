@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_x509v3;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -671,7 +672,7 @@ type
 //  typedef STACK_OF(PROFESSION_INFO) PROFESSION_INFOS;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -936,112 +937,100 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    GENERAL_NAME_cmp := LoadFunction('GENERAL_NAME_cmp', LFailed);
-    GENERAL_NAME_print := LoadFunction('GENERAL_NAME_print', LFailed);
-    OTHERNAME_cmp := LoadFunction('OTHERNAME_cmp', LFailed);
-    GENERAL_NAME_set0_value := LoadFunction('GENERAL_NAME_set0_value', LFailed);
-    GENERAL_NAME_get0_value := LoadFunction('GENERAL_NAME_get0_value', LFailed);
-    GENERAL_NAME_set0_othername := LoadFunction('GENERAL_NAME_set0_othername', LFailed);
-    GENERAL_NAME_get0_otherName := LoadFunction('GENERAL_NAME_get0_otherName', LFailed);
-    i2a_ACCESS_DESCRIPTION := LoadFunction('i2a_ACCESS_DESCRIPTION', LFailed);
-    DIST_POINT_set_dpname := LoadFunction('DIST_POINT_set_dpname', LFailed);
-    NAME_CONSTRAINTS_check := LoadFunction('NAME_CONSTRAINTS_check', LFailed);
-    NAME_CONSTRAINTS_check_CN := LoadFunction('NAME_CONSTRAINTS_check_CN', LFailed);
-    X509V3_EXT_nconf_nid := LoadFunction('X509V3_EXT_nconf_nid', LFailed);
-    X509V3_EXT_nconf := LoadFunction('X509V3_EXT_nconf', LFailed);
-    X509V3_EXT_add_nconf := LoadFunction('X509V3_EXT_add_nconf', LFailed);
-    X509V3_EXT_REQ_add_nconf := LoadFunction('X509V3_EXT_REQ_add_nconf', LFailed);
-    X509V3_EXT_CRL_add_nconf := LoadFunction('X509V3_EXT_CRL_add_nconf', LFailed);
-    X509V3_EXT_conf_nid := LoadFunction('X509V3_EXT_conf_nid', LFailed);
-    X509V3_EXT_conf := LoadFunction('X509V3_EXT_conf', LFailed);
-    X509V3_EXT_add_conf := LoadFunction('X509V3_EXT_add_conf', LFailed);
-    X509V3_EXT_REQ_add_conf := LoadFunction('X509V3_EXT_REQ_add_conf', LFailed);
-    X509V3_EXT_CRL_add_conf := LoadFunction('X509V3_EXT_CRL_add_conf', LFailed);
-    X509V3_set_nconf := LoadFunction('X509V3_set_nconf', LFailed);
-    X509V3_get_string := LoadFunction('X509V3_get_string', LFailed);
-    X509V3_string_free := LoadFunction('X509V3_string_free', LFailed);
-    X509V3_set_ctx := LoadFunction('X509V3_set_ctx', LFailed);
-    X509V3_EXT_add_alias := LoadFunction('X509V3_EXT_add_alias', LFailed);
-    X509V3_EXT_cleanup := LoadFunction('X509V3_EXT_cleanup', LFailed);
-    X509V3_add_standard_extensions := LoadFunction('X509V3_add_standard_extensions', LFailed);
-    X509V3_EXT_d2i := LoadFunction('X509V3_EXT_d2i', LFailed);
-    X509V3_EXT_i2d := LoadFunction('X509V3_EXT_i2d', LFailed);
-    X509V3_EXT_print := LoadFunction('X509V3_EXT_print', LFailed);
-    X509_check_ca := LoadFunction('X509_check_ca', LFailed);
-    X509_check_purpose := LoadFunction('X509_check_purpose', LFailed);
-    X509_supported_extension := LoadFunction('X509_supported_extension', LFailed);
-    X509_PURPOSE_set := LoadFunction('X509_PURPOSE_set', LFailed);
-    X509_check_issued := LoadFunction('X509_check_issued', LFailed);
-    X509_check_akid := LoadFunction('X509_check_akid', LFailed);
-    X509_set_proxy_flag := LoadFunction('X509_set_proxy_flag', LFailed);
-    X509_set_proxy_pathlen := LoadFunction('X509_set_proxy_pathlen', LFailed);
-    X509_get_proxy_pathlen := LoadFunction('X509_get_proxy_pathlen', LFailed);
-    X509_get_extension_flags := LoadFunction('X509_get_extension_flags', LFailed);
-    X509_get_key_usage := LoadFunction('X509_get_key_usage', LFailed);
-    X509_get_extended_key_usage := LoadFunction('X509_get_extended_key_usage', LFailed);
-    X509_get0_subject_key_id := LoadFunction('X509_get0_subject_key_id', LFailed);
-    X509_get0_authority_key_id := LoadFunction('X509_get0_authority_key_id', LFailed);
-    X509_get0_authority_serial := LoadFunction('X509_get0_authority_serial', LFailed);
-    X509_PURPOSE_get_count := LoadFunction('X509_PURPOSE_get_count', LFailed);
-    X509_PURPOSE_get0 := LoadFunction('X509_PURPOSE_get0', LFailed);
-    X509_PURPOSE_get_by_sname := LoadFunction('X509_PURPOSE_get_by_sname', LFailed);
-    X509_PURPOSE_get_by_id := LoadFunction('X509_PURPOSE_get_by_id', LFailed);
-    X509_PURPOSE_get0_name := LoadFunction('X509_PURPOSE_get0_name', LFailed);
-    X509_PURPOSE_get0_sname := LoadFunction('X509_PURPOSE_get0_sname', LFailed);
-    X509_PURPOSE_get_trust := LoadFunction('X509_PURPOSE_get_trust', LFailed);
-    X509_PURPOSE_cleanup := LoadFunction('X509_PURPOSE_cleanup', LFailed);
-    X509_PURPOSE_get_id := LoadFunction('X509_PURPOSE_get_id', LFailed);
-    X509_check_host := LoadFunction('X509_check_host', LFailed);
-    X509_check_email := LoadFunction('X509_check_email', LFailed);
-    X509_check_ip := LoadFunction('X509_check_ip', LFailed);
-    X509_check_ip_asc := LoadFunction('X509_check_ip_asc', LFailed);
-    a2i_IPADDRESS := LoadFunction('a2i_IPADDRESS', LFailed);
-    a2i_IPADDRESS_NC := LoadFunction('a2i_IPADDRESS_NC', LFailed);
-    X509_POLICY_NODE_print := LoadFunction('X509_POLICY_NODE_print', LFailed);
-    X509v3_addr_get_range := LoadFunction('X509v3_addr_get_range', LFailed);
-    X509v3_asid_validate_path := LoadFunction('X509v3_asid_validate_path', LFailed);
-    X509v3_addr_validate_path := LoadFunction('X509v3_addr_validate_path', LFailed);
-    NAMING_AUTHORITY_get0_authorityId := LoadFunction('NAMING_AUTHORITY_get0_authorityId', LFailed);
-    NAMING_AUTHORITY_get0_authorityURL := LoadFunction('NAMING_AUTHORITY_get0_authorityURL', LFailed);
-    NAMING_AUTHORITY_get0_authorityText := LoadFunction('NAMING_AUTHORITY_get0_authorityText', LFailed);
-    NAMING_AUTHORITY_set0_authorityId := LoadFunction('NAMING_AUTHORITY_set0_authorityId', LFailed);
-    NAMING_AUTHORITY_set0_authorityURL := LoadFunction('NAMING_AUTHORITY_set0_authorityURL', LFailed);
-    NAMING_AUTHORITY_set0_authorityText := LoadFunction('NAMING_AUTHORITY_set0_authorityText', LFailed);
-    ADMISSION_SYNTAX_get0_admissionAuthority := LoadFunction('ADMISSION_SYNTAX_get0_admissionAuthority', LFailed);
-    ADMISSION_SYNTAX_set0_admissionAuthority := LoadFunction('ADMISSION_SYNTAX_set0_admissionAuthority', LFailed);
-    ADMISSIONS_get0_admissionAuthority := LoadFunction('ADMISSIONS_get0_admissionAuthority', LFailed);
-    ADMISSIONS_set0_admissionAuthority := LoadFunction('ADMISSIONS_set0_admissionAuthority', LFailed);
-    ADMISSIONS_get0_namingAuthority := LoadFunction('ADMISSIONS_get0_namingAuthority', LFailed);
-    ADMISSIONS_set0_namingAuthority := LoadFunction('ADMISSIONS_set0_namingAuthority', LFailed);
-    PROFESSION_INFO_get0_addProfessionInfo := LoadFunction('PROFESSION_INFO_get0_addProfessionInfo', LFailed);
-    PROFESSION_INFO_set0_addProfessionInfo := LoadFunction('PROFESSION_INFO_set0_addProfessionInfo', LFailed);
-    PROFESSION_INFO_get0_namingAuthority := LoadFunction('PROFESSION_INFO_get0_namingAuthority', LFailed);
-    PROFESSION_INFO_set0_namingAuthority := LoadFunction('PROFESSION_INFO_set0_namingAuthority', LFailed);
-    PROFESSION_INFO_get0_registrationNumber := LoadFunction('PROFESSION_INFO_get0_registrationNumber', LFailed);
-    PROFESSION_INFO_set0_registrationNumber := LoadFunction('PROFESSION_INFO_set0_registrationNumber', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  GENERAL_NAME_cmp := LoadFunction('GENERAL_NAME_cmp', AFailed);
+  GENERAL_NAME_print := LoadFunction('GENERAL_NAME_print', AFailed);
+  OTHERNAME_cmp := LoadFunction('OTHERNAME_cmp', AFailed);
+  GENERAL_NAME_set0_value := LoadFunction('GENERAL_NAME_set0_value', AFailed);
+  GENERAL_NAME_get0_value := LoadFunction('GENERAL_NAME_get0_value', AFailed);
+  GENERAL_NAME_set0_othername := LoadFunction('GENERAL_NAME_set0_othername', AFailed);
+  GENERAL_NAME_get0_otherName := LoadFunction('GENERAL_NAME_get0_otherName', AFailed);
+  i2a_ACCESS_DESCRIPTION := LoadFunction('i2a_ACCESS_DESCRIPTION', AFailed);
+  DIST_POINT_set_dpname := LoadFunction('DIST_POINT_set_dpname', AFailed);
+  NAME_CONSTRAINTS_check := LoadFunction('NAME_CONSTRAINTS_check', AFailed);
+  NAME_CONSTRAINTS_check_CN := LoadFunction('NAME_CONSTRAINTS_check_CN', AFailed);
+  X509V3_EXT_nconf_nid := LoadFunction('X509V3_EXT_nconf_nid', AFailed);
+  X509V3_EXT_nconf := LoadFunction('X509V3_EXT_nconf', AFailed);
+  X509V3_EXT_add_nconf := LoadFunction('X509V3_EXT_add_nconf', AFailed);
+  X509V3_EXT_REQ_add_nconf := LoadFunction('X509V3_EXT_REQ_add_nconf', AFailed);
+  X509V3_EXT_CRL_add_nconf := LoadFunction('X509V3_EXT_CRL_add_nconf', AFailed);
+  X509V3_EXT_conf_nid := LoadFunction('X509V3_EXT_conf_nid', AFailed);
+  X509V3_EXT_conf := LoadFunction('X509V3_EXT_conf', AFailed);
+  X509V3_EXT_add_conf := LoadFunction('X509V3_EXT_add_conf', AFailed);
+  X509V3_EXT_REQ_add_conf := LoadFunction('X509V3_EXT_REQ_add_conf', AFailed);
+  X509V3_EXT_CRL_add_conf := LoadFunction('X509V3_EXT_CRL_add_conf', AFailed);
+  X509V3_set_nconf := LoadFunction('X509V3_set_nconf', AFailed);
+  X509V3_get_string := LoadFunction('X509V3_get_string', AFailed);
+  X509V3_string_free := LoadFunction('X509V3_string_free', AFailed);
+  X509V3_set_ctx := LoadFunction('X509V3_set_ctx', AFailed);
+  X509V3_EXT_add_alias := LoadFunction('X509V3_EXT_add_alias', AFailed);
+  X509V3_EXT_cleanup := LoadFunction('X509V3_EXT_cleanup', AFailed);
+  X509V3_add_standard_extensions := LoadFunction('X509V3_add_standard_extensions', AFailed);
+  X509V3_EXT_d2i := LoadFunction('X509V3_EXT_d2i', AFailed);
+  X509V3_EXT_i2d := LoadFunction('X509V3_EXT_i2d', AFailed);
+  X509V3_EXT_print := LoadFunction('X509V3_EXT_print', AFailed);
+  X509_check_ca := LoadFunction('X509_check_ca', AFailed);
+  X509_check_purpose := LoadFunction('X509_check_purpose', AFailed);
+  X509_supported_extension := LoadFunction('X509_supported_extension', AFailed);
+  X509_PURPOSE_set := LoadFunction('X509_PURPOSE_set', AFailed);
+  X509_check_issued := LoadFunction('X509_check_issued', AFailed);
+  X509_check_akid := LoadFunction('X509_check_akid', AFailed);
+  X509_set_proxy_flag := LoadFunction('X509_set_proxy_flag', AFailed);
+  X509_set_proxy_pathlen := LoadFunction('X509_set_proxy_pathlen', AFailed);
+  X509_get_proxy_pathlen := LoadFunction('X509_get_proxy_pathlen', AFailed);
+  X509_get_extension_flags := LoadFunction('X509_get_extension_flags', AFailed);
+  X509_get_key_usage := LoadFunction('X509_get_key_usage', AFailed);
+  X509_get_extended_key_usage := LoadFunction('X509_get_extended_key_usage', AFailed);
+  X509_get0_subject_key_id := LoadFunction('X509_get0_subject_key_id', AFailed);
+  X509_get0_authority_key_id := LoadFunction('X509_get0_authority_key_id', AFailed);
+  X509_get0_authority_serial := LoadFunction('X509_get0_authority_serial', AFailed);
+  X509_PURPOSE_get_count := LoadFunction('X509_PURPOSE_get_count', AFailed);
+  X509_PURPOSE_get0 := LoadFunction('X509_PURPOSE_get0', AFailed);
+  X509_PURPOSE_get_by_sname := LoadFunction('X509_PURPOSE_get_by_sname', AFailed);
+  X509_PURPOSE_get_by_id := LoadFunction('X509_PURPOSE_get_by_id', AFailed);
+  X509_PURPOSE_get0_name := LoadFunction('X509_PURPOSE_get0_name', AFailed);
+  X509_PURPOSE_get0_sname := LoadFunction('X509_PURPOSE_get0_sname', AFailed);
+  X509_PURPOSE_get_trust := LoadFunction('X509_PURPOSE_get_trust', AFailed);
+  X509_PURPOSE_cleanup := LoadFunction('X509_PURPOSE_cleanup', AFailed);
+  X509_PURPOSE_get_id := LoadFunction('X509_PURPOSE_get_id', AFailed);
+  X509_check_host := LoadFunction('X509_check_host', AFailed);
+  X509_check_email := LoadFunction('X509_check_email', AFailed);
+  X509_check_ip := LoadFunction('X509_check_ip', AFailed);
+  X509_check_ip_asc := LoadFunction('X509_check_ip_asc', AFailed);
+  a2i_IPADDRESS := LoadFunction('a2i_IPADDRESS', AFailed);
+  a2i_IPADDRESS_NC := LoadFunction('a2i_IPADDRESS_NC', AFailed);
+  X509_POLICY_NODE_print := LoadFunction('X509_POLICY_NODE_print', AFailed);
+  X509v3_addr_get_range := LoadFunction('X509v3_addr_get_range', AFailed);
+  X509v3_asid_validate_path := LoadFunction('X509v3_asid_validate_path', AFailed);
+  X509v3_addr_validate_path := LoadFunction('X509v3_addr_validate_path', AFailed);
+  NAMING_AUTHORITY_get0_authorityId := LoadFunction('NAMING_AUTHORITY_get0_authorityId', AFailed);
+  NAMING_AUTHORITY_get0_authorityURL := LoadFunction('NAMING_AUTHORITY_get0_authorityURL', AFailed);
+  NAMING_AUTHORITY_get0_authorityText := LoadFunction('NAMING_AUTHORITY_get0_authorityText', AFailed);
+  NAMING_AUTHORITY_set0_authorityId := LoadFunction('NAMING_AUTHORITY_set0_authorityId', AFailed);
+  NAMING_AUTHORITY_set0_authorityURL := LoadFunction('NAMING_AUTHORITY_set0_authorityURL', AFailed);
+  NAMING_AUTHORITY_set0_authorityText := LoadFunction('NAMING_AUTHORITY_set0_authorityText', AFailed);
+  ADMISSION_SYNTAX_get0_admissionAuthority := LoadFunction('ADMISSION_SYNTAX_get0_admissionAuthority', AFailed);
+  ADMISSION_SYNTAX_set0_admissionAuthority := LoadFunction('ADMISSION_SYNTAX_set0_admissionAuthority', AFailed);
+  ADMISSIONS_get0_admissionAuthority := LoadFunction('ADMISSIONS_get0_admissionAuthority', AFailed);
+  ADMISSIONS_set0_admissionAuthority := LoadFunction('ADMISSIONS_set0_admissionAuthority', AFailed);
+  ADMISSIONS_get0_namingAuthority := LoadFunction('ADMISSIONS_get0_namingAuthority', AFailed);
+  ADMISSIONS_set0_namingAuthority := LoadFunction('ADMISSIONS_set0_namingAuthority', AFailed);
+  PROFESSION_INFO_get0_addProfessionInfo := LoadFunction('PROFESSION_INFO_get0_addProfessionInfo', AFailed);
+  PROFESSION_INFO_set0_addProfessionInfo := LoadFunction('PROFESSION_INFO_set0_addProfessionInfo', AFailed);
+  PROFESSION_INFO_get0_namingAuthority := LoadFunction('PROFESSION_INFO_get0_namingAuthority', AFailed);
+  PROFESSION_INFO_set0_namingAuthority := LoadFunction('PROFESSION_INFO_set0_namingAuthority', AFailed);
+  PROFESSION_INFO_get0_registrationNumber := LoadFunction('PROFESSION_INFO_get0_registrationNumber', AFailed);
+  PROFESSION_INFO_set0_registrationNumber := LoadFunction('PROFESSION_INFO_set0_registrationNumber', AFailed);
 end;
 
 procedure UnLoad;

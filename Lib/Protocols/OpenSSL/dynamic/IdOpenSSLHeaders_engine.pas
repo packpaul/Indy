@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_engine;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -370,7 +371,7 @@ type
     const fns: dynamic_fns): TIdC_INT; cdecl;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -721,147 +722,135 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    ENGINE_get_first := LoadFunction('ENGINE_get_first', LFailed);
-    ENGINE_get_last := LoadFunction('ENGINE_get_last', LFailed);
-    ENGINE_get_next := LoadFunction('ENGINE_get_next', LFailed);
-    ENGINE_get_prev := LoadFunction('ENGINE_get_prev', LFailed);
-    ENGINE_add := LoadFunction('ENGINE_add', LFailed);
-    ENGINE_remove := LoadFunction('ENGINE_remove', LFailed);
-    ENGINE_by_id := LoadFunction('ENGINE_by_id', LFailed);
-    ENGINE_load_builtin_engines := LoadFunction('ENGINE_load_builtin_engines', LFailed);
-    ENGINE_get_table_flags := LoadFunction('ENGINE_get_table_flags', LFailed);
-    ENGINE_set_table_flags := LoadFunction('ENGINE_set_table_flags', LFailed);
-    ENGINE_register_RSA := LoadFunction('ENGINE_register_RSA', LFailed);
-    ENGINE_unregister_RSA := LoadFunction('ENGINE_unregister_RSA', LFailed);
-    ENGINE_register_all_RSA := LoadFunction('ENGINE_register_all_RSA', LFailed);
-    ENGINE_register_DSA := LoadFunction('ENGINE_register_DSA', LFailed);
-    ENGINE_unregister_DSA := LoadFunction('ENGINE_unregister_DSA', LFailed);
-    ENGINE_register_all_DSA := LoadFunction('ENGINE_register_all_DSA', LFailed);
-    ENGINE_register_EC := LoadFunction('ENGINE_register_EC', LFailed);
-    ENGINE_unregister_EC := LoadFunction('ENGINE_unregister_EC', LFailed);
-    ENGINE_register_all_EC := LoadFunction('ENGINE_register_all_EC', LFailed);
-    ENGINE_register_DH := LoadFunction('ENGINE_register_DH', LFailed);
-    ENGINE_unregister_DH := LoadFunction('ENGINE_unregister_DH', LFailed);
-    ENGINE_register_all_DH := LoadFunction('ENGINE_register_all_DH', LFailed);
-    ENGINE_register_RAND := LoadFunction('ENGINE_register_RAND', LFailed);
-    ENGINE_unregister_RAND := LoadFunction('ENGINE_unregister_RAND', LFailed);
-    ENGINE_register_all_RAND := LoadFunction('ENGINE_register_all_RAND', LFailed);
-    ENGINE_register_ciphers := LoadFunction('ENGINE_register_ciphers', LFailed);
-    ENGINE_unregister_ciphers := LoadFunction('ENGINE_unregister_ciphers', LFailed);
-    ENGINE_register_all_ciphers := LoadFunction('ENGINE_register_all_ciphers', LFailed);
-    ENGINE_register_digests := LoadFunction('ENGINE_register_digests', LFailed);
-    ENGINE_unregister_digests := LoadFunction('ENGINE_unregister_digests', LFailed);
-    ENGINE_register_all_digests := LoadFunction('ENGINE_register_all_digests', LFailed);
-    ENGINE_register_pkey_meths := LoadFunction('ENGINE_register_pkey_meths', LFailed);
-    ENGINE_unregister_pkey_meths := LoadFunction('ENGINE_unregister_pkey_meths', LFailed);
-    ENGINE_register_all_pkey_meths := LoadFunction('ENGINE_register_all_pkey_meths', LFailed);
-    ENGINE_register_pkey_asn1_meths := LoadFunction('ENGINE_register_pkey_asn1_meths', LFailed);
-    ENGINE_unregister_pkey_asn1_meths := LoadFunction('ENGINE_unregister_pkey_asn1_meths', LFailed);
-    ENGINE_register_all_pkey_asn1_meths := LoadFunction('ENGINE_register_all_pkey_asn1_meths', LFailed);
-    ENGINE_register_complete := LoadFunction('ENGINE_register_complete', LFailed);
-    ENGINE_register_all_complete := LoadFunction('ENGINE_register_all_complete', LFailed);
-    ENGINE_ctrl := LoadFunction('ENGINE_ctrl', LFailed);
-    ENGINE_cmd_is_executable := LoadFunction('ENGINE_cmd_is_executable', LFailed);
-    ENGINE_ctrl_cmd := LoadFunction('ENGINE_ctrl_cmd', LFailed);
-    ENGINE_ctrl_cmd_string := LoadFunction('ENGINE_ctrl_cmd_string', LFailed);
-    ENGINE_new := LoadFunction('ENGINE_new', LFailed);
-    ENGINE_free := LoadFunction('ENGINE_free', LFailed);
-    ENGINE_up_ref := LoadFunction('ENGINE_up_ref', LFailed);
-    ENGINE_set_id := LoadFunction('ENGINE_set_id', LFailed);
-    ENGINE_set_name := LoadFunction('ENGINE_set_name', LFailed);
-    ENGINE_set_RSA := LoadFunction('ENGINE_set_RSA', LFailed);
-    ENGINE_set_DSA := LoadFunction('ENGINE_set_DSA', LFailed);
-    ENGINE_set_EC := LoadFunction('ENGINE_set_EC', LFailed);
-    ENGINE_set_DH := LoadFunction('ENGINE_set_DH', LFailed);
-    ENGINE_set_RAND := LoadFunction('ENGINE_set_RAND', LFailed);
-    ENGINE_set_destroy_function := LoadFunction('ENGINE_set_destroy_function', LFailed);
-    ENGINE_set_init_function := LoadFunction('ENGINE_set_init_function', LFailed);
-    ENGINE_set_finish_function := LoadFunction('ENGINE_set_finish_function', LFailed);
-    ENGINE_set_ctrl_function := LoadFunction('ENGINE_set_ctrl_function', LFailed);
-    ENGINE_set_load_privkey_function := LoadFunction('ENGINE_set_load_privkey_function', LFailed);
-    ENGINE_set_load_pubkey_function := LoadFunction('ENGINE_set_load_pubkey_function', LFailed);
-    ENGINE_set_ciphers := LoadFunction('ENGINE_set_ciphers', LFailed);
-    ENGINE_set_digests := LoadFunction('ENGINE_set_digests', LFailed);
-    ENGINE_set_pkey_meths := LoadFunction('ENGINE_set_pkey_meths', LFailed);
-    ENGINE_set_pkey_asn1_meths := LoadFunction('ENGINE_set_pkey_asn1_meths', LFailed);
-    ENGINE_set_flags := LoadFunction('ENGINE_set_flags', LFailed);
-    ENGINE_set_cmd_defns := LoadFunction('ENGINE_set_cmd_defns', LFailed);
-    ENGINE_set_ex_data := LoadFunction('ENGINE_set_ex_data', LFailed);
-    ENGINE_get_ex_data := LoadFunction('ENGINE_get_ex_data', LFailed);
-    ENGINE_get_id := LoadFunction('ENGINE_get_id', LFailed);
-    ENGINE_get_name := LoadFunction('ENGINE_get_name', LFailed);
-    ENGINE_get_RSA := LoadFunction('ENGINE_get_RSA', LFailed);
-    ENGINE_get_DSA := LoadFunction('ENGINE_get_DSA', LFailed);
-    ENGINE_get_EC := LoadFunction('ENGINE_get_EC', LFailed);
-    ENGINE_get_DH := LoadFunction('ENGINE_get_DH', LFailed);
-    ENGINE_get_RAND := LoadFunction('ENGINE_get_RAND', LFailed);
-    ENGINE_get_destroy_function := LoadFunction('ENGINE_get_destroy_function', LFailed);
-    ENGINE_get_init_function := LoadFunction('ENGINE_get_init_function', LFailed);
-    ENGINE_get_finish_function := LoadFunction('ENGINE_get_finish_function', LFailed);
-    ENGINE_get_ctrl_function := LoadFunction('ENGINE_get_ctrl_function', LFailed);
-    ENGINE_get_load_privkey_function := LoadFunction('ENGINE_get_load_privkey_function', LFailed);
-    ENGINE_get_load_pubkey_function := LoadFunction('ENGINE_get_load_pubkey_function', LFailed);
-    ENGINE_get_ciphers := LoadFunction('ENGINE_get_ciphers', LFailed);
-    ENGINE_get_digests := LoadFunction('ENGINE_get_digests', LFailed);
-    ENGINE_get_pkey_meths := LoadFunction('ENGINE_get_pkey_meths', LFailed);
-    ENGINE_get_pkey_asn1_meths := LoadFunction('ENGINE_get_pkey_asn1_meths', LFailed);
-    ENGINE_get_cipher := LoadFunction('ENGINE_get_cipher', LFailed);
-    ENGINE_get_digest := LoadFunction('ENGINE_get_digest', LFailed);
-    ENGINE_get_pkey_meth := LoadFunction('ENGINE_get_pkey_meth', LFailed);
-    ENGINE_get_pkey_asn1_meth := LoadFunction('ENGINE_get_pkey_asn1_meth', LFailed);
-    ENGINE_get_pkey_asn1_meth_str := LoadFunction('ENGINE_get_pkey_asn1_meth_str', LFailed);
-    ENGINE_pkey_asn1_find_str := LoadFunction('ENGINE_pkey_asn1_find_str', LFailed);
-    ENGINE_get_cmd_defns := LoadFunction('ENGINE_get_cmd_defns', LFailed);
-    ENGINE_get_flags := LoadFunction('ENGINE_get_flags', LFailed);
-    ENGINE_init := LoadFunction('ENGINE_init', LFailed);
-    ENGINE_finish := LoadFunction('ENGINE_finish', LFailed);
-    ENGINE_load_private_key := LoadFunction('ENGINE_load_private_key', LFailed);
-    ENGINE_load_public_key := LoadFunction('ENGINE_load_public_key', LFailed);
-    ENGINE_get_default_RSA := LoadFunction('ENGINE_get_default_RSA', LFailed);
-    ENGINE_get_default_DSA := LoadFunction('ENGINE_get_default_DSA', LFailed);
-    ENGINE_get_default_EC := LoadFunction('ENGINE_get_default_EC', LFailed);
-    ENGINE_get_default_DH := LoadFunction('ENGINE_get_default_DH', LFailed);
-    ENGINE_get_default_RAND := LoadFunction('ENGINE_get_default_RAND', LFailed);
-    ENGINE_get_cipher_engine := LoadFunction('ENGINE_get_cipher_engine', LFailed);
-    ENGINE_get_digest_engine := LoadFunction('ENGINE_get_digest_engine', LFailed);
-    ENGINE_get_pkey_meth_engine := LoadFunction('ENGINE_get_pkey_meth_engine', LFailed);
-    ENGINE_get_pkey_asn1_meth_engine := LoadFunction('ENGINE_get_pkey_asn1_meth_engine', LFailed);
-    ENGINE_set_default_RSA := LoadFunction('ENGINE_set_default_RSA', LFailed);
-    ENGINE_set_default_string := LoadFunction('ENGINE_set_default_string', LFailed);
-    ENGINE_set_default_DSA := LoadFunction('ENGINE_set_default_DSA', LFailed);
-    ENGINE_set_default_EC := LoadFunction('ENGINE_set_default_EC', LFailed);
-    ENGINE_set_default_DH := LoadFunction('ENGINE_set_default_DH', LFailed);
-    ENGINE_set_default_RAND := LoadFunction('ENGINE_set_default_RAND', LFailed);
-    ENGINE_set_default_ciphers := LoadFunction('ENGINE_set_default_ciphers', LFailed);
-    ENGINE_set_default_digests := LoadFunction('ENGINE_set_default_digests', LFailed);
-    ENGINE_set_default_pkey_meths := LoadFunction('ENGINE_set_default_pkey_meths', LFailed);
-    ENGINE_set_default_pkey_asn1_meths := LoadFunction('ENGINE_set_default_pkey_asn1_meths', LFailed);
-    ENGINE_set_default := LoadFunction('ENGINE_set_default', LFailed);
-    ENGINE_add_conf_module := LoadFunction('ENGINE_add_conf_module', LFailed);
-    ENGINE_get_static_state := LoadFunction('ENGINE_get_static_state', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  ENGINE_get_first := LoadFunction('ENGINE_get_first', AFailed);
+  ENGINE_get_last := LoadFunction('ENGINE_get_last', AFailed);
+  ENGINE_get_next := LoadFunction('ENGINE_get_next', AFailed);
+  ENGINE_get_prev := LoadFunction('ENGINE_get_prev', AFailed);
+  ENGINE_add := LoadFunction('ENGINE_add', AFailed);
+  ENGINE_remove := LoadFunction('ENGINE_remove', AFailed);
+  ENGINE_by_id := LoadFunction('ENGINE_by_id', AFailed);
+  ENGINE_load_builtin_engines := LoadFunction('ENGINE_load_builtin_engines', AFailed);
+  ENGINE_get_table_flags := LoadFunction('ENGINE_get_table_flags', AFailed);
+  ENGINE_set_table_flags := LoadFunction('ENGINE_set_table_flags', AFailed);
+  ENGINE_register_RSA := LoadFunction('ENGINE_register_RSA', AFailed);
+  ENGINE_unregister_RSA := LoadFunction('ENGINE_unregister_RSA', AFailed);
+  ENGINE_register_all_RSA := LoadFunction('ENGINE_register_all_RSA', AFailed);
+  ENGINE_register_DSA := LoadFunction('ENGINE_register_DSA', AFailed);
+  ENGINE_unregister_DSA := LoadFunction('ENGINE_unregister_DSA', AFailed);
+  ENGINE_register_all_DSA := LoadFunction('ENGINE_register_all_DSA', AFailed);
+  ENGINE_register_EC := LoadFunction('ENGINE_register_EC', AFailed);
+  ENGINE_unregister_EC := LoadFunction('ENGINE_unregister_EC', AFailed);
+  ENGINE_register_all_EC := LoadFunction('ENGINE_register_all_EC', AFailed);
+  ENGINE_register_DH := LoadFunction('ENGINE_register_DH', AFailed);
+  ENGINE_unregister_DH := LoadFunction('ENGINE_unregister_DH', AFailed);
+  ENGINE_register_all_DH := LoadFunction('ENGINE_register_all_DH', AFailed);
+  ENGINE_register_RAND := LoadFunction('ENGINE_register_RAND', AFailed);
+  ENGINE_unregister_RAND := LoadFunction('ENGINE_unregister_RAND', AFailed);
+  ENGINE_register_all_RAND := LoadFunction('ENGINE_register_all_RAND', AFailed);
+  ENGINE_register_ciphers := LoadFunction('ENGINE_register_ciphers', AFailed);
+  ENGINE_unregister_ciphers := LoadFunction('ENGINE_unregister_ciphers', AFailed);
+  ENGINE_register_all_ciphers := LoadFunction('ENGINE_register_all_ciphers', AFailed);
+  ENGINE_register_digests := LoadFunction('ENGINE_register_digests', AFailed);
+  ENGINE_unregister_digests := LoadFunction('ENGINE_unregister_digests', AFailed);
+  ENGINE_register_all_digests := LoadFunction('ENGINE_register_all_digests', AFailed);
+  ENGINE_register_pkey_meths := LoadFunction('ENGINE_register_pkey_meths', AFailed);
+  ENGINE_unregister_pkey_meths := LoadFunction('ENGINE_unregister_pkey_meths', AFailed);
+  ENGINE_register_all_pkey_meths := LoadFunction('ENGINE_register_all_pkey_meths', AFailed);
+  ENGINE_register_pkey_asn1_meths := LoadFunction('ENGINE_register_pkey_asn1_meths', AFailed);
+  ENGINE_unregister_pkey_asn1_meths := LoadFunction('ENGINE_unregister_pkey_asn1_meths', AFailed);
+  ENGINE_register_all_pkey_asn1_meths := LoadFunction('ENGINE_register_all_pkey_asn1_meths', AFailed);
+  ENGINE_register_complete := LoadFunction('ENGINE_register_complete', AFailed);
+  ENGINE_register_all_complete := LoadFunction('ENGINE_register_all_complete', AFailed);
+  ENGINE_ctrl := LoadFunction('ENGINE_ctrl', AFailed);
+  ENGINE_cmd_is_executable := LoadFunction('ENGINE_cmd_is_executable', AFailed);
+  ENGINE_ctrl_cmd := LoadFunction('ENGINE_ctrl_cmd', AFailed);
+  ENGINE_ctrl_cmd_string := LoadFunction('ENGINE_ctrl_cmd_string', AFailed);
+  ENGINE_new := LoadFunction('ENGINE_new', AFailed);
+  ENGINE_free := LoadFunction('ENGINE_free', AFailed);
+  ENGINE_up_ref := LoadFunction('ENGINE_up_ref', AFailed);
+  ENGINE_set_id := LoadFunction('ENGINE_set_id', AFailed);
+  ENGINE_set_name := LoadFunction('ENGINE_set_name', AFailed);
+  ENGINE_set_RSA := LoadFunction('ENGINE_set_RSA', AFailed);
+  ENGINE_set_DSA := LoadFunction('ENGINE_set_DSA', AFailed);
+  ENGINE_set_EC := LoadFunction('ENGINE_set_EC', AFailed);
+  ENGINE_set_DH := LoadFunction('ENGINE_set_DH', AFailed);
+  ENGINE_set_RAND := LoadFunction('ENGINE_set_RAND', AFailed);
+  ENGINE_set_destroy_function := LoadFunction('ENGINE_set_destroy_function', AFailed);
+  ENGINE_set_init_function := LoadFunction('ENGINE_set_init_function', AFailed);
+  ENGINE_set_finish_function := LoadFunction('ENGINE_set_finish_function', AFailed);
+  ENGINE_set_ctrl_function := LoadFunction('ENGINE_set_ctrl_function', AFailed);
+  ENGINE_set_load_privkey_function := LoadFunction('ENGINE_set_load_privkey_function', AFailed);
+  ENGINE_set_load_pubkey_function := LoadFunction('ENGINE_set_load_pubkey_function', AFailed);
+  ENGINE_set_ciphers := LoadFunction('ENGINE_set_ciphers', AFailed);
+  ENGINE_set_digests := LoadFunction('ENGINE_set_digests', AFailed);
+  ENGINE_set_pkey_meths := LoadFunction('ENGINE_set_pkey_meths', AFailed);
+  ENGINE_set_pkey_asn1_meths := LoadFunction('ENGINE_set_pkey_asn1_meths', AFailed);
+  ENGINE_set_flags := LoadFunction('ENGINE_set_flags', AFailed);
+  ENGINE_set_cmd_defns := LoadFunction('ENGINE_set_cmd_defns', AFailed);
+  ENGINE_set_ex_data := LoadFunction('ENGINE_set_ex_data', AFailed);
+  ENGINE_get_ex_data := LoadFunction('ENGINE_get_ex_data', AFailed);
+  ENGINE_get_id := LoadFunction('ENGINE_get_id', AFailed);
+  ENGINE_get_name := LoadFunction('ENGINE_get_name', AFailed);
+  ENGINE_get_RSA := LoadFunction('ENGINE_get_RSA', AFailed);
+  ENGINE_get_DSA := LoadFunction('ENGINE_get_DSA', AFailed);
+  ENGINE_get_EC := LoadFunction('ENGINE_get_EC', AFailed);
+  ENGINE_get_DH := LoadFunction('ENGINE_get_DH', AFailed);
+  ENGINE_get_RAND := LoadFunction('ENGINE_get_RAND', AFailed);
+  ENGINE_get_destroy_function := LoadFunction('ENGINE_get_destroy_function', AFailed);
+  ENGINE_get_init_function := LoadFunction('ENGINE_get_init_function', AFailed);
+  ENGINE_get_finish_function := LoadFunction('ENGINE_get_finish_function', AFailed);
+  ENGINE_get_ctrl_function := LoadFunction('ENGINE_get_ctrl_function', AFailed);
+  ENGINE_get_load_privkey_function := LoadFunction('ENGINE_get_load_privkey_function', AFailed);
+  ENGINE_get_load_pubkey_function := LoadFunction('ENGINE_get_load_pubkey_function', AFailed);
+  ENGINE_get_ciphers := LoadFunction('ENGINE_get_ciphers', AFailed);
+  ENGINE_get_digests := LoadFunction('ENGINE_get_digests', AFailed);
+  ENGINE_get_pkey_meths := LoadFunction('ENGINE_get_pkey_meths', AFailed);
+  ENGINE_get_pkey_asn1_meths := LoadFunction('ENGINE_get_pkey_asn1_meths', AFailed);
+  ENGINE_get_cipher := LoadFunction('ENGINE_get_cipher', AFailed);
+  ENGINE_get_digest := LoadFunction('ENGINE_get_digest', AFailed);
+  ENGINE_get_pkey_meth := LoadFunction('ENGINE_get_pkey_meth', AFailed);
+  ENGINE_get_pkey_asn1_meth := LoadFunction('ENGINE_get_pkey_asn1_meth', AFailed);
+  ENGINE_get_pkey_asn1_meth_str := LoadFunction('ENGINE_get_pkey_asn1_meth_str', AFailed);
+  ENGINE_pkey_asn1_find_str := LoadFunction('ENGINE_pkey_asn1_find_str', AFailed);
+  ENGINE_get_cmd_defns := LoadFunction('ENGINE_get_cmd_defns', AFailed);
+  ENGINE_get_flags := LoadFunction('ENGINE_get_flags', AFailed);
+  ENGINE_init := LoadFunction('ENGINE_init', AFailed);
+  ENGINE_finish := LoadFunction('ENGINE_finish', AFailed);
+  ENGINE_load_private_key := LoadFunction('ENGINE_load_private_key', AFailed);
+  ENGINE_load_public_key := LoadFunction('ENGINE_load_public_key', AFailed);
+  ENGINE_get_default_RSA := LoadFunction('ENGINE_get_default_RSA', AFailed);
+  ENGINE_get_default_DSA := LoadFunction('ENGINE_get_default_DSA', AFailed);
+  ENGINE_get_default_EC := LoadFunction('ENGINE_get_default_EC', AFailed);
+  ENGINE_get_default_DH := LoadFunction('ENGINE_get_default_DH', AFailed);
+  ENGINE_get_default_RAND := LoadFunction('ENGINE_get_default_RAND', AFailed);
+  ENGINE_get_cipher_engine := LoadFunction('ENGINE_get_cipher_engine', AFailed);
+  ENGINE_get_digest_engine := LoadFunction('ENGINE_get_digest_engine', AFailed);
+  ENGINE_get_pkey_meth_engine := LoadFunction('ENGINE_get_pkey_meth_engine', AFailed);
+  ENGINE_get_pkey_asn1_meth_engine := LoadFunction('ENGINE_get_pkey_asn1_meth_engine', AFailed);
+  ENGINE_set_default_RSA := LoadFunction('ENGINE_set_default_RSA', AFailed);
+  ENGINE_set_default_string := LoadFunction('ENGINE_set_default_string', AFailed);
+  ENGINE_set_default_DSA := LoadFunction('ENGINE_set_default_DSA', AFailed);
+  ENGINE_set_default_EC := LoadFunction('ENGINE_set_default_EC', AFailed);
+  ENGINE_set_default_DH := LoadFunction('ENGINE_set_default_DH', AFailed);
+  ENGINE_set_default_RAND := LoadFunction('ENGINE_set_default_RAND', AFailed);
+  ENGINE_set_default_ciphers := LoadFunction('ENGINE_set_default_ciphers', AFailed);
+  ENGINE_set_default_digests := LoadFunction('ENGINE_set_default_digests', AFailed);
+  ENGINE_set_default_pkey_meths := LoadFunction('ENGINE_set_default_pkey_meths', AFailed);
+  ENGINE_set_default_pkey_asn1_meths := LoadFunction('ENGINE_set_default_pkey_asn1_meths', AFailed);
+  ENGINE_set_default := LoadFunction('ENGINE_set_default', AFailed);
+  ENGINE_add_conf_module := LoadFunction('ENGINE_add_conf_module', AFailed);
+  ENGINE_get_static_state := LoadFunction('ENGINE_get_static_state', AFailed);
 end;
 
 procedure UnLoad;

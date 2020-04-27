@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_blowfish;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts;
@@ -65,7 +66,7 @@ type
   PBF_KEY = ^BF_KEY;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -84,37 +85,25 @@ var
 
 implementation
 
-uses
-  System.Classes,
-  Winapi.Windows;
-
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    BF_set_key := LoadFunction('BF_set_key', LFailed);
-    BF_encrypt := LoadFunction('BF_encrypt', LFailed);
-    BF_decrypt := LoadFunction('BF_decrypt', LFailed);
-    BF_ecb_encrypt := LoadFunction('BF_ecb_encrypt', LFailed);
-    BF_cbc_encrypt := LoadFunction('BF_cbc_encrypt', LFailed);
-    BF_cfb64_encrypt := LoadFunction('BF_cfb64_encrypt', LFailed);
-    BF_ofb64_encrypt := LoadFunction('BF_ofb64_encrypt', LFailed);
-    BF_options := LoadFunction('BF_options', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  BF_set_key := LoadFunction('BF_set_key', AFailed);
+  BF_encrypt := LoadFunction('BF_encrypt', AFailed);
+  BF_decrypt := LoadFunction('BF_decrypt', AFailed);
+  BF_ecb_encrypt := LoadFunction('BF_ecb_encrypt', AFailed);
+  BF_cbc_encrypt := LoadFunction('BF_cbc_encrypt', AFailed);
+  BF_cfb64_encrypt := LoadFunction('BF_cfb64_encrypt', AFailed);
+  BF_ofb64_encrypt := LoadFunction('BF_ofb64_encrypt', AFailed);
+  BF_options := LoadFunction('BF_options', AFailed);
 end;
 
 procedure UnLoad;

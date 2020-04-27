@@ -28,7 +28,7 @@
 // Any change to this file should be made in the
 // corresponding unit in the folder "intermediate"!
 
-// Generation date: 01.04.2020 14:26:27
+// Generation date: 27.04.2020 15:01:04
 
 unit IdOpenSSLHeaders_tls1;
 
@@ -40,6 +40,7 @@ interface
 {$i IdCompilerDefines.inc}
 
 uses
+  Classes,
   IdCTypes,
   IdGlobal,
   IdOpenSSLConsts,
@@ -1103,7 +1104,7 @@ function SSL_set_tlsext_host_name(s: PSSL; const name: PIdAnsiChar): TIdC_LONG;
 {$ENDREGION}
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 procedure UnLoad;
 {$ENDREGION}
 
@@ -1205,39 +1206,29 @@ var
 implementation
 
 uses
-  IdOpenSSLHeaders_ssl,
-  System.Classes,
-  Winapi.Windows;
+  IdOpenSSLHeaders_ssl;
 
 {$REGION 'Generated loading and unloading methods'}
-function Load(const ADllHandle: THandle): TArray<string>;
+procedure Load(const ADllHandle: TIdLibHandle; const AFailed: TStringList);
 
   function LoadFunction(const AMethodName: string; const AFailed: TStringList): Pointer;
   begin
-    Result := GetProcAddress(ADllHandle, PChar(AMethodName));
+    Result := LoadLibFunction(ADllHandle, AMethodName);
     if not Assigned(Result) then
       AFailed.Add(AMethodName);
   end;
 
-var
-  LFailed: TStringList;
 begin
-  LFailed := TStringList.Create();
-  try
-    SSL_CTX_set_tlsext_max_fragment_length := LoadFunction('SSL_CTX_set_tlsext_max_fragment_length', LFailed);
-    SSL_set_tlsext_max_fragment_length := LoadFunction('SSL_set_tlsext_max_fragment_length', LFailed);
-    SSL_get_servername := LoadFunction('SSL_get_servername', LFailed);
-    SSL_get_servername_type := LoadFunction('SSL_get_servername_type', LFailed);
-    SSL_export_keying_material := LoadFunction('SSL_export_keying_material', LFailed);
-    SSL_export_keying_material_early := LoadFunction('SSL_export_keying_material_early', LFailed);
-    SSL_get_peer_signature_type_nid := LoadFunction('SSL_get_peer_signature_type_nid', LFailed);
-    SSL_get_signature_type_nid := LoadFunction('SSL_get_signature_type_nid', LFailed);
-    SSL_get_sigalgs := LoadFunction('SSL_get_sigalgs', LFailed);
-    SSL_get_shared_sigalgs := LoadFunction('SSL_get_shared_sigalgs', LFailed);
-    Result := LFailed.ToStringArray();
-  finally
-    LFailed.Free();
-  end;
+  SSL_CTX_set_tlsext_max_fragment_length := LoadFunction('SSL_CTX_set_tlsext_max_fragment_length', AFailed);
+  SSL_set_tlsext_max_fragment_length := LoadFunction('SSL_set_tlsext_max_fragment_length', AFailed);
+  SSL_get_servername := LoadFunction('SSL_get_servername', AFailed);
+  SSL_get_servername_type := LoadFunction('SSL_get_servername_type', AFailed);
+  SSL_export_keying_material := LoadFunction('SSL_export_keying_material', AFailed);
+  SSL_export_keying_material_early := LoadFunction('SSL_export_keying_material_early', AFailed);
+  SSL_get_peer_signature_type_nid := LoadFunction('SSL_get_peer_signature_type_nid', AFailed);
+  SSL_get_signature_type_nid := LoadFunction('SSL_get_signature_type_nid', AFailed);
+  SSL_get_sigalgs := LoadFunction('SSL_get_sigalgs', AFailed);
+  SSL_get_shared_sigalgs := LoadFunction('SSL_get_shared_sigalgs', AFailed);
 end;
 
 procedure UnLoad;
