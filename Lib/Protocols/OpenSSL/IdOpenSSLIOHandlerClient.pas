@@ -41,6 +41,7 @@ uses
 type
   TIdOpenSSLIOHandlerClient = class(TIdOpenSSLIOHandlerClientBase)
   private
+    FOpenSSLLoaded: Boolean;
     function GetTargetHost: string;
     function GetClientSocket: TIdOpenSSLSocketClient; {$IFDEF USE_INLINE}inline;{$ENDIF}
   protected
@@ -65,20 +66,40 @@ implementation
 uses
   IdCustomTransparentProxy,
   IdOpenSSLContextClient,
+  IdOpenSSLExceptions,
+  IdOpenSSLLoader,
   IdURI,
   SysUtils;
 
 { TIdOpenSSLIOHandlerClient }
 
 procedure TIdOpenSSLIOHandlerClient.EnsureContext;
+var
+  LLoader: IOpenSSLLoader;
 begin
   if Assigned(FContext) then
     Exit;
   FContext := TIdOpenSSLContextClient.Create();
 
-  BeforeInitContext(FContext);
-  TIdOpenSSLContextClient(FContext).Init(FOptions);
-  AfterInitContext(FContext);
+  LLoader := GetOpenSSLLoader();
+  if not FOpenSSLLoaded and Assigned(LLoader) and not LLoader.Load() then
+    raise EIdOpenSSLLoadError.Create('Failed to load OpenSSL');
+  FOpenSSLLoaded := True;
+  try
+    BeforeInitContext(FContext);
+    TIdOpenSSLContextClient(FContext).Init(FOptions);
+    AfterInitContext(FContext);
+  except
+    on E: EExternalException do
+    begin
+      try
+        FreeAndNil(FContext);
+      except
+        on E: EExternalException do ; // Nothing
+      end;
+      raise EIdOpenSSLLoadError.Create('Failed to load OpenSSL');
+    end;
+  end;
 end;
 
 procedure TIdOpenSSLIOHandlerClient.AfterInitContext(

@@ -44,6 +44,7 @@ type
   private
     FOptions: TIdOpenSSLOptionsServer;
     FContext: TIdOpenSSLContextServer;
+    FOpenSSLLoaded: Boolean;
   protected
     function GetOptionClass: TIdOpenSSLOptionsServerClass; virtual;
     procedure InitComponent; override;
@@ -67,7 +68,9 @@ type
 implementation
 
 uses
+  IdOpenSSLExceptions,
   IdOpenSSLIOHandlerClientServer,
+  IdOpenSSLLoader,
   SysUtils;
 
 { TIdOpenSSLIOHandlerServer }
@@ -106,10 +109,30 @@ begin
 end;
 
 procedure TIdOpenSSLIOHandlerServer.Init;
+var
+  LLoader: IOpenSSLLoader;
 begin
   inherited;
+
+  LLoader := GetOpenSSLLoader();
+  if not FOpenSSLLoaded and Assigned(LLoader) and not LLoader.Load() then
+    raise EIdOpenSSLLoadError.Create('Failed to load OpenSSL');
+  FOpenSSLLoaded := True;
+
   FContext := TIdOpenSSLContextServer.Create();
-  FContext.Init(FOptions);
+  try
+    FContext.Init(FOptions);
+  except
+    on E: EExternalException do
+    begin
+      try
+        FreeAndNil(FContext);
+      except
+        on E: EExternalException do ; // Nothing
+      end;
+      raise EIdOpenSSLLoadError.Create('Failed to load OpenSSL');
+    end;
+  end;
 end;
 
 procedure TIdOpenSSLIOHandlerServer.InitComponent;

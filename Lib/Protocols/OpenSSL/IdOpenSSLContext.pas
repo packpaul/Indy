@@ -237,7 +237,8 @@ end;
 
 procedure TIdOpenSSLContext.FreeContext(const AContext: PSSL_CTX);
 begin
-  SSL_CTX_Free(AContext); // SSL_CTX_Free is nil-safe
+  if Assigned(AContext) then
+    SSL_CTX_Free(AContext); // SSL_CTX_Free is also nil-safe
 end;
 
 function TIdOpenSSLContext.Init(const AOptions: TIdOpenSSLOptionsBase): Boolean;

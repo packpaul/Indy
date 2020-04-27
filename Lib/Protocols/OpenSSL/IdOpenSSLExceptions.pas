@@ -44,6 +44,8 @@ type
     class procedure RaiseFmt(const AMsg: string; const Args: array of const);
   end;
 
+  EIdOpenSSLLoadError = class(EIdOpenSSLBaseError);
+
   EIdOpenSSLSetExDataError = class(EIdOpenSSLBaseError);
   EIdOpenSSLGetExDataError = class(EIdOpenSSLBaseError);
   EIdOpenSSLSetCipherListError = class(EIdOpenSSLBaseError);
